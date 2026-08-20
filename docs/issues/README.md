@@ -27,7 +27,7 @@ Recomputed from the Status column of the table below, which
 field of each linked GAP doc. **Update these numbers whenever a row's Status
 changes** — the gate fails the build when they drift.
 
-- **91 gap files** — **60 open**, **2 partial**, **29 resolved**.
+- **91 gap files** — **59 open**, **1 partial**, **31 resolved**.
 - **14 epics** (🏔️) among them.
 
 This directory is the durable, reviewable source.
@@ -80,7 +80,7 @@ Several Act-I-scope content items were deliberately kept CONCRETE (not folded in
 | [GAP-067](GAP-067-dialogue-and-cutscenes-read-bundled-defaults-json.md) | Save | HIGH | S | ✅ fixed | Dialogue and cutscenes read bundled defaults.json instead of the player's saved config |
 | [GAP-078](GAP-078-epic-music-audio-assets-are-placeholders-5-silent.md) 🏔️ | Audio | HIGH | XL | open | EPIC: Music + audio assets are placeholders (5 silent tracks vs ~70-80 designed; ~51 SFX, 12 ambient missing) |
 | [GAP-005](GAP-005-12-dual-tech-combos-are-entirely-unimplemented-com.md) | Combat | MEDIUM | L | open | 12 dual-tech combos are entirely unimplemented (combos.json unused) |
-| [GAP-006](GAP-006-atb-battle-speed-factors-diverge-from-combat-formu.md) | Combat | MEDIUM | S | open | ATB battle-speed factors diverge from combat-formulas.md (~4x slower than documented) |
+| [GAP-006](GAP-006-atb-battle-speed-factors-diverge-from-combat-formu.md) | Combat | MEDIUM | S | resolved (#177) | ATB battle-speed factors diverge from combat-formulas.md (~4x slower than documented) |
 | [GAP-008](GAP-008-combat-interaction-buff-type-trait-multipliers-are.md) | Combat | MEDIUM | L | open | Combat interaction/buff/type-trait multipliers are never applied (damage_calculator params always neutral) |
 | [GAP-009](GAP-009-boss-ai-is-stubbed-hardcoded-data-driven-phase-scr.md) | Combat | MEDIUM | L | resolved (#179) | Boss AI is stubbed/hardcoded; data-driven phase scripts, telegraphs, and Ember Drake kit missing |
 | [GAP-012](GAP-012-party-join-level-omits-the-design-mandated-1.md) | Progression | MEDIUM | S | ✅ fixed | Party join level omits the design-mandated '-1' |
@@ -147,6 +147,6 @@ Several Act-I-scope content items were deliberately kept CONCRETE (not folded in
 | [GAP-086](GAP-086-inventory-helpers-gd-placed-in-scripts-autoload-bu.md) | Code structure | LOW | S | resolved (Issue #236) | inventory_helpers.gd placed in scripts/autoload/ but is a static helper, not an autoload |
 | [GAP-087](GAP-087-multiple-core-files-exceed-the-stated-400-line-str.md) | Code structure | LOW | L | resolved (decomposed; 4 files sit in the sanctioned 400-600 band per tech-arch 1.2a — closes #319/#343/#356) | Multiple core files exceed the stated ~400-line structure target |
 | [GAP-088](GAP-088-resolution-accessibility-doc-divergence-impl-on-12.md) | Docs | LOW | S | ✅ fixed | Resolution/accessibility doc divergence: impl on 1280x720 native + 4x zoom, docs still assume 320x180 integer scaling |
-| [GAP-089](GAP-089-design-docs-magic-md-abilities-md-still-mostly-com.md) | Docs | LOW | M | partial (magic.md COMPLETE; 9 of 10 ability magnitudes resolved in PR #358; Shiv's throw branch open, #359) | magic.md numeric balance closed; abilities.md still MOSTLY COMPLETE — Shiv's thrown-item branch is the last open magnitude while JSON + battle already consume the data |
+| [GAP-089](GAP-089-design-docs-magic-md-abilities-md-still-mostly-com.md) | Docs | LOW | M | resolved (magic.md and abilities.md both COMPLETE; all ten ability magnitudes closed — Shiv's throw branch #359 and the unscaled combo powers #360 were the last) | magic.md and abilities.md numeric balance closed; runtime execution of the abilities remains open as #321 |
 | [GAP-090](GAP-090-music-md-self-contradicts-on-a-game-over-music-cue.md) | Docs | LOW | S | ✅ fixed | music.md self-contradicts on a 'game over' music cue |
 | [GAP-091](GAP-091-epic-post-game-content-unbuilt-dreamer-s-fault-bos.md) 🏔️ | Post-game | LOW | L | open | EPIC: Post-game content unbuilt (Dreamer's Fault, boss rush, The Lingering, completion tracking) |

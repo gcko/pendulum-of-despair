@@ -806,7 +806,7 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | Dungeon Design | dungeons-world.md, dungeons-city.md | COMPLETE |
 | NPC Design | npcs.md | MOSTLY COMPLETE |
 | Magic System | magic.md | COMPLETE (numeric balance closed — see below) |
-| Ability System | abilities.md | MOSTLY COMPLETE (resource costs closed; damage magnitudes closed for 9 of 10 entries — Shiv's thrown-item branch remains, tracked as [#359](https://github.com/gcko/pendulum-of-despair/issues/359), see below) |
+| Ability System | abilities.md | COMPLETE (resource costs closed; all ten damage magnitudes closed, the last being Shiv's thrown-item branch — [#359](https://github.com/gcko/pendulum-of-despair/issues/359), see below. One non-magnitude decision is named open in abilities.md rather than settled: which held item supplies the element on Wild Card's 2- and 3-item branches — [#447](https://github.com/gcko/pendulum-of-despair/issues/447)) |
 | Music Score | music.md | COMPLETE |
 | Visual Style | visual-style.md, building-palette.md | COMPLETE |
 | Dynamic World | dynamic-world.md | COMPLETE |
@@ -855,15 +855,20 @@ The mirrored sentences in `docs/superpowers/specs/2026-03-21-combat-formulas-des
 carry dated supersession notes rather than edits, since that file is the record
 of the 2026-03-21 design, not a live rule.
 
-### Ability System — damage magnitudes (9 of 10 closed)
+### Ability System — damage magnitudes (all ten closed)
 
 The three custom resources (AP/AC/WG) are within their stated caps, and the
 damage and healing magnitudes that used to be adjectives are now numbers. Both
-are asserted by `game/tests/test_ability_balance.gd` against the numeric fields
-in `game/data/abilities/` — the caps, and every `power`, `power_favor3`,
-`ability_mult`, `ability_mult_max` and `component_powers` value. Three
-quantities below live only in effect prose and are pinned by nothing: the
-Chorus's barrier percentage and immunity duration, and Shock Coil's tick count.
+are asserted against the numeric fields in `game/data/abilities/`, in one test
+file each: `game/tests/test_ability_balance.gd` holds the cost invariants
+(`test_no_ability_costs_more_than_its_resource_cap` is the cap one), and
+`game/tests/test_ability_magnitudes.gd` holds every `power`, `power_favor3`,
+`ability_mult`, `ability_mult_max` and `component_powers` value. The three
+quantities that used to live in effect prose alone — the Chorus's barrier
+percentage and immunity duration, and Shock Coil's tick count — are data fields
+now (`counter_pct`, `immunity_turns`, `ticks`) and are asserted against the 50%
+rule and the equal-AC budget alongside the rest
+([#355](https://github.com/gcko/pendulum-of-despair/issues/355)).
 The derivations live in
 [abilities.md](../story/abilities.md) § Damage Magnitudes; each value is written
 next to the rule that produced it, so it can be checked or overturned rather
@@ -883,26 +888,45 @@ than taken on trust.
 | Convergence Chorus | Torren | Damage 5, heal 6, barrier 10% of DEF, immunity 1 turn | The ability's own "50% normal potency" rule, applied to the now-numeric components. Which four spirits compose it, and how the cell's "cleanse" is read, are labeled choices — see abilities.md |
 | Wild Card (0-2 items) | Sable | `ability_mult` 2.0 | The 0-item branch's stated "2x her Attack" |
 | Wild Card (3 items) | Sable | `ability_mult` 3.0 | "Heavy" = double, capped by the ladder's Maximum tier |
-| Ambush Protocol (combo #8) | Sable + Lira | Spell power 60 | The combo's own "2x normal Arc Trap damage" |
-| **Shiv (thrown-item branch)** | Sable | **still open** | Needs two design decisions — see below |
+| Ambush Protocol (combo #8) | Sable + Lira | Spell power 60, on Lira's MAG | The combo's own "2x normal Arc Trap damage", scaled off the character who supplies the trap |
+| Shiv (thrown-item branch) | Sable | `ability_mult` 1.0, re-elemented from the thrown item | Reading (a) — the throw changes `element_mod` and nothing else — plus the item-type mapping in items.md § Thrown-Item Elements |
+| Thornfire (combo #4) | Torren + Lira | Spell power 40, split 20 Flame on Torren's MAG + 20 Storm on Lira's MAG | The combo's own stated split, with each half scaling off the character who supplies the constituent ability |
 
-**Still open: Shiv's thrown-item branch.** The base attack is fully specified
-(`ability_mult` 1.0 plus 50% DEF ignore, combat-formulas.md § Special: Shiv).
-The throw is not, and it was deliberately not invented, because two independent
-decisions are missing. First, no document maps [items.md](../story/items.md)'s
-consumables, materials and steal-only drops onto the six elements, and "element
-depends on item type" needs that mapping — Wild Card's item branches need the
-same one, so it is one decision covering both. Second, "bonus elemental damage"
-admits three non-equivalent readings: the throw re-elements the existing Shiv
-hit, adds a separate hit at its own magnitude, or raises Shiv's multiplier for
-that use. abilities.md § Damage Magnitudes states the options and recommends the
-first; the call belongs to a pass with the item tables open. Both decisions are
-tracked as [#359](https://github.com/gcko/pendulum-of-despair/issues/359), which
-is the only thing keeping the Ability System row above at MOSTLY COMPLETE and
-[#238](https://github.com/gcko/pendulum-of-despair/issues/238) from closing.
+**Closed: Shiv's thrown-item branch
+([#359](https://github.com/gcko/pendulum-of-despair/issues/359)).** The base
+attack was always fully specified (`ability_mult` 1.0 plus 50% DEF ignore,
+combat-formulas.md § Special: Shiv). The throw needed two decisions and both are
+now made. First, [items.md](../story/items.md) § Thrown-Item Elements maps the
+catalog onto the elements, on the rule that an item is thrown at the element its
+own entry names and at nothing otherwise — sixteen items qualify (Emberstone,
+two Spirit materials, three Arcanite ones, two ley-crystal ones, and eight rows
+naming Void or the Pallor it manifests) and everything else throws
+non-elemental. Wild Card's item branches take the same mapping, which was always
+one decision covering both — though the mapping fixes the element *per item* and
+does not say which of several held items supplies it on Wild Card's 2- and
+3-item branches, which abilities.md leaves open rather than settled
+([#447](https://github.com/gcko/pendulum-of-despair/issues/447)).
+Second, the throw is read
+as **(a)**: it re-elements the existing Shiv hit and changes nothing else, so no
+new magnitude was invented for it. The rejected readings — a separate second hit,
+or a raised multiplier — both need a number no document states, and either would
+make a 0 MP, one-turn-cooldown ability Sable's best damage button. With that,
+the Ability System row above is COMPLETE and
+[#238](https://github.com/gcko/pendulum-of-despair/issues/238) is unblocked.
 
-**Physical Ability Multiplier table — the two #333 rows are corrected; the
-2.0 row's Oathkeeper exemplar remains open.**
+**Closed: the two combos with a power and no scaling stat
+([#360](https://github.com/gcko/pendulum-of-despair/issues/360)).** Thornfire
+(40) and Ambush Protocol (60) each carried a spell power that no document could
+execute, because a two-character combo has two stat lines and neither the JSON
+nor the prose said which one the formula reads. abilities.md § Damage Magnitudes
+rule 5 says it once — a combo scales each constituent off the character who
+supplies it — which puts Ambush Protocol on Lira's MAG (the trap is hers) and
+splits Thornfire, its Flame half on Torren's MAG and its Storm half on Lira's.
+`combos.json` carries `caster` / `scaling_stat` fields and the suite now fails a
+combo that declares a power without them.
+
+**Physical Ability Multiplier table — the two #333 rows and the 2.0 row's
+Oathkeeper exemplar are all corrected.**
 [combat-formulas.md](../story/combat-formulas.md) § Physical Ability Multiplier
 Tiers used to list two abilities that cannot take a physical `ability_mult` at
 all. Both rows are corrected:
@@ -921,13 +945,18 @@ marked reserved: no shipped combo takes a physical `ability_mult`, because every
 combo either modifies a constituent ability or states its own formula. Closes
 [#333](https://github.com/gcko/pendulum-of-despair/issues/333).
 
-The table is *not* fully settled. Its `2.0` row also carries Oathkeeper, which
-the same document gives three different multipliers (1.0 doubled, 1.5, 2.0)
-across the table and its own worked examples —
-[#346](https://github.com/gcko/pendulum-of-despair/issues/346), still open.
-Wild Card's `2.0` was derived independently from its own stated "2x her Attack"
-and does not depend on how #346 resolves, and the table now says so in place; the
-two exemplars share a row but not an argument.
+The `2.0` row's third defect is also fixed. It used to carry Oathkeeper as an
+exemplar while the same document gave that ability three different multipliers
+(1.0 doubled, 1.5, 2.0) across the table and its own worked examples —
+[#346](https://github.com/gcko/pendulum-of-despair/issues/346). The 1.0-doubled
+reading wins, because it is the only one a *definition* supports: abilities.md
+§ Edren — Bulwark says Oathkeeper makes Edren's attack commands hit twice, and
+the Attack command is the table's own 1.0 row. Oathkeeper is therefore not on
+this ladder at all — it moved to § Buff-Granted Multipliers as a buff that adds a
+hit — and the two worked-example rows now read 5,044 x 2 and 10,757 x 2.
+`edren.json` carries `attack_hits` and `attack_ability_mult`, and the suite holds
+a turn of Oathkeeper to exactly two basic attacks. Wild Card's `2.0` was derived
+independently from its own stated "2x her Attack" and keeps the row alone.
 
 The magnitudes above still have no runtime consumer — `game/data/abilities/` is
 read only by the menu UI, and `battle_actions.gd`'s `spell_power` path serves

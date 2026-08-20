@@ -11,6 +11,8 @@
 			"cost_value": 5,
 			"cooldown": null,
 			"target": "single_ally",
+			"counter_pct": 20,
+			"counter_pct_favor3": 40,
 			"effect": "Briar Spirit. Single ally gains a thorn barrier — attackers take counter-damage equal to 20% of the shielded ally's Defense for 3 turns. Favor 3 Upgrade (Deeproot Veil): Counter-damage rises to 40% and the barrier also reduces incoming damage by 15%.",
 			"row_restriction": null,
 			"story_gated": false,
@@ -66,6 +68,7 @@
 			"cost_value": 12,
 			"cooldown": null,
 			"target": "single_ally",
+			"immunity_turns": 2,
 			"effect": "Earth Spirit. One ally gains immunity to status effects for 2 turns. Favor 3 Upgrade (Mountain's Resolve): All allies gain status immunity for 2 turns.",
 			"row_restriction": null,
 			"story_gated": true,
@@ -105,7 +108,9 @@
 			"_comment": "target records the damage component only; the heal, the barrier and the status immunity all resolve party-side (abilities.md § Damage Magnitudes > 'Convergence Chorus'). A component whose source Spiritcall Torren has not yet learned is skipped.",
 			"component_powers": {
 				"damage": 5,
-				"heal": 6
+				"heal": 6,
+				"barrier_pct": 10,
+				"immunity_turns": 1
 			},
 			"effect": "Torren calls the Briar, Rain, Flame and Earth spirits at once. Each performs its ability at 50% normal potency simultaneously, and the single-target ones are broadened to the whole party: AoE damage (spell power 5, all enemies), AoE heal (spell power 6, all allies) that also cleanses Poison, a party barrier countering for 10% of DEF, and party status immunity for 1 turn. Usable once per battle. A component whose spirit Torren has not yet learned is skipped.",
 			"row_restriction": null,

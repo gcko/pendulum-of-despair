@@ -8,16 +8,18 @@ signal combatant_ready(combatant_id: String)
 
 const GAUGE_MAX: int = 16000
 
-## Speed factors per battle speed setting.
-## Tuned so average SPD (~20) fills the gauge in ~6-8 seconds at speed 3,
-## matching FF6 ATB pacing (SNES: gauge 0-255, ~60fps, increment ~1/tick).
+## Speed factors per battle speed setting (1 = fastest, 6 = slowest).
+## Canon: combat-formulas.md § ATB Gauge System > Battle Speed Config. Those
+## six factors are what its Battle Speed Config and ATB Pacing tables are
+## computed from, so changing one here without changing the doc breaks both
+## tables. See test_atb_system.gd for the seconds-per-turn milestones.
 const SPEED_FACTORS: Dictionary = {
-	1: 1.5,
-	2: 1.0,
-	3: 0.7,
-	4: 0.5,
-	5: 0.35,
-	6: 0.25,
+	1: 6.0,
+	2: 5.0,
+	3: 3.0,
+	4: 2.0,
+	5: 1.5,
+	6: 1.0,
 }
 
 ## Per-combatant data: {id: {gauge, spd, is_enemy, frozen, status_mods}}
@@ -120,7 +122,7 @@ func set_command_menu_open(is_open: bool) -> void:
 ## Calculate fill rate for given SPD, battle speed, and status modifiers.
 ## Public for testing. Used internally by tick().
 func calculate_fill_rate(spd: int, battle_speed: int, status_mods: Array) -> int:
-	var factor: float = SPEED_FACTORS.get(battle_speed, 0.7)
+	var factor: float = SPEED_FACTORS.get(battle_speed, 3.0)
 	var mod_product: float = 1.0
 	for mod: float in status_mods:
 		mod_product *= mod

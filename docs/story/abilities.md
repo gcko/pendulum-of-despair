@@ -40,6 +40,20 @@ Each party member has one unique command in their battle menu alongside Fight, M
 | **Steadfast Resolve** | Story: `trial_edren_complete` (Pallor Wastes trial) | 6 AP | Edren steels the party's resolve. Immediately cleanses all Despair and Silence from every ally, then grants +20% DEF and +20% MDEF to all allies for 3 turns. The cleanse fires before the buff — a Despaired ally is freed, then shielded. |
 | **Oathkeeper** | Story: Act IV (picks up Cael's sword) | 8 AP | Edren dual-wields his own sword and Cael's blade. For 3 turns, all Bulwark stances gain +50% absorption AND Riposte triggers automatically on every absorbed hit. While active, Edren's attack commands hit twice. |
 
+**Oathkeeper's second hit is a second *Attack*, not a bigger one
+([#346](https://github.com/gcko/pendulum-of-despair/issues/346)).** "Attack
+commands hit twice" is read at face value: each of the two hits is a plain basic
+attack, `ability_mult` 1.0, with its own variance roll, crit check and DEF
+subtraction. Oathkeeper itself takes no rung on
+[combat-formulas.md](combat-formulas.md) § Physical Ability Multiplier Tiers —
+that document used to give it 1.0-doubled, 1.5 and 2.0 in three different places,
+and this reading is the one it now records, in § Buff-Granted Multipliers. The
+Riposte counters Oathkeeper fires automatically are 1.5x as they always are; the
++50% is on stance absorption, not on damage dealt. `game/data/abilities/edren.json`
+carries the two numbers as `attack_hits` and `attack_ability_mult`, and
+`game/tests/test_ability_magnitudes.gd` holds a turn of Oathkeeper to exactly
+twice a basic attack.
+
 **Synergies:**
 - Edren + Torren: Torren's healing spirits can restore HP Edren loses while absorbing, creating a sustain loop.
 - Edren + Maren: Maren's Resonance (see below) can amplify Aegis Veil to cover the whole party at reduced strength.
@@ -187,10 +201,10 @@ Each party member has one unique command in their battle menu alongside Fight, M
 |---------|---------|-------------|--------|
 | **Filch** | Level 1 | 0 MP / 0 CD | Steal an item from one enemy. Success rate based on Sable's Speed vs. enemy Speed. Each enemy has a common and rare steal. |
 | **Smokescreen** | Level 4 | 4 MP / 2 turns | Reduces all enemies' accuracy by 30% for 2 turns. If Sable has a stolen Forgewright component, also reduces enemy Speed by 15%. |
-| **Shiv** | Level 8 | 0 MP / 1 turn | Quick physical attack (`ability_mult` 1.0) that ignores 50% of target's Defense. If Sable has a stolen item, she can throw it for bonus elemental damage (element depends on item type). The item is consumed. **The throw branch's magnitude is still open** — see § Damage Magnitudes. |
+| **Shiv** | Level 8 | 0 MP / 1 turn | Quick physical attack (`ability_mult` 1.0) that ignores 50% of target's Defense. If Sable has a stolen item, she can throw it instead: the same hit at the same multiplier and the same DEF ignore, re-elemented to the item's thrown element ([items.md](items.md) § Thrown-Item Elements). Most items are non-elemental and add nothing; the item is consumed either way. See § Damage Magnitudes. |
 | **Misdirect** | Interlude [S] (Lv 14+) | 6 MP / 3 turns | Forces one enemy to target a different ally than intended on its next attack. Against AoE attacks, Misdirect has no effect. Against non-physical actions (spells), it redirects the targeting as normal. If used on a boss, instead reduces the boss's next attack damage by 25%. |
 | **Ransack** | Interlude [S] (Lv 19+) | 8 MP / 4 turns | Steal from all enemies simultaneously. Lower success rate than Filch (70% of normal), but hits everyone. |
-| **Wild Card** | Story: After the Interlude (Sable's journey reuniting the party) | 10 MP / 5 turns | Sable improvises a powerful technique based on her current stolen goods. 0 items: physical damage to one enemy at `ability_mult` 2.0 ("2x her Attack"). 1 item: the same 2.0 strike against all enemies, carrying the thrown item's element. 2 items: as 1 item, plus a random debuff (drawn from: Poison, Sleep, Silence, Blind, Slow) on all enemies. 3 items: heavy — `ability_mult` 3.0 against all enemies, elemental, random debuff (same list), and restores 10% HP to all allies. All stolen items are consumed. Multipliers per [combat-formulas.md](combat-formulas.md) § Physical Ability Multiplier Tiers; *which* element a given item confers is still open — see § Damage Magnitudes. |
+| **Wild Card** | Story: After the Interlude (Sable's journey reuniting the party) | 10 MP / 5 turns | Sable improvises a powerful technique based on her current stolen goods. 0 items: physical damage to one enemy at `ability_mult` 2.0 ("2x her Attack"). 1 item: the same 2.0 strike against all enemies, carrying the thrown item's element. 2 items: as 1 item, plus a random debuff (drawn from: Poison, Sleep, Silence, Blind, Slow) on all enemies. 3 items: heavy — `ability_mult` 3.0 against all enemies, elemental, random debuff (same list), and restores 10% HP to all allies. *Which* of the held items supplies the element on the 2- and 3-item branches is open, not settled ([#447](https://github.com/gcko/pendulum-of-despair/issues/447)) — see § Damage Magnitudes. All stolen items are consumed. Multipliers per [combat-formulas.md](combat-formulas.md) § Physical Ability Multiplier Tiers; *which* element a given item confers is [items.md](items.md) § Thrown-Item Elements. See § Damage Magnitudes. |
 
 **Synergies:**
 - Sable + Lira: Stolen Forgewright components can be given to Lira between battles to restore 2 AC each.
@@ -320,7 +334,7 @@ Magic in the world of Pendulum of Despair flows from the **ley lines** — veins
 | **Seal Tongue** | 6 | Single | 70% chance to inflict Silence | Maren (Lv 6), Edren (Lv 12), Lira (Act III cross-train), Torren (Act III cross-train) |
 | **Ley Cascade** | 16 | Single | Medium Ley-element damage (spell power 35) | Maren (Lv 15), Cael (Lv 17) |
 | **Dispersion** | 14 | Single | Removes all buffs from target | Maren (Lv 18) |
-| **Leyward** | 16 | Party | +25% Magic Defense, 4 turns | Maren (Lv 18), Edren (Lv 22) |
+| **Leyward** | 20 | Party | +25% Magic Defense, 4 turns | Maren (Lv 18), Edren (Lv 22) |
 | **Ley Storm** | 25 | All enemies | Moderate Ley-element AoE damage (spell power 27) | Maren (Lv 22) |
 | **Convergence Flare** | 38 | Single | Massive Ley-element damage (spell power 65) | Maren (Lv 34) |
 
@@ -607,14 +621,25 @@ resolved in § Damage Magnitudes below.
 
 Companion to § Resource Cost Invariants. That section fixed what abilities
 *cost*; this one fixes what they *deal*. Ten entries described their output in
-adjectives rather than numbers. Nine are resolved here and one is left open on
-purpose. `game/tests/test_ability_balance.gd` asserts the numeric *fields* below
+adjectives rather than numbers, and all ten are now resolved — the last of them,
+Shiv's thrown-item branch, at the bottom of this section
+([#359](https://github.com/gcko/pendulum-of-despair/issues/359)).
+
+`game/tests/test_ability_magnitudes.gd` asserts the numeric *fields* below
 against `game/data/abilities/` — every `power`, `power_favor3`, `ability_mult`
-and `ability_mult_max`, plus the two `component_powers` — so an edit that breaks
-one of those fails the suite. Three quantities in this section live only in
-effect prose and are pinned by nothing: the Chorus's "counter 10% of DEF" and
-"status immunity, 1 turn", and Shock Coil's "3 ticks". Editing one of those
-passes the suite silently.
+and `ability_mult_max`, all four `component_powers`, Thornveil's `counter_pct`
+and `counter_pct_favor3`, Stoneheart's `immunity_turns`, Shock Coil's `ticks`,
+Shiv's `def_ignore_pct`, and the `caster` / `scaling_stat` / `source_ability` on
+every combo that carries a power — so an edit that breaks one of those fails the
+suite. (Its sibling `test_ability_balance.gd` keeps the *cost* invariants of
+§ Resource Cost Invariants; the two were split when holding the new magnitude
+assertions alongside the cost ones would have carried the combined 415-line file
+past the 600-line ceiling.) Three quantities used to live in effect prose alone and
+were pinned by nothing: the Chorus's "counter 10% of DEF" and "status immunity,
+1 turn", and Shock Coil's "3 ticks"
+([#355](https://github.com/gcko/pendulum-of-despair/issues/355)). They are real
+data fields now, and the 50% Chorus rule is asserted across all four components
+rather than the two numeric ones.
 
 No *number* here is a fresh design choice. Each one falls out of a rule already
 written down somewhere, and the derivation sits next to the value so a reader can
@@ -623,8 +648,10 @@ non-numeric choices *are* made, each labeled where it is made and each stated
 with the alternative it rejects:
 
 1. How Wild Card's item branches deliver their 2.0 strike (reading (a), the
-   strike itself becomes elemental and AoE). Shiv's equivalent fork is left open
-   rather than settled.
+   strike itself becomes elemental and AoE), and — settled later, on the same
+   reading — the same fork for Shiv's throw, together with the item-type ->
+   element mapping both of them needed. The mapping lives in
+   [items.md](items.md) § Thrown-Item Elements.
 2. Which spirits the Convergence Chorus composites, and how the cell's word
    "cleanse" is read. The shipped text said "all known spirits" and listed a
    "status cleanse"; this pass names four spirits and reads the cleanse as Rain's
@@ -693,6 +720,23 @@ with the alternative it rejects:
    law of combos, and nothing in this pass asks it to be — the only two values it
    carries, Shock Coil 10 and Ambush Protocol 60, are both damage.
 
+5. **A combo scales each constituent off the character who supplies it.** A
+   two-character combo has two stat lines available and the shipped text never
+   says which one a borrowed formula reads, so this rule says it once: the
+   character whose ability is being fired is the character whose stat the
+   formula takes. It is the generalization of the three combos that *do* state
+   a formula — Ley Torrent adds Maren's and Torren's MAG because both of them
+   channel, Twilight Raid takes Sable's ATK for the strike and Torren's MAG for
+   the Greyveil cloak, and Cael's Echo combines both attackers' ATK because both
+   swing — and it costs nothing where a combo names only one source. It settles
+   the two entries that carried a magnitude with no stat behind it
+   ([#360](https://github.com/gcko/pendulum-of-despair/issues/360)): Ambush
+   Protocol reads **Lira's MAG**, and Thornfire splits, its Flame half on
+   **Torren's MAG** and its Storm half on **Lira's MAG**. Both are recorded as
+   `caster` / `scaling_stat` fields in `game/data/abilities/combos.json` — a
+   `power` with no caster beside it is now a test failure, not a reader's
+   problem.
+
 #### Resolved values
 
 | Ability | Character | Value | Rule |
@@ -709,8 +753,9 @@ with the alternative it rejects:
 | Convergence Chorus | Torren | 50% of each component (see table below) | stated 50% rule |
 | Wild Card, 0-2 items | Sable | `ability_mult` 2.0 | stated "2x her Attack" |
 | Wild Card, 3 items | Sable | `ability_mult` 3.0 | 3, capped by the ladder |
-| Ambush Protocol | Sable + Lira | Spell power 60 | 4 |
-| **Shiv, thrown-item branch** | Sable | **still open** | — |
+| Ambush Protocol | Sable + Lira | Spell power 60, on Lira's MAG | 4, 5 |
+| Shiv, thrown-item branch | Sable | `ability_mult` 1.0, re-elemented from the item | reading (a), plus the item mapping |
+| Thornfire | Torren + Lira | Spell power 40, split 20 Flame on Torren's MAG + 20 Storm on Lira's MAG | 4, 5 |
 
 #### Derivations
 
@@ -753,7 +798,11 @@ in the Tier 1 AoE range of 7-14 that `game/tests/test_spell_balance.gd` already
 enforces for spells. Tier 2 is ruled out by price from either direction: the
 shipped Tier 2 AoE *attack* spells cost 22-25 MP (Scorch Sweep, Whiteout and
 Quake Stride at 22 up to Ley Storm at 25), and the cheapest Tier 2 AoE spell of
-any kind is 12 MP. Neither is 10. The window brackets Thornfire's answer; it
+*any* kind is Rekindling at 16 MP — a heal, which is the discounted end of the
+ladder, and still six MP clear of Ember Wing. Neither is 10. That floor read
+12 MP until [magic.md](magic.md)'s control-AoE pass repriced Miasma and Bogsink
+from 12 to 20; the repricing moved the Tier 2 floor *away* from 10, so it widens
+this gap rather than closing it. The window brackets Thornfire's answer; it
 does not select it, because 9, 10 and 11 all sit inside it.
 **Inferno Gale** doubles to **power 20** (rules 2 and 3), which lands inside the
 Tier 2 AoE band of 18-28 that [magic.md](magic.md) § Spell Balance Guidelines
@@ -786,7 +835,14 @@ equal-2 AC budget argument carries it alone.
 **Ambush Protocol** follows from rule 4 and the combo's own text: **60**. That
 is mid-band Tier 3 for 8 MP, the cheapest combo in the table — but it costs two
 ATB gauges and one stolen Forgewright component, and it is single-target where
-Thornfire (40, 16 MP) hits the whole group with guaranteed Burn.
+Thornfire (40, 16 MP) hits the whole group with guaranteed Burn. By rule 5
+**Ambush Protocol's** formula reads **Lira's MAG**: the trap is hers, and Sable's contribution is the
+guaranteed trigger and the lost enemy turn, neither of which is a damage term.
+Thornfire splits under the same rule — the Flame half's 20 is Ember Wing, on
+**Torren's MAG**, and the Storm half's 20 is Shock Coil, on **Lira's MAG** — so
+a party whose two casters have diverged in MAG sees the two halves land at
+different sizes, which is correct and is the reason the split is worth stating
+rather than averaging.
 
 **Greyveil — spell power 28.** Rule 1 puts 14 MP in Tier 2, band 28-40. The
 shipped 14 MP single-target spells that carry a spell power are Rootgrip (30),
@@ -895,46 +951,90 @@ such below:
 element as AoE damage", and "adds" admits the same two shapes Shiv's throw does:
 **(a)** the strike itself becomes elemental and AoE at the unchanged 2.0, or
 **(b)** the 2.0 single-target strike keeps its shape and a second, separate
-elemental AoE hit is added on top. This pass takes **(a)** — the same reading it
-recommends for Shiv — because (b) needs a magnitude for the second hit that no
-document states, and inventing one is exactly what this pass is trying not to do.
-The cost of (a) is real and should be named: single-target -> all-enemies at an
-unchanged 2.0 for 10 MP is a large swing, and it is the first thing to revisit if
-Wild Card plays too strong. Unlike Shiv, the branch is not left open, because
+elemental AoE hit is added on top. This pass takes **(a)** — the same reading
+Shiv's throw takes below — because (b) needs a magnitude for the second hit that
+no document states, and inventing one is exactly what this pass is trying not to
+do. The cost of (a) is real and should be named: single-target -> all-enemies at
+an unchanged 2.0 for 10 MP is a large swing, and it is the first thing to revisit
+if Wild Card plays too strong. The reading was never in real doubt here, because
 `target: all_enemies` was already shipped in `game/data/abilities/sable.json` and
 (b) would contradict it; the entry's `target` field records the item branches,
 and the 0-item branch is the single-target exception stated in the effect text.
 
-What is *not* settled here is which element a given stolen item confers. That is
-the same missing item-type -> element mapping that blocks Shiv's throw branch,
-and it is one decision covering both.
+Which element a given stolen item confers is
+[items.md](items.md) § Thrown-Item Elements — the same mapping Shiv's throw
+needed, made once and used by both.
 
-**Shiv's thrown-item branch — left open**, tracked as
-[#359](https://github.com/gcko/pendulum-of-despair/issues/359). The base attack is fully specified
-(`ability_mult` 1.0 plus 50% DEF ignore, combat-formulas.md § Special: Shiv).
-The throw is not, and it cannot be derived, because two independent decisions
-are missing and neither is implied by anything already written:
+*What that mapping does not settle: which held item supplies the element*
+([#447](https://github.com/gcko/pendulum-of-despair/issues/447)). Shiv throws
+one item, so the mapping answers the question outright. Wild Card's 2- and
+3-item branches consume the whole pool and still land as a single elemental
+strike, and no document says whether the element comes from the first item
+stolen, the last, a random one, the first *elemental* one, or whether the branch
+resolves as several strikes at all. `item_branch_element_field` in
+`game/data/abilities/sable.json` names the field the element is read from; it
+does not name the item to read it from. With most of the catalog throwing
+non-elemental, a pool of one Emberstone and two Potions has no defined answer
+today. That is **left open here rather than settled**, the same way
+[combat-formulas.md](combat-formulas.md) § Custom-Formula Abilities leaves
+Shattered Vanguard's cap ordering open: the readings differ in balance rather
+than in bookkeeping — "first elemental item wins" makes the branch reliably
+elemental, "last stolen" makes it a player choice, "one strike per element"
+changes the magnitude — and the decision belongs to the pass that implements the
+Stolen Goods pool in the battle layer. What *is* settled is the mapping and the
+magnitude: the multiplier is 2.0 through the 2-item branch and 3.0 at three,
+whichever element lands.
 
-1. *The mapping.* "Element depends on item type", but no document maps
-   [items.md](items.md)'s consumables, materials and steal-only drops onto the
-   six elements. Wild Card's item branches need the same mapping.
-2. *The shape of the bonus.* "Throw it for bonus elemental damage" admits at
-   least three readings, and they are not close to equivalent. **(a)** The throw
-   re-elements the existing Shiv hit, changing `element_mod` and nothing else.
-   **(b)** The throw adds a second, separate elemental hit at its own magnitude.
-   **(c)** The throw raises Shiv's multiplier for that one use.
+**Shiv's thrown-item branch — resolved on reading (a)**
+([#359](https://github.com/gcko/pendulum-of-despair/issues/359)). The base attack
+was always fully specified (`ability_mult` 1.0 plus 50% DEF ignore,
+combat-formulas.md § Special: Shiv). The throw needed two decisions, and both are
+made here.
 
-   **Recommendation: (a).** It is the only reading that keeps a 0 MP, one-turn
-   cooldown ability from becoming Sable's best damage button; it needs no new
-   number at all once the mapping exists; and it fits what is being described —
-   Sable throwing a stolen bottle, not casting a spell. But (a) versus (b)
-   changes how Sable plays across the whole game, and that call belongs to a
-   pass with the item tables open, not to a documentation reconciliation. The
-   entry stays open rather than taking an invented number.
+1. *The mapping.* "Element depends on item type", and no document mapped
+   [items.md](items.md)'s catalog onto the elements. It does now:
+   [items.md](items.md) § Thrown-Item Elements. The rule there is that an item
+   is thrown at the element its own catalog entry names and at nothing
+   otherwise, which comes to sixteen items — Emberstone (Flame), two Spirit
+   materials, three Arcanite ones (Storm, the element § Elemental System above
+   gives the Arcanite tradition), two ley-crystal ones (Ley), and eight rows
+   that name Void or the Pallor it manifests.
+   **Everything else is thrown non-elemental**, which is the honest
+   answer for a Potion and keeps the branch from needing a number nobody has
+   written down. The same mapping serves Wild Card's item branches — that was
+   always one decision covering both abilities, and the *mapping* is settled
+   once here. Which of several held items supplies the element on Wild Card's
+   2- and 3-item branches is a separate question the mapping does not reach; it
+   is named open above
+   ([#447](https://github.com/gcko/pendulum-of-despair/issues/447)).
 
-   Wild Card's item branches face the same (a)/(b) fork and this pass *does*
-   settle theirs, on reading (a) — see the Wild Card derivation above. The two
-   are treated differently for one reason: Wild Card's shipped `target` field
-   already says `all_enemies`, so (b) would contradict data that exists, while
-   Shiv's says `single_enemy` and is consistent with either reading. Whichever
-   pass closes Shiv should confirm Wild Card at the same time.
+2. *The shape of the bonus.* Reading **(a)**: the throw re-elements the existing
+   Shiv hit, changing `element_mod` and nothing else. The multiplier stays 1.0
+   and the 50% DEF ignore stays. The two rejected readings were **(b)** a second,
+   separate elemental hit at its own magnitude, and **(c)** a raised multiplier
+   for that one use.
+
+   (b) and (c) both need a number no document states, and inventing one for a
+   0 MP, one-turn-cooldown ability is how Sable ends up with a damage button
+   better than anything she pays for. (a) needs none: the whole payoff is the
+   1.5x weakness multiplier the elemental table already defines, which arrives
+   only when Sable has stolen the right thing and the enemy is weak to it. It is
+   also what the fiction describes — throwing a stolen bottle, not casting a
+   spell. **Wild Card's item branches take the same reading**, as this pass
+   already settled above for its own reasons; the two abilities now agree in
+   shape as well as in mapping, which is what #359 asked for.
+
+   *The cost of (a), named.* Against a target with no weakness the throw is a
+   pure loss — the same hit, minus an item. Sable's player has to know the
+   bestiary for the branch to be worth using. That is a deliberate trade for
+   never inventing a magnitude, but it is the first thing to revisit if the
+   throw goes unused in playtesting; the cheapest correction is to move a
+   handful of common materials onto elements, not to change the reading.
+
+`game/data/abilities/sable.json` records the decision as
+`thrown_item_ability_mult` (equal to `ability_mult`, which is the whole content
+of reading (a)) and `thrown_item_element_field`, and
+`game/tests/test_ability_magnitudes.gd` fails if the throw ever stops being the
+same hit — or if the item rows stop carrying the element
+[items.md](items.md) § Thrown-Item Elements gives them, which it checks item by
+item rather than as a roster.

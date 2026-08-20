@@ -164,6 +164,16 @@ After creating the file:
    - Edren Lv70 (ATK 175, DEF 60): (30625/6) - 60 = 5044
    - Edren Lv150 Oathkeeper (ATK 255, mult 1.5, DEF 80):
      (65025*1.5/6) - 80 = 16176 -> capped 14999
+
+   > **Superseded (2026-08-20).** Do not recompute the third row as written.
+   > Oathkeeper takes no `ability_mult` of its own: it is a buff that makes Edren's
+   > *Attack command* resolve twice, so each hit is a plain 1.0 basic attack and
+   > DEF is subtracted once per hit. The Lv150 figure is `10,757 x 2`, which does
+   > not cap. Canon: combat-formulas.md § Physical Damage worked examples and
+   > § Buff-Granted Multipliers, held by `game/tests/test_ability_magnitudes.gd`
+   > ([#346](https://github.com/gcko/pendulum-of-despair/issues/346)). The rest of
+   > this plan is left as written — it is the dated record of the 2026-03-21
+   > design, not a live instruction.
 3. Recompute 2 magic damage examples:
    - Maren Lv18 Kindlepyre (MAG 53, power 32, MDEF 20):
      (53*32/4) - 20 = 404

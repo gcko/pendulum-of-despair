@@ -101,6 +101,16 @@ levels:
 | Edren Lv150 Oathkeeper (1.5×) | 255 | 1.5 | 80 | 14,999 | Hits cap with best skill |
 | Any Lv150 2.0× technique | 255 | 2.0 | 60 | 14,999 | Bum Rush equivalent |
 
+> **Superseded (2026-08-20).** The two Oathkeeper rows are wrong on the
+> multiplier. Oathkeeper takes no `ability_mult` of its own: it is a buff that
+> makes Edren's *Attack command* resolve twice, so each hit is a plain 1.0
+> basic attack. The Lv70 row is 5,044 × 2 and the Lv150 row is 10,757 × 2, and
+> neither caps without a crit. Canonical rows: combat-formulas.md § Physical
+> Damage worked examples and § Buff-Granted Multipliers
+> ([#346](https://github.com/gcko/pendulum-of-despair/issues/346)). This spec is
+> left as written — it is the dated record of the 2026-03-21 design, not a live
+> rule.
+
 ### 3.2 Magic Damage
 
 ```
@@ -237,6 +247,12 @@ Damage column assumes Edren at Lv70 with endgame gear (ATK ~175 =
 > combat-formulas.md § Physical Ability Multiplier Tiers, which now cites
 > Sever Bond and Wild Card. This spec is left as written — it is the dated
 > record of the 2026-03-21 design, not a live rule.
+>
+> **Also superseded (2026-08-20):** the 2.0 row's Oathkeeper exemplar. That
+> ability adds a second Attack-command hit at 1.0 rather than taking the 2.0
+> rung, and the row's ~10,148 is not the doubled Attack's 10,088 — a doubled
+> Attack subtracts DEF twice. The live row cites Wild Card at 0-2 stolen items
+> ([#346](https://github.com/gcko/pendulum-of-despair/issues/346)).
 
 **Buff-granted multipliers (stacking):** Some abilities are buffs that
 multiply the next attack's output rather than having their own mult:

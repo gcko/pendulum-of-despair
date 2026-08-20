@@ -8,7 +8,7 @@
 | **Type** | doc-inconsistency |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | partial — 9 of 10 magnitudes resolved in PR #358; Shiv's thrown-item branch tracked as #359 |
+| **Status** | resolved — all ten magnitudes closed; Shiv's thrown-item branch (#359) and the two unscaled combo powers (#360) were the last of them |
 | **GitHub Issue** | [#238](https://github.com/gcko/pendulum-of-despair/issues/238) |
 | **Source domains** | tracker |
 
@@ -18,7 +18,7 @@ Dev gap 1.5 (spell/ability data) is COMPLETE and battle/menus consume the JSON, 
 
 ## Current state (implementation)
 
-As of the 2026-06-27 audit, design-gaps marked both docs MOSTLY COMPLETE with balance caveats and dev-gaps flagged the dependency risk without an issue to close it. Since the balance pass, magic.md is COMPLETE and abilities.md is MOSTLY COMPLETE with a specific, enumerated residue.
+As of the 2026-06-27 audit, design-gaps marked both docs MOSTLY COMPLETE with balance caveats and dev-gaps flagged the dependency risk without an issue to close it. Since the balance pass, both docs are COMPLETE: magic.md first, then abilities.md once the last magnitude (Shiv's thrown-item branch) and the two combo powers that named no scaling stat were settled.
 
 ## Desired state (per design)
 
@@ -32,18 +32,25 @@ Run a balance pass, then diff against the gap-1.5 JSON values.
 
 - [x] magic.md/abilities.md balance pass done
 - [x] JSON values reconciled to the docs
-- [ ] Docs upgraded from MOSTLY COMPLETE — magic.md is now COMPLETE.
-  abilities.md stays MOSTLY COMPLETE on a single entry: PR #358 derived
-  nine of the ten qualitative magnitudes (enumerated in
-  game-design-gaps.md § Ability System — damage magnitudes (9 of 10
-  closed)), and left Sable's Shiv thrown-item branch open because it
-  needs two design decisions no document implies — the item-type ->
-  element mapping and the shape of the thrown bonus. That residue is
-  tracked as issue #359 and is the only thing keeping this criterion
-  unmet. Two rows of combat-formulas.md § Ability Multipliers were
-  corrected under issue #333; the same table's disputed Oathkeeper
-  exemplar remains open under issue #346. Runtime execution of the party
-  abilities is tracked as issue #321.
+- [x] Docs upgraded from MOSTLY COMPLETE — magic.md and abilities.md are
+  both COMPLETE. PR #358 derived nine of the ten qualitative magnitudes
+  (enumerated in game-design-gaps.md § Ability System — damage
+  magnitudes (all ten closed)) and left Sable's Shiv thrown-item branch
+  open, because it needed two design decisions no document implied: the
+  item-type -> element mapping and the shape of the thrown bonus. Both
+  are now made — items.md § Thrown-Item Elements maps sixteen items, and
+  the throw is read as re-elementing the same hit (issue #359). The two
+  combos that stated a spell power without saying whose stat carried it
+  are settled the same way (issue #360). Two rows of combat-formulas.md
+  § Ability Multipliers were corrected under issue #333, and that table's
+  disputed Oathkeeper exemplar is resolved under issue #346: the ability
+  is a buff that adds an Attack-command hit, not a multiplier rung.
+  Runtime execution of the party abilities is still open as issue #321,
+  which is an implementation gap rather than a documentation one and
+  does not hold this criterion. Neither does #447: the mapping fixes the
+  element per item, and *which* held item supplies it on Wild Card's 2-
+  and 3-item branches is a balance decision abilities.md names open
+  rather than settles, not a magnitude.
 
 ## Design references
 

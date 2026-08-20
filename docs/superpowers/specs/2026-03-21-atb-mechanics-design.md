@@ -74,6 +74,15 @@ Player-configurable in the Config menu (1-6, default 3):
 | 5 | 1.5 | 5.4s | 4.1s | Slow. Reading descriptions. |
 | 6 (Slowest) | 1 | 8.1s | 6.2s | Crawl. Accessibility option. |
 
+> **Superseded (2026-08-20).** The Sable column's speed-5 cell reads 4.1s. The
+> fill-rate formula floors, so that cell is `16000 / floor((18 + 25) x 1.5) / 60`
+> = `16000 / 64 / 60` = **4.2s**; 4.1s is what you get by keeping the .5. Canon:
+> combat-formulas.md § ATB Gauge System > Battle Speed Config, measured cell by
+> cell in `game/tests/test_atb_system.gd`
+> ([#177](https://github.com/gcko/pendulum-of-despair/issues/177)). This file is
+> left as written — it is the dated record of the 2026-03-21 design, not a live
+> rule.
+
 Default is 3, matching FF6.
 
 ### 3.3 Fill Rate Modifiers (Status Effects)
