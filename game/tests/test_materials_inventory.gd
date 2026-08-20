@@ -9,7 +9,13 @@ extends GutTest
 const Helpers = preload("res://scripts/util/inventory_helpers.gd")
 const MENU_SCENE: PackedScene = preload("res://scenes/overlay/menu.tscn")
 const BATTLE_SCENE: PackedScene = preload("res://scenes/core/battle.tscn")
+const ATBSystem = preload("res://scripts/combat/atb_system.gd")
 const TEST_SLOT: int = 2
+
+## Real time allowed for the battle to answer a full ATB gauge with a prompt.
+const PROMPT_TIMEOUT: float = 5.0
+
+var _booted: Node = null
 
 
 func before_each() -> void:
@@ -18,6 +24,13 @@ func before_each() -> void:
 
 
 func after_each() -> void:
+	# A live battle keeps _process-ing, so free it here rather than let it run
+	# on into the next test — one test's leftovers must never decide another
+	# test's result (#422).
+	if _booted != null and is_instance_valid(_booted):
+		_booted.set("_battle_active", false)
+		_booted.free()
+	_booted = null
 	SaveManager.delete_slot(TEST_SLOT)
 	TestHelpers.reset_game_state()
 
@@ -344,29 +357,69 @@ func test_migration_merges_into_an_existing_material_stack() -> void:
 # --- Drake Fang in battle ---
 
 
-func test_drake_fang_hits_for_500_and_spends_a_fang() -> void:
-	PartyState.initialize_new_game()
-	PartyState.add_item("drake_fang", 2)
-	var fang: Dictionary = _battle_entry("drake_fang")
+## Boot the real battle scene against [param encounter]. battle.tscn seats the
+## party, spawns the enemies and registers every ATB gauge in _ready, which runs
+## inside add_child — the battle is ready to drive when this returns.
+func _boot_battle(encounter: Array) -> Node:
 	GameManager.transition_data = {
 		"return_map_id": "test_overworld",
 		"return_position": Vector2.ZERO,
 		"is_boss": false,
 		"formation_type": "normal",
-		"encounter_group": ["ley_vermin"],
+		"encounter_group": encounter,
 		"enemy_act": "act_i",
 	}
 	var battle: Node = BATTLE_SCENE.instantiate()
-	add_child_autofree(battle)
-	await wait_frames(3)
-	assert_false(battle._enemies.is_empty(), "the battle should have an enemy")
-	var enemy: Node = battle._enemies[0]
-	var hp_before: int = enemy.current_hp
+	add_child(battle)
+	_booted = battle
+	return battle
 
-	battle._atb.set_gauge("party_0", 16000)
-	await wait_frames(2)
-	battle._on_ui_command({"type": "item", "item": fang, "target": 0})
-	await wait_frames(2)
+
+## Fill [param cid]'s gauge and wait until the battle actually asks for that
+## combatant's command — turn_ready, the signal that opens the command menu.
+## Returns false, having failed the test, when the prompt never arrives.
+##
+## The wait is on the prompt rather than on a frame count because the battle
+## advances in _process (idle frames) while GUT's frame waits count physics
+## frames: a fixed wait can return with the actor still not ready, and the
+## command submitted after it is then dropped in silence (#422).
+func _await_prompt(battle: Node, cid: String) -> bool:
+	var prompted: Array[String] = []
+	battle.turn_ready.connect(
+		func(id: String, _p: bool, _s: int, _e: int, _b: bool, _c: Dictionary) -> void:
+			prompted.append(id)
+	)
+	battle.get_atb().set_gauge(cid, ATBSystem.GAUGE_MAX)
+	var fired: bool = await wait_for_signal(battle.turn_ready, PROMPT_TIMEOUT)
+	if not fired or not cid in prompted:
+		fail_test("the battle never asked %s for a command (asked: %s)" % [cid, str(prompted)])
+		return false
+	return true
+
+
+func test_drake_fang_hits_for_500_and_spends_a_fang() -> void:
+	# The whole path a player drives: hold two fangs, wait to be asked for a
+	# command, throw one at an enemy. It takes the flat 500 damage items.md
+	# promises, the player sees that number, and the stack drops to one.
+	PartyState.initialize_new_game()
+	PartyState.add_item("drake_fang", 2)
+	var fang: Dictionary = _battle_entry("drake_fang")
+	var battle: Node = _boot_battle(["ley_vermin"])
+	assert_false(battle.get_enemies().is_empty(), "the battle should have an enemy")
+	var enemy: Node = battle.get_enemies()[0]
+	var hp_before: int = enemy.current_hp
+	var hits: Array[Dictionary] = []
+	battle.damage_dealt.connect(
+		func(tid: String, amt: int, _dt: String) -> void: hits.append({"id": tid, "amount": amt})
+	)
+	if not await _await_prompt(battle, "party_0"):
+		return
+
+	# Submitted the way BattleUI submits it when the player confirms.
+	var ui: CanvasLayer = battle.get_node("BattleUI")
+	ui.command_submitted.emit({"type": "item", "item": fang, "target": 0})
 
 	assert_eq(enemy.current_hp, maxi(0, hp_before - 500), "Drake Fang deals a flat 500 damage")
 	assert_eq(PartyState.get_materials().get("drake_fang", 0), 1, "one fang is spent")
+	assert_eq(hits.size(), 1, "one damage number is shown: %s" % str(hits))
+	assert_eq(int(hits[0].get("amount", 0)), 500, "and it reads 500")

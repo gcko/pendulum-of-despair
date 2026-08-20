@@ -108,7 +108,9 @@ func test_active_slot_highlights_name() -> void:
 
 func test_row_rect_reports_real_row_geometry() -> void:
 	_panel.update_party([_member(400, 800), _member(300, 600)], {"party_0": 0, "party_1": 0})
-	await wait_frames(1)  # container layout settles on the next frame
+	# Container layout settles on the next process frame — physics frames are
+	# the wrong clock for it, several can elapse without one running (#422).
+	await wait_process_frames(1)
 	var r0: Rect2 = _panel.get_row_global_rect(0)
 	var r1: Rect2 = _panel.get_row_global_rect(1)
 	assert_gt(r0.size.y, 0.0, "row 0 reports a real height")
@@ -123,7 +125,7 @@ func test_row_rect_reports_real_row_geometry() -> void:
 
 func test_row_rect_is_empty_for_a_hidden_row() -> void:
 	_panel.update_party([_member(400, 800), {}], {"party_0": 0})
-	await wait_frames(1)
+	await wait_process_frames(1)
 	assert_eq(_panel.get_row_global_rect(1), Rect2(), "an empty party slot has no anchor")
 
 
