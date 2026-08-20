@@ -61,6 +61,7 @@ func _ready() -> void:
 	_ui.results_dismissed.connect(func() -> void: exit_battle("victory"))
 	_ui.submenu_state_changed.connect(func(o: bool) -> void: _atb.set_submenu_open(o))
 	_state.member_died.connect(_on_party_member_died)
+	_state.status_applied.connect(_on_party_status_applied)
 	var data: Dictionary = GameManager.transition_data
 	if data.is_empty():
 		push_error("BattleManager: No transition data")
@@ -117,6 +118,11 @@ func _process(delta: float) -> void:
 	for i: int in range(_enemies.size()):
 		if _enemies[i].is_alive:
 			resync_enemy_atb(i)
+	# Same for the party (#298). Without this the party half of that rule did
+	# not exist: Sleep and Petrify never held a party gauge and Slow/Despair
+	# never throttled one.
+	for i: int in range(4):
+		_resync_party_atb(i)
 	_atb.tick(delta)
 	_check_end_conditions()
 	if _battle_resolved:
@@ -238,16 +244,13 @@ func _targetable_enemy_count() -> int:
 ## Name of the status stopping this member from acting — Paralysis, Sleep or
 ## Petrify — or "" when it can act (#248). The name matters: the caller treats a
 ## gauge-freezing status differently from Paralysis, and the announcement reads
-## it back to the player.
+## it back to the player. Which name wins when a member carries several is the
+## registry's call, not this loop's iteration order (#300).
 func _incapacitating_status(slot: int) -> String:
 	var m: Dictionary = _state.get_member(slot)
 	if m.is_empty() or not m.get("is_alive", false):
 		return ""
-	for s: Dictionary in m.get("active_statuses", []):
-		var status_name: String = s.get("name", "")
-		if StatusEffects.is_incapacitating(status_name):
-			return status_name
-	return ""
+	return StatusEffects.blocking_status(m.get("active_statuses", []))
 
 
 ## Auto-skip a paralyzed member's ready turn: announce, tick statuses (so the
@@ -296,6 +299,38 @@ func resync_enemy_atb(idx: int) -> void:
 	var st: Dictionary = StatusEffects.atb_state(_enemies[idx].active_statuses)
 	_atb.set_frozen(eid, st["frozen"])
 	_atb.set_status_mods(eid, st["mods"])
+	if st["zeroed"]:
+		_atb.set_gauge(eid, 0)
+
+
+## Party-side mirror of resync_enemy_atb (#298): push a member's freeze, fill
+## mods and held-at-zero state from their current statuses to the ATB system,
+## every frame, so a landed Sleep holds the gauge where it stands and a cured
+## one resumes from that same value (combat-formulas.md § Status Effect ATB
+## Interactions). Petrify additionally pins the gauge to 0 while it lasts, which
+## is what makes recovery start fresh when it is cured (#279).
+func _resync_party_atb(slot: int) -> void:
+	var m: Dictionary = _state.get_member(slot)
+	if m.is_empty() or not m.get("is_alive", false):
+		return
+	var pid: String = "party_%d" % slot
+	var st: Dictionary = StatusEffects.atb_state(m.get("active_statuses", []))
+	_atb.set_frozen(pid, st["frozen"])
+	_atb.set_status_mods(pid, st["mods"])
+	if st["zeroed"]:
+		_atb.set_gauge(pid, 0)
+
+
+## Tell the player a status just landed on a party member (#299). Routed through
+## the one registry table so the wording is battle-dialogue.md
+## § Status Effect Notifications rather than a per-caller invention, and so
+## every infliction path — enemy ability, AoE, future spell — announces the same
+## way. A status with no canonical line lands silently.
+func _on_party_status_applied(slot: int, status_name: String) -> void:
+	var nm: String = _state.get_member(slot).get("character_data", {}).get("name", "???")
+	var line: String = StatusEffects.application_notice(status_name, nm)
+	if not line.is_empty():
+		message.emit(line)
 
 
 func _check_end_conditions() -> void:
