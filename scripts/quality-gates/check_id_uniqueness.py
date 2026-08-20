@@ -60,7 +60,15 @@ def check_ids(
 
 
 def check_enemy_ids() -> list[str]:
-    """Check enemy ID uniqueness. Bosses intentionally duplicated."""
+    """Check enemy ID uniqueness across the act tables.
+
+    Every enemy ID is unique, bosses included. The carve-out that used to
+    live here exempted a second copy of each boss in bosses.json; that file
+    was an empty stub nothing ever loaded, and the exemption made the scan
+    unable to see a genuine duplicate in any file whose name contained
+    "bosses" (issue #330). Boss records live in the act tables alongside
+    their encounter neighbours, carrying is_boss/boss_ai.
+    """
     errors: list[str] = []
     enemy_ids: dict[str, str] = {}
 
@@ -76,10 +84,7 @@ def check_enemy_ids() -> list[str]:
         key = list(data.keys())[0]
         for entry in data.get(key, []):
             eid: str = entry.get("id", "")
-            # Bosses intentionally duplicated across act files and bosses.json
-            if "bosses" in f:
-                continue
-            if eid in enemy_ids and "bosses" not in enemy_ids[eid]:
+            if eid in enemy_ids:
                 errors.append(
                     f"DUPLICATE enemy ID '{eid}': "
                     f"{enemy_ids[eid]} and {f}"

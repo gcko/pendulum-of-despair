@@ -329,3 +329,94 @@ func test_act_i_ability_data_is_well_formed() -> void:
 				assert_true(bf.get("stat", "") in valid_stats, "%s/%s buff stat valid" % [eid, aid])
 			checked += 1
 	assert_gt(checked, 20, "covered the populated Act-I ability set")
+
+
+# --- The Flickering's Shade-family kit (#257) ---
+
+
+func _ability(enemy: Enemy, ability_id: String) -> Dictionary:
+	for entry: Variant in enemy.enemy_data.get("abilities", []):
+		if entry is Dictionary and (entry as Dictionary).get("id", "") == ability_id:
+			return entry as Dictionary
+	fail_test("%s has no ability %s" % [enemy.enemy_id, ability_id])
+	return {}
+
+
+## Darkness delivers Blind through the same two-stage roll every other enemy
+## status uses. Blind's -50% accuracy effect is still deferred (#246), but the
+## status must actually land on the party member.
+func test_the_flickering_darkness_blinds_a_party_member() -> void:
+	seed(2468)
+	var enemy: Enemy = _make_enemy("the_flickering")
+	var darkness: Dictionary = _ability(enemy, "darkness")
+	assert_eq(darkness.get("status", ""), "blind", "Darkness delivers Blind")
+	var rate: int = int(darkness.get("status_rate", 0))
+	assert_eq(rate, 70, "offensive status rate 70 (conventions §2.5)")
+	var landed: bool = false
+	for _i: int in range(30):
+		var state: Node = _make_party(0, 0)
+		var r: Dictionary = BattleActions.execute_enemy_status(
+			state, enemy, 0, rate, darkness.get("status", ""), darkness.get("status_duration")
+		)
+		if r.get("inflicted", false):
+			landed = true
+			assert_true(state.has_status(0, "blind"), "the member actually carries Blind")
+			break
+	assert_true(landed, "a rate-70 Blind lands within 30 attempts against MDEF/SPD 0")
+
+
+## Blind's canonical duration is 4 turns (magic.md § Status Effect Reference).
+## Darkness ships no duration override, so the 4 has to come out of
+## StatusEffects when BattleActions *resolves the ability* — the test drives
+## execute_enemy_status and counts the turns off the member, rather than
+## hand-applying the status with a duration it computed itself.
+func test_darkness_blinds_for_the_canonical_four_turns() -> void:
+	seed(2468)
+	var enemy: Enemy = _make_enemy("the_flickering")
+	var darkness: Dictionary = _ability(enemy, "darkness")
+	assert_eq(darkness.get("status_duration"), null, "no duration override in the data")
+	var state: Node = null
+	for _i: int in range(30):
+		var attempt: Node = _make_party(0, 0)
+		var r: Dictionary = BattleActions.execute_enemy_status(
+			attempt,
+			enemy,
+			0,
+			int(darkness.get("status_rate", 0)),
+			str(darkness.get("status", "")),
+			darkness.get("status_duration")
+		)
+		if r.get("inflicted", false):
+			state = attempt
+			break
+	if state == null:
+		fail_test("a rate-70 Blind lands within 30 attempts against MDEF/SPD 0")
+		return
+	for _i: int in range(3):
+		state.tick_statuses(0)
+	assert_true(state.has_status(0, "blind"), "Darkness's Blind survives 3 of its 4 turns")
+	state.tick_statuses(0)
+	assert_false(state.has_status(0, "blind"), "Darkness's Blind expires on its 4th turn")
+
+
+## Shadow Touch is the Shade family's Tier-1 base move: MAG-based, and The
+## Flickering's MAG (14) must make it hurt more than Mine Shade's (12) does.
+func test_shadow_touch_scales_with_the_casters_magic() -> void:
+	var flickering: Enemy = _make_enemy("the_flickering")
+	var shade: Enemy = _make_enemy("mine_shade")
+	var power: int = int(_ability(flickering, "shadow_touch").get("spell_power", 0))
+	assert_eq(power, 14, "Tier-1 single-target spell power (conventions §2.2)")
+	seed(31337)
+	var strong: Dictionary = BattleActions.execute_enemy_magic(
+		_party_with({"def": 5, "mdef": 5, "spd": 1}, 500), flickering, 0, "", power
+	)
+	seed(31337)
+	var weak: Dictionary = BattleActions.execute_enemy_magic(
+		_party_with({"def": 5, "mdef": 5, "spd": 1}, 500), shade, 0, "", power
+	)
+	assert_gt(int(strong.get("damage", 0)), 0, "Shadow Touch deals damage")
+	assert_gt(
+		int(strong.get("damage", 0)),
+		int(weak.get("damage", 0)),
+		"The Flickering's MAG 14 out-damages Mine Shade's MAG 12 on the same move",
+	)

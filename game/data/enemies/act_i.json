@@ -436,7 +436,29 @@
       "locations": [
         "ember_vein_f3"
       ],
-      "ko_sound": "ko_spirit"
+      "ko_sound": "ko_spirit",
+      "abilities": [
+        {
+          "id": "shadow_touch",
+          "name": "Shadow Touch",
+          "type": "magic",
+          "element": "",
+          "spell_power": 14,
+          "target": "single",
+          "_comment": "MAG-based magic (element unspecified -> non-elemental); Tier-1 spell_power 14 (enemy-ability-conventions.md §2.2/§2.8; palette-families.md § Shade Family > 'Mine Shade')"
+        },
+        {
+          "id": "darkness",
+          "name": "Darkness",
+          "type": "magic",
+          "element": "",
+          "spell_power": 14,
+          "target": "single",
+          "status": "blind",
+          "status_rate": 70,
+          "_comment": "single-target magic + Blind chance; spell_power 14 (enemy-ability-conventions.md §2.2), rate 70 (§2.5), Blind -50% physical accuracy 4t (magic.md § Status Effect Reference > 'Blind'); the Shade family's next documented ability, taken by this Lv6 Dangerous unique per §2.8 (palette-families.md § Shade Family > 'Crypt Shade')"
+        }
+      ]
     },
     {
       "id": "marsh_serpent",
@@ -1214,7 +1236,16 @@
       "resistances": [],
       "absorb": [],
       "status_immunities": [],
-      "steal": {},
+      "steal": {
+        "common": {
+          "item_id": "potion",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "gold_pouch",
+          "rate": 25
+        }
+      },
       "drop": {
         "item_id": "potion",
         "rate": 75
@@ -1222,7 +1253,18 @@
       "locations": [
         "ironmouth_docks"
       ],
-      "ko_sound": "ko_humanoid"
+      "ko_sound": "ko_humanoid",
+      "abilities": [
+        {
+          "id": "sword_strike",
+          "name": "Sword Strike",
+          "type": "attack",
+          "element": "",
+          "ability_mult": 1.0,
+          "target": "single",
+          "_comment": "basic physical (enemy-ability-conventions.md §2.1; palette-families.md § Soldier Family > 'Compact Soldier'). Cover is the family's other Tier-1 move and is deferred (§4) — no redirect mechanic exists."
+        }
+      ]
     },
     {
       "id": "compact_scout",
@@ -1243,7 +1285,16 @@
       "resistances": [],
       "absorb": [],
       "status_immunities": [],
-      "steal": {},
+      "steal": {
+        "common": {
+          "item_id": "potion",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "gold_pouch",
+          "rate": 25
+        }
+      },
       "drop": {
         "item_id": "antidote",
         "rate": 50
@@ -1251,7 +1302,18 @@
       "locations": [
         "ironmouth_docks"
       ],
-      "ko_sound": "ko_humanoid"
+      "ko_sound": "ko_humanoid",
+      "abilities": [
+        {
+          "id": "sword_strike",
+          "name": "Sword Strike",
+          "type": "attack",
+          "element": "",
+          "ability_mult": 1.0,
+          "target": "single",
+          "_comment": "basic physical (enemy-ability-conventions.md §2.1; palette-families.md § Soldier Family > 'Compact Soldier'). Cover is the family's other Tier-1 move and is deferred (§4) — no redirect mechanic exists."
+        }
+      ]
     },
     {
       "id": "ember_drake",
@@ -1491,7 +1553,7 @@
             "type": "heal",
             "target": "self",
             "value": 300,
-            "_comment": "+300 HP, one-time at <=50%% (bosses.md § Vein Guardian > 'Reconstruct')"
+            "_comment": "+300 HP, one-time at <=50% (bosses.md § Vein Guardian > 'Reconstruct')"
           }
         }
       }

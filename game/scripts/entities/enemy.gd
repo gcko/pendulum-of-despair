@@ -321,9 +321,22 @@ func heal(amount: int) -> void:
 
 
 ## Roll for a steal attempt. Returns {item_id: String, success: bool}.
+##
+## Three steal shapes are canon (2026-04-02-enemy-data-json-design.md
+## § Steal Mapping Rules): the two-tier object, a whole-record `null` (Rule 3),
+## and a `null` tier (Rule 4). Dictionary.get() returns the STORED value when
+## the key exists, so a JSON null arrives as Nil rather than the default and
+## reading it into a typed Dictionary local aborts the function. Widen through
+## Variant; every non-dictionary means "carries nothing here".
 func roll_steal(tier: String) -> Dictionary:
-	var steal_data: Dictionary = enemy_data.get("steal", {})
-	var tier_data: Dictionary = steal_data.get(tier, {})
+	var raw_steal: Variant = enemy_data.get("steal")
+	if not raw_steal is Dictionary:
+		return {"item_id": "", "success": false}
+	var steal_data: Dictionary = raw_steal
+	var raw_tier: Variant = steal_data.get(tier)
+	if not raw_tier is Dictionary:
+		return {"item_id": "", "success": false}
+	var tier_data: Dictionary = raw_tier
 	if tier_data.is_empty():
 		return {"item_id": "", "success": false}
 	var rate: int = tier_data.get("rate", 0)
@@ -337,8 +350,13 @@ func roll_steal(tier: String) -> Dictionary:
 
 
 ## Roll for a drop on death. Returns {item_id: String, success: bool}.
+## `"drop": null` is canon for the 6 enemies that leave nothing behind — same
+## Nil-through-get() trap as roll_steal() above.
 func roll_drop() -> Dictionary:
-	var drop_data: Dictionary = enemy_data.get("drop", {})
+	var raw_drop: Variant = enemy_data.get("drop")
+	if not raw_drop is Dictionary:
+		return {"item_id": "", "success": false}
+	var drop_data: Dictionary = raw_drop
 	if drop_data.is_empty():
 		return {"item_id": "", "success": false}
 	var rate: int = drop_data.get("rate", 0)

@@ -281,15 +281,15 @@ save files, and the pseudo-schema in
   or null; `steal` itself may be null for enemies carrying nothing.
   Both null forms are spec-mandated (Steal Mapping Rules 3 and 4) and
   widely shipped: 20 records set `steal` to null and 28 tier slots are
-  null. Two Act I records (`compact_patrol`, `compact_scout`) ship an
-  empty object instead, which `roll_steal()` silently reports as
-  no-steal — that is a data gap, not a third intended shape (issue
-  #309). `roll_steal()` cannot currently read *either* null form:
-  `enemy.gd::roll_steal()` assigns the field and the tier into typed
-  `Dictionary` locals, and `Dictionary.get()` hands back the stored
-  null rather than the `{}` default, so the assignment raises "Trying
-  to assign value of type 'Nil'" and aborts the function (issue #342).
-  Nothing depends on that yet, for the reason below.
+  null. There is no third shape — `compact_patrol` and `compact_scout`
+  used to ship an empty object, and now carry the Humanoid pair the
+  rest of their family does (issue #309, fixed). `roll_steal()` reads
+  both null forms: it takes `steal` and the tier through `Variant`
+  locals and type-checks them, because `Dictionary.get()` hands back a
+  stored null rather than the `{}` default and assigning that into a
+  typed `Dictionary` local used to raise "Trying to assign value of
+  type 'Nil'" and abort the function (issue #342, fixed). A null record
+  or a null tier now returns `{"item_id": "", "success": false}`.
   `rate` is the chance the slot holds an item at all, not the chance
   the theft lands: per the enemy-data spec and
   [abilities.md](../story/abilities.md), Sable's Filch is designed to
@@ -330,7 +330,7 @@ that spec — it lists enemy abilities under "Intentional Exclusions" —
 and are defined instead in
 [bestiary/enemy-ability-conventions.md](../story/bestiary/enemy-ability-conventions.md)
 §1 (ability schema) and §3 (boss-AI conventions). `abilities` is not
-boss-only: 19 ordinary Act I enemies carry it, including `ley_vermin`
+boss-only: 22 ordinary Act I enemies carry it, including `ley_vermin`
 above, whose real record ends with a one-entry `abilities` array
 omitted here for brevity. `boss_ai` is carried by the four Act I boss
 and mini-boss records that have migrated to the data-driven

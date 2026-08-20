@@ -483,9 +483,9 @@
         "lira",
         "torren"
       ],
-      "effect": "+25% preemptive strike rate",
+      "effect": "+25pp preemptive strike rate",
       "bonus_stats": {},
-      "special": "+25% preemptive strike rate",
+      "special": "+25pp preemptive strike rate",
       "buy_price": 2000,
       "sell_price": 1000,
       "acquired": "Bellhaven quest",

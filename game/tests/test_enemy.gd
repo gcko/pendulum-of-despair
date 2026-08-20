@@ -297,3 +297,52 @@ func test_initialize_unknown_id_still_errors() -> void:
 	enemy.initialize("definitely_not_an_enemy", "act_i")
 	assert_push_error("Enemy: Failed to load 'definitely_not_an_enemy' from act 'act_i'")
 	assert_false(enemy.is_alive, "unknown id should leave the enemy dead")
+
+
+# ── steal shapes the spec mandates (#342, #309) ──────────────────────────
+
+
+## A record with "steal": null carries nothing. Filch against it must REPORT
+## a clean miss, not abort mid-function. despair_cloud is a real act_iii
+## record whose bestiary Steal cell is "—" (spec Steal Mapping Rule 3).
+func test_roll_steal_null_record_reports_a_clean_miss() -> void:
+	var enemy: Enemy = _create_enemy()
+	enemy.initialize("despair_cloud", "act_iii")
+	assert_eq(enemy.enemy_data.get("steal"), null, "despair_cloud must ship steal: null")
+	var result: Variant = enemy.roll_steal("common")
+	assert_true(result is Dictionary, "roll_steal must still return its dictionary")
+	var steal: Dictionary = result if result is Dictionary else {}
+	assert_false(steal.get("success", true), "nothing can be stolen from a null-steal enemy")
+	assert_eq(steal.get("item_id", "?"), "", "a miss yields no item")
+
+
+## Boss shape from Steal Mapping Rule 4: common is null, rare is the 100%
+## unique. Filching the empty common tier misses; the rare tier still yields
+## the unique item.
+func test_roll_steal_null_tier_misses_while_the_other_tier_still_yields() -> void:
+	var enemy: Enemy = _create_enemy()
+	enemy.initialize("vein_guardian", "act_i")
+	var steal_field: Variant = enemy.enemy_data.get("steal")
+	var steal_data: Dictionary = steal_field if steal_field is Dictionary else {}
+	assert_eq(steal_data.get("common"), null, "vein_guardian must ship a null common tier")
+	var common: Variant = enemy.roll_steal("common")
+	assert_true(common is Dictionary, "a null tier must not abort roll_steal")
+	var common_dict: Dictionary = common if common is Dictionary else {}
+	assert_false(common_dict.get("success", true), "the null common tier yields nothing")
+	var rare: Variant = enemy.roll_steal("rare")
+	var rare_dict: Dictionary = rare if rare is Dictionary else {}
+	assert_true(rare_dict.get("success", false), "the 100%% rare tier always yields")
+	assert_eq(rare_dict.get("item_id", ""), "vein_shard", "rare tier yields the unique steal")
+
+
+## `"drop": null` is canon for the 6 enemies that leave nothing behind.
+## Killing one must report an empty drop, not abort the roll.
+func test_roll_drop_null_record_reports_a_clean_miss() -> void:
+	var enemy: Enemy = _create_enemy()
+	enemy.initialize("corrupted_fenmother", "act_i")
+	assert_eq(enemy.enemy_data.get("drop"), null, "corrupted_fenmother must ship drop: null")
+	var result: Variant = enemy.roll_drop()
+	assert_true(result is Dictionary, "roll_drop must still return its dictionary")
+	var drop: Dictionary = result if result is Dictionary else {}
+	assert_false(drop.get("success", true), "a null-drop enemy leaves nothing")
+	assert_eq(drop.get("item_id", "?"), "", "a miss yields no item")

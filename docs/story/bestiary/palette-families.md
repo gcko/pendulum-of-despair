@@ -120,6 +120,14 @@ stat derivation, and naming conventions.
 > tombs/catacombs) and Forge Phantom (Lv 20, Rail Tunnels — worker
 > silhouette haunting industrial ruins). Same family tier, different
 > biomes and visual themes.
+>
+> **The Flickering** (Lv 6, Spirit, Dangerous — Ember Vein F3 unique, see
+> [act-i.md](act-i.md)) is a Shade-family unique, not a tier: it shares Mine
+> Shade's type, Ley weakness, Ether Wisp / Spirit Essence loot and Poison +
+> Petrify immunities. Its kit is **Shadow Touch + Darkness** — the Tier 1 base
+> move plus the family's next tabled ability, taken because it is Act I's only
+> Dangerous *regular* enemy (#257; derivation in
+> [enemy-ability-conventions.md](enemy-ability-conventions.md) §2.8).
 
 ---
 
@@ -553,6 +561,13 @@ stat derivation, and naming conventions.
 > Overworld Act III safe zones — army deserters with no allegiance left)
 > and Elite Guard (Lv 34, late-game military encounters). Same family
 > tier, different contexts and power levels.
+>
+> **Compact Patrol** (Lv 5) and **Compact Scout** (Lv 6) are Act I early
+> deployments of this family (see [act-i.md](act-i.md) § Ironmouth Docks).
+> Both carry the Tier 1 kit's damaging move, **Sword Strike**, and nothing
+> else; they differ in stats, not abilities. *Cover* is deferred — it needs a
+> targeting-redirect mechanic that does not exist yet (#257;
+> [enemy-ability-conventions.md](enemy-ability-conventions.md) §2.8 and §4).
 
 ---
 
