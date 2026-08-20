@@ -18,9 +18,7 @@
 					"character": "sable",
 					"level": 1
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "glintmark",
@@ -40,9 +38,7 @@
 					"character": "sable",
 					"level": 5
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		}
 	]
 }

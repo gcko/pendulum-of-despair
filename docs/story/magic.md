@@ -103,7 +103,7 @@ Each element has one element it is strong against (deals 150% damage) and one it
 ### Balance Rules
 
 - **Healing spells** cost ~80% of equivalent-tier damage spells (healers must sustain through long fights)
-- **AoE versions** cost 1.5-2x the single-target version of the same tier — binds only on the named same-tier pairs; see "AoE MP pricing" under § Derived Rules below
+- **AoE versions** cost 1.5-2x the single-target version of the same tier — binds only on the named same-tier pairs; see "AoE MP pricing" under § Derived Rules below. An AoE spell with no same-tier counterpart has no ratio to take: if it is a control spell (status/buff/debuff) it is held to the "AoE control is never cheaper than single-target control" floor in the same section, and otherwise to its plain tier MP band
 - **Status spells** have a base hit rate of 60-80% (the *standard* band; see "Status hit rate has two bands" under § Derived Rules below for the 45-59% severe band) (modified by caster MAG vs. target MDEF)
 - **Buff/debuff durations** last 4-6 turns at Tier 1, 4-8 turns at Tier 2, until end of battle at Tier 3
 - **Damage formula reference:** `magic_damage = min(14999, max(1, (caster.mag * spell.power) / 4 - target.mdef) * element_mod * variance)` where `variance = random_int(240, 255) / 256`. See [combat-formulas.md](combat-formulas.md) for full resolution order.
@@ -131,12 +131,26 @@ on the first.
 Attunement, target MDEF 80, elemental weakness, Resonance. That chain is
 `(332 x 100 / 4 - 80) x 1.5 x 1.3 = 16,029`, capped to 14,999 — the documented
 "perfect setup" moment. Solving the same chain for the minimum power that still
-reaches the cap gives `power >= 94`. Applying the 60-70% AoE reduction to Tier 4
-would cap AoE power at `120 x 0.7 = 84`, and 84 < 94, so the cap would become
-unreachable by any spell in the game. The reduction therefore cannot apply at
-Tier 4. Ultimates are balanced by MP cost (50-99, roughly double a Tier 3
-single target at the same point in its band) and by availability, not by a
-power discount.
+reaches the cap gives `power >= 94`.
+
+Applying the 60-70% AoE reduction to Tier 4 would cap **AoE** power at
+`120 x 0.7 = 84`, and 84 < 94, so no Tier 4 AoE spell could reach the cap. The
+reduction constrains AoE spells only, so that alone does not put the cap out of
+reach: a Tier 4 *single-target* spell at power 94-120 would still hit it. What
+closes the gap is the shipped corpus, not the arithmetic — every Tier 4 damage
+spell in `game/data/spells/` is AoE except Unmaking (power 85, Void,
+enemy-only), and 85 is itself below 94. So under the reduction the cap would be
+unreachable by every spell **currently shipped**, and the "perfect setup"
+moment that [combat-formulas.md](combat-formulas.md) § Magic Damage is tuned
+around would have nothing left to fire it.
+
+That leaves two ways out: ship a single-target Tier 4 ultimate at power 94+, or
+exempt Tier 4 from the reduction. **This document takes the second** — the
+exemption is a design choice, not a forced conclusion. Ultimates are balanced by
+MP cost (50-99, roughly double a Tier 3 single target at the same point in its
+band) and by availability, not by a power discount. The first way out stays
+open: adding a single-target Tier 4 spell later does not disturb the exemption,
+it just gives the cap a second route.
 
 Not every ultimate reaches the cap: Requiem of Thorns (power 90) tops out at
 ~14,410 on the same chain, and is the cheapest Tier 4 spell at 70 MP.
@@ -168,6 +182,20 @@ unstated. `game/tests/test_spell_balance.gd` asserts all of them against
   two-stage MAG/MDEF and Magic Evasion checks that 50% base lands ~26% of the
   time against a boss, which is the intended reliability for a combat-removal
   status.
+- **A status *rider* on an offensive spell sits below both hit-rate bands.** An
+  offensive spell may carry a rider — a chance to inflict a status *on top of*
+  full damage rather than as the spell's purpose. Pendulum's Echo is the only
+  one in the corpus: Void damage at spell power 70, plus a 40% chance of
+  Despair. A rider is priced **below the 60% standard-band floor (30-50%)**
+  precisely because the caster is already being paid in damage; pricing it
+  inside either status band would make an offensive spell strictly better than
+  the status spell it duplicates. A rider is **not** encoded as `hit_rate`:
+  `hit_rate` is the spell's own to-hit roll, and an offensive spell's damage
+  does not roll to hit, so `game/tests/test_spell_balance.gd` holds every
+  non-status, non-debuff spell to `hit_rate: null`. Until the battle layer grows
+  a field it can roll, a rider lives in the spell's Effect text only and nothing
+  applies it in combat; when that field arrives it is named separately from
+  `hit_rate` and this 30-50% band is what it must satisfy.
 - **AoE MP pricing needs a named *same-tier* counterpart.** The 1.5-2x rule binds
   only on the nine AoE/single-target pairs listed below, where both halves sit in
   the same tier and deliver the same effect.
@@ -195,17 +223,19 @@ unstated. `game/tests/test_spell_balance.gd` asserts all of them against
 
 - **Cross-tier AoE escalations are not pairs.** Several AoE spells reproduce a
   lower-tier single-target effect one tier up. They are new spells at a new tier,
-  not a repriced version of the same spell, so they are priced inside their own
-  plain tier MP band and the 1.5-2x rule does not bind on them. Their ratios
-  against the lower-tier original are recorded here so the relationship is not
-  mistaken for a broken pair:
+  not a repriced version of the same spell, so the 1.5-2x rule does not bind on
+  them. They are priced inside their own plain tier MP band — or, where they are
+  also control spells (five of the six below), by the AoE control floor further
+  down, which can push one past that band. Their ratios against the lower-tier
+  original are recorded here so the relationship is not mistaken for a broken
+  pair:
 
   | Lower-tier single target | MP | Cross-tier AoE | MP | Ratio |
   |--------------------------|----|----------------|----|-------|
-  | Murk Veil (T1, Blind) | 4 | Flashblind (T2) | 13 | 3.25x |
-  | Vilethorn (T1, Poison) | 5 | Miasma (T2) | 12 | 2.40x |
-  | Leaden Step (T1, Slow) | 5 | Bogsink (T2) | 12 | 2.40x |
-  | Slumber Mote (T1, Sleep) | 6 | Eventide (T2) | 14 | 2.33x |
+  | Murk Veil (T1, Blind) | 4 | Flashblind (T2) | 19 | 4.75x |
+  | Vilethorn (T1, Poison) | 5 | Miasma (T2) | 20 | 4.00x |
+  | Leaden Step (T1, Slow) | 5 | Bogsink (T2) | 20 | 4.00x |
+  | Slumber Mote (T1, Sleep) | 6 | Eventide (T2) | 22 | 3.67x |
   | Kindle Breath (T1, Regen) | 6 | Rekindling (T2) | 16 | 2.67x |
   | Dispersion (T2, dispel) | 14 | Mass Dispersion (T3) | 30 | 2.14x |
 
@@ -213,11 +243,44 @@ unstated. `game/tests/test_spell_balance.gd` asserts all of them against
   direct heal (spell power 30) and Rekindling is the party form of Kindle
   Breath's regeneration.
 
-  A standalone AoE spell with no single-target counterpart at any tier (Leyward,
-  Bulwark Line, Drift, Smokeveil, and every Tier 4 ultimate) is likewise priced
-  inside its plain tier MP band — there is no single-target cost to multiply. The
-  enemy-only Void AoE spells (Pallor Tide, Silence of Ages, The Weight, Grey
-  Horizon) carry no MP cost at all and are outside this rule entirely.
+  A standalone AoE spell with no single-target counterpart at any tier (Drift,
+  Smokeveil, and every Tier 4 ultimate) is likewise priced inside its plain tier
+  MP band — there is no single-target cost to multiply. Leyward and Bulwark Line
+  are standalone in that sense too, but they are *control* spells and the AoE
+  control floor below binds on them instead. The enemy-only Void AoE spells
+  (Pallor Tide, Silence of Ages, The Weight, Grey Horizon) carry no MP cost at
+  all and are outside this rule entirely.
+- **AoE control is never cheaper than single-target control.** A `status`,
+  `buff`, or `debuff` spell that targets an entire side costs **strictly more
+  than every single-target spell of the same tier and category, and at most 2x
+  the dearest of them**. This is the floor the 1.5-2x pair rule cannot supply:
+  none of these spells has a same-tier single-target counterpart to take a ratio
+  against, so before this rule every one of them sat legally inside its tier MP
+  band while undercutting a single-target spell of the same tier — a party-wide
+  60% Poison for less than one Petrify. Like the paired AoE spells above, a
+  control AoE **may exceed the plain tier MP band** to clear the floor; a
+  party-wide control effect is worth more than its tier band alone allows.
+
+  | Tier / category | Dearest single target | MP | AoE control | MP | Ratio |
+  |-----------------|----------------------|----|-------------|----|-------|
+  | T2 status | Grey Gaze (Petrify) | 18 | Flashblind (Blind) | 19 | 1.06x |
+  | T2 status | Grey Gaze (Petrify) | 18 | Miasma (Poison) | 20 | 1.11x |
+  | T2 status | Grey Gaze (Petrify) | 18 | Bogsink (Slow) | 20 | 1.11x |
+  | T2 status | Grey Gaze (Petrify) | 18 | Eventide (Sleep) | 22 | 1.22x |
+  | T2 buff | Leymirror | 18 | Bulwark Line | 20 | 1.11x |
+  | T2 buff | Leymirror | 18 | Leyward | 20 | 1.11x |
+
+  Within the floor, order by severity: the three standard-band AoE statuses
+  (Flashblind, Miasma, Bogsink) sit below the severe-band one (Eventide, a
+  party-wide Sleep), and Eventide is the one spell here that clears the Tier 2
+  ceiling of 20. Mass Dispersion (T3, all enemies, 30 MP) has no same-tier
+  single-target debuff to measure against, so the floor is vacuous for it and it
+  is priced inside the plain Tier 3 band.
+
+  *These six numbers are a designer judgement about relative worth, not a
+  playtest result.* The floor — AoE control above single-target control — is the
+  part meant to hold; the exact spread inside it is the first thing to revisit
+  once the combat playtest harness reports encounter lengths.
 - **Revival spells take no healing discount.** Spirit Recall (Tier 2, 20 MP) and
   Second Dawn (Tier 3, 40 MP) are priced inside the *full* tier MP band, above
   the ~80% healing band (Tier 2 ceiling 16, Tier 3 ceiling 36) — restoring a
@@ -254,9 +317,17 @@ unstated. `game/tests/test_spell_balance.gd` asserts all of them against
 
   Buff and debuff spells that *are* turn-counted must fall inside their tier's
   turn range.
-- **Cross-training multiplier.** Every `learned_by` entry marked
-  `cross_trained: true` carries `mp_penalty: 1.5`, matching the "+50% MP cost"
-  wording in this document's preamble and in each spell's "Who learns" line.
+- **Cross-training is per-learner, not per-spell.** The same spell is native to
+  one character and cross-trained for another, so the flag cannot live on the
+  spell. Every `learned_by` entry marked `cross_trained: true` carries
+  `mp_penalty: 1.5`, matching the "+50% MP cost" wording in this document's
+  preamble and in each spell's "Who learns" line; a native learner carries
+  neither key. There is deliberately **no spell-level `cross_trained` or
+  `mp_penalty` field** — one existed, was `false`/`null` on all 89 spells, was
+  read by nothing, and invited someone to set it and expect an effect.
+  *The multiplier is data only so far:* the cast path spends the spell's base
+  `mp_cost` without consulting the learner's entry, so no character is charged
+  the +50% yet.
 
 ---
 
@@ -884,7 +955,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Element:** Earth
 - **Category:** Status
 - **Tier:** 2
-- **MP Cost:** 12
+- **MP Cost:** 20
 - **Target:** All enemies
 - **Effect:** 60% chance to inflict Poison on each target.
 - **Description:** A low-hanging cloud of spore and decay rolls across the field. The Wilds exhale something foul.
@@ -895,7 +966,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Element:** Spirit
 - **Category:** Status
 - **Tier:** 2
-- **MP Cost:** 14
+- **MP Cost:** 22
 - **Target:** All enemies
 - **Effect:** 55% chance to inflict Sleep on each target.
 - **Description:** The caster hums an old Thornmere lullaby. The air grows heavy. Eyelids grow heavier.
@@ -906,7 +977,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Element:** Earth
 - **Category:** Status
 - **Tier:** 2
-- **MP Cost:** 12
+- **MP Cost:** 20
 - **Target:** All enemies
 - **Effect:** 60% chance to inflict Slow on each target.
 - **Description:** The ground softens to marsh. Every step sinks deeper. The wetlands do not hurry, and now neither do you.
@@ -917,7 +988,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Element:** Storm
 - **Category:** Status
 - **Tier:** 2
-- **MP Cost:** 13
+- **MP Cost:** 19
 - **Target:** All enemies
 - **Effect:** 60% chance to inflict Blind on each target.
 - **Description:** A burst of white-violet lightning with no thunder -- all flash, no force. The afterimage burns.
@@ -1011,7 +1082,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Element:** Earth
 - **Category:** Buff
 - **Tier:** 2
-- **MP Cost:** 16
+- **MP Cost:** 20
 - **Target:** All allies
 - **Effect:** Increases physical defense by 25% for 4 turns (entire party).
 - **Description:** The deep-root answers for everyone. The ground trembles, and every soul standing on friendly soil feels stronger.
@@ -1022,7 +1093,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Element:** Ley
 - **Category:** Buff
 - **Tier:** 2
-- **MP Cost:** 16
+- **MP Cost:** 20
 - **Target:** All allies
 - **Effect:** Increases magic defense by 25% for 4 turns (entire party).
 - **Description:** A web of ley energy stretches across the party like a golden net. Everything magical dims on the other side.

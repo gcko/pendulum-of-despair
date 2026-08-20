@@ -26,9 +26,7 @@
 					"character": "cael",
 					"level": 3
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "hoarfall",
@@ -52,9 +50,7 @@
 					"character": "cael",
 					"level": 16
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "glacial_tomb",
@@ -74,9 +70,7 @@
 					"character": "maren",
 					"level": 30
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "whiteout",
@@ -96,9 +90,7 @@
 					"character": "maren",
 					"level": 18
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "arc_snap",
@@ -122,9 +114,7 @@
 					"character": "cael",
 					"level": 5
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "galeforce",
@@ -148,9 +138,7 @@
 					"character": "cael",
 					"level": 18
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "tempest_reign",
@@ -170,9 +158,7 @@
 					"character": "maren",
 					"level": 32
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "squall_line",
@@ -192,9 +178,7 @@
 					"character": "maren",
 					"level": 20
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "linebolt",
@@ -222,9 +206,7 @@
 					"character": "edren",
 					"level": 10
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "ley_cascade",
@@ -248,9 +230,7 @@
 					"character": "cael",
 					"level": 17
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "convergence_flare",
@@ -270,9 +250,7 @@
 					"character": "maren",
 					"level": 34
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "ley_storm",
@@ -292,9 +270,7 @@
 					"character": "maren",
 					"level": 22
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "fracture",
@@ -314,9 +290,7 @@
 					"character": "maren",
 					"level": 20
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "unraveling_bolt",
@@ -336,9 +310,7 @@
 					"character": "maren",
 					"level": 36
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "ley_ruin",
@@ -358,9 +330,7 @@
 					"character": "maren",
 					"event": "ancient_ruins_convergence_text"
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "leybalm",
@@ -388,9 +358,7 @@
 					"character": "cael",
 					"level": 1
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "purge",
@@ -414,9 +382,7 @@
 					"character": "torren",
 					"level": 20
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "leydraught",
@@ -436,9 +402,7 @@
 					"character": "maren",
 					"level": 24
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "second_dawn",
@@ -458,9 +422,7 @@
 					"character": "maren",
 					"level": 28
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "befuddle",
@@ -485,8 +447,6 @@
 					"level": 18
 				}
 			],
-			"cross_trained": false,
-			"mp_penalty": null,
 			"status": "confusion"
 		},
 		{
@@ -524,8 +484,6 @@
 					"mp_penalty": 1.5
 				}
 			],
-			"cross_trained": false,
-			"mp_penalty": null,
 			"status": "silence"
 		},
 		{
@@ -547,8 +505,6 @@
 					"level": 22
 				}
 			],
-			"cross_trained": false,
-			"mp_penalty": null,
 			"status": "petrify"
 		},
 		{
@@ -570,8 +526,6 @@
 					"level": 20
 				}
 			],
-			"cross_trained": false,
-			"mp_penalty": null,
 			"status": "stop"
 		},
 		{
@@ -582,7 +536,7 @@
 			"category": "status",
 			"tier": 2,
 			"power": null,
-			"mp_cost": 13,
+			"mp_cost": 19,
 			"target": "all_enemies",
 			"hit_rate": 60,
 			"duration": null,
@@ -593,8 +547,6 @@
 					"level": 14
 				}
 			],
-			"cross_trained": false,
-			"mp_penalty": null,
 			"status": "blind"
 		},
 		{
@@ -633,9 +585,7 @@
 					"cross_trained": true,
 					"mp_penalty": 1.5
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "quickstep",
@@ -659,9 +609,7 @@
 					"character": "cael",
 					"level": 14
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "leymirror",
@@ -681,9 +629,7 @@
 					"character": "maren",
 					"level": 16
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "rallying_cry",
@@ -703,9 +649,7 @@
 					"character": "edren",
 					"level": 6
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "attunement",
@@ -729,9 +673,7 @@
 					"character": "cael",
 					"level": 16
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "leyward",
@@ -741,7 +683,7 @@
 			"category": "buff",
 			"tier": 2,
 			"power": null,
-			"mp_cost": 16,
+			"mp_cost": 20,
 			"target": "all_allies",
 			"hit_rate": null,
 			"duration": 4,
@@ -755,9 +697,7 @@
 					"character": "edren",
 					"level": 22
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "sunder",
@@ -781,9 +721,7 @@
 					"character": "maren",
 					"level": 12
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "fray",
@@ -803,9 +741,7 @@
 					"character": "maren",
 					"level": 10
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "drag_tide",
@@ -829,9 +765,7 @@
 					"character": "torren",
 					"level": 10
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "dispersion",
@@ -851,9 +785,7 @@
 					"character": "maren",
 					"level": 18
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "dampening_field",
@@ -873,9 +805,7 @@
 					"character": "maren",
 					"level": 16
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "mass_dispersion",
@@ -895,9 +825,7 @@
 					"character": "maren",
 					"level": 30
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "waymark",
@@ -917,9 +845,7 @@
 					"character": "maren",
 					"level": 8
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "linewalk",
@@ -939,9 +865,7 @@
 					"character": "maren",
 					"level": 20
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "drift",
@@ -961,9 +885,7 @@
 					"character": "maren",
 					"level": 12
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		}
 	]
 }

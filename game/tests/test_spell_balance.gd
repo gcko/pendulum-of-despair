@@ -6,11 +6,12 @@ extends GutTest
 ##   § Balance Rules             — healing discount, AoE MP multiplier,
 ##                                 status hit rate, buff/debuff duration
 ##   § Tier 4 AoE Exemption      — ultimates keep the full power band
-##   § Derived Rules             — severe status band, named same-tier AoE pairs,
-##                                 revival pricing, substitute costs,
+##   § Derived Rules             — severe status band, offensive status riders,
+##                                 named same-tier AoE pairs, the AoE control
+##                                 floor, revival pricing, substitute costs,
 ##                                 enemy-only spells, null durations (including
 ##                                 status durations owned by § Status Effect
-##                                 Reference), cross-training penalty
+##                                 Reference), per-learner cross-training
 ##
 ## If a spell value changes and a test here fails, either the value is wrong
 ## or the rule in magic.md is wrong. Fix one of them — do not weaken the test.
@@ -131,6 +132,46 @@ func _is_aoe(spell: Dictionary) -> bool:
 	return target == "all_enemies" or target == "all_allies"
 
 
+## Control spells are the ones the AoE control floor governs — the categories
+## whose whole value is denying or granting actions rather than dealing or
+## restoring HP (magic.md § Derived Rules, "AoE control is never cheaper than
+## single-target control").
+func _is_control(spell: Dictionary) -> bool:
+	var category: String = String(spell.get("category", ""))
+	return category == "status" or category == "buff" or category == "debuff"
+
+
+## MP cost of the dearest single-target spell sharing this spell's tier and
+## category, or 0 when no such spell exists (then the floor is vacuous and the
+## spell falls back to its plain tier MP band).
+func _dearest_single_target_control_mp(spell: Dictionary) -> int:
+	var tier: int = int(spell.get("tier", 0))
+	var category: String = String(spell.get("category", ""))
+	var dearest: int = 0
+	for other: Dictionary in _spells:
+		if other.get("mp_cost") == null:
+			continue
+		if _is_aoe(other):
+			continue
+		if int(other.get("tier", 0)) != tier:
+			continue
+		if String(other.get("category", "")) != category:
+			continue
+		dearest = maxi(dearest, int(other.get("mp_cost")))
+	return dearest
+
+
+## True when the AoE control floor, not the plain tier MP band, prices this
+## spell. Both the band test and the floor test route on this one predicate so
+## they cannot disagree about which rule owns a spell.
+func _priced_by_aoe_control_floor(spell: Dictionary) -> bool:
+	if spell.get("mp_cost") == null:
+		return false
+	if not _is_control(spell) or not _is_aoe(spell):
+		return false
+	return _dearest_single_target_control_mp(spell) > 0
+
+
 func _label(spell: Dictionary) -> String:
 	return (
 		"%s (T%d %s %s)"
@@ -178,6 +219,11 @@ func test_mp_cost_within_tier_band() -> void:
 			# deliberately overshoots the plain tier band and the healing band
 			# (Ley Storm 25, Sanctuary 18, Lifetide 42) — see § Derived Rules
 			# "AoE MP pricing". Covered by the ratio test instead.
+			continue
+		if _priced_by_aoe_control_floor(spell):
+			# Priced by the AoE control floor, which may overshoot the plain
+			# tier band (Eventide 22 against a Tier 2 ceiling of 20) — see
+			# § Derived Rules. Covered by the floor test instead.
 			continue
 		var tier: int = int(spell.get("tier", 0))
 		var band: Array = MP_BAND[tier]
@@ -264,6 +310,46 @@ func test_paired_aoe_spells_cost_1_5x_to_2x_their_single_target_version() -> voi
 		)
 
 
+## magic.md § Derived Rules, "AoE control is never cheaper than single-target
+## control": a status/buff/debuff that hits a whole side must cost strictly more
+## than every single-target spell of its tier and category, and at most 2x the
+## dearest of them. This is the rule that catches a party-wide Poison priced
+## under a single-target Petrify — the 1.5-2x pair rule cannot, because none of
+## these spells has a same-tier counterpart to take a ratio against.
+func test_aoe_control_costs_more_than_same_tier_single_target_control() -> void:
+	var checked: int = 0
+	for spell: Dictionary in _spells:
+		if not _priced_by_aoe_control_floor(spell):
+			continue
+		var mp: int = int(spell.get("mp_cost"))
+		var dearest: int = _dearest_single_target_control_mp(spell)
+		assert_gt(
+			mp,
+			dearest,
+			(
+				"%s costs %d MP, but a single-target spell of the same tier and category costs %d"
+				% [_label(spell), mp, dearest]
+			),
+		)
+		assert_lte(
+			mp,
+			dearest * 2,
+			(
+				"%s costs %d MP, more than 2x the dearest single-target equivalent (%d)"
+				% [_label(spell), mp, dearest]
+			),
+		)
+		checked += 1
+	assert_eq(
+		checked,
+		6,
+		(
+			"expected the 4 Tier 2 AoE statuses and 2 Tier 2 party buffs to be "
+			+ "priced by the AoE control floor"
+		),
+	)
+
+
 # ── spell power ─────────────────────────────────────────────────────────
 
 
@@ -345,13 +431,22 @@ func test_stat_penalty_debuffs_use_the_standard_hit_rate_band() -> void:
 	assert_gt(checked, 0, "no stat-penalty debuffs were checked")
 
 
+## `hit_rate` is a spell's own to-hit roll, and an offensive spell's damage does
+## not roll to hit. Per magic.md § Derived Rules, "A status rider on an offensive
+## spell sits below both hit-rate bands", a rider such as Pendulum's Echo's 40%
+## Despair is deliberately NOT encoded here — reading `hit_rate` off an offensive
+## spell would make the battle layer roll its damage instead of its rider.
 func test_only_status_and_debuff_spells_declare_a_hit_rate() -> void:
 	assert_false(_spells.is_empty(), "spell list must not be empty")
 	for spell: Dictionary in _spells:
 		var category: String = String(spell.get("category", ""))
 		if category == "status" or category == "debuff":
 			continue
-		assert_eq(spell.get("hit_rate"), null, "%s should not roll to hit" % _label(spell))
+		assert_eq(
+			spell.get("hit_rate"),
+			null,
+			"%s should not roll to hit; a status rider is not a hit_rate" % _label(spell),
+		)
 
 
 # ── buff / debuff duration ──────────────────────────────────────────────
@@ -452,6 +547,26 @@ func test_tier3_buffs_and_debuffs_last_until_end_of_battle() -> void:
 
 
 # ── cross-training ──────────────────────────────────────────────────────
+
+
+## magic.md § Derived Rules, "Cross-training is per-learner, not per-spell". The
+## spell-level `cross_trained`/`mp_penalty` fields were removed because they were
+## false/null on all 89 spells and read by nothing; a reader that sets one and
+## expects a +50% charge would be silently wrong.
+func test_no_spell_carries_cross_training_keys_at_the_top_level() -> void:
+	assert_false(_spells.is_empty(), "spell list must not be empty")
+	for spell: Dictionary in _spells:
+		assert_false(
+			spell.has("cross_trained"),
+			(
+				"%s declares a spell-level cross_trained; cross-training is per-learner"
+				% _label(spell)
+			),
+		)
+		assert_false(
+			spell.has("mp_penalty"),
+			"%s declares a spell-level mp_penalty; cross-training is per-learner" % _label(spell),
+		)
 
 
 func test_cross_trained_learners_pay_a_50_percent_mp_penalty() -> void:
