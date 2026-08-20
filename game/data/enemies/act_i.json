@@ -1553,7 +1553,7 @@
             "type": "heal",
             "target": "self",
             "value": 300,
-            "_comment": "+300 HP, one-time at <=50%% (bosses.md § Vein Guardian > 'Reconstruct')"
+            "_comment": "+300 HP, one-time at <=50% (bosses.md § Vein Guardian > 'Reconstruct')"
           }
         }
       }
