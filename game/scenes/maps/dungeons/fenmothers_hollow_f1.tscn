@@ -75,7 +75,7 @@ metadata/dungeon_id = "fenmothers_hollow"
 metadata/active_when = "wheel_1_low"
 metadata/zone_type = "block"
 
-[node name="CollisionShape2D" parent="Entities/DeepWaterBarrier" index="2"]
+[node name="CollisionShape2D" parent="Entities/DeepWaterBarrier" index="1"]
 shape = SubResource("Shape_wz_deep_water")
 
 [node name="AlcoveEntrance" parent="Entities" instance=ExtResource("6_water_zone")]
@@ -84,7 +84,7 @@ metadata/dungeon_id = "fenmothers_hollow"
 metadata/active_when = "wheel_1_low"
 metadata/zone_type = "block"
 
-[node name="CollisionShape2D" parent="Entities/AlcoveEntrance" index="2"]
+[node name="CollisionShape2D" parent="Entities/AlcoveEntrance" index="1"]
 shape = SubResource("Shape_wz_alcove")
 
 [node name="MidPassageFlood" parent="Entities" instance=ExtResource("6_water_zone")]
@@ -93,7 +93,7 @@ metadata/dungeon_id = "fenmothers_hollow"
 metadata/active_when = "wheel_1_high,wheel_2_low"
 metadata/zone_type = "block"
 
-[node name="CollisionShape2D" parent="Entities/MidPassageFlood" index="2"]
+[node name="CollisionShape2D" parent="Entities/MidPassageFlood" index="1"]
 shape = SubResource("Shape_wz_mid_passage")
 
 [node name="EastWingBlock" parent="Entities" instance=ExtResource("6_water_zone")]
@@ -102,7 +102,7 @@ metadata/dungeon_id = "fenmothers_hollow"
 metadata/active_when = "wheel_1_low"
 metadata/zone_type = "block"
 
-[node name="CollisionShape2D" parent="Entities/EastWingBlock" index="2"]
+[node name="CollisionShape2D" parent="Entities/EastWingBlock" index="1"]
 shape = SubResource("Shape_wz_east_wing")
 
 [node name="Transitions" type="Node2D" parent="."]
@@ -127,3 +127,8 @@ position = Vector2(48, 48)
 
 [node name="from_f2" type="Marker2D" parent="."]
 position = Vector2(352, 416)
+
+[editable path="Entities/DeepWaterBarrier"]
+[editable path="Entities/AlcoveEntrance"]
+[editable path="Entities/MidPassageFlood"]
+[editable path="Entities/EastWingBlock"]

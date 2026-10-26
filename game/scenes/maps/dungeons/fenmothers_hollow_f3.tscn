@@ -53,7 +53,7 @@ metadata/damage_per_tick = 8
 metadata/tick_interval = 1.0
 metadata/status_effect = "poison"
 
-[node name="CollisionShape2D" parent="Entities/SeepageLeft" index="2"]
+[node name="CollisionShape2D" parent="Entities/SeepageLeft" index="1"]
 shape = SubResource("Shape_dz_seepage_left")
 
 [node name="SeepageRight" parent="Entities" instance=ExtResource("4_damage_zone")]
@@ -63,7 +63,7 @@ metadata/damage_per_tick = 8
 metadata/tick_interval = 1.0
 metadata/status_effect = "poison"
 
-[node name="CollisionShape2D" parent="Entities/SeepageRight" index="2"]
+[node name="CollisionShape2D" parent="Entities/SeepageRight" index="1"]
 shape = SubResource("Shape_dz_seepage_right")
 
 [node name="Transitions" type="Node2D" parent="."]
@@ -98,3 +98,6 @@ position = Vector2(272, 48)
 
 [node name="from_f2" type="Marker2D" parent="."]
 position = Vector2(272, 48)
+
+[editable path="Entities/SeepageLeft"]
+[editable path="Entities/SeepageRight"]

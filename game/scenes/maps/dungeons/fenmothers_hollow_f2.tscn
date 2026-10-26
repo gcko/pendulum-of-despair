@@ -82,7 +82,7 @@ metadata/dungeon_id = "fenmothers_hollow"
 metadata/active_when = "wheel_1_low"
 metadata/zone_type = "block"
 
-[node name="CollisionShape2D" parent="Entities/MosaicFlood1" index="2"]
+[node name="CollisionShape2D" parent="Entities/MosaicFlood1" index="1"]
 shape = SubResource("Shape_wz_mosaic1")
 
 [node name="MosaicFlood2" parent="Entities" instance=ExtResource("6_water_zone")]
@@ -91,7 +91,7 @@ metadata/dungeon_id = "fenmothers_hollow"
 metadata/active_when = "wheel_2_low"
 metadata/zone_type = "block"
 
-[node name="CollisionShape2D" parent="Entities/MosaicFlood2" index="2"]
+[node name="CollisionShape2D" parent="Entities/MosaicFlood2" index="1"]
 shape = SubResource("Shape_wz_mosaic2")
 
 [node name="SecretRoom" parent="Entities" instance=ExtResource("6_water_zone")]
@@ -100,7 +100,7 @@ metadata/dungeon_id = "fenmothers_hollow"
 metadata/active_when = "wheel_1_high,wheel_2_high,wheel_3_high"
 metadata/zone_type = "reveal"
 
-[node name="CollisionShape2D" parent="Entities/SecretRoom" index="2"]
+[node name="CollisionShape2D" parent="Entities/SecretRoom" index="1"]
 shape = SubResource("Shape_wz_secret")
 
 [node name="CorruptedPoolEast" parent="Entities" instance=ExtResource("7_damage_zone")]
@@ -110,7 +110,7 @@ metadata/damage_per_tick = 8
 metadata/tick_interval = 1.0
 metadata/status_effect = "poison"
 
-[node name="CollisionShape2D" parent="Entities/CorruptedPoolEast" index="2"]
+[node name="CollisionShape2D" parent="Entities/CorruptedPoolEast" index="1"]
 shape = SubResource("Shape_dz_corrupted_east")
 
 [node name="PollutedChannelSouth" parent="Entities" instance=ExtResource("7_damage_zone")]
@@ -120,7 +120,7 @@ metadata/damage_per_tick = 8
 metadata/tick_interval = 1.0
 metadata/status_effect = "poison"
 
-[node name="CollisionShape2D" parent="Entities/PollutedChannelSouth" index="2"]
+[node name="CollisionShape2D" parent="Entities/PollutedChannelSouth" index="1"]
 shape = SubResource("Shape_dz_polluted_south")
 
 [node name="StagnantCorner" parent="Entities" instance=ExtResource("7_damage_zone")]
@@ -130,7 +130,7 @@ metadata/damage_per_tick = 8
 metadata/tick_interval = 1.0
 metadata/status_effect = "poison"
 
-[node name="CollisionShape2D" parent="Entities/StagnantCorner" index="2"]
+[node name="CollisionShape2D" parent="Entities/StagnantCorner" index="1"]
 shape = SubResource("Shape_dz_stagnant")
 
 [node name="DrownedSentinel" type="Area2D" parent="Entities"]
@@ -182,3 +182,10 @@ position = Vector2(352, 48)
 
 [node name="from_f3" type="Marker2D" parent="."]
 position = Vector2(544, 512)
+
+[editable path="Entities/MosaicFlood1"]
+[editable path="Entities/MosaicFlood2"]
+[editable path="Entities/SecretRoom"]
+[editable path="Entities/CorruptedPoolEast"]
+[editable path="Entities/PollutedChannelSouth"]
+[editable path="Entities/StagnantCorner"]
