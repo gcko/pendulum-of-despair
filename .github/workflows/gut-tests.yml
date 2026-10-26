@@ -10,7 +10,11 @@ on:
     types: [opened, synchronize, reopened]
 
 env:
-  GODOT_VERSION: "4.7"
+  # Bump together. GODOT_STATUS is "stable" for a release or the pre-release
+  # tag ("beta1", "rc2"). godotengine/godot-builds hosts every build, stable
+  # included; godotengine/godot hosts only stable ones, so a beta URL there 404s.
+  GODOT_VERSION: "4.8"
+  GODOT_STATUS: "beta1"
 
 jobs:
   gut-tests:
@@ -22,10 +26,20 @@ jobs:
 
       - name: Download Godot
         run: |
-          wget -q https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
-          unzip -q Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
-          sudo mv Godot_v${GODOT_VERSION}-stable_linux.x86_64 /usr/local/bin/godot
+          GODOT_TAG="${GODOT_VERSION}-${GODOT_STATUS}"
+          GODOT_PKG="Godot_v${GODOT_TAG}_linux.x86_64"
+          GODOT_URL="https://github.com/godotengine/godot-builds/releases/download/${GODOT_TAG}"
+          wget -q "${GODOT_URL}/${GODOT_PKG}.zip" "${GODOT_URL}/SHA512-SUMS.txt"
+          # A missing checksum line is a failure, not a skip: do not lean on how a
+          # given sha512sum treats empty input.
+          if ! SUM_LINE=$(grep " ${GODOT_PKG}.zip\$" SHA512-SUMS.txt); then
+            echo "No SHA512 entry for ${GODOT_PKG}.zip"; exit 1
+          fi
+          echo "${SUM_LINE}" | sha512sum -c -
+          unzip -q "${GODOT_PKG}.zip"
+          sudo mv "${GODOT_PKG}" /usr/local/bin/godot
           chmod +x /usr/local/bin/godot
+          godot --version
 
       - name: Import Godot project (register GUT classes)
         run: |
