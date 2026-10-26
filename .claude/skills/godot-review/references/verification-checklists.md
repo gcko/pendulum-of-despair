@@ -559,7 +559,7 @@ library internals as if they were authored code.
       fetches. `game/tests/test_gut_version_data.gd` fails if a re-vendor drops
       it, so the exception cannot be lost silently (#452). It is temporary:
       once a release tag's own data covers the CI engine, vendor that tag
-      pristine and delete this exception (follow-up linked from #452). No
+      pristine and delete this exception (#460). No
       other file gets an exception.
 - [ ] Confirm `plugin.cfg` `version=` matches the intended upstream tag.
 - [ ] Scope OUT library internals from review findings. Copilot reviews the

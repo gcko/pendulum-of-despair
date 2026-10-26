@@ -152,7 +152,7 @@ recommend the installed GUT for the running engine, so skipping this step
 cannot pass silently; its message tells `0.0.0` (data caps below the engine:
 overlay) apart from a real version (a newer GUT exists: bump). Once a release
 tag's own data covers our engine, vendor that tag pristine and drop the
-overlay.
+overlay (#460).
 
 Then let Godot re-import, and check no sidecar came out poisoned (the count
 proves the grep looked at something):
