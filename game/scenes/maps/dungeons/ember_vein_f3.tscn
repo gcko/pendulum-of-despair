@@ -128,4 +128,4 @@ position = Vector2(352, 48)
 position = Vector2(352, 32)
 
 [node name="from_f4" type="Marker2D" parent="."]
-position = Vector2(352, 540)
+position = Vector2(352, 536)

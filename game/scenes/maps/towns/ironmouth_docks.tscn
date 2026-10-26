@@ -55,7 +55,7 @@ metadata/is_equipment = true
 metadata/quantity = 1
 
 [node name="SableDialogue" type="Area2D" parent="Entities"]
-position = Vector2(352, 192)
+position = Vector2(176, 192)
 collision_layer = 0
 collision_mask = 2
 monitoring = true
@@ -68,7 +68,7 @@ metadata/required_flag = "ironmouth_lira_seen"
 shape = SubResource("Shape_trigger")
 
 [node name="BossTrigger" type="Area2D" parent="Entities"]
-position = Vector2(224, 288)
+position = Vector2(240, 192)
 collision_layer = 0
 collision_mask = 2
 monitoring = true
@@ -83,7 +83,7 @@ metadata/required_flag = "ironmouth_sable_seen"
 shape = SubResource("Shape_boss")
 
 [node name="PostCombatDialogue" type="Area2D" parent="Entities"]
-position = Vector2(256, 352)
+position = Vector2(272, 192)
 collision_layer = 0
 collision_mask = 2
 monitoring = true
@@ -98,7 +98,7 @@ shape = SubResource("Shape_trigger")
 [node name="Transitions" type="Node2D" parent="."]
 
 [node name="ExitToOverworld" type="Area2D" parent="Transitions"]
-position = Vector2(320, 192)
+position = Vector2(296, 176)
 collision_layer = 0
 collision_mask = 2
 monitoring = true
