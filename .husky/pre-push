@@ -151,7 +151,7 @@ fi
 #   * the Run Summary must be PRESENT - a suite that died before printing one
 #     looks exactly like a suite with nothing to report, and absence fails;
 #   * `Failing Tests` must be zero, read as zero only once the summary is there,
-#     because GUT 9.7.0 prints that line only when something failed;
+#     because GUT 9.7.1 prints that line only when something failed;
 #   * `Scripts` and `Tests` must clear the floors in gut-baseline.txt, and every
 #     collected test must actually PASS. A green suite says nothing about how
 #     many tests ran: GUT drops a whole test file over a GDScript parse error

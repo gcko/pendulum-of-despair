@@ -98,7 +98,7 @@ Read [`references/tech-stack.md`](references/tech-stack.md) for full detail.
   shops, spells, dialogue, etc.), loaded by the DataManager autoload
 - **Autoloads (6):** GameManager, DataManager, AudioManager, SaveManager,
   EventFlags, PartyState (`game/scripts/autoload/`)
-- **Testing:** GUT 9.7.0 (`game/addons/gut/`), test files in `game/tests/`
+- **Testing:** GUT 9.7.1 (`game/addons/gut/`), test files in `game/tests/`
 - **Save/load:** local, via the SaveManager autoload -- no backend, no database
 - **Package tooling:** `pnpm` is used **only** for husky + commitlint. No
   bundler, no backend, no monorepo, no `npm`/`yarn`/`npx`.

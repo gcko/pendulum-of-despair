@@ -46,7 +46,7 @@ GOOD_BASELINE = "\n".join(
 
 # A realistic tail of a green run, ANSI already stripped the way every caller
 # strips it before writing the log. Note there is NO "Failing Tests" line: GUT
-# 9.7.0 prints that one only when something failed, which is why its absence
+# 9.7.1 prints that one only when something failed, which is why its absence
 # cannot be the check for whether the suite finished.
 GREEN_LOG = "\n".join(
     [

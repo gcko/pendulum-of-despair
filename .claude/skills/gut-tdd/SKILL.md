@@ -5,13 +5,13 @@ description: >
   GUT. Triggers on "write tests first", implementing or refactoring a game
   mechanic (combat formulas, stat scaling, save logic, ATB), or driving any
   GDScript behavior with tests. Enforces RED -> GREEN -> REFACTOR adapted to
-  GUT 9.7.0 / Godot 4.8. Hands off to /create-pr when green.
+  GUT 9.7.1 / Godot 4.8. Hands off to /create-pr when green.
 ---
 
 # GUT TDD (Test-Driven GDScript)
 
 Drive every piece of GDScript game logic with a failing GUT test first.
-This project runs **GUT 9.7.0 on Godot 4.8**, GDScript only. Tests live in
+This project runs **GUT 9.7.1 on Godot 4.8**, GDScript only. Tests live in
 `game/tests/` as `test_*.gd`. The pre-push hook runs the **full GUT suite**,
 so code does not leave your machine until the suite is green — never
 `--no-verify`, fix the root cause instead.
@@ -26,7 +26,7 @@ loop you actually run.
 - Write the smallest GUT test that describes behavior that does not exist yet.
 - **RUN it immediately** (single-file command below). Do not write code first.
 - Confirm it fails on a **real assertion** — not a parse error and not a
-  missing-file skip. GUT 9.7.0 **silently skips** test files that fail to
+  missing-file skip. GUT 9.7.1 **silently skips** test files that fail to
   parse, so a "green" run can hide a broken file. Read the summary's
   `Scripts` and `Tests` counts every time: if your new test did not add to
   the `Tests` count, it was skipped (parse error / wrong path), not passing.
@@ -138,12 +138,15 @@ Godot binary: `godot` on PATH, else
 # 0. Import warm-up FIRST — must pass before any test run.
 <godot> --headless --path game/ --import
 
-# Single file (the RED/GREEN inner loop):
-<godot> --headless --path game/ -s addons/gut/gut_cmdln.gd \
+# Single file (the RED/GREEN inner loop). `-gconfig=` is required: without it
+# GUT also loads game/.gutconfig.json, whose `dirs` pull in the WHOLE suite and
+# -gtest only adds your file to it (the summary then shows the suite's Scripts
+# count, not 1).
+<godot> --headless --path game/ -s addons/gut/gut_cmdln.gd -gconfig= \
   -gtest=res://tests/test_<thing>.gd -gexit
 
 # Add verbose logging when a failure is unclear:
-<godot> --headless --path game/ -s addons/gut/gut_cmdln.gd \
+<godot> --headless --path game/ -s addons/gut/gut_cmdln.gd -gconfig= \
   -gtest=res://tests/test_<thing>.gd -gexit -glog=3
 
 # Full suite (run before handing off; this is what pre-push runs):
@@ -154,7 +157,7 @@ If `--import` wedges on macOS (0% CPU, uninterruptible) a reboot clears it.
 A wedged import/pre-push means the suite **did not run** — never treat "the
 other gates passed" as "tests green."
 
-## GUT 9.7.0 patterns (use these, not generic xUnit habits)
+## GUT 9.7.1 patterns (use these, not generic xUnit habits)
 
 - **AAA structure** — Arrange / Act / Assert, one behavior per test. No
   `assert_true(true)` filler.

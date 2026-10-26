@@ -208,9 +208,10 @@ Use `/usr/bin/diff`: the RTK hook rewrites a bare `diff` into
 
 **GUT gotcha:** GUT 9.7.x (9.7.0 and 9.7.1; 9.7.1 re-verified on Godot
 4.8-beta1 in #452) **silently skips** test files that have parse errors on
-Godot 4.7 and 4.8 — a green run can hide them. After a GUT bump especially, check the **Scripts/Tests counts** in the
-summary against the floors in `scripts/quality-gates/gut-baseline.txt` (Gate L
-enforces them); a dropped count means a file failed to parse, not that it passed.
+Godot 4.7 and 4.8 — a green run can hide them. After a GUT bump especially,
+check the **Scripts/Tests counts** in the summary against the floors in
+`scripts/quality-gates/gut-baseline.txt` (Gate L enforces them); a dropped
+count means a file failed to parse, not that it passed.
 
 If a step fails, fix it (or revert that one tool and offer the user the
 choice to defer it). Do not push with a failing or wedged gate. If

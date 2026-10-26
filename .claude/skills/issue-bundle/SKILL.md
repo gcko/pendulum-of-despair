@@ -125,7 +125,7 @@ Either way:
 - Each issue's commit(s) reference its number (`Refs #N`), so the history
   shows which change served which issue.
 - Run the real gates locally as you go: `gdlint`, `gdformat --check`,
-  Godot `--import`, then the GUT suite. Remember GUT 9.7.0 silently skips
+  Godot `--import`, then the GUT suite. Remember GUT 9.7.1 silently skips
   test files with parse errors — check the Scripts/Tests counts in the
   summary, don't trust a green bar alone.
 - Never `--no-verify`. Fix the root cause.

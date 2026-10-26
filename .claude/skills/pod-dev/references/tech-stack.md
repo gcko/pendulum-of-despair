@@ -139,9 +139,9 @@ game/data/
 
 ---
 
-## Testing: GUT 9.7.0
+## Testing: GUT 9.7.1
 
-GUT (Godot Unit Test) 9.7.0 lives in `game/addons/gut/`. Test files
+GUT (Godot Unit Test) 9.7.1 lives in `game/addons/gut/`. Test files
 (`test_*.gd`) live in `game/tests/`.
 
 Resolve the Godot binary as `godot` on PATH, else
@@ -154,14 +154,15 @@ Resolve the Godot binary as `godot` on PATH, else
 # Full suite
 <godot> --headless --path game/ -s addons/gut/gut_cmdln.gd
 
-# Single file
-<godot> --headless --path game/ -s addons/gut/gut_cmdln.gd \
+# Single file. `-gconfig=` matters: without it GUT also reads
+# game/.gutconfig.json, whose `dirs` run the whole suite alongside <file>.
+<godot> --headless --path game/ -s addons/gut/gut_cmdln.gd -gconfig= \
   -gtest=res://tests/<file>.gd -gexit
 ```
 
 ### GUT gotchas (do not get burned)
 
-- GUT 9.7.0 **silently skips** test files that have parse errors --
+- GUT 9.7.1 **silently skips** test files that have parse errors --
   a green run can hide them. Always check the **Scripts / Tests** counts in the
   summary against the floors in `scripts/quality-gates/gut-baseline.txt` (Gate L
   enforces them), not just the pass/fail line.
