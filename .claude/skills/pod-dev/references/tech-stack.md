@@ -163,7 +163,8 @@ Resolve the Godot binary as `godot` on PATH, else
 
 - GUT 9.7.0 **silently skips** test files that have parse errors --
   a green run can hide them. Always check the **Scripts / Tests** counts in the
-  summary, not just the pass/fail line.
+  summary against the floors in `scripts/quality-gates/gut-baseline.txt` (Gate L
+  enforces them), not just the pass/fail line.
 - The assertion helpers are `assert_lte` / `assert_gte` (NOT `assert_le` /
   `assert_ge`).
 - Nodes that must be unit-testable via `.new()` should use

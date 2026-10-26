@@ -308,9 +308,15 @@ cannot point to the exact line that handles the case, it's a bug.
 ### Viewport Configuration
 - [ ] Viewport size is 1280x720
 - [ ] Stretch mode is "viewport"
-- [ ] Stretch aspect is "keep"
+- [ ] Stretch aspect is "keep". This is the engine default, so Godot 4.8 does
+      not write `window/stretch/aspect` to project.godot: the key being ABSENT is
+      correct. Flag only an explicit value other than "keep"
 - [ ] Scale mode is `"integer"` (Godot 4.x string format in project.godot)
 - [ ] Default texture filter is Nearest (0)
+- [ ] `display/window/size/enable_toggle_fullscreen_shortcut=false` is still set
+      until #453 ships an in-game fullscreen option. Godot 4.8 defaults it to
+      true and the window does not consume the shortcut, so Alt+Enter would also
+      fire `ui_accept` (in the Config menu: toggle fullscreen AND cycle a setting)
 
 ### Snap to Pixel
 - [ ] `2d/snap/snap_2d_transforms_to_pixel` is true

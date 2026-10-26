@@ -264,7 +264,7 @@ README files in subdirectories serve as navigation indexes.
 - [worldbuilding-audit.md](worldbuilding-audit.md) -- worldbuilding consistency audit
 
 **Technical:**
-- [technical-architecture.md](../plans/technical-architecture.md) -- Godot 4.6 project setup, data formats, state machine, entities, assets, persistence, performance
+- [technical-architecture.md](../plans/technical-architecture.md) -- Godot project setup, data formats, state machine, entities, assets, persistence, performance
 
 **Analysis:**
 - `docs/analysis/game-design-gaps.md` -- gap tracker (25 gaps, 24 complete, 4.5 Localization deferred)

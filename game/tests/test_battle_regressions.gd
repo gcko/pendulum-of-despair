@@ -32,6 +32,23 @@ func test_project_max_fps_is_set() -> void:
 
 
 # ==========================================================================
+# Godot 4.8: Alt+Enter must not toggle fullscreen (#453)
+# ==========================================================================
+
+
+# Headless Godot cannot observe a window-mode toggle, so the setting that
+# controls it is the only seam a test can reach. The engine default is true.
+func test_alt_enter_does_not_toggle_fullscreen() -> void:
+	var enabled: bool = ProjectSettings.get_setting(
+		"display/window/size/enable_toggle_fullscreen_shortcut", true
+	)
+	assert_false(
+		enabled,
+		"Alt+Enter also fires ui_accept; Config would toggle fullscreen and cycle a setting",
+	)
+
+
+# ==========================================================================
 # Issue dc3: battle_command_menu only consumes handled input
 # ==========================================================================
 

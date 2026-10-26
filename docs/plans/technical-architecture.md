@@ -200,9 +200,9 @@ Six persistent managers, always available via global name:
 [display]
 window/size/viewport_width = 1280
 window/size/viewport_height = 720
+window/size/enable_toggle_fullscreen_shortcut = false  # opt out of the 4.8 ui_toggle_fullscreen default (Alt+Enter; also Ctrl+Cmd+F on macOS)
 window/size/window_width_override = 1920
 window/size/window_height_override = 1080
-window/size/enable_toggle_fullscreen_shortcut = false  # opt out of the 4.8 Alt+Enter default
 window/stretch/mode = "viewport"
 window/stretch/aspect = "keep"  # engine default; not written to project.godot
 window/stretch/scale_mode="integer"

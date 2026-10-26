@@ -35,7 +35,7 @@ One-line doc updates across the four references (or pin the project to 4.6 if in
 
 ## Design references
 
-- docs/plans/technical-architecture.md § Technical Architecture > 'Engine: Godot 4.8'
+- docs/plans/technical-architecture.md § Technical Architecture > 'Engine: Godot'
 - AGENTS.md / CLAUDE.md
 
 ## Code references
