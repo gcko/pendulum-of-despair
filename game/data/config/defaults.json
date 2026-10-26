@@ -19,5 +19,6 @@
   "reduce_motion": false,
   "flash_intensity": "full",
   "transition_style": "classic",
-  "sfx_captions": false
+  "sfx_captions": false,
+  "fullscreen": false
 }

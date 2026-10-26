@@ -817,6 +817,15 @@ FF6 config screen: label/value pairs in a single scrollable list.
 | Transition Style | Classic / Simple | Classic | Classic: mosaic dissolve and Mode 7 zoom. Simple: 0.5s fade to black for all transitions including boss. |
 | SFX Captions | On / Off | Off | Brief text labels (2-3s) in lower corner for gameplay sounds: [Save Point], [Encounter], [Level Up], [Victory], [Item], [Quest Complete], [Phase Change], [Alert]. See [accessibility.md](accessibility.md) Section 6. |
 
+#### 10.3b Display Settings
+
+| Setting | Values | Default | Notes |
+|---------|--------|---------|-------|
+| Fullscreen | On / Off | Off | Off: the game runs in a window. On: borderless fullscreen at the display's native resolution; the game image stays integer-scaled and letterboxed per [accessibility.md](accessibility.md) Section 1. Takes effect immediately. |
+
+- Fullscreen is the final row of the Config list, after SFX Captions (§ 10.3a's last row).
+- Godot's built-in fullscreen shortcut (Alt+Enter; also Ctrl+Cmd+F on macOS) is turned off (see [technical-architecture.md](../plans/technical-architecture.md) § 1.4), so this row is the game's only fullscreen control. The OS can still change the window mode (for example the macOS green window button or Window > Enter Full Screen), which can leave this row out of step with the real window until reconciliation lands (#461).
+
 ---
 
 ## 11. Shop Interface

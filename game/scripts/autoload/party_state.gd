@@ -70,6 +70,10 @@ var has_player_position: bool = false
 var is_at_save_point: bool = false
 var ley_crystals: Dictionary = {}
 var puzzle_state: Dictionary = {}
+## Window the boot apply of the Fullscreen setting targets (#453). Null means
+## this node's own window; tests set a stand-in, because headless Godot reports
+## every in-tree window as minimized.
+var display_window: Window = null
 var _config: Dictionary = {}
 var _config_loaded: bool = false
 var _crystals: PartyCrystals = null
@@ -82,6 +86,10 @@ var _persistence: PartyPersistence = null
 
 func _ready() -> void:
 	_load_config()
+	# Deferred so the root window is fully set up before its mode changes.
+	DisplaySettings.apply.call_deferred(
+		_config, display_window if display_window != null else get_window()
+	)
 
 
 func initialize_new_game() -> void:

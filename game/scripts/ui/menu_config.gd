@@ -1,5 +1,5 @@
 extends Control
-## Config sub-screen: 17+ settings with live adjustment.
+## Config sub-screen: the ui-design.md § 10.3-10.3b settings (Key Config excepted), adjusted live.
 
 const COLOR_SELECTED: Color = Color("#ffff88")
 const COLOR_NORMAL: Color = Color("#ccddff")
@@ -51,7 +51,12 @@ const SETTINGS: Array[Dictionary] = [
 		"options": ["classic", "simple"]
 	},
 	{"key": "sfx_captions", "name": "SFX Captions", "type": "toggle"},
+	{"key": DisplaySettings.KEY, "name": "Fullscreen", "type": "toggle"},
 ]
+
+## Window the Fullscreen setting drives. Null means this screen's own window;
+## tests point it at a stand-in because headless cannot show a mode change.
+var display_window: Window = null
 
 var _cursor_index: int = 0
 var _config: Dictionary = {}
@@ -152,6 +157,8 @@ func _adjust(direction: int) -> void:
 	# Only re-apply audio bus volumes when an audio setting changed.
 	if key == "music_volume" or key == "sfx_volume":
 		AudioManager.update_volumes()
+	elif key == DisplaySettings.KEY:
+		DisplaySettings.apply(_config, display_window if display_window != null else get_window())
 	_update_display()
 
 
@@ -195,9 +202,16 @@ func _adjust_cycle(key: String, direction: int, setting: Dictionary) -> void:
 
 
 func _adjust_toggle(key: String) -> void:
-	var current: bool = _config.get(key, false)
+	var current: bool = _toggle_on(key)
 	_config[key] = not current
 	PartyState.set_config(key, not current)
+
+
+## Whether a toggle row is On, by the same rule DisplaySettings uses for the
+## window: a hand-edited null, string or number reads Off, and the next press
+## stores a real true.
+func _toggle_on(key: String) -> bool:
+	return DisplaySettings.is_on(_config.get(key, false))
 
 
 func _apply_cascades() -> void:
@@ -314,6 +328,5 @@ func _format_value(setting: Dictionary, key: String) -> String:
 			var val: String = str(_config.get(key, ""))
 			return val.replace("_", "-").capitalize()
 		"toggle":
-			var val: bool = _config.get(key, false)
-			return "On" if val else "Off"
+			return "On" if _toggle_on(key) else "Off"
 	return ""

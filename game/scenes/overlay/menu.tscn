@@ -881,6 +881,13 @@ text = "SFX Captions"
 [node name="Value18" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
 text = "Off"
 
+[node name="Name19" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
+size_flags_horizontal = 3
+text = "Fullscreen"
+
+[node name="Value19" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
+text = "Off"
+
 [node name="FooterRow" type="HBoxContainer" parent="SubScreen/ConfigScreen/Layout"]
 
 [node name="DescPanel" type="PanelContainer" parent="SubScreen/ConfigScreen/Layout/FooterRow"]
