@@ -172,6 +172,7 @@ child.value = hp
 - [ ] `--import` ran clean (no U-state wedge).
 - [ ] New test failed for a REAL assertion in RED (not a skip/parse error).
 - [ ] Full suite green AND `Scripts`/`Tests` counts match expectation
-      (repo baseline ~55 files / ~924 tests — counts only go UP as you add).
+      (compare against the floors in `scripts/quality-gates/gut-baseline.txt`
+      — counts only go UP as you add).
 - [ ] No new orphans, no leaked doubles.
 - [ ] Then `/create-pr`. Never `--no-verify`.

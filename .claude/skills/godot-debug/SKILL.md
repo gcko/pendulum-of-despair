@@ -38,7 +38,8 @@ Symptom -> root cause -> fix.
   is clearly broken; `Scripts`/`Tests` counts look low.
 - **Root cause:** GUT 9.x **silently skips** any `test_*.gd` file that fails to
   parse. The skipped file contributes zero passes and zero failures, so green
-  hides it. (Repo baseline: ~55 test files / ~924 tests.)
+  hides it. (Compare against the floors in `scripts/quality-gates/gut-baseline.txt`;
+  Gate L enforces them.)
 - **Fix:** Always read the summary's `Scripts` and `Tests` counts. If they
   dropped, a file was skipped — run that file alone (`-gtest=...`) to surface
   the parse error, fix it, confirm the counts recover.

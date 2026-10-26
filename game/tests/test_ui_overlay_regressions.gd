@@ -274,13 +274,11 @@ func test_overlay_swap_no_gap() -> void:
 # ==========================================================================
 
 
-# Headless Godot cannot observe a window-mode toggle, so the setting that
-# controls it is the only seam a test can reach. The engine default is true.
+# Headless Godot cannot observe a window-mode toggle, so assert the root
+# window's fullscreen_shortcut_enabled flag, which Window::_window_input checks.
+# project.godot's enable_toggle_fullscreen_shortcut=false sets it (engine default true).
 func test_alt_enter_does_not_toggle_fullscreen() -> void:
-	var enabled: bool = ProjectSettings.get_setting(
-		"display/window/size/enable_toggle_fullscreen_shortcut", true
-	)
 	assert_false(
-		enabled,
+		get_tree().root.fullscreen_shortcut_enabled,
 		"Alt+Enter also fires ui_accept; Config would toggle fullscreen and cycle a setting",
 	)

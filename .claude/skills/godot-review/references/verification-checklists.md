@@ -314,10 +314,13 @@ cannot point to the exact line that handles the case, it's a bug.
       only an explicit value other than "keep"
 - [ ] Scale mode is `"integer"` (Godot 4.x string format in project.godot)
 - [ ] Default texture filter is Nearest (0)
-- [ ] `display/window/size/enable_toggle_fullscreen_shortcut=false` is still set
-      until #453 ships an in-game fullscreen option. Godot 4.8 defaults it to
-      true and the window does not consume the shortcut, so Alt+Enter would also
-      fire `ui_accept` (in the Config menu: toggle fullscreen AND cycle a setting)
+- [ ] `display/window/size/enable_toggle_fullscreen_shortcut=false` is still set.
+      Godot 4.8 defaults it to true and the window does not consume the
+      shortcut, so Alt+Enter would also fire `ui_accept` (in the Config menu:
+      toggle fullscreen AND cycle a setting). Removing it is only acceptable in a
+      PR that deliberately re-enables Alt+Enter (#453) AND makes every
+      `ui_accept` handler ignore `InputEventKey` with `alt_pressed`; adding a
+      Config-menu fullscreen option alone is not a reason to remove it
 
 ### Snap to Pixel
 - [ ] `2d/snap/snap_2d_transforms_to_pixel` is true

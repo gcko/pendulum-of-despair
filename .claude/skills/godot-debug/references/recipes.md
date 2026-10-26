@@ -14,7 +14,8 @@ long form. `<godot>` = `godot` on PATH, else
    -gtest=res://tests/test_<name>.gd -gexit -glog=3`
 3. Narrow to one test method with `-gselect=<pattern>`.
 4. Read the `Scripts` / `Tests` counts every run — a drop means a file failed to
-   parse and was silently skipped (baseline ~55 files / ~924 tests).
+   parse and was silently skipped (compare against the floors in
+   `scripts/quality-gates/gut-baseline.txt`).
 
 ## Doubles / mocks for the 6 autoloads
 
