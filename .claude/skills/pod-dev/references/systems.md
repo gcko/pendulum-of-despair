@@ -189,6 +189,14 @@ Avoid exposition dumps. Break up long lore into multiple exchanges.
 - **Map format:** Godot `.tscn` scenes under `scenes/maps/` (`towns/`,
   `dungeons/`, `cutscenes/`, plus `overworld.tscn`), built with Godot
   `TileMapLayer` nodes and a shared `TileSet` resource -- not Tiled JSON
+- **Tile data format:** `tile_map_data` must be the TileMapLayer
+  `PackedByteArray` (a u16 format header of 0, then 12 bytes per cell:
+  x, y, source, atlas x, atlas y, alternative), never the legacy TileMap
+  `PackedInt32Array(...)` or `{"format": 3, "tile_data": ...}` layouts.
+  TileMapLayer rejects those and the layer loads empty (#449).
+  `tools/convert_tile_map_data.py` re-encodes them, pre-push Gate N
+  rejects them, and `game/tests/test_map_tile_layers.gd` fails on a layer
+  that loads no cells.
 - **Layers (minimum), as TileMapLayer nodes / collision setup:**
   - `ground` -- walkable terrain
   - `decoration` -- trees, rocks, objects above ground
