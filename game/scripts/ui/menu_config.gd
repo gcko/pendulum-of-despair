@@ -1,5 +1,5 @@
 extends Control
-## Config sub-screen: 17+ settings with live adjustment.
+## Config sub-screen: the ui-design.md § 10.3-10.3b settings (Key Config excepted), adjusted live.
 
 const COLOR_SELECTED: Color = Color("#ffff88")
 const COLOR_NORMAL: Color = Color("#ccddff")
@@ -51,7 +51,12 @@ const SETTINGS: Array[Dictionary] = [
 		"options": ["classic", "simple"]
 	},
 	{"key": "sfx_captions", "name": "SFX Captions", "type": "toggle"},
+	{"key": DisplaySettings.KEY, "name": "Fullscreen", "type": "toggle"},
 ]
+
+## Window the Fullscreen setting drives. Null means this screen's own window;
+## tests point it at a stand-in because headless cannot show a mode change.
+var display_window: Window = null
 
 var _cursor_index: int = 0
 var _config: Dictionary = {}
@@ -152,6 +157,8 @@ func _adjust(direction: int) -> void:
 	# Only re-apply audio bus volumes when an audio setting changed.
 	if key == "music_volume" or key == "sfx_volume":
 		AudioManager.update_volumes()
+	elif key == DisplaySettings.KEY:
+		DisplaySettings.apply(_config, display_window if display_window != null else get_window())
 	_update_display()
 
 

@@ -82,6 +82,8 @@ var _persistence: PartyPersistence = null
 
 func _ready() -> void:
 	_load_config()
+	# Deferred so the root window is fully set up before its mode changes.
+	DisplaySettings.apply.call_deferred(_config, get_window())
 
 
 func initialize_new_game() -> void:
