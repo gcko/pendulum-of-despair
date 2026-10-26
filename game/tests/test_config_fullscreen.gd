@@ -1,7 +1,9 @@
 extends GutTest
 ## The Config menu's Fullscreen setting (#453): the last row of the list, an
 ## On/Off toggle that changes the stored setting and the window mode at once,
-## and a stored setting that DisplaySettings.apply puts back on a window.
+## a stored setting that DisplaySettings.apply puts back on a window, and the
+## boot apply that puts it back when the game starts. A hand-edited value that
+## is not a JSON boolean reads Off everywhere, the row as well as the window.
 ##
 ## Headless Godot reports every in-tree window as minimized, so the real root
 ## window cannot show a mode change. These tests hand the code a stand-in
@@ -120,6 +122,36 @@ func test_a_hand_edited_fullscreen_value_that_is_not_a_boolean_gives_a_window() 
 		assert_eq(
 			_window.mode, Window.MODE_WINDOWED, "%s is not On; fall back to the default" % [bad]
 		)
+
+
+func test_a_hand_edited_non_boolean_reads_off_and_one_press_turns_fullscreen_on() -> void:
+	for bad: Variant in [null, "yes", 1.0]:
+		PartyState.set_config(KEY, bad)
+		_window.mode = Window.MODE_WINDOWED
+		var row: int = _open_on_last_row()
+		assert_eq(_label_text("Value", row), "Off", "%s reads Off, matching the window" % [bad])
+		_press("ui_accept")
+		assert_eq(PartyState.get_config().get(KEY), true, "one press stores On after %s" % [bad])
+		assert_eq(_label_text("Value", row), "On", "%s: the row then reads On" % [bad])
+		assert_eq(_window.mode, Window.MODE_FULLSCREEN, "%s: and fills the screen" % [bad])
+
+
+## Boots a fresh PartyState against the stand-in window. It reads the
+## developer's config.json and never writes it; the stand-in starts in the
+## opposite of the stored mode, so the result means something whatever that
+## file holds.
+func test_the_game_boots_in_the_mode_the_stored_config_asks_for() -> void:
+	var stored: Window.Mode = DisplaySettings.window_mode_for(
+		SaveDataHelpers.load_config_from_disk()
+	)
+	_window.mode = (
+		Window.MODE_WINDOWED if stored == Window.MODE_FULLSCREEN else Window.MODE_FULLSCREEN
+	)
+	var state: Node = preload("res://scripts/autoload/party_state.gd").new()
+	state.display_window = _window
+	add_child_autofree(state)
+	await wait_process_frames(1)
+	assert_eq(_window.mode, stored, "boot puts the window in the mode config.json asks for")
 
 
 func test_the_game_ships_windowed() -> void:

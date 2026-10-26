@@ -202,9 +202,16 @@ func _adjust_cycle(key: String, direction: int, setting: Dictionary) -> void:
 
 
 func _adjust_toggle(key: String) -> void:
-	var current: bool = _config.get(key, false)
+	var current: bool = _toggle_on(key)
 	_config[key] = not current
 	PartyState.set_config(key, not current)
+
+
+## Whether a toggle row is On, by the same rule DisplaySettings uses for the
+## window: a hand-edited null, string or number reads Off, and the next press
+## stores a real true.
+func _toggle_on(key: String) -> bool:
+	return DisplaySettings.is_on(_config.get(key, false))
 
 
 func _apply_cascades() -> void:
@@ -321,6 +328,5 @@ func _format_value(setting: Dictionary, key: String) -> String:
 			var val: String = str(_config.get(key, ""))
 			return val.replace("_", "-").capitalize()
 		"toggle":
-			var val: bool = _config.get(key, false)
-			return "On" if val else "Off"
+			return "On" if _toggle_on(key) else "Off"
 	return ""
