@@ -542,9 +542,25 @@ When a PR adds or updates a third-party addon under `game/addons/` (e.g.
 the GUT testing framework), the review scope changes — we do NOT audit
 library internals as if they were authored code.
 
-- [ ] Verify the vendored addon matches its upstream release byte-for-byte
-      (`diff -rq <release>/addons/<name> game/addons/<name>` is empty). The
-      copy must be pristine, not a local fork.
+- [ ] Verify the vendored addon matches its upstream release byte-for-byte:
+      `/usr/bin/diff -rq -x '*.import' -x '*.uid' <release>/addons/<name> game/addons/<name>`
+      is empty. The `.import`/`.uid` sidecars are gitignored and Godot
+      rewrites them on import, so without the two `-x` the check fails even on
+      a pristine copy. (Call `/usr/bin/diff`: the RTK hook rewrites a bare
+      `diff` into `git diff --no-index`, which rejects `-r`.) The copy must be
+      pristine, not a local fork.
+      **ONE exception:** `addons/gut/versions.json` may be bitwes/Gut main's
+      published copy at a commit SHA named in the commit body, instead of the
+      tag's. A release tag can ship data capping below our engine, and then
+      every GUT run ends advertising a nonexistent `GUT 0.0.0`; GUT prints that
+      on every run and offers no switch to turn it off, and the other route
+      (seeding a `user://` cache) needs the network and differs per machine.
+      The main copy is upstream's own data, the file GUT's update detector
+      fetches. `game/tests/test_gut_version_data.gd` fails if a re-vendor drops
+      it, so the exception cannot be lost silently (#452). It is temporary:
+      once a release tag's own data covers the CI engine, vendor that tag
+      pristine and delete this exception (follow-up linked from #452). No
+      other file gets an exception.
 - [ ] Confirm `plugin.cfg` `version=` matches the intended upstream tag.
 - [ ] Scope OUT library internals from review findings. Copilot reviews the
       full diff and WILL flag bugs/typos inside vendored files — these are

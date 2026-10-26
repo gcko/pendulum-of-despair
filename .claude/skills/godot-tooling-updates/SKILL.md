@@ -17,7 +17,9 @@ This project has **no npm runtime dependencies** and no monorepo. The only
 things with versions are:
 
 1. **GUT** — the test framework, vendored at `game/addons/gut/` (currently
-   **9.7.0**). Source: `bitwes/Gut` on GitHub.
+   **9.7.1**, the release tag exactly, except `addons/gut/versions.json`,
+   which is bitwes/Gut main's published copy — see Phase 5). Source:
+   `bitwes/Gut` on GitHub.
 2. **gdtoolkit** — the Python package providing `gdlint` and `gdformat`
    (the lint/format gates). Installed via `pip`/`pipx`, not the repo.
 3. **husky + @commitlint/cli + @commitlint/config-conventional** — the only
@@ -39,7 +41,7 @@ real gates**. Then file/close Issues and bundle into one chore PR.
 
 ```bash
 # GUT (vendored addon)
-grep '^version=' game/addons/gut/plugin.cfg          # -> 9.7.0
+grep '^version=' game/addons/gut/plugin.cfg          # -> 9.7.1
 
 # gdtoolkit (provides gdlint + gdformat)
 gdformat --version
@@ -53,11 +55,15 @@ pnpm --version
 
 ### Phase 2: Check Upstream for Newer
 
-- **GUT:** check the latest release tag.
+- **GUT:** find the highest released version by **semver sort**.
   ```bash
-  gh release view --repo bitwes/Gut --json tagName,name,publishedAt
-  # or: gh api repos/bitwes/Gut/releases/latest --jq '.tag_name'
+  gh api 'repos/bitwes/Gut/releases?per_page=20' \
+    --jq '.[] | select(.prerelease | not) | select(.draft | not) | .tag_name' \
+    | sed 's/^v//' | sort -V | tail -1
   ```
+  Do NOT use `gh release view` or `releases/latest`: GitHub's "Latest" flag
+  is not a version sort. On 2026-10-26 it pointed at v9.6.1 while v9.7.1 was
+  already released, so trusting it reads a newer installed GUT as a downgrade.
 - **gdtoolkit:** check PyPI for the newest version.
   ```bash
   pip index versions gdtoolkit 2>/dev/null \
@@ -96,7 +102,7 @@ hook tooling can be auto-applied unless the user objects):
 
 ```
 === Tooling Update Plan ===
-GUT:        9.7.0 -> <tag>   [major? notes]   APPROVE / DEFER / SKIP
+GUT:        <cur> -> <tag>   [major? notes]   APPROVE / DEFER / SKIP
 gdtoolkit:  <cur> -> <new>   (reformats game/scripts/)   APPROVE / DEFER / SKIP
 husky:      <cur> -> <new>
 @commitlint/cli: <cur> -> <new>
@@ -112,11 +118,49 @@ git checkout -b chore/tooling-updates
 ```
 
 **GUT** — replace the vendored addon with the new release. Download the
-release's `addons/gut/` and overwrite `game/addons/gut/`, preserving the path.
-Then let Godot re-import:
+release tarball into a new, empty scratch directory, extract it, and mirror
+its `addons/gut/` over `game/addons/gut/` (so files upstream deleted go too):
+```bash
+curl -sSL -o <scratch>/gut.tar.gz https://github.com/bitwes/Gut/archive/refs/tags/v<tag>.tar.gz
+tar -xzf <scratch>/gut.tar.gz -C <scratch>
+rsync -a --delete <scratch>/Gut-<tag>/addons/gut/ game/addons/gut/
+git status --short game/addons/gut   # review every add/delete, not just M
+```
+
+**Then check the release's version data covers OUR engine.** Every GUT run
+ends by asking `addons/gut/versions.json` which release suits the running
+Godot and prints `GUT <x> is now available!` when that differs from the
+installed GUT. A release tag can ship data that caps below the engine in
+`project.godot` `config/features` and CI (9.7.0 and 9.7.1 cap at 4.7.999), and
+on 4.8 every run then advertised a nonexistent `GUT 0.0.0`. GUT checks at
+the end of every run that ran tests (`summary.gd` `log_end_run` ->
+`log_version_update`) and no config or CLI option turns it off, so the only
+repo-local cure is the data file. If the tag's data caps
+below our engine, overlay **only** `addons/gut/versions.json` from bitwes/Gut
+**main at a named commit SHA** — upstream's own published copy, the same file
+GUT's update detector fetches — and record the SHA and its sha256 in the
+commit body:
+```bash
+gh api 'repos/bitwes/Gut/contents/addons/gut/versions.json?ref=<sha>' \
+  -H 'Accept: application/vnd.github.raw' > game/addons/gut/versions.json
+shasum -a 256 game/addons/gut/versions.json
+```
+This is the ONE permitted difference from the release tag
+(verification-checklists.md §10, #452). Every other vendored file stays
+pristine. `game/tests/test_gut_version_data.gd` fails if the data does not
+recommend the installed GUT for the running engine, so skipping this step
+cannot pass silently; its message tells `0.0.0` (data caps below the engine:
+overlay) apart from a real version (a newer GUT exists: bump). Once a release
+tag's own data covers our engine, vendor that tag pristine and drop the
+overlay.
+
+Then let Godot re-import, and check no sidecar came out poisoned (the count
+proves the grep looked at something):
 ```bash
 GODOT="$(command -v godot || echo /Applications/Godot.app/Contents/MacOS/Godot)"
 "$GODOT" --headless --path game/ --import
+find game/assets game/addons -name '*.import' | wc -l                       # > 0
+grep -rl 'valid=false' game/assets game/addons --include='*.import' | wc -l  # 0
 ```
 
 **gdtoolkit**:
@@ -150,13 +194,21 @@ gdformat --check game/scripts/
 # Import (must pass before tests)
 "$GODOT" --headless --path game/ --import
 
-# Full GUT suite (pre-push gate)
-"$GODOT" --headless --path game/ -s addons/gut/gut_cmdln.gd
-```
+# Full GUT suite (pre-push gate), judged by the same floor gate the hook uses
+"$GODOT" --headless --path game/ -s addons/gut/gut_cmdln.gd > <log> 2>&1
+python3 scripts/quality-gates/check_gut_baseline.py --log <log>
+grep -c 'is now available' <log>   # 0: the version data matches (see Phase 5)
 
-**GUT gotcha:** GUT 9.7.0 **silently skips** test files that have parse
-errors on Godot 4.7 and 4.8 (re-verified during the 4.8 migration) — a green run can hide
-them. After a GUT bump especially, check the **Scripts/Tests counts** in the
+# Vendored copy vs the release tag: the ONLY permitted difference is
+# versions.json. .import/.uid sidecars are gitignored and Godot regenerates them.
+/usr/bin/diff -rq -x '*.import' -x '*.uid' <scratch>/Gut-<tag>/addons/gut game/addons/gut
+```
+Use `/usr/bin/diff`: the RTK hook rewrites a bare `diff` into
+`git diff --no-index`, which rejects `-r`.
+
+**GUT gotcha:** GUT 9.7.x (9.7.0 and 9.7.1; 9.7.1 re-verified on Godot
+4.8-beta1 in #452) **silently skips** test files that have parse errors on
+Godot 4.7 and 4.8 — a green run can hide them. After a GUT bump especially, check the **Scripts/Tests counts** in the
 summary against the floors in `scripts/quality-gates/gut-baseline.txt` (Gate L
 enforces them); a dropped count means a file failed to parse, not that it passed.
 
@@ -170,7 +222,7 @@ wedged hook means the GUT suite did NOT run, so treat the suite as unproven.
 File a tracking Issue (GitHub Issues via `gh`, **not** beads/bd) for the
 work, and for anything deferred:
 ```bash
-gh issue create --label chore \
+gh issue create --label chore --milestone "<milestone>" \
   --title "chore: update <tool> <cur> -> <new>" \
   --body "Tooling bump. Breaking changes: <summary>. Refs upstream notes: <url>"
 ```
@@ -182,13 +234,14 @@ scope `deps` or `ci`:
 git add -A
 git commit -m "chore(deps): update GUT to <tag>, gdtoolkit to <ver>, commit hooks
 
-GUT: 9.7.0 -> <tag>
+GUT: <cur> -> <tag>
+versions.json: tag copy | bitwes/Gut main @ <sha> (sha256 <hash>)
 gdtoolkit: <cur> -> <new>
 husky/commitlint: <details>
 
 Closes #<n>
 
-Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"
+<attribution line from the session's system reminder>"
 ```
 
 Push and open ONE chore PR targeting `main` using the repo template

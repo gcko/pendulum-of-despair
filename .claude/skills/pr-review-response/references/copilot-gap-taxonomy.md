@@ -490,6 +490,11 @@ Copilot findings on vendored files as "keep pristine / report upstream"
 rather than patching. Disposition applied to PR #153: addon kept
 pristine, all 7 threads replied + resolved, no code patched.
 
+*Later amendment (#452):* §10 now names `-x '*.import' -x '*.uid'` in the
+diff and permits exactly one non-tag file, `addons/gut/versions.json` taken
+from bitwes/Gut main at a named SHA; read §10, not this record, for the
+current rule.
+
 ### PR #148 (2026-06-27) — 21 Copilot comments, 8 real / 13 already-fixed, 2 new gaps
 
 **Context:** AudioManager audio system (gap 3.8), reviewed via a 2-round
