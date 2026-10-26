@@ -113,6 +113,15 @@ func test_applying_a_config_written_before_fullscreen_existed_gives_a_window() -
 	assert_eq(_window.mode, Window.MODE_WINDOWED, "a missing key means the shipped default, off")
 
 
+func test_a_hand_edited_fullscreen_value_that_is_not_a_boolean_gives_a_window() -> void:
+	for bad: Variant in [null, "yes", 1.0]:
+		_window.mode = Window.MODE_FULLSCREEN
+		DisplaySettings.apply({KEY: bad}, _window)
+		assert_eq(
+			_window.mode, Window.MODE_WINDOWED, "%s is not On; fall back to the default" % [bad]
+		)
+
+
 func test_the_game_ships_windowed() -> void:
 	var defaults: Dictionary = DataManager.load_json("res://data/config/defaults.json")
 	assert_true(defaults.has(KEY), "defaults.json declares the Fullscreen setting")

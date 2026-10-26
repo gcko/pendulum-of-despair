@@ -824,7 +824,7 @@ FF6 config screen: label/value pairs in a single scrollable list.
 | Fullscreen | On / Off | Off | Off: the game runs in a window. On: borderless fullscreen at the display's native resolution; the game image stays integer-scaled and letterboxed per [accessibility.md](accessibility.md) Section 1. Takes effect immediately. |
 
 - Fullscreen is the final row of the Config list, after SFX Captions (§ 10.3a's last row).
-- Alt+Enter does not toggle fullscreen; the Config row is the only control.
+- Godot's built-in fullscreen shortcut (Alt+Enter; also Ctrl+Cmd+F on macOS) is turned off (see [technical-architecture.md](../plans/technical-architecture.md) § 1.4), so this row is the game's only fullscreen control. The OS can still change the window mode (for example the macOS green window button or Window > Enter Full Screen), which can leave this row out of step with the real window until reconciliation lands (#461).
 
 ---
 

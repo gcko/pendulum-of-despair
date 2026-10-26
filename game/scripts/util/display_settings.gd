@@ -12,9 +12,11 @@ const KEY: String = "fullscreen"
 ## The window mode the config asks for. MODE_FULLSCREEN, never
 ## EXCLUSIVE_FULLSCREEN: borderless at the display's native resolution, the
 ## mode Godot's own ui_toggle_fullscreen uses, and it leaves the display's
-## video mode alone. A missing key means the shipped default, windowed.
+## video mode alone. A missing key, or a value that is not a JSON boolean
+## (a hand-edited null, string or number), means the shipped default, windowed.
 static func window_mode_for(config: Dictionary) -> Window.Mode:
-	return Window.MODE_FULLSCREEN if bool(config.get(KEY, false)) else Window.MODE_WINDOWED
+	var value: Variant = config.get(KEY, false)
+	return Window.MODE_FULLSCREEN if value is bool and value else Window.MODE_WINDOWED
 
 
 ## Put `window` in the mode the config asks for. A window already in the
