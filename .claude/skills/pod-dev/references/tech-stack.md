@@ -134,8 +134,9 @@ game/data/
 - Data files include a `"_comment"` key describing structure where helpful.
 - IDs are strings (e.g. `"enemy_001"`) for readability.
 - JSON is validated by the pre-commit hook (`python3 -c "import json..."`).
-- Data integrity (ID uniqueness, stale counts, scene refs) is scanned by the
-  pre-push hook.
+- Data integrity (ID uniqueness, stale counts, scene refs, and the other
+  pre-push scans listed in the gate registry at the top of `.husky/pre-push`)
+  is checked by the pre-push hook.
 
 ---
 
@@ -204,7 +205,7 @@ Dispatch chain: `core.hooksPath=.husky/_` -> thin shim -> dispatcher ->
 |------|--------------|
 | `commit-msg` | commitlint (Conventional Commits 1.0.0) |
 | `pre-commit` | branch protection + gdlint + JSON validation + `gdformat --check` |
-| `pre-push` | data-integrity scans + Godot `--import` + full GUT suite |
+| `pre-push` | gate self-tests + data-integrity scans (registry at top of `.husky/pre-push`) + Godot `--import` + full GUT suite |
 
 **Never use `--no-verify`.** Fix the root cause (or remove the offending test)
 instead.

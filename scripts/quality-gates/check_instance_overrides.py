@@ -19,7 +19,9 @@ This gate fails when a scene under game/scenes/:
   * overrides a node the instanced scene does not have (Godot warns that
     the node "has vanished" and drops the override);
   * has a typeless node that is inside no instance at all;
-  * has a [node] header it cannot parse (an unread header is a skipped one).
+  * has a typed node whose parent the scene neither creates nor instances;
+  * has a [node] header it cannot parse (an unread header is a skipped one),
+    or an [editable] entry with no path.
 
 THE LIMITS, stated so nobody reads more into a pass than it means:
 
@@ -182,9 +184,15 @@ def check_scene(scene, cache):
         if not chain:
             if root_instance:
                 continue  # inherited scene: the root's nodes are editable
-            errors.append(
-                f"{rel}:{attrs['_line']}: '{path}' is a typeless node inside no instance, so it overrides nothing"
-            )
+            if typeless:
+                errors.append(
+                    f"{rel}:{attrs['_line']}: '{path}' is a typeless node inside no instance, so it overrides nothing"
+                )
+            else:
+                errors.append(
+                    f"{rel}:{attrs['_line']}: '{path}' has parent '{parent}', which this scene does not "
+                    f"create and no instance contains; Godot drops it as a vanished parent"
+                )
             continue
         # Only the NEAREST instance needs [editable]: whether that instance
         # node itself survives is judged when the loop reaches it.

@@ -137,6 +137,13 @@ class TestEditorSaveRules(GateFixture):
         self.assertEqual(code, 1)
         self.assertIn("inside no instance", out)
 
+    def test_a_typed_node_under_a_parent_the_scene_lacks_names_the_missing_parent(self):
+        self.map('\n[node name="Marker" type="Marker2D" parent="Entitiez"]\n')
+        code, out = self.run_gate()
+        self.assertEqual(code, 1)
+        self.assertIn("'Entitiez/Marker' has parent 'Entitiez', which this scene does not create", out)
+        self.assertNotIn("typeless", out)
+
     def test_an_inherited_scene_may_override_its_base(self):
         self.write(
             "scenes/entities/zone_variant.tscn",
@@ -162,11 +169,29 @@ class TestEditorSaveRules(GateFixture):
         self.assertEqual(code, 1)
         self.assertIn("[node] without name", out)
 
+    def test_a_node_header_that_does_not_parse_fails_rather_than_being_skipped(self):
+        self.map('\n[node name="X" type="Node2D" parent="."\n')
+        code, out = self.run_gate()
+        self.assertEqual(code, 1)
+        self.assertIn("cannot parse header", out)
+
+    def test_an_editable_entry_without_a_path_fails(self):
+        # EDITABLE makes the override itself legal, so the bare [editable] is the only fault.
+        self.map(OVERRIDE + EDITABLE + "\n[editable]\n")
+        code, out = self.run_gate()
+        self.assertEqual(code, 1)
+        self.assertIn("[editable] without path", out)
+
 
 class TestTheWalk(GateFixture):
     def test_a_violation_two_directories_down_is_found(self):
         self.map(OVERRIDE)  # scenes/maps/dungeons/floor.tscn
-        self.assertEqual(self.run_gate()[0], 1)
+        # min_scenes=0 so the floor cannot fail it: only the walk reaching
+        # floor.tscn can produce this message.
+        code, out = self.run_gate(min_scenes=0)
+        self.assertEqual(code, 1)
+        self.assertIn("maps/dungeons/floor.tscn", out)
+        self.assertIn("'Entities/Barrier/CollisionShape2D' overrides", out)
 
     def test_too_few_scenes_fails_and_says_repair_the_walk(self):
         code, out = self.run_gate(min_scenes=5)
@@ -176,8 +201,9 @@ class TestTheWalk(GateFixture):
     def test_a_missing_scene_root_fails(self):
         out = io.StringIO()
         with contextlib.redirect_stdout(out):
-            code = gate.main(os.path.join(self.tmp, "nope"), min_scenes=1)
+            code = gate.main(os.path.join(self.tmp, "nope"), min_scenes=0)
         self.assertEqual(code, 1)
+        self.assertIn("is not a directory", out.getvalue())
 
 
 class TestRealTree(unittest.TestCase):

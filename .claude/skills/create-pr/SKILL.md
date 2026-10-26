@@ -143,9 +143,10 @@ After outputting the PR URL, always end with:
 
 - **Hooks are the quality gates.** Do not run separate test/lint
   commands — the husky pre-commit (branch protection, gdlint, JSON
-  validation, gdformat --check) and pre-push (ID uniqueness, stale
-  counts, scene refs, Godot import, full GUT suite, GUT count floor)
-  hooks handle it. The one exception is `bash scripts/gates.sh`, on
+  validation, gdformat --check) and pre-push (every gate in the
+  registry at the top of `.husky/pre-push`, Gates M and N included,
+  then Godot import, the full GUT suite and its count floor) hooks
+  handle it. The one exception is `bash scripts/gates.sh`, on
   work the hooks cannot see: uncommitted state in a parallel worktree
   (pre-commit sees only the index), or a stacked branch that must be
   judged against its own parent rather than `main`

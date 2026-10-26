@@ -12,7 +12,8 @@ extends GutTest
 ## (water zones, ember crystals, spirit plants) and NPC bodies are not
 ## obstacles here, and the flood fill is 4-connected over whole cells, which is
 ## exact only while the player's body fits inside one cell, which both
-## reachability tests assert before they trust the fill.
+## reachability tests assert before they trust the fill. (#466: the Ember Vein
+## F3 puzzle blockers are such props, and the tiles alone do not gate them.)
 ## Cells outside a layer's used rect are treated as not walkable, so an exit
 ## reachable only by walking off the painted map counts as unreachable.
 
@@ -32,14 +33,21 @@ const SPAWN_META_KEYS: Array[String] = ["target_spawn", "cutscene_return_spawn"]
 
 ## Marker names some transition places the player at; built once per run.
 var _entry_names_cache: Dictionary = {}
+## The player body's collision_mask; read once per run.
+var _player_mask_cache: int = -1
 
 
 func test_every_map_tile_layer_loads_its_painted_cells() -> void:
 	var tiled: int = 0
+	var solid_total: int = 0
 	for path: String in _map_scenes():
 		var root: Node = _instance(path)
 		for layer: TileMapLayer in _layers(root):
 			tiled += 1
+			if not path.begins_with(CUTSCENE_DIR):
+				for cell: Vector2i in layer.get_used_cells():
+					if _is_solid(layer, cell):
+						solid_total += 1
 			assert_gt(
 				layer.get_used_cells().size(),
 				0,
@@ -49,6 +57,9 @@ func test_every_map_tile_layer_loads_its_painted_cells() -> void:
 				)
 			)
 		root.free()
+	assert_gt(
+		solid_total, 0, "no painted tile collides with the player; walls would not block (#449)"
+	)
 	assert_gte(
 		tiled,
 		MIN_TILE_LAYERS,
@@ -142,7 +153,12 @@ func test_every_exit_and_trigger_is_reachable_from_some_entry() -> void:
 					and not (area.collision_layer & INTERACTABLE_BIT)
 				):
 					continue
-				for r: Rect2 in _area_rects(area, layer):
+				var rects: Array[Rect2] = _area_rects(area, layer)
+				assert_false(
+					rects.is_empty(),
+					"%s: %s has no measurable shape" % [path, root.get_path_to(area)]
+				)
+				for r: Rect2 in rects:
 					assert_true(
 						_touches(reach, layer, r.grow(pad)),
 						"%s: %s is sealed off by wall tiles" % [path, root.get_path_to(area)]
@@ -233,18 +249,27 @@ func _area_rects(area: Area2D, layer: TileMapLayer) -> Array[Rect2]:
 	var root: Node = layer.owner if layer.owner != null else layer.get_parent()
 	var to_layer: Transform2D = _xf_to(layer, root).affine_inverse()
 	for c: Node in area.get_children():
+		if c is CollisionPolygon2D:
+			fail_test("%s: %s is a CollisionPolygon2D; extend _area_rects" % [area.name, c.name])
+			continue
 		var cs: CollisionShape2D = c as CollisionShape2D
 		if cs == null or cs.disabled or cs.shape == null:
 			continue
-		var center: Vector2 = to_layer * _xf_to(cs, root).origin
 		var size: Vector2 = Vector2.ZERO
 		if cs.shape is RectangleShape2D:
 			size = (cs.shape as RectangleShape2D).size
 		elif cs.shape is CircleShape2D:
 			size = Vector2.ONE * (cs.shape as CircleShape2D).radius * 2.0
 		else:
+			fail_test(
+				(
+					"%s: %s uses unsupported shape %s; extend _area_rects"
+					% [area.name, cs.name, cs.shape.get_class()]
+				)
+			)
 			continue
-		out.append(Rect2(center - size / 2.0, size))
+		# Transform2D * Rect2 is the AABB, so a scaled or rotated shape still counts.
+		out.append((to_layer * _xf_to(cs, root)) * Rect2(-size / 2.0, size))
 	return out
 
 
@@ -262,6 +287,8 @@ func _is_solid(layer: TileMapLayer, cell: Vector2i) -> bool:
 	if td == null:
 		return false
 	for pl: int in layer.tile_set.get_physics_layers_count():
+		if not (layer.tile_set.get_physics_layer_collision_layer(pl) & _player_mask()):
+			continue
 		if td.get_collision_polygons_count(pl) > 0:
 			return true
 	return false
@@ -325,6 +352,17 @@ func _player_body_size() -> Vector2:
 	player.free()
 	assert_gt(size.x, 0.0, "player body shape not found in %s" % PLAYER_SCENE)
 	return size
+
+
+## The physics layers the player's body collides with; a wall tile blocks only
+## when its tileset physics layer shares a bit with this mask.
+func _player_mask() -> int:
+	if _player_mask_cache < 0:
+		var player: Node = _instance(PLAYER_SCENE)
+		_player_mask_cache = (player as CollisionObject2D).collision_mask
+		player.free()
+		assert_gt(_player_mask_cache, 0, "player collision_mask is 0 in %s" % PLAYER_SCENE)
+	return _player_mask_cache
 
 
 func _player_interact_radius() -> float:

@@ -7,7 +7,7 @@ when it is.
 | Script | Status | What it does |
 |--------|--------|--------------|
 | `generate_placeholder_audio.py` | Live | Writes silent `.ogg` placeholders for the audio assets listed in `docs/story/audio.md`. Run it, then check it wrote non-empty files — an earlier version produced zero files while reporting success. |
-| `convert_tile_map_data.py` | Live | Re-encodes a map scene's legacy TileMap int `tile_map_data` (`PackedInt32Array(...)` or `{"format": 3, ...}`) as the TileMapLayer `PackedByteArray` the engine loads, and bumps the scene header to `format=4` as Godot's saver does (#449). Reports by default; `--write` rewrites. A second run must print `converted 0 layer(s)`. The text-only rewrite exists so a scene never has to be resaved in the editor to fix its tiles. |
+| `convert_tile_map_data.py` | Live | Re-encodes a map scene's legacy TileMap int `tile_map_data` (`PackedInt32Array(...)` or `{"format": 3, ...}`) as the TileMapLayer `PackedByteArray` the engine loads, and bumps the scene header to `format=4` as Godot's saver does (#449). Reports by default; `--write` rewrites. A second run must report 0 layers: `would convert 0 layer(s)` without `--write`, `converted 0 layer(s)` with it. The text-only rewrite exists so a scene never has to be resaved in the editor to fix its tiles. |
 
 ## Retired
 

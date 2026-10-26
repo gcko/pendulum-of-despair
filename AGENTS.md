@@ -108,7 +108,7 @@ Godot, which matters when several worktrees run at once.
 
 **Quality checks (pre-commit):** Branch protection + GDScript quality gates (gdlint, JSON validation, gdformat check).
 
-**Quality checks (pre-push):** Data-integrity scans (ID uniqueness, stale counts, scene refs) + the full GUT test suite.
+**Quality checks (pre-push):** Quality-gate self-tests (Gate I), data-integrity and doc scans (Gates D-G, J, K), instanced-child edits (Gate M), TileMapLayer tile data (Gate N), Godot import, and the full GUT suite with its baseline floor (Gates H, L). The gate registry at the top of `.husky/pre-push` is the authoritative list.
 
 **Commit message validation (commit-msg):** commitlint enforces Conventional Commits format. Non-conforming messages are rejected.
 

@@ -106,8 +106,9 @@ Read [`references/tech-stack.md`](references/tech-stack.md) for full detail.
 **Git hooks (Husky v9, `core.hooksPath=.husky/_` -- never edit `_/`):**
 - **pre-commit:** branch protection (no direct commits to main) + gdlint +
   JSON validation + `gdformat --check`
-- **pre-push:** data-integrity scans (ID uniqueness, stale counts, scene refs)
-  + Godot `--import` + the full GUT suite
+- **pre-push:** quality-gate self-tests + data-integrity/doc scans (Gates D-G,
+  J, K, M, N) + Godot `--import` + the full GUT suite (Gates H, L); the
+  registry at the top of `.husky/pre-push` is the full list
 - **commit-msg:** commitlint (Conventional Commits 1.0.0)
 - Recovery: `pnpm install`. **Never** use `--no-verify` -- fix the root cause.
 

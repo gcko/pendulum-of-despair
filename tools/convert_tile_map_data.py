@@ -23,7 +23,8 @@ changes: only the value after `tile_map_data = ` and the header's format=.
 It refuses anything it cannot read unambiguously: an unknown layout, an int
 count not divisible by 3, a negative or out-of-range position, the "other"
 int of a cell not being 0, an index the TileSet does not define, a duplicate
-cell, or a layer whose tile_set is not the placeholder TileSet. A value that
+cell, or a layer whose own [node] section lacks a tile_set ExtResource to the
+placeholder TileSet (a SubResource or missing tile_set is refused). A value that
 is already a PackedByteArray is left alone, so a second run converts nothing.
 
 Usage, from the repo root:
@@ -105,11 +106,19 @@ def convert_text(src, columns, rel):
     if not hits:
         return src, []
     ext = {ident: path for path, ident in EXT_RE.findall(src)}
-    for ident in TILE_SET_RE.findall(src):
-        if ext.get(ident) != TILESET_RES:
-            raise ValueError("%s: a layer uses tile_set %s, not %s" % (rel, ext.get(ident), TILESET_RES))
     out, last, report = [], 0, []
     for match in hits:
+        # Judge each layer by its own [node] section, so a SubResource or
+        # missing tile_set is refused even when another layer is fine.
+        start = src.rfind("\n[", 0, match.start()) + 1
+        end = src.find("\n[", match.end())
+        section = src[start:] if end < 0 else src[start:end]
+        sets = TILE_SET_RE.findall(section)
+        if len(sets) != 1 or ext.get(sets[0]) != TILESET_RES:
+            raise ValueError(
+                "%s: the layer at %r has no tile_set = ExtResource(...) to %s"
+                % (rel, src[start:src.find("\n", start)], TILESET_RES)
+            )
         layout, cells = decode(match.group(1), columns)
         raw, text = encode(cells)
         out.extend([src[last:match.start(1)], text])

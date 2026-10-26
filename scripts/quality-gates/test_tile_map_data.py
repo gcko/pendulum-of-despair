@@ -8,6 +8,9 @@ Gate I's discovery, so a Gate N that has stopped detecting fails at pre-push.
 The two legacy layouts are pinned verbatim from the pre-#449 scenes, the walk
 is tested two directories deep (every real map layer lives at least one level
 below game/scenes/), and the hook wiring test rejects a commented-out call.
+Each tile_set resolution branch (missing, undeclared, unreadable, inline) and
+each unloadable encoding (bad base64, a byte above 255, not a byte array) is
+pinned by its own test.
 
 Run: python3 -m unittest discover -s scripts/quality-gates -p 'test_*.py'
 """
@@ -168,6 +171,70 @@ class TestCellsResolveAgainstTheTileSet(GateFixture):
     def test_undefined_alternative_is_rejected(self):
         self.scene(encode([(0, 0, 0, 1, 0, 2)]))
         self.assertIn("alternative 2", self.errors()[0])
+
+
+INLINE_SCENE = """[gd_scene load_steps=3 format=3]
+
+[sub_resource type="TileSetAtlasSource" id="Src0"]
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TS"]
+sources/0 = SubResource("Src0")
+
+[node name="Map" type="Node2D"]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_set = SubResource("TS")
+%s"""
+
+
+class TestTheTileSetResolves(GateFixture):
+    def rewrite(self, old, new, data_line=None):
+        path = self.scene(data_line or encode(GOOD))
+        with open(path, encoding="utf-8") as f:
+            text = f.read()
+        self.assertIn(old, text)
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(text.replace(old, new))
+
+    def test_a_layer_with_no_tile_set_is_rejected(self):
+        self.rewrite('tile_set = ExtResource("1_ts")\n', "")
+        self.assertIn("has no tile_set", self.errors()[0])
+
+    def test_an_undeclared_ext_resource_is_rejected(self):
+        self.rewrite('ExtResource("1_ts")', 'ExtResource("9_missing")')
+        self.assertIn("is not declared", self.errors()[0])
+
+    def test_a_tile_set_file_that_cannot_be_read_is_rejected(self):
+        self.rewrite("res://ts.tres", "res://gone.tres")
+        self.assertIn("cannot be read", self.errors()[0])
+
+    def inline(self, cells):
+        path = os.path.join(self.game, "scenes", "maps", "towns", "a.tscn")
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(INLINE_SCENE % encode(cells))
+
+    def test_an_inline_tile_set_is_read(self):
+        self.inline([(0, 0, 0, 0, 0, 0)])
+        self.assertEqual(self.errors(), [])
+
+    def test_a_cell_the_inline_tile_set_lacks_is_rejected(self):
+        self.inline([(0, 0, 0, 5, 0, 0)])
+        self.assertIn("atlas (5, 0)", self.errors()[0])
+
+
+class TestUnloadableEncodingsAreRejected(GateFixture):
+    def test_base64_that_does_not_decode_is_rejected(self):
+        self.scene('tile_map_data = PackedByteArray("AAA")\n')
+        self.assertIn("base64 does not decode", self.errors()[0])
+
+    def test_a_decimal_byte_above_255_is_rejected(self):
+        self.scene("tile_map_data = PackedByteArray(0, 0, 256)\n")
+        self.assertIn("above 255", self.errors()[0])
+
+    def test_a_value_that_is_not_a_byte_array_is_rejected(self):
+        self.scene("tile_map_data = 42\n")
+        self.assertIn("is not a PackedByteArray", self.errors()[0])
 
 
 class TestTheWalk(GateFixture):

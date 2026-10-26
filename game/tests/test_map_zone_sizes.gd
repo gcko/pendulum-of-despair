@@ -11,7 +11,9 @@ extends GutTest
 ##
 ## Both tests walk every map scene and judge every zone instance they find, so
 ## a zone placed on a new map without a footprint here fails rather than going
-## unchecked, and a walk that stopped descending fails the floor.
+## unchecked, and a walk that stopped descending fails the floor. A map named
+## here is judged even once its zones are gone, so a deleted zone fails, and a
+## map named here that the walk never reaches fails too.
 
 const MAPS_ROOT: String = "res://scenes/maps"
 const ZONE_PREFABS: Array[String] = [
@@ -55,14 +57,17 @@ const MIN_ZONES_FOUND: int = 13
 
 func test_every_zone_on_a_map_has_its_spec_footprint_at_runtime() -> void:
 	var found: int = 0
+	var visited: Dictionary = {}
 	for scene_path: String in _map_scenes(MAPS_ROOT):
+		visited[scene_path] = true
 		var map: Node = load(scene_path).instantiate()
-		if _zones(map).is_empty():
+		if _zones(map).is_empty() and not AUTHORED_SIZES.has(scene_path):
 			map.free()
 			continue
 		# In the tree, so _ready runs: a footprint applied by script counts too.
 		add_child_autofree(map)
 		found += _assert_footprints(map, scene_path, "at runtime")
+	_assert_every_authored_map_walked(visited)
 	assert_gte(found, MIN_ZONES_FOUND, "zone walk found too few zones; repair the walk")
 
 
@@ -70,9 +75,11 @@ func test_every_zone_footprint_survives_an_editor_save() -> void:
 	# EditorNode saves a scene by instancing it in edit state and packing it.
 	# Doing the same in memory reproduces #450 without touching the file.
 	var found: int = 0
+	var visited: Dictionary = {}
 	for scene_path: String in _map_scenes(MAPS_ROOT):
+		visited[scene_path] = true
 		var edited: Node = load(scene_path).instantiate(PackedScene.GEN_EDIT_STATE_MAIN)
-		if _zones(edited).is_empty():
+		if _zones(edited).is_empty() and not AUTHORED_SIZES.has(scene_path):
 			edited.free()
 			continue
 		var resaved: PackedScene = PackedScene.new()
@@ -81,6 +88,7 @@ func test_every_zone_footprint_survives_an_editor_save() -> void:
 		var map: Node = resaved.instantiate()
 		add_child_autofree(map)
 		found += _assert_footprints(map, scene_path, "after an editor save")
+	_assert_every_authored_map_walked(visited)
 	assert_gte(found, MIN_ZONES_FOUND, "zone walk found too few zones; repair the walk")
 
 
@@ -112,6 +120,15 @@ func _assert_footprints(map: Node, scene_path: String, when: String) -> int:
 			"%s %s footprint %s" % [scene_path.get_file(), zone_path, when]
 		)
 	return zones.size()
+
+
+## A map named in AUTHORED_SIZES that the walk never reached was moved or
+## deleted, and its zones would otherwise go unchecked.
+func _assert_every_authored_map_walked(visited: Dictionary) -> void:
+	for key: String in AUTHORED_SIZES:
+		assert_true(
+			visited.has(key), "AUTHORED_SIZES names %s, which the map walk never found" % key
+		)
 
 
 ## Every instance of a zone prefab anywhere under `map`, not only under Entities.
