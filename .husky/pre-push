@@ -22,6 +22,7 @@ GATE_DIR="scripts/quality-gates"
 #   K  American-English spelling  pre-push   check_spelling.py
 #   L  GUT summary/failures/floor pre-push   check_gut_baseline.py
 #   M  instanced-child edits      pre-push   check_instance_overrides.py
+#   N  TileMapLayer tile data     pre-push   check_tile_map_data.py
 #
 # Each gate script's module docstring names its own letter; keep the two in
 # step when editing either.
@@ -71,6 +72,14 @@ python3 "$GATE_DIR/check_spelling.py"
 # entry and reverted to the 16x16 prefab on the first resave (#450).
 echo "=== Pre-push: Instanced-child edit persistence ==="
 python3 "$GATE_DIR/check_instance_overrides.py"
+
+# === QUALITY GATE N: TileMapLayer tile data ===
+# Every map layer once stored tile_map_data in the legacy TileMap int layout,
+# which TileMapLayer rejects, so all 22 maps loaded with no tiles and no walls
+# (#449). The value must be a PackedByteArray with format header 0, whole
+# 12-byte cells, and only tiles its TileSet defines.
+echo "=== Pre-push: TileMapLayer tile data ==="
+python3 "$GATE_DIR/check_tile_map_data.py"
 
 # === QUALITY GATE H: GUT unit tests ===
 # Run all GUT tests headless. Godot comes from $GODOT_BIN, from PATH, or from

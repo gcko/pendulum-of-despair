@@ -17,7 +17,7 @@ automatically by husky hooks — no manual test/lint step needed:
 - **pre-push:** quality-gate self-tests + cross-file ID-uniqueness
   scan + stale-count scan + scene-ref scan + doc-citation integrity +
   dialogue sync + American-English spelling + instanced-child edit
-  persistence (Gate M) + Godot import
+  persistence (Gate M) + TileMapLayer tile data (Gate N) + Godot import
   (`godot --headless --path game/ --import`) + the full GUT test suite
   + Gate L (Run Summary present, nothing failed, every collected test
   passed, script/test counts at or above `gut-baseline.txt`).
@@ -85,7 +85,7 @@ The pre-push hook runs the **quality-gate self-tests**, **cross-file
 ID uniqueness**, **stale-count scan**, **scene reference
 validation**, **doc-citation integrity**, **dialogue sync**,
 **American-English spelling**, **instanced-child edit persistence**
-(Gate M), **Godot import**
+(Gate M), **TileMapLayer tile data** (Gate N), **Godot import**
 (`godot --headless --path game/ --import`), the **full GUT test
 suite**, and **Gate L** over the run's log. If the push fails, fix
 the reported issues and retry.
@@ -110,7 +110,7 @@ PR body format:
 
 ## Test plan
 - [x] Pre-commit gates pass (branch protection, gdlint, JSON validation, gdformat --check)
-- [x] Pre-push gates pass (ID uniqueness, stale counts, scene refs, doc citations, dialogue sync, spelling, instanced-child edits (Gate M), Godot import, full GUT suite, Gate L count floor)
+- [x] Pre-push gates pass (ID uniqueness, stale counts, scene refs, doc citations, dialogue sync, spelling, instanced-child edits (Gate M), TileMapLayer tile data (Gate N), Godot import, full GUT suite, Gate L count floor)
 - [ ] Manual verification steps if applicable
 
 Generated with [Claude Code](https://claude.ai/code)
