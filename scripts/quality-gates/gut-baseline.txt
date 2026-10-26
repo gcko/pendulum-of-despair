@@ -50,7 +50,7 @@
 # 79/1287, then 1293 after tests were deliberately removed, then scripts=89
 # while the suite already collected 90); each time it either passed a real
 # regression or failed honest work.
-scripts=95
-tests=1329
+scripts=96
+tests=1331
 gates=7
 gate_tests=338
