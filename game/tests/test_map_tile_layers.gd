@@ -45,6 +45,13 @@ func test_every_map_tile_layer_loads_its_painted_cells() -> void:
 		for layer: TileMapLayer in _layers(root):
 			tiled += 1
 			if not path.begins_with(CUTSCENE_DIR):
+				assert_true(
+					layer.enabled and layer.collision_enabled,
+					(
+						"%s:%s has tile collision switched off; walls would not block (#449)"
+						% [path, layer.name]
+					)
+				)
 				for cell: Vector2i in layer.get_used_cells():
 					if _is_solid(layer, cell):
 						solid_total += 1
@@ -95,8 +102,10 @@ func test_no_entry_marker_stands_inside_a_wall() -> void:
 		if path.begins_with(CUTSCENE_DIR):
 			continue
 		var root: Node = _instance(path)
+		var markers: Array[Marker2D] = _entry_markers(root)
+		assert_false(markers.is_empty(), "%s has no player entry marker; nothing to judge" % path)
 		for layer: TileMapLayer in _layers(root):
-			for marker: Marker2D in _entry_markers(root):
+			for marker: Marker2D in markers:
 				var at: Vector2 = _in_layer(layer, marker).round()
 				var body: Rect2 = Rect2(at - half, half * 2.0)
 				var hit: Array[Vector2i] = _solid_cells_under(layer, body)
@@ -113,6 +122,8 @@ func test_every_entry_marker_can_walk_to_an_exit() -> void:
 		if path.begins_with(CUTSCENE_DIR):
 			continue
 		var root: Node = _instance(path)
+		var markers: Array[Marker2D] = _entry_markers(root)
+		assert_false(markers.is_empty(), "%s has no player entry marker; nothing to judge" % path)
 		for layer: TileMapLayer in _layers(root):
 			_assert_body_fits_one_cell(layer, path)
 			var exits: Array[Rect2] = _target_rects(root, layer, true)
@@ -121,7 +132,7 @@ func test_every_entry_marker_can_walk_to_an_exit() -> void:
 			)
 			if exits.is_empty():
 				continue
-			for marker: Marker2D in _entry_markers(root):
+			for marker: Marker2D in markers:
 				var reach: Dictionary = _flood(layer, _in_layer(layer, marker))
 				var any_exit: bool = false
 				for r: Rect2 in exits:
@@ -141,10 +152,12 @@ func test_every_exit_and_trigger_is_reachable_from_some_entry() -> void:
 		if path.begins_with(CUTSCENE_DIR):
 			continue
 		var root: Node = _instance(path)
+		var markers: Array[Marker2D] = _entry_markers(root)
+		assert_false(markers.is_empty(), "%s has no player entry marker; nothing to judge" % path)
 		for layer: TileMapLayer in _layers(root):
 			_assert_body_fits_one_cell(layer, path)
 			var reach: Dictionary = {}
-			for marker: Marker2D in _entry_markers(root):
+			for marker: Marker2D in markers:
 				reach.merge(_flood(layer, _in_layer(layer, marker)))
 			for area: Area2D in _areas(root):
 				var pad: float = 0.0 if (area.collision_mask & PLAYER_BIT) else interact_pad
@@ -202,7 +215,8 @@ func _layers(root: Node) -> Array[TileMapLayer]:
 
 ## Markers the player can be placed at: PlayerSpawn (exploration.gd's
 ## default), any from_* entry, and any name a transition's metadata targets.
-## Actor marks such as CadenSpawnPoint are not player entries.
+## Actor marks such as CadenSpawnPoint are not player entries. An entry must be
+## a direct child of the map root: one nested deeper fails the test.
 func _entry_markers(root: Node) -> Array[Marker2D]:
 	if _entry_names_cache.is_empty():
 		_entry_names_cache["PlayerSpawn"] = true
@@ -213,10 +227,25 @@ func _entry_markers(root: Node) -> Array[Marker2D]:
 					if n.has_meta(key):
 						_entry_names_cache[str(n.get_meta(key))] = true
 			scene.free()
+	# exploration.gd resolves an entry with get_node_or_null(name) on the map
+	# root, so only direct children are reachable; a nested one silently drops
+	# the player at the (80, 90) fallback instead.
 	var out: Array[Marker2D] = []
 	for n: Node in root.find_children("*", "Marker2D", true, false):
-		if _entry_names_cache.has(n.name) or n.name.begins_with("from_"):
-			out.append(n as Marker2D)
+		if not (_entry_names_cache.has(n.name) or n.name.begins_with("from_")):
+			continue
+		if n.get_parent() != root:
+			fail_test(
+				(
+					(
+						"%s: entry marker %s is not a direct child of the map root;"
+						+ " exploration.gd cannot reach it"
+					)
+					% [root.scene_file_path, root.get_path_to(n)]
+				)
+			)
+			continue
+		out.append(n as Marker2D)
 	return out
 
 
@@ -283,6 +312,8 @@ func _target_rects(root: Node, layer: TileMapLayer, exits_only: bool) -> Array[R
 
 
 func _is_solid(layer: TileMapLayer, cell: Vector2i) -> bool:
+	if not layer.enabled or not layer.collision_enabled:
+		return false
 	var td: TileData = layer.get_cell_tile_data(cell)
 	if td == null:
 		return false

@@ -8,7 +8,8 @@ Gate I's discovery, so a Gate N that has stopped detecting fails at pre-push.
 The two legacy layouts are pinned verbatim from the pre-#449 scenes, the walk
 is tested two directories deep (every real map layer lives at least one level
 below game/scenes/), and the hook wiring test rejects a commented-out call.
-Each tile_set resolution branch (missing, undeclared, unreadable, inline) and
+Each tile_set resolution branch (missing, undeclared ExtResource or SubResource,
+unreadable, inline, two inline TileSets) and
 each unloadable encoding (bad base64, a byte above 255, not a byte array) is
 pinned by its own test.
 
@@ -116,6 +117,35 @@ class TestLegacyLayoutsAreRejected(GateFixture):
         self.assertIn("0 tile_map_data lines", self.errors()[0])
 
 
+class TestOverridesOfInstancedLayers(GateFixture):
+    def test_a_legacy_value_on_a_typeless_override_is_rejected(self):
+        path = os.path.join(self.game, "scenes", "maps", "towns", "chunk.tscn")
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(
+                '[gd_scene format=3]\n\n'
+                '[ext_resource type="PackedScene" path="res://base.tscn" id="1"]\n\n'
+                '[node name="Root" type="Node2D"]\n\n'
+                '[node name="Base" parent="." instance=ExtResource("1")]\n\n'
+                '[node name="TileMapLayer" parent="Base"]\n'
+                "tile_map_data = PackedInt32Array(0, 1, 0)\n"
+            )
+        errs = self.errors(min_layers=0)
+        self.assertEqual(len(errs), 1, errs)
+        self.assertIn("chunk.tscn:TileMapLayer", errs[0])
+        self.assertIn("legacy TileMap int layout", errs[0])
+
+    def test_a_valid_value_on_a_typeless_override_passes_and_is_not_a_layer(self):
+        path = os.path.join(self.game, "scenes", "maps", "towns", "chunk.tscn")
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(
+                '[gd_scene format=3]\n\n'
+                '[node name="Root" type="Node2D"]\n\n'
+                '[node name="TileMapLayer" parent="Base"]\n' + encode(GOOD)
+            )
+        scenes, layers, cells, errs = gate.check_tree(os.path.join(self.game, "scenes"), self.game, 0)
+        self.assertEqual((layers, cells, errs), (0, 2, []))
+
+
 class TestByteLayout(GateFixture):
     def test_valid_base64_layer_passes_and_counts_its_cells(self):
         self.scene(encode(GOOD))
@@ -220,6 +250,25 @@ class TestTheTileSetResolves(GateFixture):
 
     def test_a_cell_the_inline_tile_set_lacks_is_rejected(self):
         self.inline([(0, 0, 0, 5, 0, 0)])
+        self.assertIn("atlas (5, 0)", self.errors()[0])
+
+    def test_an_undeclared_sub_resource_is_rejected(self):
+        path = os.path.join(self.game, "scenes", "maps", "towns", "a.tscn")
+        with open(path, "w", encoding="utf-8") as f:
+            f.write((INLINE_SCENE % encode([(0, 0, 0, 0, 0, 0)])).replace('SubResource("TS")', 'SubResource("Nope")'))
+        self.assertIn("SubResource Nope is not declared", self.errors()[0])
+
+    def test_a_cell_is_judged_against_the_inline_tile_set_its_layer_names(self):
+        # TS_B, declared after TS_A, defines atlas (5, 0); TS, the one the
+        # layer names, does not. The cell must be judged against TS.
+        path = os.path.join(self.game, "scenes", "maps", "towns", "a.tscn")
+        second = (
+            '[sub_resource type="TileSetAtlasSource" id="SrcB"]\n5:0/0 = 0\n\n'
+            '[sub_resource type="TileSet" id="TS_B"]\nsources/0 = SubResource("SrcB")\n\n'
+            '[node name="Map"'
+        )
+        with open(path, "w", encoding="utf-8") as f:
+            f.write((INLINE_SCENE % encode([(0, 0, 0, 5, 0, 0)])).replace('[node name="Map"', second))
         self.assertIn("atlas (5, 0)", self.errors()[0])
 
 

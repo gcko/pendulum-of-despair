@@ -120,6 +120,12 @@ class TestEditorSaveRules(GateFixture):
         self.assertEqual(code, 1)
         self.assertIn("adds a node under the inside of instance 'Entities/Barrier'", out)
 
+    def test_a_node_added_under_a_child_the_instance_lacks_fails(self):
+        self.map(EDITABLE + '\n[node name="Glow" type="Node2D" parent="Entities/Barrier/NoSuchChild"]\n')
+        code, out = self.run_gate()
+        self.assertEqual(code, 1)
+        self.assertIn("is added under 'NoSuchChild', which res://scenes/entities/zone.tscn does not have", out)
+
     def test_a_node_added_directly_under_an_instance_root_passes(self):
         self.map('\n[node name="Marker" type="Marker2D" parent="Entities/Barrier"]\n')
         code, out = self.run_gate()

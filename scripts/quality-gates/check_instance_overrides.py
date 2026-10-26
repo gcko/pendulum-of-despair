@@ -16,8 +16,8 @@ This gate fails when a scene under game/scenes/:
 
   * overrides a node inside an instance that has no matching [editable];
   * adds a node under an instance's internal child with no [editable];
-  * overrides a node the instanced scene does not have (Godot warns that
-    the node "has vanished" and drops the override);
+  * overrides, or adds a node under, a node the instanced scene does not
+    have (Godot warns that the node "has vanished" and drops it);
   * has a typeless node that is inside no instance at all;
   * has a typed node whose parent the scene neither creates nor instances;
   * has a [node] header it cannot parse (an unread header is a skipped one),
@@ -203,13 +203,15 @@ def check_scene(scene, cache):
                 f"{rel}:{attrs['_line']}: '{path}' {what} the inside of instance '{inst}', "
                 f'which has no [editable path="{inst}"]; an editor save deletes it'
             )
-        if typeless:
-            target = path[len(inst) + 1:]
-            if not has_node(scene.instance_path(inst), target, cache):
-                errors.append(
-                    f"{rel}:{attrs['_line']}: '{path}' overrides '{target}', which "
-                    f"{scene.instance_path(inst)} does not have; Godot drops it as vanished"
-                )
+        # `start` is the node itself (typeless) or its parent (typed); either
+        # way it must exist inside the instanced scene, or Godot drops the node.
+        target = start[len(inst) + 1:]
+        if not has_node(scene.instance_path(inst), target, cache):
+            what = "overrides" if typeless else "is added under"
+            errors.append(
+                f"{rel}:{attrs['_line']}: '{path}' {what} '{target}', which "
+                f"{scene.instance_path(inst)} does not have; Godot drops it as vanished"
+            )
     return errors, len(instances), sum(
         1 for p in scene.order if p != "." and "type" not in scene.nodes[p] and "instance" not in scene.nodes[p]
     )

@@ -24,8 +24,10 @@ It refuses anything it cannot read unambiguously: an unknown layout, an int
 count not divisible by 3, a negative or out-of-range position, the "other"
 int of a cell not being 0, an index the TileSet does not define, a duplicate
 cell, or a layer whose own [node] section lacks a tile_set ExtResource to the
-placeholder TileSet (a SubResource or missing tile_set is refused). A value that
-is already a PackedByteArray is left alone, so a second run converts nothing.
+placeholder TileSet (a SubResource or missing tile_set is refused). Every scene
+is checked before any is written: if one is refused, each refusal is listed and
+the run exits 1 having written nothing. A value that is already a
+PackedByteArray is left alone, so a second run converts nothing.
 
 Usage, from the repo root:
   python3 tools/convert_tile_map_data.py           # report only
@@ -136,7 +138,7 @@ def main(argv=None):
     parser.add_argument("--write", action="store_true", help="rewrite the scenes in place")
     args = parser.parse_args(argv)
     columns = tileset_columns(GAME_ROOT)
-    converted = 0
+    converted, pending, refused = 0, [], []
     for dirpath, dirnames, filenames in os.walk(os.path.join(GAME_ROOT, "scenes")):
         dirnames.sort()
         for name in sorted(filenames):
@@ -146,13 +148,26 @@ def main(argv=None):
             rel = os.path.relpath(path, REPO_ROOT)
             with open(path, encoding="utf-8", newline="") as handle:
                 src = handle.read()
-            new, report = convert_text(src, columns, rel)
+            try:
+                new, report = convert_text(src, columns, rel)
+            except ValueError as err:
+                msg = str(err)
+                refused.append(msg if msg.startswith(rel + ":") else "%s: %s" % (rel, msg))
+                continue
             for layout, cells, size in report:
                 print("%-58s %-4s cells=%-5d bytes=%d" % (rel, layout, cells, size))
                 converted += 1
-            if args.write and new != src:
-                with open(path, "w", encoding="utf-8", newline="") as handle:
-                    handle.write(new)
+            if new != src:
+                pending.append((path, new))
+    if refused:
+        for line in refused:
+            print("REFUSED %s" % line, file=sys.stderr)
+        print("refused %d scene(s); wrote nothing" % len(refused), file=sys.stderr)
+        return 1
+    if args.write:
+        for path, new in pending:
+            with open(path, "w", encoding="utf-8", newline="") as handle:
+                handle.write(new)
     print("%s %d layer(s)" % ("converted" if args.write else "would convert", converted))
     return 0
 

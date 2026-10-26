@@ -24,6 +24,8 @@ re-encode one if it ever comes back.
 THE LIMITS: this reads text. It does not run Godot, so it cannot see cells set
 by a script at runtime, and it parses only TileSets referenced through an
 ext_resource `.tres` or an inline sub_resource. It reads game/scenes/ only.
+A typeless node that overrides an instanced layer's tile_map_data has its
+encoding and cells checked, but not against a TileSet.
 Whether the loaded walls leave the map playable is
 game/tests/test_map_tile_layers.gd's job, not this one's. It runs in
 .husky/pre-push and scripts/gates.sh; CI does not run the static Python gates.
@@ -78,20 +80,24 @@ def _sections(lines):
         yield header, body
 
 
-def parse_tileset(lines):
-    """Return {source_id: {(atlas_x, atlas_y): {alternatives}}} from .tres/.tscn lines."""
-    subs, sources, current = {}, {}, None
+def parse_tileset(lines, tileset_id=None):
+    """Return {source_id: {(atlas_x, atlas_y): {alternatives}}} from .tres/.tscn lines.
+
+    With `tileset_id`, read `sources/N` only from the `[sub_resource]` with that
+    id (a TileSet inline in a scene); otherwise only from `[resource]` (a .tres).
+    """
+    subs, sources = {}, {}
     for header, body in _sections(lines):
         m = SUB_RE.match(header)
+        sub_id = _attrs(m.group(1)).get("id") if m else None
         if m:
-            current = _attrs(m.group(1)).get("id")
-            tiles = subs.setdefault(current, {})
+            tiles = subs.setdefault(sub_id, {})
             for line in body:
                 t = TILE_RE.match(line)
                 if t:
                     key = (int(t.group(1)), int(t.group(2)))
                     tiles.setdefault(key, set()).add(int(t.group(3)))
-        if header.startswith("[resource]") or header.startswith("[sub_resource"):
+        if (sub_id == tileset_id) if tileset_id is not None else header.startswith("[resource]"):
             for line in body:
                 s = SOURCE_RE.match(line)
                 if s:
@@ -174,7 +180,11 @@ def _resolve_tileset(lines, tile_set_value, game_root):
         return None, "tile_set ExtResource %s is not declared" % m.group(1)
     m = re.match(r'^SubResource\("([^"]+)"\)$', tile_set_value or "")
     if m:
-        return parse_tileset(lines), None
+        for header, _ in _sections(lines):
+            sub = SUB_RE.match(header)
+            if sub and _attrs(sub.group(1)).get("id") == m.group(1):
+                return parse_tileset(lines, m.group(1)), None
+        return None, "tile_set SubResource %s is not declared" % m.group(1)
     return None, "TileMapLayer has no tile_set"
 
 
@@ -191,16 +201,30 @@ def check_scene(path, game_root=GAME_ROOT):
     layers, cells, errors = 0, 0, []
     for header, body in _sections(lines):
         m = NODE_RE.match(header)
-        if not m or _attrs(m.group(1)).get("type") != "TileMapLayer":
+        if not m:
             continue
-        layers += 1
-        name = _attrs(m.group(1)).get("name", "?")
+        attrs = _attrs(m.group(1))
+        name = attrs.get("name", "?")
         props = {}
         for line in body:
             k, sep, v = line.partition(" = ")
             if sep:
                 props.setdefault(k, []).append(v)
         where = "%s:%s" % (_rel(path), name)
+        if attrs.get("type") != "TileMapLayer":
+            # A typeless node overriding an instanced TileMapLayer loads this
+            # value too. Its TileSet lives in the instanced scene, so check the
+            # encoding and cells only.
+            for value in props.get("tile_map_data", []):
+                raw, reason = decode_value(value)
+                if raw is None:
+                    errors.append("%s: %s" % (where, reason))
+                    continue
+                n, problems = check_cells(raw, None)
+                cells += n
+                errors.extend("%s: %s" % (where, p) for p in problems)
+            continue
+        layers += 1
         data = props.get("tile_map_data", [])
         if len(data) != 1:
             errors.append(
