@@ -652,7 +652,7 @@ These are the core .tscn scenes and their orchestrating GDScript.
 **Priority:** P1 — blocks inventory management, equipment, party setup
 **Estimated Size:** L (1 .tscn + 10+ .gd files for sub-screens)
 **Output:** `game/scenes/overlay/menu.tscn`, `game/scripts/ui/` (menu screens), `game/scripts/autoload/party_state.gd`
-**Source Docs:** `ui-design.md` (all 14 screen designs — 1,180 lines)
+**Source Docs:** `ui-design.md` (all 14 screen designs)
 **Depends On:** 1.1 (Character Data), 1.3 (Items & Equipment), 1.4 (Shop Data — for buy/sell screens), 1.5 (Spells & Abilities)
 
 **What's Needed:**
