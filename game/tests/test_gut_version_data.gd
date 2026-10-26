@@ -29,7 +29,8 @@ func _recommended_gut_for_running_engine() -> String:
 
 
 ## The remedy for a mismatch, chosen by what the data recommends instead. Empty
-## when the data agrees with the installed GUT, so the passing message stays true.
+## when the data agrees with the installed GUT; the notice sentence and the hint
+## are then left out, so the passing message stays true.
 func _fix_hint(recommended: String, installed: String) -> String:
 	if recommended == installed:
 		return ""
@@ -62,21 +63,13 @@ func _fix_hint(recommended: String, installed: String) -> String:
 func test_vendored_version_data_recommends_the_installed_gut_for_this_engine() -> void:
 	var installed: String = GutUtils.version_numbers.gut_version
 	var recommended: String = _recommended_gut_for_running_engine()
-	assert_eq(
-		recommended,
-		installed,
-		(
-			(
-				"res://addons/gut/versions.json recommends GUT %s for Godot %s; installed is"
-				+ " %s. When they differ, every run ends with a 'GUT %s is now available!' notice."
-				+ " %s"
-			)
-			% [
-				recommended,
-				GutUtils.godot_version_string(),
-				installed,
-				recommended,
-				_fix_hint(recommended, installed),
-			]
-		)
+	var message: String = (
+		"res://addons/gut/versions.json recommends GUT %s for Godot %s; installed is %s."
+		% [recommended, GutUtils.godot_version_string(), installed]
 	)
+	var hint: String = _fix_hint(recommended, installed)
+	if hint != "":
+		message += (
+			" Every run ends with a 'GUT %s is now available!' notice. %s" % [recommended, hint]
+		)
+	assert_eq(recommended, installed, message)

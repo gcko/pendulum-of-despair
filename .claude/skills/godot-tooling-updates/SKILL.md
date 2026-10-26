@@ -200,7 +200,7 @@ gdformat --check game/scripts/
 # Full GUT suite (pre-push gate), judged by the same floor gate the hook uses
 "$GODOT" --headless --path game/ -s addons/gut/gut_cmdln.gd > <log> 2>&1
 python3 scripts/quality-gates/check_gut_baseline.py --log <log>
-grep -c 'is now available' <log>   # 0: the version data matches (see Phase 5)
+grep -cE 'is now available|may not be compatible|does not have a release' <log>   # 0 only proves no GUT version notice; a user://gut_temp_directory/versions.json cache can hide a bad vendored file. test_gut_version_data.gd (in the suite above) is the machine-independent check (see Phase 5)
 
 # Vendored copy vs the release tag: the ONLY permitted difference is
 # versions.json. .import/.uid sidecars are gitignored and Godot regenerates them.
