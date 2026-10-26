@@ -51,8 +51,8 @@ in these docs.**
 | Crafting | `crafting.md` (403) |
 | Encounters | `dungeons-world.md` (5,352), `dungeons-city.md` (1,489), `combat-formulas.md` |
 | Dialogue | `dialogue-system.md` (639), `script/` (9 files) |
-| UI & menus | `ui-design.md` (1,237) |
-| Save/load | `save-system.md` (621) |
+| UI & menus | `ui-design.md` (1,246) |
+| Save/load | `save-system.md` (622) |
 | Audio | `audio.md` (323), `music.md` (528) |
 | Overworld & maps | `overworld.md` (512), `geography.md` (718), `locations.md` (1,244), `biomes.md` (999) |
 | Dungeons | `dungeons-world.md` (5,352), `dungeons-city.md` (1,489) |
@@ -60,13 +60,13 @@ in these docs.**
 | NPCs | `npcs.md` (1,477) |
 | Events & flags | `events.md` (988) |
 | Visual style | `visual-style.md` (872), `building-palette.md` (1,407) |
-| Accessibility | `accessibility.md` (361) |
+| Accessibility | `accessibility.md` (362) |
 | Difficulty & balance | `difficulty-balance.md` (600) |
 | Transport | `transport.md` (307) |
 | Dynamic world | `dynamic-world.md` (1,156) |
 | Sidequests | `sidequests.md` (704) |
 | Post-game | `postgame.md` (281) |
-| Architecture | `docs/plans/technical-architecture.md` (1,240) |
+| Architecture | `docs/plans/technical-architecture.md` (1,241) |
 
 **Design doc risk note:** Some source docs are marked "MOSTLY COMPLETE"
 in `game-design-gaps.md` (npcs.md, sidequests.md, events.md).
@@ -353,12 +353,12 @@ transformation that can be validated line-by-line against source docs.
 **Priority:** P2 — blocks settings/config screen
 **Estimated Size:** S (1 JSON file)
 **Output:** `game/data/config/defaults.json`
-**Source Docs:** `accessibility.md` Section 7 (17 config settings), `save-system.md` Section 2 (config separate from saves)
+**Source Docs:** `accessibility.md` Section 7 (18 config settings), `save-system.md` Section 2 (config separate from saves)
 **Architecture Ref:** `technical-architecture.md` Section 6.6
 **Depends On:** None
 
 **What's Needed:**
-- [x] All 17 config settings with default values from accessibility.md
+- [x] All 18 config settings with default values from accessibility.md
 - [x] Battle speed (default 3), ATB mode (active), text speed (normal)
 - [x] Accessibility defaults: patience_mode (false), color_blind_mode (off), high_res_text (false), reduce_motion (false)
 - [x] Audio defaults: music_volume (8), sfx_volume (8), sound_mode (stereo)
@@ -664,7 +664,7 @@ These are the core .tscn scenes and their orchestrating GDScript.
 - [x] Status screen: full stat display, equipment summary, elemental profile
 - [x] Formation screen: swap reorder, row toggle (F/B), active+reserve list — Phase 2 (2026-04-08)
 - [x] Ley Crystal screen: browse/detail/equip, XP bar, stat comparison, negative effects — 2026-04-11
-- [x] Config screen: all 17 settings from accessibility.md (with cascade logic)
+- [x] Config screen: all 18 settings from accessibility.md (with cascade logic)
 - [x] All screens: keyboard/gamepad navigation, cursor memory, per ui-design.md specs
 - [x] Process mode: PROCESS_MODE_ALWAYS (runs while game paused)
 - [x] PartyState autoload: runtime party/inventory/equipment state

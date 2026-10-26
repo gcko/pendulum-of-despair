@@ -1178,7 +1178,7 @@ func faint_and_fast_reload() -> void:
 ### 6.6 Global Config
 
 Separate from saves per [save-system.md](../story/save-system.md)
-Section 2. All 17 settings per
+Section 2. All 18 settings per
 [accessibility.md](../story/accessibility.md) Section 7:
 
 ```json
@@ -1199,7 +1199,8 @@ Section 2. All 17 settings per
   "reduce_motion": false,
   "flash_intensity": "full",
   "transition_style": "classic",
-  "sfx_captions": false
+  "sfx_captions": false,
+  "fullscreen": false
 }
 ```
 

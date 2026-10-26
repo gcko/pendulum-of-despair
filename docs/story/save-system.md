@@ -68,6 +68,7 @@ the FF6 model — config is system-level.
 - Text speed (Instant / Fast / Normal / Slow)
 - Battle Cursor (Reset / Memory)
 - Window Color (RGB sliders, 0–31 each)
+- Fullscreen (On / Off)
 
 **Audio Settings**
 - Sound (Stereo / Mono)

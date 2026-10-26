@@ -353,6 +353,7 @@ changes these values.
 | Window Color | RGB | (default navy) |
 | Screen Shake | On / Off | On |
 | Mode 7 Intensity | 1-6 | 6 |
+| Fullscreen | On / Off | Off |
 
 ### Key Config Sub-Screen
 
