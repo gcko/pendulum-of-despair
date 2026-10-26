@@ -2,10 +2,10 @@
 """Quality Gate L: the GUT script/test count floor.
 
 `scripts/quality-gates/gut-baseline.txt` holds FLOORS for how many test scripts
-and tests GUT collects. They are the only guard against GUT 9.7.0 dropping a
+and tests GUT collects. They are the only guard against GUT 9.7.1 dropping a
 whole test file over a GDScript parse error while still reporting a green suite:
-every remaining test passes, `Failing Tests 0` prints, and the only trace is a
-count that fell.
+every remaining test passes, no `Failing Tests` line prints, and the only trace
+is a count that fell.
 
 Until #430 the floors were read by `scripts/gates.sh` alone, which nothing runs
 for you — so a deleted or parse-skipped test file sailed through both
@@ -62,7 +62,7 @@ SUMMARY_KEYS = {
     "risky": "Risky/Pending",
 }
 
-# GUT 9.7.0 prints "Failing Tests" and "Risky/Pending" ONLY when they are
+# GUT 9.7.1 prints "Failing Tests" and "Risky/Pending" ONLY when they are
 # non-zero (`_log_non_zero_total` in summary.gd), so their absence cannot serve
 # as the proof that
 # the suite finished — which is precisely how the old pre-push gate came to pass

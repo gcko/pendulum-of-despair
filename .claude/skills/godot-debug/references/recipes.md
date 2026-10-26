@@ -1,6 +1,6 @@
 # godot-debug recipes (deeper)
 
-Detailed techniques for root-causing GDScript / GUT 9.7.0 bugs in
+Detailed techniques for root-causing GDScript / GUT 9.7.1 bugs in
 Pendulum of Despair. The SKILL.md catalog covers the common scars; this is the
 long form. `<godot>` = `godot` on PATH, else
 `/Applications/Godot.app/Contents/MacOS/Godot`.
@@ -10,9 +10,12 @@ long form. `<godot>` = `godot` on PATH, else
 1. `<godot> --headless --path game/ --import` — warm imports. If this wedges in
    U-state (0% CPU, unkillable), reboot; the suite did not run.
 2. Run the one failing file with verbosity:
-   `<godot> --headless --path game/ -s addons/gut/gut_cmdln.gd \
+   `<godot> --headless --path game/ -s addons/gut/gut_cmdln.gd -gconfig= \
    -gtest=res://tests/test_<name>.gd -gexit -glog=3`
-3. Narrow to one test method with `-gselect=<pattern>`.
+   (`-gconfig=` keeps game/.gutconfig.json's `dirs` from adding the whole suite.)
+3. Narrow to the test methods whose name contains some text with
+   `-gunit_test_name=<text>`. (`-gselect=<pattern>` filters test FILES by
+   filename, not methods.)
 4. Read the `Scripts` / `Tests` counts every run — a drop means a file failed to
    parse and was silently skipped (compare against the floors in
    `scripts/quality-gates/gut-baseline.txt`).

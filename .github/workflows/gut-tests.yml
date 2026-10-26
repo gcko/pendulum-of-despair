@@ -68,9 +68,9 @@ jobs:
         timeout-minutes: 5
 
       # THE VERDICT. A green suite says nothing about how many tests RAN: GUT
-      # 9.7.0 drops a whole test file over a GDScript parse error and still
-      # reports `Failing Tests 0`, and a test that stops asserting is scored
-      # risky rather than failing. This one step checks that the Run Summary is
+      # 9.7.1 drops a whole test file over a GDScript parse error and still
+      # prints no `Failing Tests` line (it appears only when non-zero), and a
+      # test that stops asserting is scored risky rather than failing. This one step checks that the Run Summary is
       # present at all (absence FAILS, it does not pass), that nothing failed,
       # that every collected test passed, and that the script/test counts clear
       # the floors in gut-baseline.txt. Until #430 nothing but a hand-run

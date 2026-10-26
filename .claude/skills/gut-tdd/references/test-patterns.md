@@ -1,7 +1,7 @@
-# GUT 9.7.0 Test Patterns (reference)
+# GUT 9.7.1 Test Patterns (reference)
 
 Companion to `../SKILL.md`. Longer examples kept out of the main loop file.
-GUT 9.7.0 on Godot 4.8, GDScript only. Tests live in `game/tests/test_*.gd`.
+GUT 9.7.1 on Godot 4.8, GDScript only. Tests live in `game/tests/test_*.gd`.
 
 ## Assertion quick table
 
@@ -21,7 +21,7 @@ GUT 9.7.0 on Godot 4.8, GDScript only. Tests live in `game/tests/test_*.gd`.
 | Leaks | `assert_no_new_orphans()` |
 
 **Naming trap:** it is `assert_lte` / `assert_gte`, NOT `assert_le` / `assert_ge`.
-Using the wrong name is a parse error, and GUT 9.7.0 **silently skips** the
+Using the wrong name is a parse error, and GUT 9.7.1 **silently skips** the
 whole file — the suite stays green while your tests never ran. Always confirm
 the summary's `Scripts` and `Tests` counts.
 

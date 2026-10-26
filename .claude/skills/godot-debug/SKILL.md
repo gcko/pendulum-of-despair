@@ -5,7 +5,7 @@ description: Use when a GDScript bug, GUT failure, or unexpected Godot behavior 
 
 # Godot Debug
 
-Systematic root-causing for GDScript / GUT (9.7.0) / Godot 4.8 bugs in the
+Systematic root-causing for GDScript / GUT (9.7.1) / Godot 4.8 bugs in the
 Pendulum of Despair JRPG. GDScript only — no TypeScript, no vitest/jest. Tests
 are GUT; lint is gdlint + `gdformat --check`; issues live in GitHub Issues.
 
@@ -41,7 +41,7 @@ Symptom -> root cause -> fix.
   hides it. (Compare against the floors in `scripts/quality-gates/gut-baseline.txt`;
   Gate L enforces them.)
 - **Fix:** Always read the summary's `Scripts` and `Tests` counts. If they
-  dropped, a file was skipped — run that file alone (`-gtest=...`) to surface
+  dropped, a file was skipped — run that file alone (`-gconfig= -gtest=...`) to surface
   the parse error, fix it, confirm the counts recover.
 
 ### Pre-push "passed" but the GUT suite never ran (macOS U-state wedge)
@@ -86,15 +86,20 @@ Godot binary: `godot` on PATH, else
 # Import warm-up FIRST — must pass before any test run
 <godot> --headless --path game/ --import
 
-# Run ONE test file, exit when done
-<godot> --headless --path game/ -s addons/gut/gut_cmdln.gd \
+# Run ONE test file, exit when done. `-gconfig=` is required: without it GUT
+# also reads game/.gutconfig.json, whose `dirs` run the whole suite as well.
+<godot> --headless --path game/ -s addons/gut/gut_cmdln.gd -gconfig= \
   -gtest=res://tests/test_<name>.gd -gexit
 
 # Max verbosity while root-causing
-<godot> --headless --path game/ -s addons/gut/gut_cmdln.gd \
+<godot> --headless --path game/ -s addons/gut/gut_cmdln.gd -gconfig= \
   -gtest=res://tests/test_<name>.gd -gexit -glog=3
 
-# Isolate a single test / pattern within files
+# Only the test methods whose NAME contains <text>, within that file
+<godot> --headless --path game/ -s addons/gut/gut_cmdln.gd -gconfig= \
+  -gtest=res://tests/test_<name>.gd -gunit_test_name=<text> -gexit
+
+# Only the test FILES whose filename contains <pattern> (keeps .gutconfig's dirs)
 <godot> --headless --path game/ -s addons/gut/gut_cmdln.gd \
   -gselect=<pattern> -gexit
 
