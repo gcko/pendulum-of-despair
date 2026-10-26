@@ -26,6 +26,36 @@ func _recommended_gut_for_running_engine() -> String:
 	return recommended
 
 
+## The remedy for a mismatch, chosen by what the data recommends instead. Empty
+## when the data agrees with the installed GUT, so the passing message stays true.
+func _fix_hint(recommended: String, installed: String) -> String:
+	if recommended == installed:
+		return ""
+	if recommended == "0.0.0":
+		return (
+			"The data caps below this engine: take addons/gut/versions.json from"
+			+ " bitwes/Gut main at a named SHA (see godot-tooling-updates)."
+		)
+	if recommended.find(".") == -1:
+		return (
+			(
+				"No release in the data covers this engine, only the upstream branch '%s':"
+				+ " take versions.json from a newer bitwes/Gut main SHA that lists GUT %s."
+			)
+			% [recommended, installed]
+		)
+	if GutUtils.VersionNumbers.VerNumTools.is_version_gte(installed, recommended):
+		return (
+			(
+				"The data recommends an older release because it has no entry for the"
+				+ " installed GUT on this engine: take versions.json from a newer"
+				+ " bitwes/Gut main SHA that lists GUT %s. Do not bump GUT."
+			)
+			% installed
+		)
+	return "A newer GUT really exists: bump GUT."
+
+
 func test_vendored_version_data_recommends_the_installed_gut_for_this_engine() -> void:
 	var installed: String = GutUtils.version_numbers.gut_version
 	var recommended: String = _recommended_gut_for_running_engine()
@@ -34,12 +64,16 @@ func test_vendored_version_data_recommends_the_installed_gut_for_this_engine() -
 		installed,
 		(
 			(
-				"res://addons/gut/versions.json recommends GUT %s for Godot %s but %s is"
-				+ " installed, so every run ends with a 'GUT %s is now available!' notice."
-				+ " 0.0.0 means the data caps below this engine: take addons/gut/versions.json"
-				+ " from bitwes/Gut main at a named SHA (see godot-tooling-updates)."
-				+ " Any other version means a newer GUT really exists: bump GUT."
+				"res://addons/gut/versions.json recommends GUT %s for Godot %s; installed is"
+				+ " %s. When they differ, every run ends with a 'GUT %s is now available!' notice."
+				+ " %s"
 			)
-			% [recommended, GutUtils.godot_version_string(), installed, recommended]
+			% [
+				recommended,
+				GutUtils.godot_version_string(),
+				installed,
+				recommended,
+				_fix_hint(recommended, installed),
+			]
 		)
 	)

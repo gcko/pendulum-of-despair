@@ -61,9 +61,10 @@ pnpm --version
     --jq '.[] | select(.prerelease | not) | select(.draft | not) | .tag_name' \
     | sed 's/^v//' | sort -V | tail -1
   ```
-  Do NOT use `gh release view` or `releases/latest`: GitHub's "Latest" flag
-  is not a version sort. On 2026-10-26 it pointed at v9.6.1 while v9.7.1 was
-  already released, so trusting it reads a newer installed GUT as a downgrade.
+  Do NOT find the newest version with a bare `gh release view` (no tag) or
+  `releases/latest`: GitHub's "Latest" flag is not a version sort. On
+  2026-10-26 it pointed at v9.6.1 while v9.7.1 was already released, so
+  trusting it reads a newer installed GUT as a downgrade.
 - **gdtoolkit:** check PyPI for the newest version.
   ```bash
   pip index versions gdtoolkit 2>/dev/null \
@@ -82,7 +83,7 @@ For every tool with a newer version, **do not guess**. Research before
 proposing the bump:
 
 - **GUT:** read the release notes between current and target
-  (`gh release view <tag> --repo bitwes/Gut`). Watch for renamed asserts,
+  (`gh release view v<tag> --repo bitwes/Gut`). Watch for renamed asserts,
   changed `gut_cmdln.gd` flags, or `.gutconfig`/runner changes. Note that
   the `game/tests/test_*.gd` files use the project's existing assert conventions
   (`assert_lte`/`assert_gte`, never `assert_le`/`assert_ge`).
@@ -149,10 +150,11 @@ This is the ONE permitted difference from the release tag
 (verification-checklists.md §10, #452). Every other vendored file stays
 pristine. `game/tests/test_gut_version_data.gd` fails if the data does not
 recommend the installed GUT for the running engine, so skipping this step
-cannot pass silently; its message tells `0.0.0` (data caps below the engine:
-overlay) apart from a real version (a newer GUT exists: bump). Once a release
-tag's own data covers our engine, vendor that tag pristine and drop the
-overlay (#460).
+cannot pass silently; its message names which case it hit: `0.0.0` (data
+caps below the engine: overlay main), an older release or a branch name (the
+data lacks the installed GUT: overlay a newer main SHA, do not bump), or a
+newer release (a newer GUT really exists: bump). Once a release tag's own data
+covers our engine, vendor that tag pristine and drop the overlay (#460).
 
 Then let Godot re-import, and check no sidecar came out poisoned (the count
 proves the grep looked at something):
