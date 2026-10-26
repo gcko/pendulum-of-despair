@@ -880,7 +880,7 @@ smallest vertical slice (Ember Vein) that exercises every system.
 
 **Notes:**
 - Vertical slice: 3 floors (F1 Upper Mine, F2 Lower Mine, F4 Boss Arena). Floor 3 (Ancient Ruin) deferred — puzzles and key items not in scope
-- TileMapLayer pipeline validated with placeholder tileset + physics collision
+- TileMapLayer pipeline validated with placeholder tileset + physics collision. **Not true until #449:** every map's `tile_map_data` was written in a legacy TileMap int layout that TileMapLayer rejects, so all 22 layers loaded with zero cells and nothing collided. #449 re-encoded them as TileMapLayer byte arrays; pre-push Gate N now checks the encoding, and `game/tests/test_map_tile_layers.gd` checks that each layer loads and that its wall tiles leave the map walkable (tile collision only; props are not modeled).
 - Vein Guardian AI is hardcoded in battle_manager.gd — **tech debt: refactor to data-driven boss_ai.gd when second boss exists**
 - Ember Drake uses weighted-random AI — canonical AI is conditional priority-list (deferred)
 - Post-boss exit goes to test_room — replace when overworld (gap 4.3) exists

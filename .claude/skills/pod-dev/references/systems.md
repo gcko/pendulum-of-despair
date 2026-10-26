@@ -189,11 +189,27 @@ Avoid exposition dumps. Break up long lore into multiple exchanges.
 - **Map format:** Godot `.tscn` scenes under `scenes/maps/` (`towns/`,
   `dungeons/`, `cutscenes/`, plus `overworld.tscn`), built with Godot
   `TileMapLayer` nodes and a shared `TileSet` resource -- not Tiled JSON
+- **Tile data format:** `tile_map_data` must be the TileMapLayer
+  `PackedByteArray` (a u16 format header of 0, then 12 bytes per cell:
+  x, y, source, atlas x, atlas y, alternative), never the legacy TileMap
+  `PackedInt32Array(...)` or `{"format": 3, "tile_data": ...}` layouts.
+  TileMapLayer rejects those and the layer loads empty (#449).
+  `tools/convert_tile_map_data.py` re-encodes them, pre-push Gate N
+  rejects them, and `game/tests/test_map_tile_layers.gd` fails on a layer
+  that loads no cells.
 - **Layers (minimum), as TileMapLayer nodes / collision setup:**
   - `ground` -- walkable terrain
   - `decoration` -- trees, rocks, objects above ground
   - `collision` -- physics layer marking impassable tiles
   - `events` -- trigger-zone entity scenes (NPC positions, doors, transitions)
+- **Instanced-child edits:** a map scene that overrides a property of an
+  instanced entity's child (for example, a water or damage zone's
+  `CollisionShape2D` footprint), or adds a node inside an instance, needs an
+  `[editable path="Entities/<Zone>"]` entry for that instance. Godot applies
+  the edit at load time without one, but an editor save (or "Upgrade All
+  Project Files") deletes it (#450). Pre-push Gate M
+  (`scripts/quality-gates/check_instance_overrides.py`) rejects a missing
+  entry, and `game/tests/test_map_zone_sizes.gd` pins the zone footprints.
 
 ### Encounter Design
 Two options -- **confirm with user before implementing:**

@@ -16,7 +16,8 @@ automatically by husky hooks — no manual test/lint step needed:
   gdlint + JSON validation + `gdformat --check`.
 - **pre-push:** quality-gate self-tests + cross-file ID-uniqueness
   scan + stale-count scan + scene-ref scan + doc-citation integrity +
-  dialogue sync + American-English spelling + Godot import
+  dialogue sync + American-English spelling + instanced-child edit
+  persistence (Gate M) + TileMapLayer tile data (Gate N) + Godot import
   (`godot --headless --path game/ --import`) + the full GUT test suite
   + Gate L (Run Summary present, nothing failed, every collected test
   passed, script/test counts at or above `gut-baseline.txt`).
@@ -83,7 +84,8 @@ git push -u origin "$(git branch --show-current)"
 The pre-push hook runs the **quality-gate self-tests**, **cross-file
 ID uniqueness**, **stale-count scan**, **scene reference
 validation**, **doc-citation integrity**, **dialogue sync**,
-**American-English spelling**, **Godot import**
+**American-English spelling**, **instanced-child edit persistence**
+(Gate M), **TileMapLayer tile data** (Gate N), **Godot import**
 (`godot --headless --path game/ --import`), the **full GUT test
 suite**, and **Gate L** over the run's log. If the push fails, fix
 the reported issues and retry.
@@ -108,7 +110,7 @@ PR body format:
 
 ## Test plan
 - [x] Pre-commit gates pass (branch protection, gdlint, JSON validation, gdformat --check)
-- [x] Pre-push gates pass (ID uniqueness, stale counts, scene refs, Godot import, full GUT suite, Gate L count floor)
+- [x] Pre-push gates pass (quality-gate self-tests, ID uniqueness, stale counts, scene refs, doc citations, dialogue sync, spelling, instanced-child edits (Gate M), TileMapLayer tile data (Gate N), Godot import, full GUT suite, Gate L count floor)
 - [ ] Manual verification steps if applicable
 
 Generated with [Claude Code](https://claude.ai/code)
@@ -141,9 +143,10 @@ After outputting the PR URL, always end with:
 
 - **Hooks are the quality gates.** Do not run separate test/lint
   commands — the husky pre-commit (branch protection, gdlint, JSON
-  validation, gdformat --check) and pre-push (ID uniqueness, stale
-  counts, scene refs, Godot import, full GUT suite, GUT count floor)
-  hooks handle it. The one exception is `bash scripts/gates.sh`, on
+  validation, gdformat --check) and pre-push (every gate marked
+  pre-push in the registry at the top of `.husky/pre-push`, Gates M and N included,
+  then Godot import, the full GUT suite and its count floor) hooks
+  handle it. The one exception is `bash scripts/gates.sh`, on
   work the hooks cannot see: uncommitted state in a parallel worktree
   (pre-commit sees only the index), or a stacked branch that must be
   judged against its own parent rather than `main`

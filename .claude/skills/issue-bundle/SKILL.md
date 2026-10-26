@@ -136,8 +136,9 @@ Either way:
 /create-pr
 ```
 
-`/create-pr` commits, pushes (husky pre-push runs the ID/stale/scene-ref
-scans, Godot import, and the full GUT suite), and opens the PR against
+`/create-pr` commits, pushes (husky pre-push runs every gate marked pre-push in the registry at
+the top of `.husky/pre-push`: the data-integrity scans, Godot import, and
+the full GUT suite), and opens the PR against
 `main` using `.github/pull_request_template.md`.
 
 The PR body must list **every** issue in the bundle with its own closing

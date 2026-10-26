@@ -49,7 +49,7 @@ Multi-phase epic: build the full tilemap to canonical coords, then add location 
 - **Verdict:** CONFIRMED
 - **Verified severity:** HIGH
 - **Safe to fix immediately:** no — tracked as development work
-- **Evidence:** Parsed overworld.tscn TileMapLayer PackedInt32Array: 2400 cells, x range 0-59, y range 0-39 (exactly 60x40). Design geography.md:472 '128 tiles wide x 96 tiles tall'; geography.md:490 'Key Landmark Positions'. game/scenes/maps/overworld.tscn:41 TileMapLayer holds the only tile data.
+- **Evidence:** Parsed overworld.tscn TileMapLayer tile_map_data (a PackedByteArray, format 0, since #449): 2400 cells, x range 0-59, y range 0-39 (exactly 60x40). Design geography.md:472 '128 tiles wide x 96 tiles tall'; geography.md:490 'Key Landmark Positions'. game/scenes/maps/overworld.tscn:41 TileMapLayer holds the only tile data.
 - **Notes:** Core claim (60x40 actual vs 128x96 designed) exactly correct. XL multi-act continental epic — must not attempt now.
 
 ---

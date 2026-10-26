@@ -21,6 +21,8 @@ GATE_DIR="scripts/quality-gates"
 #   J  dialogue script/JSON sync  pre-push   check_dialogue_sync.py
 #   K  American-English spelling  pre-push   check_spelling.py
 #   L  GUT summary/failures/floor pre-push   check_gut_baseline.py
+#   M  instanced-child edits      pre-push   check_instance_overrides.py
+#   N  TileMapLayer tile data     pre-push   check_tile_map_data.py
 #
 # Each gate script's module docstring names its own letter; keep the two in
 # step when editing either.
@@ -62,6 +64,22 @@ python3 "$GATE_DIR/check_dialogue_sync.py"
 # fresh British spellings in the commit that was sweeping (#400).
 echo "=== Pre-push: American-English spelling ==="
 python3 "$GATE_DIR/check_spelling.py"
+
+# === QUALITY GATE M: Instanced-child edits survive an editor save ===
+# A .tscn may override a node inside a scene it instances. Godot applies the
+# override at load, but an editor save keeps it only if the instance is listed
+# in [editable path=...]. Twelve Fenmother's Hollow zone footprints had no such
+# entry and reverted to the 16x16 prefab on the first resave (#450).
+echo "=== Pre-push: Instanced-child edit persistence ==="
+python3 "$GATE_DIR/check_instance_overrides.py"
+
+# === QUALITY GATE N: TileMapLayer tile data ===
+# Every map layer once stored tile_map_data in the legacy TileMap int layout,
+# which TileMapLayer rejects, so all 22 maps loaded with no tiles and no walls
+# (#449). The value must be a PackedByteArray with format header 0, whole
+# 12-byte cells, and only tiles its TileSet defines.
+echo "=== Pre-push: TileMapLayer tile data ==="
+python3 "$GATE_DIR/check_tile_map_data.py"
 
 # === QUALITY GATE H: GUT unit tests ===
 # Run all GUT tests headless. Godot comes from $GODOT_BIN, from PATH, or from
