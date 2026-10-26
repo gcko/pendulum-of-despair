@@ -7,7 +7,7 @@
 >
 > **Companion to:** `docs/analysis/game-design-gaps.md` (design docs — 24/25 COMPLETE)
 > **Architecture reference:** `docs/plans/technical-architecture.md`
-> **Engine:** Godot 4.6+ / GDScript only
+> **Engine:** Godot 4.8+ / GDScript only
 > **Resolution:** 1280x720 native (changed from 320x180 on 2026-04-08), 4x camera zoom for game world, integer-scaled window
 
 ## How to Read This Document
@@ -66,7 +66,7 @@ in these docs.**
 | Dynamic world | `dynamic-world.md` (1,156) |
 | Sidequests | `sidequests.md` (704) |
 | Post-game | `postgame.md` (281) |
-| Architecture | `docs/plans/technical-architecture.md` (1,239) |
+| Architecture | `docs/plans/technical-architecture.md` (1,240) |
 
 **Design doc risk note:** Some source docs are marked "MOSTLY COMPLETE"
 in `game-design-gaps.md` (npcs.md, sidequests.md, events.md).

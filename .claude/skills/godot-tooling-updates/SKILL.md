@@ -78,7 +78,7 @@ proposing the bump:
 - **GUT:** read the release notes between current and target
   (`gh release view <tag> --repo bitwes/Gut`). Watch for renamed asserts,
   changed `gut_cmdln.gd` flags, or `.gutconfig`/runner changes. Note that
-  these 55 `test_*.gd` files use the project's existing assert conventions
+  the `game/tests/test_*.gd` files use the project's existing assert conventions
   (`assert_lte`/`assert_gte`, never `assert_le`/`assert_ge`).
 - **gdtoolkit:** read its changelog. **A `gdformat` bump can change
   formatting rules**, which would make `gdformat --check` fail across files
@@ -154,10 +154,11 @@ gdformat --check game/scripts/
 "$GODOT" --headless --path game/ -s addons/gut/gut_cmdln.gd
 ```
 
-**GUT gotcha:** Godot 4.7 / GUT 9.7.0 **silently skip** test files that have
-parse errors — a green run can hide them. After a GUT bump especially, check
-the **Scripts/Tests counts** in the summary against the 55 `test_*.gd` files;
-a dropped count means a file failed to parse, not that it passed.
+**GUT gotcha:** GUT 9.7.0 **silently skips** test files that have parse
+errors on Godot 4.7 and 4.8 (re-verified during the 4.8 migration) — a green run can hide
+them. After a GUT bump especially, check the **Scripts/Tests counts** in the
+summary against the floors in `scripts/quality-gates/gut-baseline.txt` (Gate L
+enforces them); a dropped count means a file failed to parse, not that it passed.
 
 If a step fails, fix it (or revert that one tool and offer the user the
 choice to defer it). Do not push with a failing or wedged gate. If

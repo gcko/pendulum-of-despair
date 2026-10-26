@@ -5,7 +5,7 @@ description: Use when a GDScript bug, GUT failure, or unexpected Godot behavior 
 
 # Godot Debug
 
-Systematic root-causing for GDScript / GUT (9.7.0) / Godot 4.7 bugs in the
+Systematic root-causing for GDScript / GUT (9.7.0) / Godot 4.8 bugs in the
 Pendulum of Despair JRPG. GDScript only — no TypeScript, no vitest/jest. Tests
 are GUT; lint is gdlint + `gdformat --check`; issues live in GitHub Issues.
 
@@ -38,7 +38,8 @@ Symptom -> root cause -> fix.
   is clearly broken; `Scripts`/`Tests` counts look low.
 - **Root cause:** GUT 9.x **silently skips** any `test_*.gd` file that fails to
   parse. The skipped file contributes zero passes and zero failures, so green
-  hides it. (Repo baseline: ~55 test files / ~924 tests.)
+  hides it. (Compare against the floors in `scripts/quality-gates/gut-baseline.txt`;
+  Gate L enforces them.)
 - **Fix:** Always read the summary's `Scripts` and `Tests` counts. If they
   dropped, a file was skipped — run that file alone (`-gtest=...`) to surface
   the parse error, fix it, confirm the counts recover.

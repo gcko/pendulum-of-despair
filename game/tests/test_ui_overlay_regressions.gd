@@ -1,7 +1,8 @@
 extends GutTest
 ## Regression guards for the overlay and UI layer: menu scrolling, the shop
 ## act filter, the title Config entry, overlay push/pop recovery and swap,
-## the save/load re-entry guards, and the guarded input-consume helper.
+## the save/load re-entry guards, the guarded input-consume helper, and the
+## Alt+Enter fullscreen opt-out that keeps the shortcut off ui_accept.
 ##
 ## Split out of the 968-line test_issue_fixes.gd (#374).
 
@@ -265,4 +266,19 @@ func test_overlay_swap_no_gap() -> void:
 	assert_true(
 		"push_overlay" in open_save_body,
 		"_open_save should call push_overlay directly after silent pop",
+	)
+
+
+# ==========================================================================
+# Godot 4.8: Alt+Enter must not toggle fullscreen (#453)
+# ==========================================================================
+
+
+# Headless Godot cannot observe a window-mode toggle, so assert the root
+# window's fullscreen_shortcut_enabled flag, which Window::_window_input checks.
+# project.godot's enable_toggle_fullscreen_shortcut=false sets it (engine default true).
+func test_alt_enter_does_not_toggle_fullscreen() -> void:
+	assert_false(
+		get_tree().root.fullscreen_shortcut_enabled,
+		"Alt+Enter also fires ui_accept; Config would toggle fullscreen and cycle a setting",
 	)

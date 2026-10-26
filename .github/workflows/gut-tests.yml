@@ -10,7 +10,17 @@ on:
     types: [opened, synchronize, reopened]
 
 env:
-  GODOT_VERSION: "4.7"
+  # Review all three on every bump; GODOT_SHA512 changes with every build.
+  # GODOT_STATUS is "stable" for a release or the pre-release tag ("beta1",
+  # "rc2"). godotengine/godot-builds hosts every build, stable included;
+  # godotengine/godot hosts only stable ones, so a beta URL there 404s.
+  # GODOT_SHA512 is the hash only (first field, no filename) from the
+  # Godot_v<tag>_linux.x86_64.zip line of that release's SHA512-SUMS.txt, pinned
+  # here rather than fetched next to the zip: a sums file from the same release
+  # would be replaced along with a replaced asset.
+  GODOT_VERSION: "4.8"
+  GODOT_STATUS: "beta1"
+  GODOT_SHA512: "aee4cbf3c5f86eee875c0f2f77cc9d816a3fbb220774e6ffc95fd5a557a6c5ec917f2b6118c0aa2008bd10f4b2a021225dc78ba7b7c54745411e0f2721f70a67"
 
 jobs:
   gut-tests:
@@ -22,10 +32,18 @@ jobs:
 
       - name: Download Godot
         run: |
-          wget -q https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
-          unzip -q Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
-          sudo mv Godot_v${GODOT_VERSION}-stable_linux.x86_64 /usr/local/bin/godot
+          GODOT_TAG="${GODOT_VERSION}-${GODOT_STATUS}"
+          GODOT_PKG="Godot_v${GODOT_TAG}_linux.x86_64"
+          GODOT_URL="https://github.com/godotengine/godot-builds/releases/download/${GODOT_TAG}"
+          wget -q "${GODOT_URL}/${GODOT_PKG}.zip"
+          # An unset pin is a failure, not a skip: do not lean on how a given
+          # sha512sum treats a malformed line.
+          : "${GODOT_SHA512:?GODOT_SHA512 must be set}"
+          echo "${GODOT_SHA512}  ${GODOT_PKG}.zip" | sha512sum -c -
+          unzip -q "${GODOT_PKG}.zip"
+          sudo mv "${GODOT_PKG}" /usr/local/bin/godot
           chmod +x /usr/local/bin/godot
+          godot --version
 
       - name: Import Godot project (register GUT classes)
         run: |

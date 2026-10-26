@@ -1,10 +1,10 @@
 # Technical Architecture
 
-> Developer implementation reference for the Godot 4.7 project.
+> Developer implementation reference for the Godot 4.8 project.
 > Self-contained — everything needed to start building Pendulum of
 > Despair in Godot, in one file.
 >
-> **Engine:** Godot 4.7+ (stable)
+> **Engine:** Godot 4.8+ (currently 4.8-beta1; CI pins the exact build in `.github/workflows/gut-tests.yml`)
 > **Language:** GDScript only (no C#, no .NET dependency)
 > **Resolution:** 1280x720 viewport with 4x camera zoom (effective 320x180 game world), integer-scaled (per [accessibility.md](../story/accessibility.md))
 > **Frame rate:** 60 fps locked
@@ -200,10 +200,11 @@ Six persistent managers, always available via global name:
 [display]
 window/size/viewport_width = 1280
 window/size/viewport_height = 720
+window/size/enable_toggle_fullscreen_shortcut = false  # opt out of the 4.8 ui_toggle_fullscreen default (Alt+Enter; also Ctrl+Cmd+F on macOS)
 window/size/window_width_override = 1920
 window/size/window_height_override = 1080
 window/stretch/mode = "viewport"
-window/stretch/aspect = "keep"
+window/stretch/aspect = "keep"  # engine default; not written to project.godot
 window/stretch/scale_mode="integer"
 
 [rendering]
