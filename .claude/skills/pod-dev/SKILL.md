@@ -12,7 +12,7 @@ description: >
 
 # Pendulum of Despair -- Project Skill
 
-A Godot 4.7 desktop JRPG written in GDScript -- an homage to the golden age of
+A Godot 4.8 desktop JRPG written in GDScript -- an homage to the golden age of
 16-bit console RPGs (1990-1995), drawing from **Final Fantasy IV**, **Final
 Fantasy VI**, **Secret of Mana**, and **Chrono Trigger**. The goal: honor that
 era with a locally-run desktop application built on the Godot Engine.
@@ -89,7 +89,7 @@ current focus is the combat command core (see open `gap-analysis` issues). Use
 Read [`references/tech-stack.md`](references/tech-stack.md) for full detail.
 
 **Quick summary:**
-- **Engine:** Godot 4.7, **GL Compatibility** renderer, `config_version=5`
+- **Engine:** Godot 4.8, **GL Compatibility** renderer, `config_version=5`
 - **Language:** **GDScript only** (no TypeScript, no `.js`/`.ts` source)
 - **Project root:** `game/` (open this directory in the Godot editor)
 - **Viewport:** 1280x720 at 4x camera zoom -> 320x180 effective game world,

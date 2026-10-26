@@ -154,10 +154,11 @@ gdformat --check game/scripts/
 "$GODOT" --headless --path game/ -s addons/gut/gut_cmdln.gd
 ```
 
-**GUT gotcha:** Godot 4.7 / GUT 9.7.0 **silently skip** test files that have
-parse errors — a green run can hide them. After a GUT bump especially, check
-the **Scripts/Tests counts** in the summary against the 55 `test_*.gd` files;
-a dropped count means a file failed to parse, not that it passed.
+**GUT gotcha:** GUT 9.7.0 **silently skips** test files that have parse
+errors on Godot 4.7 and 4.8 (re-verified on 4.8-beta1) — a green run can hide
+them. After a GUT bump especially, check the **Scripts/Tests counts** in the
+summary against the floors in `scripts/quality-gates/gut-baseline.txt` (Gate L
+enforces them); a dropped count means a file failed to parse, not that it passed.
 
 If a step fails, fix it (or revert that one tool and offer the user the
 choice to defer it). Do not push with a failing or wedged gate. If

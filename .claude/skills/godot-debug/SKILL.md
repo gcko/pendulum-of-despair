@@ -5,7 +5,7 @@ description: Use when a GDScript bug, GUT failure, or unexpected Godot behavior 
 
 # Godot Debug
 
-Systematic root-causing for GDScript / GUT (9.7.0) / Godot 4.7 bugs in the
+Systematic root-causing for GDScript / GUT (9.7.0) / Godot 4.8 bugs in the
 Pendulum of Despair JRPG. GDScript only — no TypeScript, no vitest/jest. Tests
 are GUT; lint is gdlint + `gdformat --check`; issues live in GitHub Issues.
 

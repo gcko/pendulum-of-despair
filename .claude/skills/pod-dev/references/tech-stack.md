@@ -2,13 +2,13 @@
 
 ## Architecture
 
-A **single Godot 4.7 project** rooted at `game/`. There is no monorepo, no
+A **single Godot 4.8 project** rooted at `game/`. There is no monorepo, no
 bundler, no backend server, and no database. The game is a locally-run desktop
 application written entirely in **GDScript**.
 
 | Item | Value |
 |------|-------|
-| Engine | Godot 4.7 |
+| Engine | Godot 4.8 (4.8-beta1 until stable; exact build pinned in CI) |
 | Renderer | GL Compatibility |
 | `config_version` | 5 |
 | Language | GDScript only |
@@ -16,7 +16,7 @@ application written entirely in **GDScript**.
 | Viewport | 1280x720 at 4x camera zoom -> 320x180 effective, integer-scaled |
 | Game name | "Pendulum of Despair" |
 
-Open the `game/` directory in the Godot 4.7+ editor.
+Open the `game/` directory in the Godot 4.8+ editor.
 
 ---
 
@@ -161,7 +161,7 @@ Resolve the Godot binary as `godot` on PATH, else
 
 ### GUT gotchas (do not get burned)
 
-- Godot 4.7 / GUT 9.7.0 **silently skip** test files that have parse errors --
+- GUT 9.7.0 **silently skips** test files that have parse errors --
   a green run can hide them. Always check the **Scripts / Tests** counts in the
   summary, not just the pass/fail line.
 - The assertion helpers are `assert_lte` / `assert_gte` (NOT `assert_le` /

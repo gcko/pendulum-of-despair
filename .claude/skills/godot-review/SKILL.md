@@ -49,7 +49,7 @@ digraph godot_review {
 ### Pass A: GDScript Type Safety & Style
 
 Check all changed `.gd` files for:
-- **No Godot-3 API holdovers (CRITICAL in this 4.7-only repo).** Flag
+- **No Godot-3 API holdovers (CRITICAL in this 4.8-only repo).** Flag
   `KinematicBody2D`→`CharacterBody2D`, `Physics2DServer`→`PhysicsServer2D`,
   `File`/`Directory`→`FileAccess`/`DirAccess`, string-name `connect()` →
   `Callable`. A Godot-3 API here is a BLOCKER.
@@ -146,7 +146,7 @@ Cross-reference implementation against game design docs:
 ## Verdict Categories
 
 **BLOCKER:** Crashes, data loss, broken pixel rendering, state machine
-violations, Godot-3 API holdovers (this repo is 4.7-only). Must fix before
+violations, Godot-3 API holdovers (this repo is 4.8-only). Must fix before
 merge.
 
 **ISSUE:** Design doc mismatch, type safety gap, style violation,

@@ -5,13 +5,13 @@ description: >
   GUT. Triggers on "write tests first", implementing or refactoring a game
   mechanic (combat formulas, stat scaling, save logic, ATB), or driving any
   GDScript behavior with tests. Enforces RED -> GREEN -> REFACTOR adapted to
-  GUT 9.7.0 / Godot 4.7. Hands off to /create-pr when green.
+  GUT 9.7.0 / Godot 4.8. Hands off to /create-pr when green.
 ---
 
 # GUT TDD (Test-Driven GDScript)
 
 Drive every piece of GDScript game logic with a failing GUT test first.
-This project runs **GUT 9.7.0 on Godot 4.7**, GDScript only. Tests live in
+This project runs **GUT 9.7.0 on Godot 4.8**, GDScript only. Tests live in
 `game/tests/` as `test_*.gd`. The pre-push hook runs the **full GUT suite**,
 so code does not leave your machine until the suite is green — never
 `--no-verify`, fix the root cause instead.

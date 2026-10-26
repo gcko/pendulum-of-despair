@@ -1,7 +1,7 @@
 # GUT 9.7.0 Test Patterns (reference)
 
 Companion to `../SKILL.md`. Longer examples kept out of the main loop file.
-GUT 9.7.0 on Godot 4.7, GDScript only. Tests live in `game/tests/test_*.gd`.
+GUT 9.7.0 on Godot 4.8, GDScript only. Tests live in `game/tests/test_*.gd`.
 
 ## Assertion quick table
 
