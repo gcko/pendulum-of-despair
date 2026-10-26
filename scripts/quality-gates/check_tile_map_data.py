@@ -16,7 +16,8 @@ Why: all 22 map layers once stored the legacy TileMap int layout
 (`PackedInt32Array(...)` or `{"format": 3, "tile_data": ...}`). TileMapLayer
 rejects both, so every map loaded with zero cells, and an editor resave then
 deletes the line for good. A layer with NO tile_map_data line is reported too,
-because that is exactly what such a resave leaves behind.
+because that is exactly what such a resave leaves behind, and so is a layer
+with two (a bad merge resolution; Godot silently keeps the last).
 
 tools/convert_tile_map_data.py rewrote the 22 legacy layers and is the way to
 re-encode one if it ever comes back.
@@ -227,10 +228,14 @@ def check_scene(path, game_root=GAME_ROOT):
         layers += 1
         data = props.get("tile_map_data", [])
         if len(data) != 1:
-            errors.append(
-                "%s: %s tile_map_data lines - a layer with none loads empty, which is "
-                "what an editor resave of a rejected value leaves behind (#449)" % (where, len(data))
-            )
+            if data:
+                why = "Godot keeps only the last one, so delete the duplicate"
+            else:
+                why = (
+                    "a layer with none loads empty, which is what an editor resave "
+                    "of a rejected value leaves behind (#449)"
+                )
+            errors.append("%s: %s tile_map_data lines - %s" % (where, len(data), why))
             continue
         raw, reason = decode_value(data[0])
         if raw is None:

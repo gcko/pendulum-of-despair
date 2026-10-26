@@ -8,6 +8,8 @@ Gate I's discovery, so a Gate N that has stopped detecting fails at pre-push.
 The two legacy layouts are pinned verbatim from the pre-#449 scenes, the walk
 is tested two directories deep (every real map layer lives at least one level
 below game/scenes/), and the hook wiring test rejects a commented-out call.
+A layer with no tile_map_data line and one with a duplicated line are each
+pinned by their own test.
 Each tile_set resolution branch (missing, undeclared ExtResource or SubResource,
 unreadable, inline, two inline TileSets) and
 each unloadable encoding (bad base64, a byte above 255, not a byte array) is
@@ -115,6 +117,15 @@ class TestLegacyLayoutsAreRejected(GateFixture):
     def test_a_layer_whose_data_line_a_resave_deleted_is_reported(self):
         self.scene("")
         self.assertIn("0 tile_map_data lines", self.errors()[0])
+
+    def test_a_layer_with_a_duplicated_data_line_is_reported(self):
+        # A bad merge resolution can leave two values; Godot silently keeps the last.
+        line = encode(GOOD)
+        self.scene(line + line)
+        errs = self.errors()
+        self.assertEqual(len(errs), 1, errs)
+        self.assertIn("2 tile_map_data lines", errs[0])
+        self.assertIn("keeps only the last", errs[0])
 
 
 class TestOverridesOfInstancedLayers(GateFixture):

@@ -110,7 +110,7 @@ PR body format:
 
 ## Test plan
 - [x] Pre-commit gates pass (branch protection, gdlint, JSON validation, gdformat --check)
-- [x] Pre-push gates pass (ID uniqueness, stale counts, scene refs, doc citations, dialogue sync, spelling, instanced-child edits (Gate M), TileMapLayer tile data (Gate N), Godot import, full GUT suite, Gate L count floor)
+- [x] Pre-push gates pass (quality-gate self-tests, ID uniqueness, stale counts, scene refs, doc citations, dialogue sync, spelling, instanced-child edits (Gate M), TileMapLayer tile data (Gate N), Godot import, full GUT suite, Gate L count floor)
 - [ ] Manual verification steps if applicable
 
 Generated with [Claude Code](https://claude.ai/code)
@@ -143,8 +143,8 @@ After outputting the PR URL, always end with:
 
 - **Hooks are the quality gates.** Do not run separate test/lint
   commands — the husky pre-commit (branch protection, gdlint, JSON
-  validation, gdformat --check) and pre-push (every gate in the
-  registry at the top of `.husky/pre-push`, Gates M and N included,
+  validation, gdformat --check) and pre-push (every gate marked
+  pre-push in the registry at the top of `.husky/pre-push`, Gates M and N included,
   then Godot import, the full GUT suite and its count floor) hooks
   handle it. The one exception is `bash scripts/gates.sh`, on
   work the hooks cannot see: uncommitted state in a parallel worktree

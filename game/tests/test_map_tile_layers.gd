@@ -16,6 +16,9 @@ extends GutTest
 ## F3 puzzle blockers are such props, and the tiles alone do not gate them.)
 ## Cells outside a layer's used rect are treated as not walkable, so an exit
 ## reachable only by walking off the painted map counts as unreachable.
+## An exit counts only where exploration_entity_manager.gd connects it: a
+## direct child of Transitions with target_map, or of Entities with
+## target_map_id. Any other area carrying that metadata fails the test.
 
 const MAPS_DIR: String = "res://scenes/maps"
 const PLAYER_SCENE: String = "res://scenes/entities/player_character.tscn"
@@ -302,11 +305,40 @@ func _area_rects(area: Area2D, layer: TileMapLayer) -> Array[Rect2]:
 	return out
 
 
+## Exits as exploration_entity_manager.gd wires them: a direct child of
+## Transitions with target_map (transition), or a direct child of Entities with
+## target_map_id (pitfall). An exit anywhere else is never connected, so it is
+## not credited, and the test fails.
 func _target_rects(root: Node, layer: TileMapLayer, exits_only: bool) -> Array[Rect2]:
 	var out: Array[Rect2] = []
+	var transitions: Node = root.get_node_or_null("Transitions")
+	var entities: Node = root.get_node_or_null("Entities")
 	for area: Area2D in _areas(root):
-		var is_exit: bool = area.has_meta("target_map") or area.has_meta("target_map_id")
-		if (area.collision_mask & PLAYER_BIT) and (is_exit or not exits_only):
+		var has_exit_meta: bool = area.has_meta("target_map") or area.has_meta("target_map_id")
+		var wired_exit: bool = (
+			(
+				transitions != null
+				and area.get_parent() == transitions
+				and area.has_meta("target_map")
+			)
+			or (
+				entities != null
+				and area.get_parent() == entities
+				and area.has_meta("target_map_id")
+			)
+		)
+		if has_exit_meta and not wired_exit:
+			fail_test(
+				(
+					(
+						"%s: exit %s is not a direct child of Transitions/Entities;"
+						+ " exploration_entity_manager.gd never connects it"
+					)
+					% [root.scene_file_path, root.get_path_to(area)]
+				)
+			)
+			continue
+		if (area.collision_mask & PLAYER_BIT) and (wired_exit or not exits_only):
 			out.append_array(_area_rects(area, layer))
 	return out
 
@@ -377,9 +409,32 @@ func _touches(reach: Dictionary, layer: TileMapLayer, r: Rect2) -> bool:
 func _player_body_size() -> Vector2:
 	var player: Node = _instance(PLAYER_SCENE)
 	var size: Vector2 = Vector2.ZERO
+	var body_cs: CollisionShape2D = null
 	for c: Node in player.get_children():
 		if c is CollisionShape2D and (c as CollisionShape2D).shape is RectangleShape2D:
-			size = ((c as CollisionShape2D).shape as RectangleShape2D).size
+			body_cs = c as CollisionShape2D
+			size = (body_cs.shape as RectangleShape2D).size
+	# The marker rect, the flood start and the interaction pad all model the
+	# body as an unscaled rect centered on the player origin.
+	assert_eq(
+		(player as Node2D).scale,
+		Vector2.ONE,
+		"player root is scaled in %s; the reachability model assumes scale 1" % PLAYER_SCENE
+	)
+	if body_cs != null:
+		assert_eq(
+			body_cs.position,
+			Vector2.ZERO,
+			(
+				"player body is offset in %s; the reachability model assumes a centered body"
+				% PLAYER_SCENE
+			)
+		)
+		assert_eq(
+			body_cs.scale,
+			Vector2.ONE,
+			"player body is scaled in %s; the reachability model assumes scale 1" % PLAYER_SCENE
+		)
 	player.free()
 	assert_gt(size.x, 0.0, "player body shape not found in %s" % PLAYER_SCENE)
 	return size
@@ -401,9 +456,27 @@ func _player_interact_radius() -> float:
 	var r: float = 0.0
 	var area: Node = player.get_node_or_null("InteractionArea")
 	if area != null:
+		# The pad (radius - body half-width) assumes the circle is centered on
+		# the body.
+		assert_eq(
+			(area as Node2D).position,
+			Vector2.ZERO,
+			(
+				"InteractionArea is offset in %s; the interaction pad assumes it is centered"
+				% PLAYER_SCENE
+			)
+		)
 		for c: Node in area.get_children():
 			if c is CollisionShape2D and (c as CollisionShape2D).shape is CircleShape2D:
 				r = ((c as CollisionShape2D).shape as CircleShape2D).radius
+				assert_eq(
+					(c as CollisionShape2D).position,
+					Vector2.ZERO,
+					(
+						"InteractionArea circle is offset in %s; the interaction pad assumes it is centered"
+						% PLAYER_SCENE
+					)
+				)
 	player.free()
 	assert_gt(r, 0.0, "player InteractionArea radius not found in %s" % PLAYER_SCENE)
 	return r

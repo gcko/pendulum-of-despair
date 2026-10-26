@@ -136,7 +136,7 @@ Either way:
 /create-pr
 ```
 
-`/create-pr` commits, pushes (husky pre-push runs every gate in the registry at
+`/create-pr` commits, pushes (husky pre-push runs every gate marked pre-push in the registry at
 the top of `.husky/pre-push`: the data-integrity scans, Godot import, and
 the full GUT suite), and opens the PR against
 `main` using `.github/pull_request_template.md`.

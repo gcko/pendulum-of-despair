@@ -17,11 +17,13 @@ This gate fails when a scene under game/scenes/:
   * overrides a node inside an instance that has no matching [editable];
   * adds a node under an instance's internal child with no [editable];
   * overrides, or adds a node under, a node the instanced scene does not
-    have (Godot warns that the node "has vanished" and drops it);
+    have (Godot warns that the node "has vanished" and drops it); an
+    inherited scene is held to its base the same way, though it needs no
+    [editable] entry;
   * has a typeless node that is inside no instance at all;
   * has a typed node whose parent the scene neither creates nor instances;
-  * has a [node] header it cannot parse (an unread header is a skipped one),
-    or an [editable] entry with no path.
+  * has a [node], [editable] or [ext_resource] header it cannot parse (an
+    unread header is a skipped one), or an [editable] entry with no path.
 
 THE LIMITS, stated so nobody reads more into a pass than it means:
 
@@ -183,7 +185,16 @@ def check_scene(scene, cache):
         chain = [a for a in ancestors(start) if a in instances]
         if not chain:
             if root_instance:
-                continue  # inherited scene: the root's nodes are editable
+                # Inherited scene: the base's nodes are editable without an
+                # [editable] entry, but the node (or its parent) must still
+                # exist in the base, or Godot drops it as vanished.
+                if not has_node(root_instance, start, cache):
+                    what = "overrides" if typeless else "is added under"
+                    errors.append(
+                        f"{rel}:{attrs['_line']}: '{path}' {what} '{start}', which "
+                        f"{root_instance} does not have; Godot drops it as vanished"
+                    )
+                continue
             if typeless:
                 errors.append(
                     f"{rel}:{attrs['_line']}: '{path}' is a typeless node inside no instance, so it overrides nothing"
@@ -252,7 +263,7 @@ def main(root=SCENES_ROOT, min_scenes=MIN_SCENES):
         return 1
     print(
         f"Instanced-child edit persistence passed: {scenes} scenes, {nodes} nodes, "
-        f"{instances} instances, {overrides} overrides inside [editable] instances."
+        f"{instances} instances, {overrides} typeless overrides."
     )
     return 0
 

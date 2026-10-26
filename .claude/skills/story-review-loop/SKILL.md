@@ -258,7 +258,7 @@ If issues are found:
    re-read is required.
 5. **Verify fixes.** Linting and tests run automatically via the git
    hooks on commit/push (pre-commit: gdlint + JSON validation +
-   `gdformat --check`; pre-push: every gate in the `.husky/pre-push`
+   `gdformat --check`; pre-push: every gate marked pre-push in the `.husky/pre-push`
    registry + Godot import + the full GUT suite). To verify manually before committing:
    - **Code touched (`.gd`):** `gdlint <files>` and
      `gdformat --check <files>`, then run the GUT suite with

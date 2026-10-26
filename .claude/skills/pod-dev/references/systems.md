@@ -202,6 +202,14 @@ Avoid exposition dumps. Break up long lore into multiple exchanges.
   - `decoration` -- trees, rocks, objects above ground
   - `collision` -- physics layer marking impassable tiles
   - `events` -- trigger-zone entity scenes (NPC positions, doors, transitions)
+- **Instanced-child edits:** a map scene that overrides a property of an
+  instanced entity's child (for example, a water or damage zone's
+  `CollisionShape2D` footprint), or adds a node inside an instance, needs an
+  `[editable path="Entities/<Zone>"]` entry for that instance. Godot applies
+  the edit at load time without one, but an editor save (or "Upgrade All
+  Project Files") deletes it (#450). Pre-push Gate M
+  (`scripts/quality-gates/check_instance_overrides.py`) rejects a missing
+  entry, and `game/tests/test_map_zone_sizes.gd` pins the zone footprints.
 
 ### Encounter Design
 Two options -- **confirm with user before implementing:**

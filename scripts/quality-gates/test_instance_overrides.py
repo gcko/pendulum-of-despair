@@ -65,6 +65,13 @@ shape = SubResource("Big")
 
 EDITABLE = '\n[editable path="Entities/Barrier"]\n'
 
+# A scene inheriting zone.tscn: its root instances the base.
+INHERITED = (
+    '[gd_scene format=3]\n\n[ext_resource type="PackedScene" '
+    'path="res://scenes/entities/zone.tscn" id="1"]\n\n'
+    '[node name="ZoneVariant" instance=ExtResource("1")]\n'
+)
+
 
 class GateFixture(unittest.TestCase):
     """A miniature res:// tree: one prefab and maps two directories down."""
@@ -108,7 +115,7 @@ class TestEditorSaveRules(GateFixture):
         self.map(OVERRIDE + EDITABLE)
         code, out = self.run_gate()
         self.assertEqual(code, 0, out)
-        self.assertIn("1 overrides inside [editable] instances", out)
+        self.assertIn("1 typeless overrides", out)
 
     def test_editable_naming_a_different_instance_does_not_count(self):
         self.map(OVERRIDE + '\n[editable path="Entities/Other"]\n')
@@ -161,6 +168,21 @@ class TestEditorSaveRules(GateFixture):
         code, out = self.run_gate()
         self.assertEqual(code, 0, out)
 
+    def test_an_inherited_scene_overriding_a_node_its_base_lacks_fails(self):
+        self.write("scenes/entities/zone_variant.tscn", INHERITED + '\n[node name="Ghost" parent="."]\nvisible = false\n')
+        code, out = self.run_gate()
+        self.assertEqual(code, 1)
+        self.assertIn("overrides 'Ghost', which res://scenes/entities/zone.tscn does not have", out)
+
+    def test_an_inherited_scene_adding_under_a_parent_its_base_lacks_fails(self):
+        self.write(
+            "scenes/entities/zone_variant.tscn",
+            INHERITED + '\n[node name="Kid" type="Node2D" parent="NoSuchParent"]\n',
+        )
+        code, out = self.run_gate()
+        self.assertEqual(code, 1)
+        self.assertIn("is added under 'NoSuchParent'", out)
+
     def test_a_header_with_an_array_attribute_is_read(self):
         # The first prototype's header regex could not read groups=["..."]
         # and skipped player_character.tscn's root without a word.
@@ -187,6 +209,73 @@ class TestEditorSaveRules(GateFixture):
         code, out = self.run_gate()
         self.assertEqual(code, 1)
         self.assertIn("[editable] without path", out)
+
+    def test_an_ext_resource_header_that_does_not_parse_fails_rather_than_being_skipped(self):
+        # An unread ext_resource leaves its instance unresolved, so every
+        # override through it would be judged against nothing.
+        self.map('\n[ext_resource type="PackedScene" path="res://scenes/entities/zone.tscn" id="2_zone"\n')
+        code, out = self.run_gate()
+        self.assertEqual(code, 1)
+        self.assertIn("cannot parse header '[ext_resource", out)
+
+
+OUTER = """[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/entities/zone.tscn" id="1_zone"]
+
+[node name="Gate" type="Node2D"]
+
+[node name="Inner" parent="." instance=ExtResource("1_zone")]
+"""
+
+NESTED_HEAD = """[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/entities/gate.tscn" id="1_gate"]
+
+[node name="Map" type="Node2D"]
+
+[node name="Entities" type="Node2D" parent="."]
+
+[node name="Outer" parent="Entities" instance=ExtResource("1_gate")]
+"""
+
+
+class TestNestedInstances(GateFixture):
+    def nested_map(self, child):
+        self.write("scenes/entities/gate.tscn", OUTER)
+        self.write(
+            "scenes/maps/dungeons/floor.tscn",
+            NESTED_HEAD
+            + f'\n[node name="{child}" parent="Entities/Outer/Inner" index="1"]\n'
+            + 'visible = false\n\n[editable path="Entities/Outer"]\n',
+        )
+
+    def test_an_override_reached_through_a_nested_instance_passes_when_the_inner_scene_has_it(self):
+        self.nested_map("CollisionShape2D")
+        code, out = self.run_gate()
+        self.assertEqual(code, 0, out)
+
+    def test_an_override_reached_through_a_nested_instance_fails_when_the_inner_scene_lacks_it(self):
+        self.nested_map("Hitbox")
+        code, out = self.run_gate()
+        self.assertEqual(code, 1)
+        self.assertIn(
+            "overrides 'Inner/Hitbox', which res://scenes/entities/gate.tscn does not have", out
+        )
+
+    def test_editable_is_required_on_the_nearest_instance_not_an_outer_one(self):
+        self.map(
+            '\n[node name="Inner" parent="Entities/Barrier" instance=ExtResource("1_zone")]\n'
+            '\n[node name="CollisionShape2D" parent="Entities/Barrier/Inner" index="1"]\n'
+            'visible = false\n' + EDITABLE
+        )
+        code, out = self.run_gate()
+        self.assertEqual(code, 1)
+        self.assertIn(
+            "overrides the inside of instance 'Entities/Barrier/Inner', which has no "
+            '[editable path="Entities/Barrier/Inner"]',
+            out,
+        )
 
 
 class TestTheWalk(GateFixture):
