@@ -52,5 +52,5 @@
 # regression or failed honest work.
 scripts=96
 tests=1331
-gates=7
-gate_tests=338
+gates=8
+gate_tests=358
