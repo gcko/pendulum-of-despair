@@ -240,18 +240,92 @@ NESTED_HEAD = """[gd_scene format=3]
 """
 
 
+BOTH_EDITABLE = ("Entities/Outer", "Entities/Outer/Inner")
+
+
 class TestNestedInstances(GateFixture):
-    def nested_map(self, child):
+    def nested_map(self, child, editable=BOTH_EDITABLE):
         self.write("scenes/entities/gate.tscn", OUTER)
         self.write(
             "scenes/maps/dungeons/floor.tscn",
             NESTED_HEAD
             + f'\n[node name="{child}" parent="Entities/Outer/Inner" index="1"]\n'
-            + 'visible = false\n\n[editable path="Entities/Outer"]\n',
+            + "visible = false\n"
+            + "".join(f'\n[editable path="{p}"]\n' for p in editable),
         )
 
-    def test_an_override_reached_through_a_nested_instance_passes_when_the_inner_scene_has_it(self):
+    def test_an_override_through_a_nested_instance_passes_with_both_editable_entries(self):
         self.nested_map("CollisionShape2D")
+        code, out = self.run_gate()
+        self.assertEqual(code, 0, out)
+
+    def test_an_override_through_a_nested_instance_fails_with_only_the_outer_editable(self):
+        # An editor save packs Inner's children only when Inner itself is
+        # listed; the outer entry opens Outer's own nodes, not Inner's.
+        self.nested_map("CollisionShape2D", editable=("Entities/Outer",))
+        code, out = self.run_gate()
+        self.assertEqual(code, 1)
+        self.assertIn(
+            "overrides the inside of instance 'Entities/Outer/Inner', which has no "
+            '[editable path="Entities/Outer/Inner"]',
+            out,
+        )
+
+    def test_an_override_through_a_nested_instance_fails_with_only_the_inner_editable(self):
+        self.nested_map("CollisionShape2D", editable=("Entities/Outer/Inner",))
+        code, out = self.run_gate()
+        self.assertEqual(code, 1)
+        self.assertIn('which has no [editable path="Entities/Outer"]', out)
+
+    def test_overriding_the_nested_instance_node_itself_needs_only_the_outer_editable(self):
+        # Inner is a node gate.tscn owns, so only Outer has to be opened.
+        self.write("scenes/entities/gate.tscn", OUTER)
+        self.write(
+            "scenes/maps/dungeons/floor.tscn",
+            NESTED_HEAD
+            + '\n[node name="Inner" parent="Entities/Outer" index="0"]\nvisible = false\n'
+            + '\n[editable path="Entities/Outer"]\n',
+        )
+        code, out = self.run_gate()
+        self.assertEqual(code, 0, out)
+
+    def test_an_inherited_scene_overriding_inside_an_instance_nested_in_its_base_needs_editable(self):
+        self.write("scenes/entities/gate.tscn", OUTER)
+        variant = (
+            '[gd_scene format=3]\n\n[ext_resource type="PackedScene" '
+            'path="res://scenes/entities/gate.tscn" id="1"]\n\n'
+            '[node name="GateVariant" instance=ExtResource("1")]\n\n'
+            '[node name="CollisionShape2D" parent="Inner" index="1"]\nvisible = false\n'
+        )
+        self.write("scenes/entities/gate_variant.tscn", variant)
+        code, out = self.run_gate()
+        self.assertEqual(code, 1)
+        self.assertIn(
+            "'Inner/CollisionShape2D' overrides the inside of instance 'Inner', which has no "
+            '[editable path="Inner"]',
+            out,
+        )
+        self.write("scenes/entities/gate_variant.tscn", variant + '\n[editable path="Inner"]\n')
+        code, out = self.run_gate()
+        self.assertEqual(code, 0, out)
+
+    def test_every_level_of_a_three_deep_nesting_needs_its_own_editable(self):
+        self.write("scenes/entities/gate.tscn", OUTER)
+        self.write(
+            "scenes/entities/gatehouse.tscn",
+            OUTER.replace("zone.tscn", "gate.tscn").replace('name="Inner"', 'name="Mid"'),
+        )
+        head = NESTED_HEAD.replace("gate.tscn", "gatehouse.tscn") + (
+            '\n[node name="CollisionShape2D" parent="Entities/Outer/Mid/Inner" index="1"]\nvisible = false\n'
+        )
+        two = '\n[editable path="Entities/Outer"]\n\n[editable path="Entities/Outer/Mid"]\n'
+        self.write("scenes/maps/dungeons/floor.tscn", head + two)
+        code, out = self.run_gate()
+        self.assertEqual(code, 1)
+        self.assertIn('which has no [editable path="Entities/Outer/Mid/Inner"]', out)
+        self.write(
+            "scenes/maps/dungeons/floor.tscn", head + two + '\n[editable path="Entities/Outer/Mid/Inner"]\n'
+        )
         code, out = self.run_gate()
         self.assertEqual(code, 0, out)
 

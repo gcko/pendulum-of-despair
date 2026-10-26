@@ -16,10 +16,15 @@ This gate fails when a scene under game/scenes/:
 
   * overrides a node inside an instance that has no matching [editable];
   * adds a node under an instance's internal child with no [editable];
+  * reaches an edit through a nested instance without an [editable] entry
+    for EVERY instance the node path enters: an outer instance's entry does
+    not open the instance nested inside it (`Entities/Outer` and
+    `Entities/Outer/Inner` both need one);
   * overrides, or adds a node under, a node the instanced scene does not
     have (Godot warns that the node "has vanished" and drops it); an
-    inherited scene is held to its base the same way, though it needs no
-    [editable] entry;
+    inherited scene is held to its base the same way. An inherited scene's
+    own base nodes need no [editable] entry, but nodes inside an instance
+    nested in the base do (`[editable path="Inner"]`);
   * has a typeless node that is inside no instance at all;
   * has a typed node whose parent the scene neither creates nor instances;
   * has a [node], [editable] or [ext_resource] header it cannot parse (an
@@ -36,9 +41,6 @@ THE LIMITS, stated so nobody reads more into a pass than it means:
     the lost sizes; those two catch it, this gate does not.
   * It scans game/scenes/ only. No .tscn lives anywhere else under game/
     outside addons/ and .godot/ today; a scene added elsewhere is not read.
-  * It requires [editable] only on the NEAREST instance declared in the file.
-    An override reached through an editable outer instance into a nested one
-    is not fully modeled (none exist today).
   * [connection] entries that target a node inside a non-editable instance
     are not checked (none exist today).
   * It runs in .husky/pre-push and scripts/gates.sh. CI does not run the
@@ -166,6 +168,41 @@ def has_node(res_path, rel, cache, depth=0):
     return False
 
 
+def entered_instances(res_path, rel, cache, depth=0):
+    """Instances inside the scene at res_path that node path `rel` enters.
+
+    Uses has_node()'s lookup. An instance is ENTERED when `rel` runs strictly
+    past its root into the nodes it owns; naming the instance node itself, or
+    a node added directly under it, enters nothing. Paths are relative to the
+    scene at res_path, outermost first.
+    """
+    if rel == ".":
+        return []
+    fs = res_to_fs(res_path)
+    if depth > 16 or fs is None or not os.path.isfile(fs):
+        return []
+    scene = cache.get(fs) or cache.setdefault(fs, Scene(fs))
+    if scene.owns(rel):
+        return []
+    for anc in ancestors(rel):
+        if anc != "." and anc in scene.nodes and scene.instance_path(anc):
+            inner = entered_instances(scene.instance_path(anc), rel[len(anc) + 1:], cache, depth + 1)
+            return [anc] + [f"{anc}/{p}" for p in inner]
+    return []
+
+
+def missing_editable(scene, required, path, typeless, line):
+    """One error per instance in `required` with no [editable] entry."""
+    rel = os.path.relpath(scene.path, REPO_ROOT)
+    what = "overrides" if typeless else "adds a node under"
+    return [
+        f"{rel}:{line}: '{path}' {what} the inside of instance '{inst}', "
+        f'which has no [editable path="{inst}"]; an editor save deletes it'
+        for inst in required
+        if inst not in scene.editable
+    ]
+
+
 def check_scene(scene, cache):
     errors = list(scene.errors)
     rel = os.path.relpath(scene.path, REPO_ROOT)
@@ -185,9 +222,15 @@ def check_scene(scene, cache):
         chain = [a for a in ancestors(start) if a in instances]
         if not chain:
             if root_instance:
-                # Inherited scene: the base's nodes are editable without an
-                # [editable] entry, but the node (or its parent) must still
+                # Inherited scene: the base's own nodes are editable without
+                # an [editable] entry, but a node inside an instance nested in
+                # the base is not, and the node (or its parent) must still
                 # exist in the base, or Godot drops it as vanished.
+                errors.extend(
+                    missing_editable(
+                        scene, entered_instances(root_instance, start, cache), path, typeless, attrs["_line"]
+                    )
+                )
                 if not has_node(root_instance, start, cache):
                     what = "overrides" if typeless else "is added under"
                     errors.append(
@@ -205,18 +248,18 @@ def check_scene(scene, cache):
                     f"create and no instance contains; Godot drops it as a vanished parent"
                 )
             continue
-        # Only the NEAREST instance needs [editable]: whether that instance
-        # node itself survives is judged when the loop reaches it.
+        # The NEAREST instance this file declares needs [editable], and so
+        # does every instance nested in it that the path enters: an outer
+        # entry does not open an inner instance. Instances further out are
+        # not entered (this file owns the nearest one), and whether that
+        # instance node itself survives is judged when the loop reaches it.
         inst = chain[0]
-        if inst not in scene.editable:
-            what = "overrides" if typeless else "adds a node under"
-            errors.append(
-                f"{rel}:{attrs['_line']}: '{path}' {what} the inside of instance '{inst}', "
-                f'which has no [editable path="{inst}"]; an editor save deletes it'
-            )
+        target = start[len(inst) + 1:]
+        nested = entered_instances(scene.instance_path(inst), target, cache)
+        required = [inst] + [f"{inst}/{p}" for p in nested]
+        errors.extend(missing_editable(scene, required, path, typeless, attrs["_line"]))
         # `start` is the node itself (typeless) or its parent (typed); either
         # way it must exist inside the instanced scene, or Godot drops the node.
-        target = start[len(inst) + 1:]
         if not has_node(scene.instance_path(inst), target, cache):
             what = "overrides" if typeless else "is added under"
             errors.append(

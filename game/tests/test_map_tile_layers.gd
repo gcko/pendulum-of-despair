@@ -17,7 +17,8 @@ extends GutTest
 ## Cells outside a layer's used rect are treated as not walkable, so an exit
 ## reachable only by walking off the painted map counts as unreachable.
 ## An exit counts only where exploration_entity_manager.gd connects it: a
-## direct child of Transitions with target_map, or of Entities with
+## direct child of Transitions with target_map, or a direct child of Entities
+## that is a pitfall (initialize() plus pitfall_triggered) with a non-empty
 ## target_map_id. Any other area carrying that metadata fails the test.
 
 const MAPS_DIR: String = "res://scenes/maps"
@@ -306,9 +307,11 @@ func _area_rects(area: Area2D, layer: TileMapLayer) -> Array[Rect2]:
 
 
 ## Exits as exploration_entity_manager.gd wires them: a direct child of
-## Transitions with target_map (transition), or a direct child of Entities with
-## target_map_id (pitfall). An exit anywhere else is never connected, so it is
-## not credited, and the test fails.
+## Transitions with target_map (transition), or a direct child of Entities that
+## is a pitfall (initialize() plus pitfall_triggered) with a non-empty
+## target_map_id. Any other exit is never connected, so it is not credited, and
+## the test fails. The scene is never added to the tree, but an instanced
+## PitfallZone still has its script, so has_method and has_signal answer.
 func _target_rects(root: Node, layer: TileMapLayer, exits_only: bool) -> Array[Rect2]:
 	var out: Array[Rect2] = []
 	var transitions: Node = root.get_node_or_null("Transitions")
@@ -324,14 +327,16 @@ func _target_rects(root: Node, layer: TileMapLayer, exits_only: bool) -> Array[R
 			or (
 				entities != null
 				and area.get_parent() == entities
-				and area.has_meta("target_map_id")
+				and area.has_method("initialize")
+				and area.has_signal("pitfall_triggered")
+				and not String(area.get_meta("target_map_id", "")).is_empty()
 			)
 		)
 		if has_exit_meta and not wired_exit:
 			fail_test(
 				(
 					(
-						"%s: exit %s is not a direct child of Transitions/Entities;"
+						"%s: exit %s is not wired as a transition or pitfall;"
 						+ " exploration_entity_manager.gd never connects it"
 					)
 					% [root.scene_file_path, root.get_path_to(area)]
