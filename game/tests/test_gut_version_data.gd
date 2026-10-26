@@ -10,10 +10,12 @@ extends GutTest
 ## published data (bitwes/Gut main, which raises 9.7.x to 4.99). Re-vendoring a
 ## release tag over it brings the bogus notice back, and this test is what says so.
 ##
-## Only the vendored file is read, never the user:// cache GUT's editor panel
-## downloads, so the verdict is the same on every machine and in CI. That is the
-## local half of what the end-of-run notice consults; the cache can only differ
-## on a machine where someone has opened the GUT editor panel.
+## Only the vendored file is read, never the user://gut_temp_directory/versions.json
+## cache, so the verdict is the same on every machine and in CI. That is the local
+## half of what the end-of-run notice consults. The cache exists only where the GUT
+## plugin has been enabled in the editor: the plugin downloads it at most once a day
+## when the editor loads, and once that directory exists -gcheck_update refreshes it
+## from the command line too.
 
 
 func _recommended_gut_for_running_engine() -> String:
@@ -33,7 +35,8 @@ func _fix_hint(recommended: String, installed: String) -> String:
 		return ""
 	if recommended == "0.0.0":
 		return (
-			"The data caps below this engine: take addons/gut/versions.json from"
+			"No entry covers this engine, or versions.json is missing or unreadable"
+			+ " (GUT reports 0.0.0 for both): take addons/gut/versions.json from"
 			+ " bitwes/Gut main at a named SHA (see godot-tooling-updates)."
 		)
 	if recommended.find(".") == -1:

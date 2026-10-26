@@ -150,8 +150,9 @@ This is the ONE permitted difference from the release tag
 (verification-checklists.md §10, #452). Every other vendored file stays
 pristine. `game/tests/test_gut_version_data.gd` fails if the data does not
 recommend the installed GUT for the running engine, so skipping this step
-cannot pass silently; its message names which case it hit: `0.0.0` (data
-caps below the engine: overlay main), an older release or a branch name (the
+cannot pass silently; its message names which case it hit: `0.0.0` (no entry
+covers the engine, or the file is missing or unreadable, which GUT reports the
+same way: overlay main), an older release or a branch name (the
 data lacks the installed GUT: overlay a newer main SHA, do not bump), or a
 newer release (a newer GUT really exists: bump). Once a release tag's own data
 covers our engine, vendor that tag pristine and drop the overlay (#460).
