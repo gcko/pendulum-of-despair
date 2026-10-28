@@ -68,7 +68,7 @@ static func apply_stat(m: Dictionary, stat: String, base: int) -> int:
 
 ## Start of a member's turn: Second Wind restores regen_pct of max HP. Returns
 ## the HP restored. A turn begins once — prompting it again before it ends (a
-## cancelled command menu) restores nothing more.
+## canceled command menu) restores nothing more.
 static func begin_turn(state: Node, slot: int) -> int:
 	var m: Dictionary = state.get_member(slot)
 	if m.is_empty() or not m.get("is_alive", false) or m.get("turn_open", false):

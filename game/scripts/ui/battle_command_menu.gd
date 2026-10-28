@@ -295,7 +295,7 @@ func _build_magic_submenu() -> void:
 
 ## Populate the submenu with the acting character's known unique-command
 ## abilities (GAP-002) as {"type": "ability", "ability": <dict>} commands,
-## greying unaffordable MP costs as Magic does. Hook for #158 slices b-f: an
+## graying unaffordable MP costs as Magic does. Hook for #158 slices b-f: an
 ## ability whose command is not built yet is listed but disabled, so those
 ## characters keep today's outcome of nothing to pick.
 func _build_ability_submenu() -> void:
