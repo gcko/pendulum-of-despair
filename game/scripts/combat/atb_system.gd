@@ -8,6 +8,20 @@ signal combatant_ready(combatant_id: String)
 
 const GAUGE_MAX: int = 16000
 
+## Gauge ticks per second of battle time. Canon: combat-formulas.md § Fill
+## Rate Formula — a fixed tick rate, independent of the rendered frame rate.
+const TICKS_PER_SECOND: int = 60
+
+## Most ticks one tick() call may apply: a quarter second of battle time. A
+## longer frame is a hitch (a load stall, a debugger pause), not play, so the
+## excess is dropped rather than dumped into one frame. Frames down to 4 fps
+## still keep exact time.
+const MAX_TICKS_PER_CALL: int = 15
+
+## Slack when converting accumulated seconds to whole ticks, so a 1/60 s frame
+## that lands a hair under one tick in float math still applies it.
+const _TICK_EPSILON: float = 1e-6
+
 ## Speed factors per battle speed setting (1 = fastest, 6 = slowest).
 ## Canon: combat-formulas.md § ATB Gauge System > Battle Speed Config. Those
 ## six factors are what its Battle Speed Config and ATB Pacing tables are
@@ -36,6 +50,10 @@ var _submenu_open: bool = false
 
 ## Whether top-level command menu is open (for patience pausing).
 var _command_menu_open: bool = false
+
+## Battle time not yet spent on a whole tick, in ticks (0 <= x < 1, give or
+## take _TICK_EPSILON). Carried between tick() calls.
+var _pending_ticks: float = 0.0
 
 
 ## Check if real-time status timers should pause (for Wait/Patience modes).
@@ -129,11 +147,26 @@ func calculate_fill_rate(spd: int, battle_speed: int, status_mods: Array) -> int
 	return int((spd + 25) * factor * mod_product)
 
 
-## Tick all gauges by one frame. Call from battle_manager._process().
-func tick(_delta: float) -> void:
-	if _should_pause():
+## Advance all gauges by `delta` seconds of battle time. Call from
+## battle_manager._process(). Applies one integer fill per whole 1/60 s and
+## carries the remainder, so the fill speed does not depend on the frame rate.
+## Paused time is discarded, not banked.
+func tick(delta: float) -> void:
+	if _should_pause() or delta <= 0.0:
 		return
+	_pending_ticks += delta * TICKS_PER_SECOND
+	var ticks: int = int(floor(_pending_ticks + _TICK_EPSILON))
+	if ticks > MAX_TICKS_PER_CALL:
+		ticks = MAX_TICKS_PER_CALL
+		_pending_ticks = 0.0
+	else:
+		_pending_ticks -= ticks
+	for _i: int in range(ticks):
+		_apply_one_tick()
 
+
+## Advance every unfrozen gauge by exactly its fill rate (one 1/60 s tick).
+func _apply_one_tick() -> void:
 	for id: String in _combatants:
 		var data: Dictionary = _combatants[id]
 		if data["frozen"]:

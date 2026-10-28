@@ -188,6 +188,98 @@ func test_gauge_caps_at_max() -> void:
 	assert_eq(_atb.get_gauge("party_0"), 16000, "gauge caps at GAUGE_MAX")
 
 
+# --- Fixed tick rate (#441) ---
+# combat-formulas.md § Fill Rate Formula: the gauge advances 60 ticks per
+# second of game time, whatever the rendered frame rate is.
+
+
+## Drive a fresh SPD 10 gauge (fill rate 105 at speed 3) through `frames` calls
+## of `tick(frame_seconds)` and return the gauge.
+func _gauge_after_frames(frames: int, frame_seconds: float) -> int:
+	var atb: Node = ATBScript.new()
+	add_child_autofree(atb)
+	atb.add_combatant("x", 10, false)
+	atb.set_battle_speed(3)
+	for i: int in range(frames):
+		atb.tick(frame_seconds)
+	return atb.get_gauge("x")
+
+
+func test_same_wall_clock_time_fills_the_same_gauge_at_30_60_and_120_fps() -> void:
+	# Half a second of battle is 30 ticks: 30 * 105 = 3150.
+	var at_60: int = _gauge_after_frames(30, 1.0 / 60.0)
+	assert_eq(at_60, 3150, "half a second at 60 fps is 30 ticks")
+	assert_eq(_gauge_after_frames(15, 1.0 / 30.0), at_60, "30 fps fills the same in 0.5 s")
+	assert_eq(_gauge_after_frames(60, 1.0 / 120.0), at_60, "120 fps fills the same in 0.5 s")
+
+
+func test_two_half_ticks_equal_one_full_tick() -> void:
+	assert_eq(
+		_gauge_after_frames(2, 1.0 / 120.0),
+		_gauge_after_frames(1, 1.0 / 60.0),
+		"two 1/120 s frames advance the gauge as far as one 1/60 s frame",
+	)
+
+
+func test_a_frame_shorter_than_a_tick_waits_for_the_next() -> void:
+	_atb.add_combatant("party_0", 10, false)
+	_atb.set_battle_speed(3)
+	_atb.tick(1.0 / 120.0)
+	assert_eq(_atb.get_gauge("party_0"), 0, "half a tick of time applies no tick yet")
+	_atb.tick(1.0 / 120.0)
+	assert_eq(_atb.get_gauge("party_0"), 105, "the second half completes the tick")
+
+
+func test_leftover_time_carries_into_the_next_frame() -> void:
+	# 1.5 ticks, then 0.5 ticks: one tick now, the half carried completes a second.
+	_atb.add_combatant("party_0", 10, false)
+	_atb.set_battle_speed(3)
+	_atb.tick(1.5 / 60.0)
+	assert_eq(_atb.get_gauge("party_0"), 105, "1.5 ticks of time applies one whole tick")
+	_atb.tick(0.5 / 60.0)
+	assert_eq(_atb.get_gauge("party_0"), 210, "the carried half tick completes a second")
+
+
+func test_a_long_hitch_applies_at_most_the_capped_ticks() -> void:
+	# A 10 s debugger pause must not dump 600 ticks into one frame.
+	_atb.add_combatant("party_0", 0, false)
+	_atb.set_battle_speed(6)
+	var rate: int = _atb.calculate_fill_rate(0, 6, [])
+	_atb.tick(10.0)
+	assert_eq(
+		_atb.get_gauge("party_0"),
+		rate * ATBScript.MAX_TICKS_PER_CALL,
+		"a hitch is clamped to MAX_TICKS_PER_CALL ticks",
+	)
+	assert_lt(
+		rate * ATBScript.MAX_TICKS_PER_CALL, ATBScript.GAUGE_MAX, "the cap, not the max, binds"
+	)
+
+
+func test_time_dropped_by_the_cap_is_not_paid_back_later() -> void:
+	_atb.add_combatant("party_0", 0, false)
+	_atb.set_battle_speed(6)
+	var rate: int = _atb.calculate_fill_rate(0, 6, [])
+	_atb.tick(10.0)
+	_atb.tick(1.0 / 60.0)
+	assert_eq(
+		_atb.get_gauge("party_0"),
+		rate * (ATBScript.MAX_TICKS_PER_CALL + 1),
+		"the frame after a hitch applies one tick, not the backlog",
+	)
+
+
+func test_paused_time_does_not_bank_ticks() -> void:
+	_atb.add_combatant("party_0", 10, false)
+	_atb.set_battle_speed(3)
+	_atb.set_atb_mode("wait")
+	_atb.set_submenu_open(true)
+	_atb.tick(1.0)
+	_atb.set_submenu_open(false)
+	_atb.tick(1.0 / 60.0)
+	assert_eq(_atb.get_gauge("party_0"), 105, "only the unpaused frame's one tick applies")
+
+
 # --- Turn Order ---
 
 
