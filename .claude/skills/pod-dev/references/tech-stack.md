@@ -203,8 +203,8 @@ Dispatch chain: `core.hooksPath=.husky/_` -> thin shim -> dispatcher ->
 
 | Hook | What it runs |
 |------|--------------|
-| `commit-msg` | commitlint (Conventional Commits 1.0.0) |
-| `pre-commit` | branch protection + gdlint + JSON validation + `gdformat --check` |
+| `commit-msg` | commitlint (Conventional Commits 1.0.0); CI re-runs it over the PR's commits in `.github/workflows/static-gates.yml` |
+| `pre-commit` | branch protection + gdlint + JSON validation + `gdformat --check`. With `.gd` files staged, a missing gdlint or gdformat fails the commit; install the version in `scripts/quality-gates/gdtoolkit-version.txt`. CI re-runs all but branch protection over every file in `static-gates.yml` |
 | `pre-push` | gate self-tests + data-integrity scans (registry at top of `.husky/pre-push`) + Godot `--import` + full GUT suite |
 
 **Never use `--no-verify`.** Fix the root cause (or remove the offending test)

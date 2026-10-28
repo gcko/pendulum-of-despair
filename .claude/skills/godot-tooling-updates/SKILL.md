@@ -21,7 +21,10 @@ things with versions are:
    which is bitwes/Gut main's published copy — see Phase 5). Source:
    `bitwes/Gut` on GitHub.
 2. **gdtoolkit** — the Python package providing `gdlint` and `gdformat`
-   (the lint/format gates). Installed via `pip`/`pipx`, not the repo.
+   (the lint/format gates). Installed via `pip`/`pipx`, not the repo, but
+   the version is pinned in `scripts/quality-gates/gdtoolkit-version.txt`:
+   `.github/workflows/static-gates.yml` installs exactly that version and
+   `.husky/pre-commit` quotes it when gdtoolkit is missing.
 3. **husky + @commitlint/cli + @commitlint/config-conventional** — the only
    npm `devDependencies` in `package.json`. Used **purely for git hooks**.
    `pnpm` exists solely for these.
@@ -44,6 +47,7 @@ real gates**. Then file/close Issues and bundle into one chore PR.
 grep '^version=' game/addons/gut/plugin.cfg          # -> 9.7.1
 
 # gdtoolkit (provides gdlint + gdformat)
+cat scripts/quality-gates/gdtoolkit-version.txt      # the pin CI installs
 gdformat --version
 gdlint --version
 pipx list 2>/dev/null | grep -i gdtoolkit || pip show gdtoolkit
@@ -166,9 +170,13 @@ find game/assets game/addons -name '*.import' | wc -l                       # > 
 grep -rl 'valid=false' game/assets game/addons --include='*.import' | wc -l  # 0
 ```
 
-**gdtoolkit**:
+**gdtoolkit**: bump the pin, then install exactly what it names. CI installs
+the pin, not the newest release, so a bump that skips the pin file leaves CI
+on the old version.
 ```bash
-pipx upgrade gdtoolkit   # or: pip install -U gdtoolkit
+echo "<new>" > scripts/quality-gates/gdtoolkit-version.txt
+pip install "gdtoolkit==$(cat scripts/quality-gates/gdtoolkit-version.txt)"   # or pipx
+gdlint --version                     # must print <new>
 ```
 If the formatter changed, reformat and review the diff before committing:
 ```bash

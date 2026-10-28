@@ -13,7 +13,10 @@ Commit, push, and open a pull request. Quality gates are enforced
 automatically by husky hooks — no manual test/lint step needed:
 
 - **pre-commit:** branch protection (no direct commits to main) +
-  gdlint + JSON validation + `gdformat --check`.
+  gdlint + JSON validation + `gdformat --check`. **No gdtoolkit
+  installed is a failure, not a skip,** when `.gd` files are staged.
+  `.github/workflows/static-gates.yml` re-runs gdlint, JSON validation
+  and `gdformat --check` over every file, plus commitlint, on the PR.
 - **pre-push:** quality-gate self-tests + cross-file ID-uniqueness
   scan + stale-count scan + scene-ref scan + doc-citation integrity +
   dialogue sync + American-English spelling + instanced-child edit
@@ -74,6 +77,8 @@ git commit -s -F /tmp/commit-msg.txt
 The pre-commit hook runs **branch protection**, **gdlint**, **JSON
 validation**, and **`gdformat --check`** automatically. If the commit
 fails, fix the reported issues and retry — do not use `--no-verify`.
+`gdlint NOT FOUND` or `gdformat NOT FOUND` means gdtoolkit is missing:
+install the version the message names, never work around it.
 
 ### 2. Push
 
@@ -109,7 +114,7 @@ PR body format:
 - Bullet points describing what changed and why
 
 ## Test plan
-- [x] Pre-commit gates pass (branch protection, gdlint, JSON validation, gdformat --check)
+- [x] Pre-commit gates pass (branch protection, gdlint, JSON validation, gdformat --check; CI re-runs all but branch protection in static-gates.yml)
 - [x] Pre-push gates pass (quality-gate self-tests, ID uniqueness, stale counts, scene refs, doc citations, dialogue sync, spelling, instanced-child edits (Gate M), TileMapLayer tile data (Gate N), Godot import, full GUT suite, Gate L count floor)
 - [ ] Manual verification steps if applicable
 
@@ -146,7 +151,9 @@ After outputting the PR URL, always end with:
   validation, gdformat --check) and pre-push (every gate marked
   pre-push in the registry at the top of `.husky/pre-push`, Gates M and N included,
   then Godot import, the full GUT suite and its count floor) hooks
-  handle it. The one exception is `bash scripts/gates.sh`, on
+  handle it, and CI re-runs every hook gate but branch protection on
+  the PR (`static-gates.yml`, `quality-gates.yml`, `gut-tests.yml`).
+  The one exception is `bash scripts/gates.sh`, on
   work the hooks cannot see: uncommitted state in a parallel worktree
   (pre-commit sees only the index), or a stacked branch that must be
   judged against its own parent rather than `main`
