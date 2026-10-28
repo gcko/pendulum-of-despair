@@ -190,6 +190,7 @@ func _ability(character_id: String, ability_id: String) -> Dictionary:
 
 
 func test_cael_s_ability_issues_the_rally_and_ends_his_turn() -> void:
+	# Hold the Line's +15% DEF on Edren, 6 MP from Cael, and his turn spent.
 	var battle: Node = _boot()
 	var state: Node = battle.get_battle_state()
 	var mp_before: int = state.get_member(CAEL)["current_mp"]
@@ -201,42 +202,62 @@ func test_cael_s_ability_issues_the_rally_and_ends_his_turn() -> void:
 	assert_eq(battle.get_atb().get_gauge("party_%d" % CAEL), 0, "Cael's turn is spent")
 
 
-func test_ability_for_a_character_whose_command_is_unbuilt_still_attacks() -> void:
-	# Bulwark is #158 slice b. Until then Edren's Ability keeps the placeholder
-	# it has always had: a basic attack on the chosen enemy, costing nothing.
-	var battle: Node = _boot()
-	var state: Node = battle.get_battle_state()
-	watch_signals(battle)
-	var mp_before: int = state.get_member(EDREN)["current_mp"]
-	_give_turn(battle, EDREN)
-	_submit(battle, {"type": "ability", "ability": _ability("edren", "ironwall"), "target": 0})
-	assert_signal_emitted_with_parameters(battle, "message", ["Edren attacks!"])
-	assert_eq(state.get_member(EDREN)["current_mp"], mp_before, "no MP spent")
-	assert_eq(battle.get_atb().get_gauge("party_%d" % EDREN), 0, "the turn is spent")
-
-
 func test_second_wind_heals_an_ally_as_its_turn_begins() -> void:
 	var battle: Node = _boot()
 	var state: Node = battle.get_battle_state()
 	state.take_damage(EDREN, 40)
 	var hp_before: int = state.get_member(EDREN)["current_hp"]
 	var regen: int = state.get_member(EDREN)["max_hp"] * 5 / 100
-	state.start_rally(CAEL, "second_wind", AbilityCommand.RALLY_EFFECTS["second_wind"])
+	BattleRally.start(state, CAEL, "second_wind", AbilityCommand.RALLY_EFFECTS["second_wind"])
 	watch_signals(battle)
 	_give_turn(battle, EDREN)
 	assert_eq(state.get_member(EDREN)["current_hp"], hp_before + regen, "5% max HP restored")
 	assert_signal_emitted_with_parameters(battle, "damage_dealt", ["party_0", regen, "heal"])
 
 
-func test_press_forward_speeds_up_the_atb_gauge() -> void:
+func test_press_forward_s_speed_is_what_the_atb_gauge_fills_at() -> void:
+	# One fixed tick fills a gauge by calculate_fill_rate(spd, ...); after Press
+	# Forward that spd must be the member's buffed effective SPD.
 	var battle: Node = _boot()
 	var atb: Node = battle.get_atb()
+	var state: Node = battle.get_battle_state()
+	var speed: int = ATBSystem.settings_from_config(PartyState.get_config())["speed"]
+	BattleRally.start(state, CAEL, "press_forward", AbilityCommand.RALLY_EFFECTS["press_forward"])
+	var buffed_spd: int = state.get_effective_stat(EDREN, "spd")
 	atb.set_gauge("party_0", 0)
-	battle._process(0.0)
-	var unbuffed_fill: int = atb.get_gauge("party_0")
-	battle.get_battle_state().start_rally(
-		CAEL, "press_forward", AbilityCommand.RALLY_EFFECTS["press_forward"]
+	battle._process(1.0 / ATBSystem.TICKS_PER_SECOND)
+	assert_eq(
+		atb.get_gauge("party_0"),
+		atb.calculate_fill_rate(buffed_spd, speed, []),
+		"the gauge filled at Edren's +10% SPD"
 	)
-	atb.set_gauge("party_0", 0)
-	battle._process(0.0)
-	assert_gt(atb.get_gauge("party_0"), unbuffed_fill, "+10% SPD fills the gauge faster")
+
+
+func test_cael_s_second_wind_heals_him_on_four_turns_like_every_ally() -> void:
+	# abilities.md § Cael — Rally: "for 4 turns". The turn Cael issues it on is
+	# not one of the four.
+	var battle: Node = _boot()
+	var state: Node = battle.get_battle_state()
+	state.take_damage(CAEL, 60)
+	_give_turn(battle, CAEL)
+	_submit(battle, {"type": "ability", "ability": _ability("cael", "second_wind")})
+	var heals: int = 0
+	for _i: int in range(6):
+		var hp: int = state.get_member(CAEL)["current_hp"]
+		_give_turn(battle, CAEL)
+		if state.get_member(CAEL)["current_hp"] > hp:
+			heals += 1
+		_submit(battle, {"type": "defend"})
+	assert_eq(heals, 4, "four regen turns, then none")
+
+
+func test_real_time_statuses_run_on_the_seconds_the_gauges_advanced() -> void:
+	# A frame stops early at the first gauge to fill, so a Stop timer must
+	# lose only the battle time that frame actually ran, not the raw delta.
+	var battle: Node = _boot()
+	var atb: Node = battle.get_atb()
+	var state: Node = battle.get_battle_state()
+	state.apply_status(CAEL, "stop", "realtime", 0.1)
+	atb.set_gauge("party_0", ATBSystem.GAUGE_MAX - 1)  # fills on the first tick
+	battle._process(0.5)
+	assert_true(state.has_status(CAEL, "stop"), "one tick of battle time is not 0.1 s")

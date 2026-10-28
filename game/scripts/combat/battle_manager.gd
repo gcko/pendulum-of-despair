@@ -42,6 +42,7 @@ var _ritual_meter_value: float = 100.0
 var _actions: BattlePlayerActions = null
 var _magic: BattleMagicCommand = null
 var _items: BattleItemCommand = null
+var _abilities: BattleAbilityCommand = null
 
 @onready var _atb: Node = $ATBSystem
 @onready var _state: Node = $BattleState
@@ -110,9 +111,6 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if not _battle_active or _battle_resolved:
 		return
-	if not _atb.should_pause_timers():
-		for i: int in range(4):
-			_state.tick_realtime_statuses(i, delta)
 	# Resync living enemies' ATB freeze/mods from their current statuses
 	# (GAP-003) so a cured Sleep unfreezes and an expired Slow clears.
 	for i: int in range(_enemies.size()):
@@ -123,7 +121,12 @@ func _process(delta: float) -> void:
 	# never throttled one.
 	for i: int in range(4):
 		_resync_party_atb(i)
-	_atb.tick(delta)
+	# Real-time statuses (Stop) run on the battle seconds the gauges actually
+	# advanced: tick returns 0 while timers are paused and stops early at the
+	# first gauge to fill, so the two share one clock.
+	var elapsed: float = _atb.tick(delta)
+	for i: int in range(4):
+		_state.tick_realtime_statuses(i, elapsed)
 	_check_end_conditions()
 	if _battle_resolved:
 		return
@@ -141,10 +144,8 @@ func _process(delta: float) -> void:
 			# holding survives it. Other combatants act around them.
 			if StatusEffects.atb_effect(blocked_by) == "frozen":
 				continue
-			# The turn begins, so Second Wind's regen lands (abilities.md § Cael — Rally).
-			var regen: int = _state.begin_turn(slot)
-			if regen > 0:
-				damage_dealt.emit("party_%d" % slot, regen, "heal")
+			# The turn begins: Second Wind's regen lands (abilities.md § Cael — Rally).
+			_emit_party_events(_state.begin_turn(slot))
 			if blocked_by != "":
 				# Paralysis fills the gauge instead, so it does have a turn to
 				# consume: the status counts down on this would-be turn (the
@@ -197,7 +198,7 @@ func _on_ui_command(command: Dictionary) -> void:
 			else:
 				_get_actions().do_flee()
 		"ability":
-			ok = BattleAbilityCommand.new(self).do_ability(actor_id, command)
+			ok = _get_abilities().do_ability(actor_id, command)
 	if not ok:
 		_atb.set_command_menu_open(true)
 		var char_data: Dictionary = _state.get_member(cmd_slot).get("character_data", {})
@@ -217,10 +218,7 @@ func _on_ui_command(command: Dictionary) -> void:
 	_turn_counter += 1
 	# Surface party-side DoT (Poison/Burn) through damage_dealt so it shows a
 	# floating number, mirroring the enemy-side tick.
-	for ev: Dictionary in _state.tick_statuses(cmd_slot):
-		damage_dealt.emit(
-			"party_%d" % int(ev.get("slot", 0)), int(ev.get("dmg", 0)), ev.get("type", "poison")
-		)
+	_emit_party_events(_state.tick_statuses(cmd_slot))
 	_check_end_conditions()
 
 
@@ -260,12 +258,18 @@ func _incapacitating_status(slot: int) -> String:
 func _skip_incapacitated_turn(slot: int, id: String, status_name: String) -> void:
 	var nm: String = _state.get_member(slot).get("character_data", {}).get("name", "???")
 	message.emit("%s is %s and can't move!" % [nm, StatusEffects.display_adjective(status_name)])
-	for ev: Dictionary in _state.tick_statuses(slot):
+	_emit_party_events(_state.tick_statuses(slot))
+	_atb.reset_gauge(id)
+	_check_end_conditions()
+
+
+## Surface BattleState's turn events [{slot, dmg, type}] — DoT ticks at a
+## turn's end, Second Wind's heal at its start — as floating numbers.
+func _emit_party_events(events: Array) -> void:
+	for ev: Dictionary in events:
 		damage_dealt.emit(
 			"party_%d" % int(ev.get("slot", 0)), int(ev.get("dmg", 0)), ev.get("type", "poison")
 		)
-	_atb.reset_gauge(id)
-	_check_end_conditions()
 
 
 func _on_party_member_died(slot: int) -> void:
@@ -458,3 +462,9 @@ func _get_items() -> BattleItemCommand:
 	if _items == null:
 		_items = BattleItemCommand.new(self)
 	return _items
+
+
+func _get_abilities() -> BattleAbilityCommand:
+	if _abilities == null:
+		_abilities = BattleAbilityCommand.new(self)
+	return _abilities

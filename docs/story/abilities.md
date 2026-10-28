@@ -71,7 +71,7 @@ twice a basic attack.
 
 > *Cael doesn't fight alone. He fights through his brothers and sisters — lifting their spirits, calling their movements, turning six swords into one. When Cael speaks, people believe.*
 
-**Mechanic:** Cael issues battlefield commands that buff allies and coordinate attacks. Rally commands cost MP and last a set number of turns. Only one Rally can be active at a time (issuing a new one replaces the old one). Cael must be conscious for the Rally to persist — if he's Fainted or afflicted with Silence/Sleep, the active Rally ends.
+**Mechanic:** Cael issues battlefield commands that buff allies and coordinate attacks. Rally commands cost MP and last a set number of turns. Only one Rally can be active at a time (issuing a new one replaces the old one). Cael must be conscious for the Rally to persist — if he's Fainted or afflicted with Silence/Sleep, the active Rally ends. **How a Rally runs in battle:** Every living ally, Cael included, gets the Rally's full turn count and spends it on their own turns — the turn Cael issues it on is not one of them, so his own copy of Hold the Line lasts through his next three turns, as everyone else's does. A Rally cannot be issued while Cael is Silenced: the Rally command and every Rally in its list are grayed out, since Silence would end it at once (see [ui-design.md](ui-design.md) § 2.7 Battle Sub-Menus). A Rally's stat bonus adds to any other buff on the same stat rather than multiplying it ([combat-formulas.md](combat-formulas.md) § Buff & Debuff Interaction). **Vanguard Strike is not a Rally.** It is a standalone command that shares Cael's menu and MP: it neither replaces nor is replaced by the active Rally.
 
 **Sub-Abilities:**
 

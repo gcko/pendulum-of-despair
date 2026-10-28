@@ -211,7 +211,7 @@ static func execute_enemy_magic(
 		reduction.append(1.0 - dmg_mult)
 	# element_mod 1.0 until party resistances are implemented
 	var dmg: int = DamageCalc.calculate_magic(mag, power, target_mdef, 1.0, 1.0, [], reduction)
-	state.take_damage(target_slot, dmg)
+	dmg = state.take_damage(target_slot, dmg)  # after Unbreakable, as applied
 	return {"hit": true, "damage": dmg, "type": "magic"}
 
 
@@ -258,7 +258,7 @@ static func execute_enemy_attack(
 			1.0,
 		)
 	)
-	state.take_damage(target_slot, dmg)
+	dmg = state.take_damage(target_slot, dmg)  # after Unbreakable, as applied
 	var dtype: String = "critical" if is_crit else "physical"
 	return {"hit": true, "damage": dmg, "type": dtype}
 

@@ -148,10 +148,10 @@ func _on_turn_ready(
 	if _command_menu != null:
 		_command_menu.set_enemy_count(enemy_count)
 		_command_menu.set_party_count(_occupied_party_slot_count())
-		var current_mp: int = 0
+		var member: Dictionary = {}
 		if _battle_state != null:
-			current_mp = int(_battle_state.get_member(slot).get("current_mp", 0))
-		_command_menu.show_commands(character_data, is_boss, current_mp)
+			member = _battle_state.get_member(slot)
+		_command_menu.show_commands(character_data, is_boss, member)
 
 
 func _on_command_selected(command: Dictionary) -> void:
