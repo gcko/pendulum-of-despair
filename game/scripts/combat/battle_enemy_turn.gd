@@ -160,6 +160,7 @@ func _do_spawn(action: Dictionary, enemy: Node, enemies: Array[Node], idx: int) 
 		var eid: String = "enemy_%d" % (enemies.size() - 1)
 		_atb.add_combatant(eid, new_enemy.get_stats().get("spd", 10), true)
 		new_enemy.died.connect(_manager._on_enemy_died.bind(new_enemy))
+		new_enemy.status_applied.connect(_manager._on_enemy_status_applied.bind(new_enemy))
 		spawned += 1
 	if spawned > 0:
 		_manager.message.emit("Corrupted Spawns emerge from the depths!")

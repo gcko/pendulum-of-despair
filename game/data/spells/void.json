@@ -159,6 +159,10 @@
 			"target": "single_enemy",
 			"hit_rate": null,
 			"duration": null,
+			"rider": {
+				"status": "despair",
+				"chance": 40
+			},
 			"description": "Void damage. Additionally has a 40% chance to inflict Despair on the target.",
 			"learned_by": [
 				{

@@ -31,7 +31,12 @@ static func setup_party(state: Node, atb: Node) -> void:
 ## enemy grid, and give each one an ATB gauge. Returns the spawned nodes.
 ## @param encounter_group Array[String] — enemy IDs from JSON encounter data.
 static func setup_enemies(
-	encounter_group: Array, enemy_act: String, enemy_area: Node2D, atb: Node, on_died: Callable
+	encounter_group: Array,
+	enemy_act: String,
+	enemy_area: Node2D,
+	atb: Node,
+	on_died: Callable,
+	on_status_applied: Callable
 ) -> Array[Node]:
 	var enemies: Array[Node] = []
 	for i: int in range(mini(MAX_ENEMIES, encounter_group.size())):
@@ -46,6 +51,8 @@ static func setup_enemies(
 		atb.add_combatant("enemy_%d" % i, e.get_stats().get("spd", 10), true)
 		# AoE-on-death (Shard Burst): fire when this enemy dies, by any cause.
 		e.died.connect(on_died.bind(e))
+		# Announce every status that lands on it, whatever inflicted it (#439).
+		e.status_applied.connect(on_status_applied.bind(e))
 	return enemies
 
 

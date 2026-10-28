@@ -439,7 +439,7 @@ func test_stat_penalty_debuffs_use_the_standard_hit_rate_band() -> void:
 ## `hit_rate` is a spell's own to-hit roll, and offensive damage does not roll to
 ## hit. Per magic.md § Derived Rules, "A status rider on an offensive spell sits
 ## below both hit-rate bands", a rider (Pendulum's Echo's 40% Despair) is NOT
-## encoded here: the battle layer would roll damage instead of the rider.
+## encoded here; test_battle_magic_command.gd checks its own `rider` field.
 func test_only_status_and_debuff_spells_declare_a_hit_rate() -> void:
 	assert_false(_spells.is_empty(), "spell list must not be empty")
 	for spell: Dictionary in _spells:

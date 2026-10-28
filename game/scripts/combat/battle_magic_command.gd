@@ -83,11 +83,15 @@ func _resolve(
 		return _for_each_targetable_enemy(
 			func(i: int) -> bool: return _status_on_enemy(slot, spell, i)
 		)
-	if target_type == "single_enemy":
-		return _magic_on_enemy(slot, mag, power, element, resolved_enemy_target)
-	if target_type == "all_enemies":
+	if target_type == "single_enemy" or target_type == "all_enemies":
+		# An offensive spell's status rider (magic.md § Derived Rules); null when none.
+		var rider: Dictionary = {}
+		if spell.get("rider") != null:
+			rider = spell.get("rider")
+		if target_type == "single_enemy":
+			return _magic_on_enemy(slot, mag, power, element, rider, resolved_enemy_target)
 		return _for_each_targetable_enemy(
-			func(i: int) -> bool: return _magic_on_enemy(slot, mag, power, element, i)
+			func(i: int) -> bool: return _magic_on_enemy(slot, mag, power, element, rider, i)
 		)
 	if target_type in ["single_ally", "all_allies"]:
 		return _heal_allies(target_type, command, DamageCalc.calculate_healing(mag, power))
@@ -127,9 +131,12 @@ func _heal_allies(target_type: String, command: Dictionary, heal_amt: int) -> bo
 	return had_effect
 
 
-## Resolve a damage spell against one enemy. Returns true if it landed (an
-## absorb counts — the spell affected the target).
-func _magic_on_enemy(caster_slot: int, mag: int, power: int, element: String, idx: int) -> bool:
+## Resolve a damage spell against one enemy, then roll its status [param rider]
+## (`{status, chance}`, or empty) if the damage landed and the enemy survived.
+## Returns true if it landed (an absorb counts — the spell affected the target).
+func _magic_on_enemy(
+	caster_slot: int, mag: int, power: int, element: String, rider: Dictionary, idx: int
+) -> bool:
 	var enemies: Array[Node] = _battle.get_enemies()
 	if idx < 0 or idx >= enemies.size():
 		return false
@@ -150,6 +157,9 @@ func _magic_on_enemy(caster_slot: int, mag: int, power: int, element: String, id
 		if result.get("killed", false):
 			_battle.combatant_died.emit("enemy_%d" % idx)
 			_battle.get_atb().remove_combatant("enemy_%d" % idx)
+		elif not rider.is_empty():
+			# The rider rides on landed damage, and only onto a target still alive.
+			BattleActions.roll_status_rider(state, caster_slot, rider, enemies[idx])
 		return true
 	_battle.damage_dealt.emit("enemy_%d" % idx, 0, "miss")
 	return false
@@ -170,13 +180,7 @@ func _status_on_enemy(caster_slot: int, spell: Dictionary, idx: int) -> bool:
 		enemies[idx]
 	)
 	if result.get("inflicted", false):
-		_battle.resync_enemy_atb(idx)
-		# enemy.apply_status already emitted status_applied with the real
-		# duration; don't re-emit it here with a fabricated value.
-		_battle.damage_dealt.emit("enemy_%d" % idx, 0, "status")
-		_battle.message.emit(
-			"%s is afflicted with %s!" % [enemies[idx].get_display_name(), result.get("status", "")]
-		)
+		# The battle announces it from the enemy's own status_applied (#439).
 		return true
 	match result.get("type", ""):
 		"immune":
