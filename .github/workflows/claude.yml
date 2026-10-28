@@ -88,7 +88,7 @@ jobs:
 
             **Project context:**
             - Godot 4.8 project in `game/` (open `game/` in the editor), GDScript only
-            - Tests: the GUT suite in `game/tests/`, plus the quality gates (`bash scripts/gates.sh` locally; CI runs both in its own workflows)
+            - Tests: the GUT suite in `game/tests/`, plus the quality gates (`bash scripts/gates.sh` locally; CI runs both in gut-tests.yml, quality-gates.yml and static-gates.yml)
             - Game data is JSON in `game/data/`; canonical design docs live in `docs/story/`
             - pnpm is used only for husky and commitlint (git hooks); there is no Node or TypeScript application code
           claude_args: '--allowed-tools "Bash(gh:*),Bash(cat:*),Bash(head:*),Bash(tail:*),Bash(grep:*),Bash(find:*),Bash(ls:*),Bash(stat:*),Bash(wc:*),Bash(diff:*),Read,Glob,Grep"'

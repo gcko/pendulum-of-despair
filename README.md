@@ -8,7 +8,7 @@
 
 Pendulum of Despair is a single-player JRPG built with **Godot Engine**. The game features ATB combat, a 6-character party, Ley Crystal progression, Arcanite Forging crafting, and a branching narrative across 4 acts plus epilogue and post-game content.
 
-**Status:** Game design is complete (25 design gaps closed across 4 tiers). The game is being built in `game/`, a Godot 4.8 project with a GUT test suite. Implementation is tracked against the design in `docs/analysis/game-dev-gaps.md` and `docs/issues/`.
+**Status:** Mechanical game design is complete: 24 of 25 design gaps are closed across 4 tiers, with 4.5 Localization deferred. The game is being built in `game/`, a Godot 4.8 project with a GUT test suite. Live work is tracked in GitHub Issues, grouped by milestone; `docs/analysis/game-dev-gaps.md` and `docs/issues/` are the records that trace that work back to the design.
 
 ---
 
@@ -19,9 +19,9 @@ pendulum-of-despair/
 ├── game/                   # Godot 4.8 project root (open this in the editor)
 │   ├── project.godot
 │   ├── scripts/            # GDScript game logic; autoload/ holds the 6 singletons
-│   ├── scenes/             # Scene files (.tscn): core, overlay, entities, maps
+│   ├── scenes/             # Scene files (.tscn): core, overlay, entities, maps, ui
 │   ├── data/               # JSON game data (enemies, items, equipment, shops, ...)
-│   ├── assets/             # Sprites, tilesets, music, SFX, ambient audio
+│   ├── assets/             # Sprites, tilesets, UI art, music, SFX, ambient audio
 │   ├── tests/              # GUT test suite
 │   └── addons/             # Vendored addons (GUT)
 ├── docs/
@@ -31,21 +31,25 @@ pendulum-of-despair/
 │   │   └── ...
 │   ├── analysis/           # Gap trackers: design (game-design-gaps.md) and implementation (game-dev-gaps.md)
 │   ├── issues/             # Per-gap implementation issue files (GAP-NNN), indexed by README.md
-│   ├── decisions/          # Decision records
+│   ├── decisions/          # Incident write-ups and the decisions they led to
 │   ├── references/         # Reference data (SNES, audio, graphics)
-│   ├── plans/              # Architecture decisions and implementation plans
-│   └── superpowers/        # Design specs and implementation plans
+│   ├── plans/              # Technical architecture and roadmap plans
+│   └── superpowers/        # Per-feature design specs and implementation plans
 ├── scripts/
 │   ├── gates.sh            # Run the quality gates locally
 │   └── quality-gates/      # Gate scripts, their self-tests, and the GUT count floors
 ├── tools/                  # Hand-run developer scripts (see tools/README.md)
+├── .claude/                # Claude Code project skills and settings
 ├── .github/                # CI: gut-tests, quality-gates, static-gates; Claude review, SAST
 ├── .husky/                 # Git hooks (conventional commits, branch protection, quality gates)
+├── AGENTS.md               # Instructions for AI coding agents
+├── CLAUDE.md               # Claude-specific extensions to AGENTS.md
 ├── package.json            # Commitlint + Husky tooling only
+├── pnpm-lock.yaml          # Lockfile for that tooling
 └── commitlint.config.ts    # Conventional commit rules
 ```
 
-See the Repository Layout table in `AGENTS.md` for where each kind of change goes.
+See the Where to Add Code table in `AGENTS.md` for where each kind of change goes.
 
 ---
 
@@ -60,31 +64,23 @@ See the Repository Layout table in `AGENTS.md` for where each kind of change goe
 ### Setup
 
 ```bash
-pnpm install    # Install commitlint + husky and enable the git hooks
+pnpm install --frozen-lockfile    # Install commitlint + husky and enable the git hooks
 ```
 
-Run `pnpm install` once per clone, and again in every new `git worktree`: the
-hook shims live in the gitignored `.husky/_/`, which each checkout generates
-for itself, and `scripts/gates.sh` refuses to run until they exist.
+Run `pnpm install --frozen-lockfile` once per clone, and again in every new `git worktree`: the hook shims live in the gitignored `.husky/_/`, which each checkout generates for itself, and `scripts/gates.sh` refuses to run until they exist.
 
-### Running the game
+### Running the Game
 
-Open the `game/` directory as a project in the Godot 4.8 editor and press
-**Run Project** (F5). The main scene is `res://scenes/core/title.tscn`.
+Open the `game/` directory as a project in the Godot 4.8 editor and press **Run Project** (F5, or Cmd+B on macOS). The main scene is `res://scenes/core/title.tscn`.
 
-### Running the quality gates
+### Running the Quality Gates
 
 ```bash
-bash scripts/gates.sh
+bash scripts/gates.sh                        # judge the branch against main
+GATES_BASE=<parent> bash scripts/gates.sh    # on a stacked branch, judge it against its parent
 ```
 
-This runs the hooks' quality gates (gdformat, gdlint, JSON validation, the
-Python data and doc gates and their self-tests, then Godot import and the GUT
-suite when the change can affect them) against your branch and any uncommitted
-work. On a stacked branch, pass `GATES_BASE=<parent>`. The GUT suite is held
-to the count floors in `scripts/quality-gates/gut-baseline.txt`. The hooks
-still run on every commit and push; the script is for checking work they cannot
-see yet.
+This runs the hooks' quality gates (gdformat, gdlint, JSON validation, the Python data and doc gates and their self-tests, then Godot import and the GUT suite when the change can affect them) against your branch and any uncommitted work. The GUT suite is held to the count floors in `scripts/quality-gates/gut-baseline.txt`. The hooks still run on every commit and push; the script is for checking work they cannot see yet.
 
 ---
 
@@ -94,9 +90,10 @@ All mechanical game design is complete and lives in `docs/story/`. Key documents
 
 | Document | Content |
 |----------|---------|
+| `gdd-overview.md` | Entry point to the design: pitch, pillars, act structure, systems summary, content volume, document index |
 | `combat-formulas.md` | Damage, hit/miss, critical, ATB gauge, encounter rates |
 | `characters.md` | 6 party members, stat growth, Ley Crystal system |
-| `bestiary/` | Regular enemies and bosses, with full AI scripts |
+| `bestiary/` | Enemy stat tables, type rules, families; boss AI scripts in `bosses.md` |
 | `items.md` | Consumables, devices, crafting materials, key items |
 | `equipment.md` | Weapons, armor, accessories |
 | `economy.md` | Shop inventories, inn prices, gold pacing |
@@ -105,7 +102,7 @@ All mechanical game design is complete and lives in `docs/story/`. Key documents
 | `ui-design.md` | Battle screen, menus, dialogue, save/load UI |
 | `difficulty-balance.md` | FF6 Accessible philosophy, balance methodology |
 
-Gap trackers: `docs/analysis/game-design-gaps.md` (design), `docs/analysis/game-dev-gaps.md` (implementation against the design), and the per-gap issue files in `docs/issues/`.
+Live work is tracked in GitHub Issues, grouped by milestone. The markdown trackers are records: `docs/analysis/game-design-gaps.md` (design), `docs/analysis/game-dev-gaps.md` (implementation against the design), and the per-gap issue files in `docs/issues/`.
 
 ---
 

@@ -134,6 +134,6 @@ jobs:
 
             **IMPORTANT - Do NOT:**
             - Run tests or gates (GUT, `bash scripts/gates.sh`, Godot); CI runs them
-            - Execute the code or start servers
+            - Launch the game or run Godot
             - Modify any files
           claude_args: '--allowed-tools "Bash(gh:*),Bash(cat:*),Bash(head:*),Bash(tail:*),Bash(grep:*),Bash(find:*),Bash(ls:*),Bash(stat:*),Bash(wc:*),Bash(diff:*),Read,Glob,Grep"'

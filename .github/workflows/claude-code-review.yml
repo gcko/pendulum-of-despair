@@ -83,7 +83,7 @@ jobs:
             - Bugs, security vulnerabilities, correctness
             - Performance considerations
             - Test coverage gaps
-            - TypeScript strict mode compliance (no `any` types)
+            - GDScript static typing and gdlint-clean code; game values traced to `docs/story/`
 
             Use AGENTS.md for universal agent guidance and CLAUDE.md for Claude-specific guidance. Be concise - only highlight critical issues.
             Sign off: approved or issues found.
@@ -96,12 +96,12 @@ jobs:
 
             **IMPORTANT - Do NOT:**
             - Run tests or gates (GUT, `bash scripts/gates.sh`, Godot); CI runs them
-            - Execute the code or start servers
+            - Launch the game or run Godot
             - Modify any files
 
             **Project context:**
             - Godot 4.8 project in `game/` (open `game/` in the editor), GDScript only
-            - Tests: the GUT suite in `game/tests/`, plus the quality gates (`bash scripts/gates.sh` locally; CI runs both in its own workflows)
+            - Tests: the GUT suite in `game/tests/`, plus the quality gates (`bash scripts/gates.sh` locally; CI runs both in gut-tests.yml, quality-gates.yml and static-gates.yml)
             - Game data is JSON in `game/data/`; canonical design docs live in `docs/story/`
             - pnpm is used only for husky and commitlint (git hooks); there is no Node or TypeScript application code
 
