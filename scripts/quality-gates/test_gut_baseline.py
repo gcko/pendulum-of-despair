@@ -44,19 +44,22 @@ REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 #            "prove main green" recipe, and inherited it sent every fixture
 #            gates.sh run, which holds no game/, into the Godot stage (#482).
 #   GODOT_*  GODOT_BIN picks the binary, GODOT_LOCK* place and time the mutex.
-# plus HUSKY (gates.sh refuses HUSKY=0) and the floors gates.sh and
-# quality-gates.yml compute and export, MIN_GATES and MIN_GATE_TESTS.
+# plus HUSKY (gates.sh refuses HUSKY=0) and MIN_GATES and MIN_GATE_TESTS.
+# quality-gates.yml writes those two floors to $GITHUB_ENV, so CI's real Gate I
+# step runs this suite with them set; gates.sh only evals them into its own
+# shell and never exports them.
 _SCRUBBED_PREFIXES = ("GIT_", "GATES_", "GODOT_")
 _SCRUBBED_NAMES = ("HUSKY", "MIN_GATES", "MIN_GATE_TESTS")
 
 
 def _scrubbed_env(path=None, **overrides):
-    """os.environ minus everything the repo's scripts read, then `overrides`.
+    """os.environ minus the knobs listed above, then `overrides`.
 
     Every subprocess here that runs a repo script -- gates.sh, a husky hook, a
     workflow step body, godot-lock.sh, or the git that builds their fixture --
     takes its environment from this, so a test sets exactly the knobs it is
-    about and inherits none. `path`, if given, replaces PATH.
+    about and inherits none. `path`, if given, replaces PATH. A new kind of
+    fixture must also join TestFixturesIgnoreTheCallersEnvironment.REPRESENTATIVE.
     """
     env = {k: v for k, v in os.environ.items()
            if not k.startswith(_SCRUBBED_PREFIXES) and k not in _SCRUBBED_NAMES}
@@ -758,13 +761,18 @@ def run_workflow_steps(steps, cwd, env_extra=None, expressions=None):
     entry raises rather than reaching bash as a "bad substitution". The
     environment is `_scrubbed_env()`, as a runner has none of the caller's
     GIT_*, GATES_* or GODOT_* variables: inherited from a git hook, GIT_* alone
-    would point a fixture's `git` at the real repository.
+    would point a fixture's `git` at the real repository. MIN_GATES and
+    MIN_GATE_TESTS go too, because this workflow's own first step writes them
+    to $GITHUB_ENV: CI's Gate I step therefore runs this suite with both set,
+    and a fixture step that inherited them would find a floor it was never
+    handed and pass where it must fail.
     """
     scratch = tempfile.mkdtemp(prefix="pod-wf-")
     env_file = os.path.join(scratch, "github_env")
     io.open(env_file, "w").close()
-    env = _scrubbed_env(GITHUB_ENV=env_file, RUNNER_TEMP=scratch, CI="true")
-    env.update(env_extra or {})
+    overrides = dict(GITHUB_ENV=env_file, RUNNER_TEMP=scratch, CI="true")
+    overrides.update(env_extra or {})
+    env = _scrubbed_env(**overrides)
 
     def substitute(match):
         if match.group(1) not in (expressions or {}):
@@ -1313,9 +1321,8 @@ class TestPreCommitRequiresGdtoolkit(unittest.TestCase):
 
     def _hook(self):
         """Run the hook under every husky shell; returns [(shell, code, output)]."""
-        env = _scrubbed_env(self.fake_bin + os.pathsep + _path_without_gdtoolkit())
-        env["FAKE_TOOL_LOG"] = self.fake_log
-        env["FAKE_BIN"] = self.fake_bin
+        env = _scrubbed_env(self.fake_bin + os.pathsep + _path_without_gdtoolkit(),
+                            FAKE_TOOL_LOG=self.fake_log, FAKE_BIN=self.fake_bin)
         runs = []
         for shell in _hook_shells():
             proc = subprocess.run(
@@ -1564,15 +1571,15 @@ class TestHooksRunUnderPosixSh(unittest.TestCase):
         """Run `hook` under every husky shell; returns [(shell, code, output, calls)].
 
         `before`, if given, is called before each shell's run."""
-        env = _scrubbed_env(self.fake_bin + os.pathsep + _path_without_gdtoolkit())
-        env.update(
+        overrides = dict(
             FAKE_TOOL_LOG=self.fake_log,
             GODOT_BIN=os.path.join(self.fake_bin, "godot"),
             GODOT_LOCK=os.path.join(self.dir, "godot.lock"),
             GODOT_LOCK_POLL="1",
             GODOT_LOCK_TIMEOUT="5",
         )
-        env.update(env_extra)
+        overrides.update(env_extra)
+        env = _scrubbed_env(self.fake_bin + os.pathsep + _path_without_gdtoolkit(), **overrides)
         runs = []
         for shell in _hook_shells():
             if os.path.exists(self.fake_log):
@@ -1881,8 +1888,17 @@ class TestFixturesIgnoreTheCallersEnvironment(unittest.TestCase):
     every fixture gates.sh run -- a scratch repo with no game/ and no Godot --
     went on to the Godot stage and failed, so the recipe failed on a green tree.
     This runs a representative test of each kind of fixture in a child unittest
-    process whose environment holds every knob a developer or a hook might have
-    set, and requires them all to pass exactly as they do in a bare shell.
+    process whose environment carries HOSTILE, and requires them all to pass
+    exactly as they do in a bare shell.
+
+    Which HOSTILE entries the guard actually exercises: GATES_FORCE_GODOT,
+    HUSKY and GIT_DIR each turn a representative red when inherited, and so
+    do MIN_GATES and MIN_GATE_TESTS, which quality-gates.yml exports to CI's
+    real Gate I step. GATES_BASE, GATES_MAX_GODOT, GODOT_BIN and GODOT_LOCK
+    are preventive: every fixture that reads them either sets its own value
+    over the inherited one or stops before the stage that reads it, so letting
+    any one of them through the scrub leaves this test green today. It costs a
+    child process running ten fixture tests, roughly 5-10s.
     """
 
     HOSTILE = {
@@ -1893,6 +1909,8 @@ class TestFixturesIgnoreTheCallersEnvironment(unittest.TestCase):
         "GODOT_BIN": "/nonexistent/godot",
         "GODOT_LOCK": "/nonexistent/pod-godot.lock",
         "GIT_DIR": "/nonexistent/.git",
+        "MIN_GATES": "1",
+        "MIN_GATE_TESTS": "1",
     }
     REPRESENTATIVE = (
         "TestGatesShRequiresInstalledHooks.test_a_checkout_with_its_hooks_installed_runs_the_gates_and_passes",
@@ -1902,11 +1920,12 @@ class TestFixturesIgnoreTheCallersEnvironment(unittest.TestCase):
         "TestHooksRunUnderPosixSh.test_pre_push_passes_and_hands_gate_l_the_stripped_log",
         "TestHooksRunUnderPosixSh.test_commit_msg_accepts_a_conventional_message_and_lints_that_file",
         "TestQualityGatesWorkflow.test_a_clean_tree_passes_having_run_every_gate_and_self_test",
+        "TestQualityGatesWorkflow.test_a_step_that_never_received_its_floor_fails_on_a_clean_tree",
         "TestStaticGatesWorkflow.test_a_clean_tree_passes_having_installed_the_pin_and_checked_every_file",
         "TestGodotLockMutex.test_an_acquirer_names_itself_and_release_removes_the_lock",
     )
 
-    def test_representative_fixtures_pass_with_every_gates_knob_set_in_the_callers_environment(self):
+    def test_representative_fixtures_pass_with_hostile_knobs_in_the_callers_environment(self):
         module = os.path.splitext(os.path.basename(__file__))[0]
         ids = ["%s.%s" % (module, name) for name in self.REPRESENTATIVE]
         # Deliberately NOT scrubbed: the child inherits the hostile knobs, as
