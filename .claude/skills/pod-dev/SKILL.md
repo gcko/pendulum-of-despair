@@ -211,9 +211,9 @@ step in its exit message.
 
 | Step | Skill | What It Does | Next Step |
 |------|-------|-------------|-----------|
-| 0 | `/milestone-burndown <milestone>` | Drive a whole milestone to zero open issues: several bundles at once in parallel worktrees, stacked or independent PRs, in waves; asks model and effort per stage at intake | One `/issue-bundle`-sized bundle per worktree, each through steps 2-3 |
+| 0 | `/milestone-burndown <milestone>` | Drive a whole milestone to zero open issues: several bundles at once in parallel worktrees, stacked or independent PRs, in waves; asks model and effort per stage at intake | Runs steps 2-3 itself for every bundle (a stacked child skips `/create-pr`, which always targets main); ends with its Step 9 report |
 | 1 | `/story-designer` | Design a game system (brainstorm, spec, plan, implement) | `/create-pr` |
-| 1 (alt) | `/issue-bundle` | Implement a few related GitHub issues together on one branch as one PR | `/create-pr` |
+| 1 (alt) | `/issue-bundle` | Implement a few related GitHub issues together on one branch as one PR | Runs steps 2-3 itself; ends at its Step 6 decision (next bundle, or playtest) |
 | 2 | `/create-pr` | Open a PR targeting main (tests, lint, push, create) | `/pr-review-response <PR#>` |
 | 3 | `/pr-review-response <PR#>` | Orchestrate review + address feedback | Merge (or re-run) |
 
