@@ -197,10 +197,10 @@ unstated. `game/tests/test_spell_balance.gd` asserts all of them against
   the status spell it duplicates. A rider is **not** encoded as `hit_rate`:
   `hit_rate` is the spell's own to-hit roll, and an offensive spell's damage
   does not roll to hit, so `game/tests/test_spell_balance.gd` holds every
-  non-status, non-debuff spell to `hit_rate: null`. Until the battle layer grows
-  a field it can roll, a rider lives in the spell's Effect text only and nothing
-  applies it in combat; when that field arrives it is named separately from
-  `hit_rate` and this 30-50% band is what it must satisfy.
+  non-status, non-debuff spell to `hit_rate: null`. A rider has its own field,
+  `rider: {status, chance}` (Pendulum's Echo: despair, 40), and `chance` must sit
+  in this 30-50% band. Combat rolls it only once the damage lands on a living
+  target: immunity check, then the two-stage status roll, at canonical duration.
 - **AoE MP pricing needs a named *same-tier* counterpart.** The 1.5-2x rule binds
   only on the nine AoE/single-target pairs listed below, where both halves sit in
   the same tier and deliver the same effect.
