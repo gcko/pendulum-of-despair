@@ -13,6 +13,7 @@ signal status_removed(slot: int, status_name: String)
 
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 const Helpers = preload("res://scripts/util/inventory_helpers.gd")
+const Rally = preload("res://scripts/combat/battle_rally.gd")
 
 ## Party member data. Index = slot (0-3). Null entries = empty slots.
 var _members: Array = [null, null, null, null]
@@ -65,7 +66,9 @@ func add_member(slot: int, char_data: Dictionary) -> void:
 		"wg": 0,
 		"favor": {},
 		"stolen_goods": [] as Array[String],
+		# The Rally this member is under; battle_rally.gd owns its shape and rules.
 		"active_rally": {},
+		"turn_open": false,
 		"active_stance": "",
 	}
 
@@ -91,11 +94,12 @@ func take_damage(slot: int, amount: int) -> void:
 	var m: Dictionary = get_member(slot)
 	if m.is_empty() or not m["is_alive"]:
 		return
-	var clamped: int = maxi(0, amount)
+	var clamped: int = Rally.absorb_lethal(self, m, maxi(0, amount))
 	m["current_hp"] = maxi(0, m["current_hp"] - clamped)
 	member_damaged.emit(slot, clamped)
 	if m["current_hp"] <= 0:
 		m["is_alive"] = false
+		Rally.on_fainted(self, slot)
 		member_died.emit(slot)
 
 
@@ -152,6 +156,7 @@ func apply_status(slot: int, status_name: String, duration_type: String, duratio
 	else:
 		entry["remaining_seconds"] = float(duration)
 	m["active_statuses"].append(entry)
+	Rally.on_status_applied(self, slot, status_name)
 	status_applied.emit(slot, status_name)
 
 
@@ -187,6 +192,7 @@ func tick_statuses(slot: int) -> Array:
 	if m.is_empty():
 		return []
 	var dot_events: Array = _apply_dot(slot, m)
+	Rally.end_turn(m)
 	for i: int in range(m["active_statuses"].size() - 1, -1, -1):
 		var s: Dictionary = m["active_statuses"][i]
 		if s.get("duration_type", "") != "turns":
@@ -240,12 +246,13 @@ func tick_realtime_statuses(slot: int, delta: float) -> void:
 			status_removed.emit(slot, sname)
 
 
-## Get effective stat with equipment bonuses and buff multiplier applied.
+## Get effective stat with equipment bonuses, the Rally and the buff multiplier
+## applied. The Rally is its own layer, so an item buff outlives its ending.
 func get_effective_stat(slot: int, stat_name: String) -> int:
 	var m: Dictionary = get_member(slot)
 	if m.is_empty():
 		return 0
-	var base: int = m.get("effective_stats", {}).get(stat_name, 0)
+	var base: int = Rally.apply_stat(m, stat_name, m.get("effective_stats", {}).get(stat_name, 0))
 	var mult_key: String = stat_name + "_mult"
 	var mult: float = m.get(mult_key, 1.0)
 	return int(base * mult)
@@ -257,6 +264,21 @@ func set_buff(slot: int, buff_key: String, value: float) -> void:
 	if m.is_empty():
 		return
 	m[buff_key] = value
+
+
+## Issue a Rally to every living ally, replacing any Rally already running.
+func start_rally(caster_slot: int, rally_id: String, effect: Dictionary) -> void:
+	Rally.start(self, caster_slot, rally_id, effect)
+
+
+## The Rally in force as {id, caster_slot}, or {} when none.
+func get_active_rally() -> Dictionary:
+	return Rally.active(self)
+
+
+## Start of a member's turn (once per turn). Returns HP the Rally restored.
+func begin_turn(slot: int) -> int:
+	return Rally.begin_turn(self, slot)
 
 
 ## Swap row (front <-> back). Free action per combat-formulas.md.
