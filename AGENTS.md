@@ -71,9 +71,9 @@ Godot, which matters when several worktrees run at once.
 | `game/scenes/` | Scene files (.tscn) — core, overlay, entities, maps |
 | `game/data/` | JSON game data (enemies, items, equipment, shops, etc.) |
 | `game/assets/` | Art and audio assets (sprites, tilesets, music, SFX) |
-| `docs/story/` | Canonical game design documents (35+ files) |
+| `docs/story/` | Canonical game design documents |
 | `docs/story/bestiary/` | Enemy stat tables, type rules, families |
-| `docs/story/script/` | Full dialogue script (8 files, 6,300+ lines) |
+| `docs/story/script/` | Full dialogue script |
 | `docs/analysis/` | Gap analysis and audit docs |
 | `docs/references/` | Reference data (SNES, audio, graphics) |
 | `docs/plans/` | Architecture decisions and implementation plans |
