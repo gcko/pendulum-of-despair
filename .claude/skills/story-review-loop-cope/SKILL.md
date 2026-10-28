@@ -1,14 +1,20 @@
 ---
 name: story-review-loop-cope
-description: Use when a story PR needs Copilot-level review but Copilot is unavailable. Emulates Copilot's review patterns using 3 specialized agents targeting the 10 gap categories from .claude/skills/pr-review-response/references/copilot-gap-taxonomy.md. Takes same parameters as story-review-loop (PR number + iteration count). Finds 4-12+ issues per round like Copilot does.
+description: Use when a story, docs or tooling PR needs Copilot-level review but Copilot is unavailable. Emulates Copilot's review patterns using 3 specialized agents targeting the 10 gap categories from .claude/skills/pr-review-response/references/copilot-gap-taxonomy.md. Takes same parameters as story-review-loop (PR number + iteration count). Finds 4-12+ issues per round like Copilot does.
 ---
 
 # Story Review Loop — Copilot Emulation
 
 Drop-in replacement for `/story-review-loop` when GitHub Copilot is
-unavailable. Emulates the specific issue categories Copilot catches
-by dispatching 3 agents targeting the 10 gap categories from
+unavailable, and the Copilot fallback for Story, Docs and Tooling PRs
+(`/milestone-burndown` Step 6). Emulates the specific issue categories
+Copilot catches by dispatching 3 agents targeting the 10 gap categories from
 `.claude/skills/pr-review-response/references/copilot-gap-taxonomy.md`.
+
+On a Tooling PR (`/pr-review-response` Step 1), re-point each agent's focus
+at the PR's real surface: shell, hooks, workflows, gates, test behavior, and
+the docs that describe them. The expanding-file rule below then means reading
+the related skills, workflows and scripts, not story docs.
 
 ## Invocation
 

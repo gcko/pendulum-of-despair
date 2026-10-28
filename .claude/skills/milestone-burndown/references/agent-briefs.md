@@ -13,10 +13,19 @@ you verified and how; never report something as done or fixed without the
 command or file evidence.* The orchestrator spot-checks reports before acting
 on them (SKILL.md Steps 1 and 3).
 
-Every brief carries a `SCRATCH:` line, `<scratchpad>/<stage>-<name>/`, where
-`<scratchpad>` is the orchestrator's session scratchpad and `<stage>-<name>`
-is unique to that agent. Agents share the scratchpad, so a shared scratch name
-lets one agent delete another's files.
+Every brief carries a `SCRATCH:` line, `<scratchpad>/<stage>-<name>/`.
+`<scratchpad>` is the orchestrator's session scratchpad; `<stage>-<name>` is
+unique to the agent:
+
+| Agent | `<stage>-<name>` | Example |
+|---|---|---|
+| triage verifier | `triage-<slice>`, the slice index | `triage-1` |
+| research agent while planning (`references/intake.md` section 5) | `research-<n>` | `research-1` |
+| builder | `build-<bundle>`, the agent's own name | `build-A` |
+| reviewer | `review-<PR#>-<agent>` | `review-485-A` |
+
+Agents share the scratchpad, so a shared scratch name lets one agent delete
+another's files.
 
 ---
 
@@ -59,7 +68,7 @@ WORKTREE: <absolute path>   BRANCH: <branch>   BASE: <base-sha>
   (<base-sha> is the origin/main commit your worktree was cut from. Judge
   everything against it, never against a local `main`, which may be stale.)
 Work only inside this worktree. Do not cd anywhere else or touch another worktree.
-SCRATCH: <scratchpad>/build-<X>/
+SCRATCH: <scratchpad>/build-<bundle>/
   Create it yourself. Write temporary files only inside it, and never rm -rf
   a path outside it: other agents share the scratchpad.
 
