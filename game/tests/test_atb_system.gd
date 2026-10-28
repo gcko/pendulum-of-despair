@@ -195,9 +195,35 @@ func _gauge_after_frames(frames: int, frame_seconds: float) -> int:
 	add_child_autofree(atb)
 	atb.add_combatant("x", 10, false)
 	atb.set_battle_speed(3)
-	for i: int in range(frames):
+	for _i: int in range(frames):
 		atb.tick(frame_seconds)
 	return atb.get_gauge("x")
+
+
+## Feed `deltas` to a fresh gauge one frame at a time and return how many ticks
+## each frame applied, read off the gauge (SPD 0 at speed 6 fills 25 per tick
+## and needs 640 ticks, so no frame here can fill it).
+func _ticks_applied_per_frame(deltas: Array) -> Array[int]:
+	var atb: Node = ATBScript.new()
+	add_child_autofree(atb)
+	atb.add_combatant("x", 0, false)
+	atb.set_battle_speed(6)
+	var rate: int = atb.calculate_fill_rate(0, 6, [])
+	var applied: Array[int] = []
+	for delta: float in deltas:
+		atb.set_gauge("x", 0)
+		atb.tick(delta)
+		applied.append(atb.get_gauge("x") / rate)
+	return applied
+
+
+## Count the frames in `applied` that did not apply exactly one tick.
+func _frames_off_one_tick(applied: Array[int]) -> int:
+	var off: int = 0
+	for n: int in applied:
+		if n != 1:
+			off += 1
+	return off
 
 
 func test_same_wall_clock_time_fills_the_same_gauge_at_30_60_and_120_fps() -> void:
@@ -216,23 +242,54 @@ func test_two_half_ticks_equal_one_full_tick() -> void:
 	)
 
 
-func test_a_frame_shorter_than_a_tick_waits_for_the_next() -> void:
+func test_a_frame_under_half_a_tick_waits_for_the_next() -> void:
 	_atb.add_combatant("party_0", 10, false)
 	_atb.set_battle_speed(3)
-	_atb.tick(1.0 / 120.0)
-	assert_eq(_atb.get_gauge("party_0"), 0, "half a tick of time applies no tick yet")
-	_atb.tick(1.0 / 120.0)
-	assert_eq(_atb.get_gauge("party_0"), 105, "the second half completes the tick")
+	_atb.tick(0.3 / 60.0)
+	assert_eq(_atb.get_gauge("party_0"), 0, "0.3 of a tick applies no tick yet")
+	_atb.tick(0.3 / 60.0)
+	assert_eq(_atb.get_gauge("party_0"), 105, "the carried 0.3 plus 0.3 rounds to one tick")
 
 
 func test_leftover_time_carries_into_the_next_frame() -> void:
-	# 1.5 ticks, then 0.5 ticks: one tick now, the half carried completes a second.
+	# 1.3 ticks, then 0.3: one tick now, and the carried 0.3 makes 0.6, a second.
 	_atb.add_combatant("party_0", 10, false)
 	_atb.set_battle_speed(3)
-	_atb.tick(1.5 / 60.0)
-	assert_eq(_atb.get_gauge("party_0"), 105, "1.5 ticks of time applies one whole tick")
-	_atb.tick(0.5 / 60.0)
-	assert_eq(_atb.get_gauge("party_0"), 210, "the carried half tick completes a second")
+	_atb.tick(1.3 / 60.0)
+	assert_eq(_atb.get_gauge("party_0"), 105, "1.3 ticks of time applies one tick")
+	_atb.tick(0.3 / 60.0)
+	assert_eq(_atb.get_gauge("party_0"), 210, "the carried 0.3 completes a second")
+
+
+func test_a_paced_60_fps_frame_applies_exactly_one_tick() -> void:
+	# Godot reports frame time in whole microseconds, so a paced 60 fps frame is
+	# 16666 or 16667 us: 0.99996 or 1.00002 of a tick, never exactly one.
+	var deltas: Array = []
+	deltas.resize(60)
+	deltas.fill(0.016666)
+	var applied: Array[int] = _ticks_applied_per_frame(deltas)
+	assert_eq(_frames_off_one_tick(applied), 0, "every 16666 us frame applies one tick")
+	assert_eq(applied.reduce(func(a: int, b: int) -> int: return a + b, 0), 60, "60 in all")
+
+
+func test_microsecond_jitter_at_60_fps_never_skips_or_doubles_a_tick() -> void:
+	seed(441)
+	var deltas: Array = []
+	for _i: int in range(10000):
+		deltas.append(randi_range(16664, 16670) / 1000000.0)
+	var applied: Array[int] = _ticks_applied_per_frame(deltas)
+	assert_eq(_frames_off_one_tick(applied), 0, "no jittered 60 fps frame applies 0 or 2 ticks")
+
+
+func test_exact_60_fps_does_not_drift_over_ten_minutes() -> void:
+	var deltas: Array = []
+	deltas.resize(36000)
+	deltas.fill(1.0 / 60.0)
+	assert_eq(
+		_frames_off_one_tick(_ticks_applied_per_frame(deltas)),
+		0,
+		"36000 frames of exactly 1/60 s apply one tick each",
+	)
 
 
 func test_a_long_hitch_applies_at_most_the_capped_ticks() -> void:
@@ -273,6 +330,89 @@ func test_paused_time_does_not_bank_ticks() -> void:
 	_atb.set_submenu_open(false)
 	_atb.tick(1.0 / 60.0)
 	assert_eq(_atb.get_gauge("party_0"), 105, "only the unpaused frame's one tick applies")
+
+
+func test_a_non_finite_delta_applies_nothing_and_does_not_stall_the_gauge() -> void:
+	_atb.add_combatant("party_0", 10, false)
+	_atb.set_battle_speed(3)
+	_atb.tick(NAN)
+	_atb.tick(INF)
+	assert_eq(_atb.get_gauge("party_0"), 0, "a NaN or INF frame applies no tick")
+	_atb.tick(1.0 / 60.0)
+	assert_eq(_atb.get_gauge("party_0"), 105, "and the next real frame still fills")
+
+
+# --- One tick at a time inside a long frame (#441) ---
+# combat-formulas.md breaks SPD ties only among combatants that fill on the
+# same tick, so a frame that covers several ticks stops at the first one that
+# fills a gauge and leaves the rest for the next call.
+
+
+func test_a_slower_combatant_that_fills_first_is_ready_alone() -> void:
+	# party_0 fills on tick 1; the faster enemy_0 would fill on tick 2.
+	_atb.add_combatant("party_0", 10, false)
+	_atb.add_combatant("enemy_0", 100, true)
+	_atb.set_battle_speed(3)
+	var enemy_rate: int = _atb.calculate_fill_rate(100, 3, [])
+	_atb.set_gauge("party_0", ATBScript.GAUGE_MAX - _atb.calculate_fill_rate(10, 3, []))
+	_atb.set_gauge("enemy_0", ATBScript.GAUGE_MAX - enemy_rate - 1)
+	_atb.tick(0.25)
+	assert_eq(_atb.get_ready_queue(), ["party_0"] as Array[String], "the first to fill is alone")
+	_atb.tick(1.0 / 60.0)
+	assert_eq(
+		_atb.get_ready_queue(),
+		["enemy_0", "party_0"] as Array[String],
+		"the faster one fills on the next call and SPD orders the two",
+	)
+
+
+func test_a_combatant_ready_inside_a_long_frame_gets_one_turn_not_two() -> void:
+	# SPD 255 + Haste at speed 1 fills in 7 ticks, so a 15-tick frame could
+	# fill it twice if it acted (and emptied) the instant it was ready.
+	_atb.add_combatant("party_0", 255, false)
+	_atb.set_battle_speed(1)
+	_atb.set_status_mods("party_0", [1.5])
+	_atb.set_gauge("party_0", ATBScript.GAUGE_MAX - 1)
+	_atb.combatant_ready.connect(func(id: String) -> void: _atb.reset_gauge(id))
+	watch_signals(_atb)
+	_atb.tick(0.25)
+	assert_signal_emit_count(_atb, "combatant_ready", 1, "one quarter-second frame, one turn")
+
+
+func test_patience_holds_every_gauge_at_the_tick_a_party_member_became_ready() -> void:
+	_atb.add_combatant("party_0", 10, false)
+	_atb.add_combatant("enemy_0", 10, true)
+	_atb.set_battle_speed(3)
+	_atb.set_atb_mode("patience")
+	var rate: int = _atb.calculate_fill_rate(10, 3, [])
+	_atb.set_gauge("party_0", ATBScript.GAUGE_MAX - rate)
+	_atb.tick(0.25)
+	assert_eq(_atb.get_gauge("enemy_0"), rate, "the enemy moved one tick, the one that readied us")
+	_atb.set_command_menu_open(true)  # what battle_ui does on turn_ready
+	_atb.tick(0.25)
+	assert_eq(_atb.get_gauge("enemy_0"), rate, "and no further while the menu is open")
+
+
+# --- tick() reports the battle time it applied (#441) ---
+
+
+func test_tick_returns_the_battle_seconds_it_applied() -> void:
+	_atb.add_combatant("party_0", 10, false)
+	_atb.set_battle_speed(3)
+	assert_almost_eq(_atb.tick(1.0 / 60.0), 1.0 / 60.0, 1e-9, "a 60 fps frame is one tick")
+	assert_almost_eq(_atb.tick(0.3 / 60.0), 0.0, 1e-9, "under half a tick applies none")
+	assert_almost_eq(_atb.tick(10.0), 0.25, 1e-9, "a hitch reports only the capped 15 ticks")
+	assert_almost_eq(_atb.tick(NAN), 0.0, 1e-9, "a NaN frame applies nothing")
+	_atb.set_atb_mode("wait")
+	_atb.set_submenu_open(true)
+	assert_almost_eq(_atb.tick(1.0), 0.0, 1e-9, "paused time applies nothing")
+
+
+func test_a_frame_cut_short_by_a_fill_reports_only_the_ticks_it_applied() -> void:
+	_atb.add_combatant("party_0", 10, false)
+	_atb.set_battle_speed(3)
+	_atb.set_gauge("party_0", ATBScript.GAUGE_MAX - _atb.calculate_fill_rate(10, 3, []))
+	assert_almost_eq(_atb.tick(0.25), 1.0 / 60.0, 1e-9, "it stopped on the tick that filled")
 
 
 # --- Turn Order ---

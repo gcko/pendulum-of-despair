@@ -291,13 +291,13 @@ func test_petrify_empties_the_party_gauge_and_recovery_starts_fresh() -> void:
 	atb.set_gauge("party_0", 8000)
 	st.apply_status(0, "petrify", "turns", StatusEffects.default_duration("petrify"))
 
-	battle._process(0.016)
+	battle._process(1.0 / 60.0)
 	assert_eq(atb.get_gauge("party_0"), 0, "petrify empties the gauge it lands on")
-	battle._process(0.016)
+	battle._process(1.0 / 60.0)
 	assert_eq(atb.get_gauge("party_0"), 0, "and holds it empty")
 
 	st.remove_status(0, "petrify")
-	battle._process(0.016)
+	battle._process(1.0 / 60.0)
 
 	# One frame of fill after the cure and no more: above 0 proves the gauge
 	# resumed at all, and below the 8000 it carried when petrify landed proves
@@ -323,12 +323,12 @@ func test_petrify_holds_an_enemy_gauge_at_zero_until_it_is_cured() -> void:
 	)
 
 	for _i: int in range(5):
-		battle._process(0.016)
+		battle._process(1.0 / 60.0)
 
 	assert_eq(atb.get_gauge("enemy_0"), 0, "petrify empties the enemy gauge and holds it there")
 
 	enemy.remove_status("petrify")
-	battle._process(0.016)
+	battle._process(1.0 / 60.0)
 
 	var resumed: int = atb.get_gauge("enemy_0")
 	assert_gt(resumed, 0, "a cured enemy's gauge fills again")

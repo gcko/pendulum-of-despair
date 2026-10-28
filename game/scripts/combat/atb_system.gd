@@ -18,10 +18,6 @@ const TICKS_PER_SECOND: int = 60
 ## still keep exact time.
 const MAX_TICKS_PER_CALL: int = 15
 
-## Slack when converting accumulated seconds to whole ticks, so a 1/60 s frame
-## that lands a hair under one tick in float math still applies it.
-const _TICK_EPSILON: float = 1e-6
-
 ## Speed factors per battle speed setting (1 = fastest, 6 = slowest).
 ## Canon: combat-formulas.md § ATB Gauge System > Battle Speed Config. Those
 ## six factors are what its Battle Speed Config and ATB Pacing tables are
@@ -51,8 +47,9 @@ var _submenu_open: bool = false
 ## Whether top-level command menu is open (for patience pausing).
 var _command_menu_open: bool = false
 
-## Battle time not yet spent on a whole tick, in ticks (0 <= x < 1, give or
-## take _TICK_EPSILON). Carried between tick() calls.
+## Battle time owed to the gauges but not yet applied, in ticks. Carried
+## between tick() calls: a signed rounding remainder in [-0.5, 0.5), plus any
+## whole ticks a frame left over when it stopped on a fill.
 var _pending_ticks: float = 0.0
 
 
@@ -147,38 +144,36 @@ func calculate_fill_rate(spd: int, battle_speed: int, status_mods: Array) -> int
 	return int((spd + 25) * factor * mod_product)
 
 
-## Advance all gauges by `delta` seconds of battle time. Call from
-## battle_manager._process(). Applies one integer fill per whole 1/60 s and
-## carries the remainder, so the fill speed does not depend on the frame rate.
-## Paused time is discarded, not banked.
-func tick(delta: float) -> void:
-	if _should_pause() or delta <= 0.0:
-		return
+## Advance all gauges by `delta` seconds of battle time and return the battle
+## seconds actually applied. Call from battle_manager._process().
+##
+## One integer fill per 1/TICKS_PER_SECOND, so fill speed does not depend on the
+## frame rate. The owed time is rounded to the NEAREST tick and the signed
+## remainder carried: Godot frame times are whole microseconds, so a paced
+## 60 fps frame is 0.99996 or 1.00002 ticks, and flooring that straddles the
+## boundary into frames of 0 and 2 ticks.
+##
+## The call stops after the first tick that fills any gauge and keeps the rest
+## owed for the next call, so the caller sees the ready queue (and Patience sees
+## a party member's turn) on the tick it happened: combat-formulas.md breaks SPD
+## ties only among combatants that fill on the same tick. At most
+## MAX_TICKS_PER_CALL apply; time beyond that is dropped. Paused time and a
+## non-finite delta are discarded.
+func tick(delta: float) -> float:
+	if _should_pause() or not is_finite(delta) or delta <= 0.0:
+		return 0.0
 	_pending_ticks += delta * TICKS_PER_SECOND
-	var ticks: int = int(floor(_pending_ticks + _TICK_EPSILON))
-	if ticks > MAX_TICKS_PER_CALL:
-		ticks = MAX_TICKS_PER_CALL
-		_pending_ticks = 0.0
-	else:
-		_pending_ticks -= ticks
-	for _i: int in range(ticks):
-		_apply_one_tick()
-
-
-## Advance every unfrozen gauge by exactly its fill rate (one 1/60 s tick).
-func _apply_one_tick() -> void:
-	for id: String in _combatants:
-		var data: Dictionary = _combatants[id]
-		if data["frozen"]:
-			continue
-		if data["gauge"] >= GAUGE_MAX:
-			continue
-
-		var rate: int = calculate_fill_rate(data["spd"], _battle_speed, data["status_mods"])
-		data["gauge"] = mini(data["gauge"] + rate, GAUGE_MAX)
-
-		if data["gauge"] >= GAUGE_MAX:
-			combatant_ready.emit(id)
+	var due: int = floori(_pending_ticks + 0.5)
+	if due > MAX_TICKS_PER_CALL:
+		due = MAX_TICKS_PER_CALL
+		_pending_ticks = float(MAX_TICKS_PER_CALL)
+	var applied: int = 0
+	while applied < due:
+		applied += 1
+		if _apply_one_tick():
+			break
+	_pending_ticks -= applied
+	return applied / float(TICKS_PER_SECOND)
 
 
 ## Get all combatants whose gauge is at GAUGE_MAX, sorted by priority.
@@ -230,3 +225,23 @@ func _should_pause() -> bool:
 		"patience":
 			return _submenu_open or _command_menu_open
 	return false
+
+
+## Advance every unfrozen, not-yet-full gauge by exactly its fill rate (one
+## tick). Returns whether any gauge filled on this tick.
+func _apply_one_tick() -> bool:
+	var any_filled: bool = false
+	for id: String in _combatants:
+		var data: Dictionary = _combatants[id]
+		if data["frozen"]:
+			continue
+		if data["gauge"] >= GAUGE_MAX:
+			continue
+
+		var rate: int = calculate_fill_rate(data["spd"], _battle_speed, data["status_mods"])
+		data["gauge"] = mini(data["gauge"] + rate, GAUGE_MAX)
+
+		if data["gauge"] >= GAUGE_MAX:
+			any_filled = true
+			combatant_ready.emit(id)
+	return any_filled
