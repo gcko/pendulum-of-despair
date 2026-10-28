@@ -1,0 +1,135 @@
+name: Static Gates
+
+# The pre-commit gates (A gdlint, B JSON validation, C gdformat) and the
+# commit-msg hook's commitlint, run on every PR. Until #472 they ran ONLY in
+# the hooks, so a commit made with hooks uninstalled (a fresh clone or worktree
+# that skipped `pnpm install`), or a commit from a machine without gdtoolkit,
+# reached a PR with none of them checked.
+#
+# CI checks EVERY .gd file under game/ and every JSON file under game/data,
+# not just the PR's changes, because a file that slipped past an absent hook
+# earlier is still unchecked today. addons/ (vendored GUT) is excluded, as it
+# is in the hook.
+#
+# The collection and JSON steps are executed by test_gut_baseline.py
+# (TestStaticGatesWorkflow) against fixture trees. The install, lint, format
+# and commitlint steps need gdtoolkit, pnpm or the PR's history, so the tests
+# check those as text.
+
+on:
+  pull_request:
+    # No `branches:` filter, for the same reason as gut-tests.yml: stacked PRs
+    # target their parent branch rather than main, and a filter of [main] gives
+    # every link in a stack no CI until it is retargeted at merge time.
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  static-gates:
+    name: Static Gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # fetch-depth: 0 so commitlint can walk base..head; a shallow clone holds
+      # only the merge commit.
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      # The version comes from the pin file, the same one .husky/pre-commit
+      # quotes when gdtoolkit is missing, so the hook and CI name one version.
+      # The --version check fails the job if pip resolved anything else.
+      - name: Install pinned gdtoolkit
+        run: |
+          PIN=$(tr -d '[:space:]' < scripts/quality-gates/gdtoolkit-version.txt)
+          : "${PIN:?scripts/quality-gates/gdtoolkit-version.txt is empty}"
+          pip install "gdtoolkit==$(cat scripts/quality-gates/gdtoolkit-version.txt)"
+          gdlint --version
+          gdlint --version | grep -qF "$PIN" || { echo "gdlint is not gdtoolkit $PIN"; exit 1; }
+
+      # One list, read by both Gate A and Gate C below. A find that matches
+      # nothing (a moved game/ directory, a broken -path filter) would otherwise
+      # hand gdlint no files and pass having inspected nothing.
+      - name: Collect GDScript files
+        run: |
+          LIST="${RUNNER_TEMP:?}/gd-files.txt"
+          find game -type f -name '*.gd' -not -path '*/addons/*' | sort > "$LIST"
+          COUNT=$(wc -l < "$LIST" | tr -d ' ')
+          echo "GD_FILES=$LIST" >> "$GITHUB_ENV"
+          echo "gdscript files: $COUNT under game/ (addons/ excluded)"
+          if [ "$COUNT" -eq 0 ]; then
+            echo "NO .gd FILES FOUND under game/ — the scan inspected nothing. Repair the"
+            echo "  find; an empty list is not a pass."
+            exit 1
+          fi
+
+      # `!cancelled()` on every gate from here on, so one failing gate does not
+      # hide the others: a PR sees all of its failures in one run.
+      - name: gdlint (Gate A)
+        if: ${{ !cancelled() }}
+        run: |
+          : "${GD_FILES:?GD_FILES was not set; see the collect step}"
+          xargs gdlint < "$GD_FILES"
+
+      - name: JSON validation (Gate B)
+        if: ${{ !cancelled() }}
+        run: |
+          python3 - <<'PY'
+          import json
+          import pathlib
+          import sys
+
+          root = pathlib.Path("game/data")
+          files = sorted(p for p in root.rglob("*.json") if "addons" not in p.parts)
+          bad = []
+          for path in files:
+              try:
+                  json.loads(path.read_text(encoding="utf-8"))
+              except (ValueError, UnicodeDecodeError) as exc:
+                  bad.append("INVALID JSON: %s (%s)" % (path, exc))
+          for line in bad:
+              print(line)
+          if not files:
+              print("NO .json FILES FOUND under game/data — the scan inspected nothing.")
+              print("  Repair the walk; an empty corpus is not a pass.")
+              sys.exit(1)
+          if bad:
+              print("JSON validation FAILED: %d of %d files" % (len(bad), len(files)))
+              sys.exit(1)
+          print("JSON validation passed: %d files under game/data" % len(files))
+          PY
+
+      - name: gdformat check (Gate C)
+        if: ${{ !cancelled() }}
+        run: |
+          : "${GD_FILES:?GD_FILES was not set; see the collect step}"
+          xargs gdformat --check < "$GD_FILES"
+
+      # commitlint over the PR's own commits, as .husky/commit-msg runs it on
+      # each one. pnpm/action-setup reads the version from package.json's
+      # packageManager; --ignore-scripts skips husky's `prepare`, which has no
+      # hooks to install here.
+      - name: Set up pnpm
+        if: ${{ !cancelled() }}
+        uses: pnpm/action-setup@v6
+
+      - name: Set up Node
+        if: ${{ !cancelled() }}
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+
+      - name: commitlint (PR commits)
+        if: ${{ !cancelled() }}
+        run: |
+          pnpm install --frozen-lockfile --ignore-scripts
+          pnpm exec commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }}

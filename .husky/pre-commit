@@ -9,15 +9,22 @@ if [ "$BRANCH" = "main" ]; then
   exit 1
 fi
 
+# Gates A and C refuse to pass when .gd files are staged and gdlint or
+# gdformat is missing: they used to sit inside `if command -v` with no else, so
+# a machine without gdtoolkit committed GDScript nothing had checked (#472).
+# The helper prints the install command for the pinned version
+# (scripts/quality-gates/gdtoolkit-version.txt). No staged .gd, no requirement.
+# shellcheck source=scripts/quality-gates/gdtoolkit-require.sh
+. "$(git rev-parse --show-toplevel)/scripts/quality-gates/gdtoolkit-require.sh"
+
 # === QUALITY GATE A: GDScript linting (gdtoolkit) ===
 # Lint only staged .gd files (excludes addons/).
-if command -v gdlint >/dev/null 2>&1; then
-    STAGED_GD=$(git diff --cached --name-only --diff-filter=ACM -- '*.gd' | grep -v 'addons/' || true)
-    if [ -n "$STAGED_GD" ]; then
-        echo "=== Pre-commit: gdlint ==="
-        echo "$STAGED_GD" | xargs gdlint
-        echo "gdlint passed."
-    fi
+STAGED_GD=$(git diff --cached --name-only --diff-filter=ACM -- '*.gd' | grep -v 'addons/' || true)
+if [ -n "$STAGED_GD" ]; then
+    gdtoolkit_require gdlint "Gate A" || exit 1
+    echo "=== Pre-commit: gdlint ==="
+    echo "$STAGED_GD" | xargs gdlint
+    echo "gdlint passed."
 fi
 
 # === QUALITY GATE B: JSON validation ===
@@ -44,23 +51,22 @@ fi
 # === QUALITY GATE C: gdformat check (formatting) ===
 # Verify staged .gd files match gdformat output (excludes addons/).
 # Only checks — does not auto-fix. Run `gdformat file.gd` to fix.
-if command -v gdformat >/dev/null 2>&1; then
-    STAGED_GD=$(git diff --cached --name-only --diff-filter=ACM -- '*.gd' | grep -v 'addons/' || true)
-    if [ -n "$STAGED_GD" ]; then
-        echo "=== Pre-commit: gdformat check ==="
-        FAIL=0
-        for f in $STAGED_GD; do
-            if [ -f "$f" ]; then
-                if ! gdformat --check "$f" 2>/dev/null; then
-                    echo "FORMAT MISMATCH: $f (run: gdformat $f)"
-                    FAIL=1
-                fi
+STAGED_GD=$(git diff --cached --name-only --diff-filter=ACM -- '*.gd' | grep -v 'addons/' || true)
+if [ -n "$STAGED_GD" ]; then
+    gdtoolkit_require gdformat "Gate C" || exit 1
+    echo "=== Pre-commit: gdformat check ==="
+    FAIL=0
+    for f in $STAGED_GD; do
+        if [ -f "$f" ]; then
+            if ! gdformat --check "$f" 2>/dev/null; then
+                echo "FORMAT MISMATCH: $f (run: gdformat $f)"
+                FAIL=1
             fi
-        done
-        if [ "$FAIL" -eq 1 ]; then
-            echo "gdformat check FAILED. Run gdformat on flagged files."
-            exit 1
         fi
-        echo "gdformat passed."
+    done
+    if [ "$FAIL" -eq 1 ]; then
+        echo "gdformat check FAILED. Run gdformat on flagged files."
+        exit 1
     fi
+    echo "gdformat passed."
 fi
