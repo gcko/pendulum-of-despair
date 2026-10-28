@@ -244,14 +244,14 @@ func test_an_unbuilt_cael_ability_is_listed_but_cannot_be_chosen() -> void:
 
 
 func test_a_character_whose_command_is_unbuilt_can_choose_nothing() -> void:
-	# Bulwark is slice 158b. Its abilities show, none can be chosen, and the
+	# Arcanum is slice 158f. Its abilities show, none can be chosen, and the
 	# previous submenu's entries (here Magic's) never leak into the list.
 	var m: Node = _make_menu()
-	m.show_commands({"character_id": "edren", "level": 10}, false, _member(99))
+	m.show_commands({"character_id": "maren", "level": 10}, false, _member(99))
 	_open_magic_submenu(m)
 	m._handle_submenu_input(_press("ui_cancel"))
 	_open_ability_submenu(m)
-	assert_gt(m._submenu_items.size(), 0, "Edren's known Bulwark abilities are listed")
+	assert_gt(m._submenu_items.size(), 0, "Maren's known Arcanum abilities are listed")
 	for item: Dictionary in m._submenu_items:
 		assert_eq(item.get("command", {}).get("type", ""), "ability", "no leftover Magic entry")
 		assert_false(item.get("enabled", true), "%s is not selectable yet" % item.get("label"))

@@ -5,14 +5,14 @@ extends RefCounted
 ##
 ## A dispatcher. do_ability checks the ability can be issued, pays its cost
 ## (keyed on the data's cost_type), then hands it to the resolver for its
-## command (the data's `command` field). Slice 158a of #158 builds Cael's
-## Rally. Bulwark, Forgewright, Tricks, Spiritcall and Arcanum are slices
-## 158b-f: each adds a resolver here, and pay() learns its cost type. Until
-## then their abilities are not built, so the battle menu lists them disabled
-## and do_ability refuses them.
+## command (the data's `command` field). Slice 158a of #158 built Cael's
+## Rally and 158b Edren's Bulwark. Forgewright, Tricks, Spiritcall and Arcanum
+## are slices 158c-f: each adds a resolver here, and pay() learns its cost
+## type. Until then their abilities are not built, so the battle menu lists
+## them disabled and do_ability refuses them.
 ##
-## The Rally's in-force rules (duration, end conditions) live in BattleRally,
-## reached through BattleState's ability hooks.
+## The in-force rules live in BattleRally and BattleBulwark, reached through
+## BattleState's ability hooks.
 
 ## Rally magnitudes, from abilities.md § Cael — Rally and the matching
 ## `effect` text in game/data/abilities/cael.json. stat_pct is the +% to each
@@ -47,14 +47,29 @@ func do_ability(actor_id: String, command: Dictionary) -> bool:
 		return false
 	if not is_available(member, ability):
 		return false
+	if not _target_ok(state, slot, ability, command):
+		_battle.message.emit("No target!")
+		return false
 	if not pay(state, slot, ability):
-		_battle.message.emit("Not enough MP!")
+		_battle.message.emit("Not enough %s!" % String(ability.get("cost_type", "")).to_upper())
 		return false
 	_battle.message.emit(
 		"%s uses %s!" % [member.get("character_data", {}).get("name", "???"), ability["name"]]
 	)
-	_resolver(ability).call(slot, ability)
+	_resolver(ability).call(slot, ability, command)
 	return true
+
+
+## Whether a single-ally ability has a living ally at command["target"]. Ironwall
+## also needs that ally to be someone other than Edren: guarding himself would
+## redirect his damage to himself (BattleBulwark.guard_for).
+static func _target_ok(state: Node, slot: int, ability: Dictionary, command: Dictionary) -> bool:
+	if ability.get("target", "") != "single_ally":
+		return true
+	var target: int = int(command.get("target", -1))
+	if not state.get_member(target).get("is_alive", false):
+		return false
+	return not (ability.get("id", "") == "ironwall" and target == slot)
 
 
 ## The resolver for [param ability]'s command, or an invalid Callable when that
@@ -63,13 +78,28 @@ func _resolver(ability: Dictionary) -> Callable:
 	match ability.get("command", ""):
 		"rally":
 			return _resolve_rally
+		"bulwark":
+			return _resolve_bulwark
 	return Callable()
 
 
 ## Cael's Rally: every living ally gains the effect for its turns, replacing
 ## any Rally already running (BattleRally.start).
-func _resolve_rally(slot: int, ability: Dictionary) -> void:
+func _resolve_rally(slot: int, ability: Dictionary, _command: Dictionary) -> void:
 	BattleRally.start(_battle.get_battle_state(), slot, ability["id"], RALLY_EFFECTS[ability["id"]])
+
+
+## Edren's Bulwark: raise a stance, veil an ally, or steel the party.
+func _resolve_bulwark(slot: int, ability: Dictionary, command: Dictionary) -> void:
+	var state: Node = _battle.get_battle_state()
+	var target: int = int(command.get("target", -1))
+	match ability["id"]:
+		"ironwall", "rampart":
+			BattleBulwark.enter_stance(state, slot, ability["id"], target)
+		"aegis_veil":
+			BattleBulwark.aegis_veil(state, target)
+		"steadfast_resolve":
+			BattleBulwark.steadfast_resolve(state)
 
 
 ## Whether [param ability] can be issued at all in this build: its command has
@@ -79,6 +109,8 @@ static func is_built(ability: Dictionary) -> bool:
 	match ability.get("command", ""):
 		"rally":
 			return is_rally(ability)
+		"bulwark":
+			return BattleBulwark.BUILT.has(ability.get("id", ""))
 	return false
 
 
@@ -99,14 +131,16 @@ static func is_available(member: Dictionary, ability: Dictionary) -> bool:
 
 
 ## Whether [param member] has enough of [param ability]'s resource. Keyed on
-## the data's cost_type: only "mp" is built (158a). "ap" (Bulwark, 158b), "ac"
-## (Forgewright, 158c), "mp_cd" (Tricks' MP plus cooldown, 158d) and "wg"
-## (Arcanum, 158f) answer false until their slices add them, and "none" marks a
-## passive, which is never issued.
+## the data's cost_type: "mp" (158a) and "ap" (Bulwark's Aegis Points, 158b)
+## are built. "ac" (Forgewright, 158c), "mp_cd" (Tricks' MP plus cooldown,
+## 158d) and "wg" (Arcanum, 158f) answer false until their slices add them, and
+## "none" marks a passive, which is never issued.
 static func can_pay(member: Dictionary, ability: Dictionary) -> bool:
 	match ability.get("cost_type", ""):
 		"mp":
 			return int(member.get("current_mp", 0)) >= int(ability.get("cost_value", 0))
+		"ap":
+			return BattleBulwark.can_spend(member, int(ability.get("cost_value", 0)))
 	return false
 
 
@@ -118,4 +152,6 @@ static func pay(state: Node, slot: int, ability: Dictionary) -> bool:
 	match ability.get("cost_type", ""):
 		"mp":
 			return state.spend_mp(slot, int(ability.get("cost_value", 0)))
+		"ap":
+			return BattleBulwark.spend_ap(state, slot, int(ability.get("cost_value", 0)))
 	return false

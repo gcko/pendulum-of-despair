@@ -16,10 +16,12 @@ signal ability_state_changed(slot: int)
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 const Helpers = preload("res://scripts/util/inventory_helpers.gd")
 const Rally = preload("res://scripts/combat/battle_rally.gd")
+const Bulwark = preload("res://scripts/combat/battle_bulwark.gd")
 
 ## Modules holding in-force unique-command state (#158), each answering on_damage,
-## on_fainted, on_status, on_turn_begin and on_turn_end, so no seam names one.
-const ABILITY_HOOKS: Array = [Rally]
+## on_fainted, on_status, on_turn_begin, on_turn_end and stat_pct, so no seam
+## names one.
+const ABILITY_HOOKS: Array = [Rally, Bulwark]
 
 ## Party member data. Index = slot (0-3). Null entries = empty slots.
 var _members: Array = [null, null, null, null]
@@ -75,7 +77,9 @@ func add_member(slot: int, char_data: Dictionary) -> void:
 		# The Rally this member is under; battle_rally.gd owns its shape and rules.
 		"active_rally": {},
 		"turn_open": false,
+		# Edren's stance; battle_bulwark.gd owns it and the "bulwark" record.
 		"active_stance": "",
+		"bulwark": {},
 	}
 
 
@@ -269,8 +273,10 @@ func get_effective_stat(slot: int, stat_name: String) -> int:
 	if m.is_empty():
 		return 0
 	var base: int = m.get("effective_stats", {}).get(stat_name, 0)
-	var buff_pct: int = roundi((float(m.get(stat_name + "_mult", 1.0)) - 1.0) * 100.0)
-	return base * (100 + buff_pct + Rally.stat_pct(m, stat_name)) / 100
+	var pct: int = 100 + roundi((float(m.get(stat_name + "_mult", 1.0)) - 1.0) * 100.0)
+	for hook: Variant in ABILITY_HOOKS:
+		pct += hook.stat_pct(m, stat_name)
+	return base * pct / 100
 
 
 ## Set a buff multiplier.

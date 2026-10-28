@@ -10,6 +10,7 @@ const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
 const ModifierAggregator = preload("res://scripts/combat/modifier_aggregator.gd")
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 const Enemy = preload("res://scripts/entities/enemy.gd")
+const Bulwark = preload("res://scripts/combat/battle_bulwark.gd")
 
 
 ## Resolve a player status spell against a single enemy (GAP-003).
@@ -236,13 +237,36 @@ static func execute_enemy_magic(
 	if DamageCalc.roll_evasion(target_spd):
 		return {"hit": false, "damage": 0, "type": "miss"}
 	var dmg_mult: float = member.get("damage_taken_mult", 1.0)
-	var reduction: Array[float] = []
+	var reduction: Array[float] = Bulwark.reductions(state, target_slot, "magic")
 	if dmg_mult < 1.0:
 		reduction.append(1.0 - dmg_mult)
+	var guard: Dictionary = Bulwark.guard_for(state, target_slot, "magic")
 	# element_mod 1.0 until party resistances are implemented
-	var dmg: int = DamageCalc.calculate_magic(mag, power, target_mdef, 1.0, 1.0, [], reduction)
-	dmg = state.take_damage(target_slot, dmg)  # after Unbreakable, as applied
-	return {"hit": true, "damage": dmg, "type": "magic"}
+	var dmg: int = DamageCalc.calculate_magic(
+		mag, power, target_mdef, 1.0, 1.0, [], reduction if guard.is_empty() else []
+	)
+	return _land_on_party(state, target_slot, dmg, reduction, guard, "magic")
+
+
+## Land an enemy hit of [param dmg] on [param slot]. Unguarded, [param dmg]
+## already carries the member's reductions. Under a Bulwark stance it is the hit
+## before them, and BattleBulwark.split divides it: the member takes the rest,
+## Edren absorbs his share, reported as "absorbed": {slot, damage}.
+static func _land_on_party(
+	state: Node, slot: int, dmg: int, reduction: Array, guard: Dictionary, dtype: String
+) -> Dictionary:
+	if guard.is_empty():
+		dmg = state.take_damage(slot, dmg)  # after Unbreakable, as applied
+		return {"hit": true, "damage": dmg, "type": dtype}
+	var shares: Dictionary = Bulwark.split(dmg, reduction, guard)
+	var landed: int = state.take_damage(slot, int(shares["damage"]))
+	var taken: int = Bulwark.absorb(state, guard, int(shares["absorbed"]))
+	return {
+		"hit": true,
+		"damage": landed,
+		"type": dtype,
+		"absorbed": {"slot": int(guard["slot"]), "damage": taken},
+	}
 
 
 ## Execute an enemy physical attack against a party member.
@@ -272,6 +296,7 @@ static func execute_enemy_attack(
 	if dmg_mult < 1.0:
 		reduction.append(1.0 - dmg_mult)  # Convert mult to reduction source
 	var defender_row: String = member.get("row", "front")
+	var guard: Dictionary = Bulwark.guard_for(state, target_slot, "physical")
 	var dmg: int = (
 		DamageCalc
 		. calculate_physical(
@@ -283,14 +308,13 @@ static func execute_enemy_attack(
 			"front",
 			defender_row,
 			false,
-			reduction,
+			reduction if guard.is_empty() else [],
 			false,
 			1.0,
 		)
 	)
-	dmg = state.take_damage(target_slot, dmg)  # after Unbreakable, as applied
 	var dtype: String = "critical" if is_crit else "physical"
-	return {"hit": true, "damage": dmg, "type": dtype}
+	return _land_on_party(state, target_slot, dmg, reduction, guard, dtype)
 
 
 ## Resolve a possibly multi-hit enemy physical ability against one member.
@@ -304,6 +328,7 @@ static func execute_enemy_physical_ability(
 	var total: int = 0
 	var landed: int = 0
 	var any_crit: bool = false
+	var absorbed: Dictionary = {}
 	for _h: int in range(maxi(1, hits)):
 		var r: Dictionary = execute_enemy_attack(state, enemy, target_slot, ability_mult)
 		if r.get("hit", false):
@@ -311,6 +336,15 @@ static func execute_enemy_physical_ability(
 			total += int(r.get("damage", 0))
 			if r.get("type", "") == "critical":
 				any_crit = true
+		if r.has("absorbed"):  # each hit is absorbed on its own; the shares add
+			var share: Dictionary = r["absorbed"]
+			absorbed = {
+				"slot": share["slot"],
+				"damage": int(absorbed.get("damage", 0)) + int(share["damage"]),
+			}
 	# Report "critical" if ANY sub-hit crit, not just the last (which could miss).
 	var dtype: String = "critical" if any_crit else "physical"
-	return {"hit": landed > 0, "damage": total, "type": dtype, "hits_landed": landed}
+	var out: Dictionary = {"hit": landed > 0, "damage": total, "type": dtype, "hits_landed": landed}
+	if not absorbed.is_empty():
+		out["absorbed"] = absorbed
+	return out

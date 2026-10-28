@@ -383,23 +383,30 @@ func test_vanguard_strike_is_not_a_rally_and_cannot_replace_one() -> void:
 
 
 func test_an_unbuilt_command_is_refused_without_cost() -> void:
-	# Bulwark is #158 slice b; the menu disables it, and do_ability agrees.
-	var ironwall: Dictionary = DataManager.load_abilities("edren")[0]
+	# Forgewright is #158 slice c; the menu disables it, and do_ability agrees.
+	var bulkhead: Dictionary = {}
+	for a: Variant in DataManager.load_abilities("lira"):
+		if (a as Dictionary).get("id", "") == "bulkhead":
+			bulkhead = a
+	assert_false(bulkhead.is_empty(), "lira.json has Bulkhead")
+	_state.get_member(LIRA)["ac"] = 12
 	assert_false(
-		_cmd.do_ability("party_%d" % EDREN, {"type": "ability", "ability": ironwall, "target": 0}),
-		"Edren's Ironwall is not built yet"
+		_cmd.do_ability("party_%d" % LIRA, {"type": "ability", "ability": bulkhead, "target": 0}),
+		"Lira's Bulkhead is not built yet"
 	)
-	assert_eq(_state.get_member(EDREN)["current_mp"], 40, "nothing spent")
+	assert_eq(_state.get_member(LIRA)["ac"], 12, "nothing spent")
 
 
 # --- Costs are keyed on the data's cost_type ---
 
 
-func test_only_mp_costs_can_be_paid_in_158a() -> void:
+func test_only_mp_and_ap_costs_can_be_paid_after_158b() -> void:
 	var member: Dictionary = {"current_mp": 10, "ap": 10, "ac": 12, "wg": 100}
 	assert_true(AbilityCommand.can_pay(member, {"cost_type": "mp", "cost_value": 10}), "mp")
 	assert_false(AbilityCommand.can_pay(member, {"cost_type": "mp", "cost_value": 11}), "short")
-	for ctype: String in ["ap", "ac", "wg", "mp_cd", "none"]:
+	assert_true(AbilityCommand.can_pay(member, {"cost_type": "ap", "cost_value": 10}), "ap")
+	assert_false(AbilityCommand.can_pay(member, {"cost_type": "ap", "cost_value": 11}), "ap short")
+	for ctype: String in ["ac", "wg", "mp_cd", "none"]:
 		assert_false(
 			AbilityCommand.can_pay(member, {"cost_type": ctype, "cost_value": 0}),
 			"%s is not payable until its slice lands" % ctype

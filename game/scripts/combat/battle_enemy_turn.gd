@@ -203,15 +203,7 @@ func _resolve_attack_or_ability(action: Dictionary, enemy: Node) -> void:
 			if m.is_empty() or not m.get("is_alive", false):
 				continue
 			var result: Dictionary = _resolve_offensive(action, enemy, i, elem)
-			(
-				_manager
-				. damage_dealt
-				. emit(
-					"party_%d" % i,
-					result.get("damage", 0),
-					result.get("type", "miss"),
-				)
-			)
+			_emit_hit(i, result)
 			if not status_name.is_empty() and result.get("hit", false):
 				(
 					BattleActions
@@ -249,9 +241,7 @@ func _resolve_attack_or_ability(action: Dictionary, enemy: Node) -> void:
 					int(action.get("hits", 1)),
 				)
 			)
-		_manager.damage_dealt.emit(
-			"party_%d" % tgt, result.get("damage", 0), result.get("type", "miss")
-		)
+		_emit_hit(tgt, result)
 		# Offensive status infliction on a landed hit (GAP-024, Venom Spit -> Poison).
 		var status_name: String = action.get("status", "")
 		if not status_name.is_empty() and result.get("hit", false):
@@ -269,6 +259,19 @@ func _resolve_attack_or_ability(action: Dictionary, enemy: Node) -> void:
 	# Gain Weave Gauge for Maren AFTER action resolves (not before target validation)
 	if atype == "ability":
 		_state.gain_weave_gauge_for_maren(15)
+
+
+## Show the damage [param result] dealt to [param slot], and the share Edren
+## absorbed from it under a Bulwark stance on Edren's own slot.
+func _emit_hit(slot: int, result: Dictionary) -> void:
+	_manager.damage_dealt.emit(
+		"party_%d" % slot, result.get("damage", 0), result.get("type", "miss")
+	)
+	var absorbed: Dictionary = result.get("absorbed", {})
+	if not absorbed.is_empty():
+		_manager.damage_dealt.emit(
+			"party_%d" % int(absorbed["slot"]), int(absorbed["damage"]), result.get("type", "miss")
+		)
 
 
 ## Resolve one offensive AoE hit against a party slot. Magic when atk_type is
