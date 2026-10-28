@@ -225,7 +225,7 @@ comment:
 
 ```bash
 git push
-gh pr comment <PR#> --body-file /tmp/cope-summary.md
+gh pr comment <PR#> --body-file /tmp/cope-summary-<PR#>.md   # per-PR: parallel loops must not share one file
 ```
 
 **Case 2 — invoked from pr-review-response Step 6b** (post-fix review,
