@@ -14,6 +14,11 @@ const COLOR_HP_LOW: Color = Color("#ff4444")
 const COLOR_MP_FILL: Color = Color("#4488ff")
 ## Maren's Weave Gauge fill (ui-design.md § 2.9).
 const COLOR_WEAVE_FILL: Color = Color("#aa44ff")
+## ATB gauge fill (ui-design.md § 1.4 'ATB gauge fill').
+const COLOR_ATB_FILL: Color = Color("#ffcc00")
+## The second cel of the full-gauge ready flash (ui-design.md § 2.3: "2-frame
+## flash alternating gold and white").
+const COLOR_ATB_FLASH: Color = Color("#ffffff")
 
 
 ## Fill width in pixels for a stat bar. Clamps to [0, bar_width]; a
