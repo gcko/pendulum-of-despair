@@ -176,7 +176,7 @@ func _confirm_spell() -> void:
 	if not SpellHelpers.can_field_cast(spell):
 		_show_feedback("Can't use here.")
 		return
-	var mp_cost: int = spell.get("mp_cost", 0)
+	var mp_cost: int = SpellHelpers.get_mp_cost(spell, _character_id)
 	var member: Dictionary = PartyState.get_member(_character_id)
 	if member.get("current_mp", 0) < mp_cost:
 		_show_feedback("Not enough MP.")
@@ -194,7 +194,7 @@ func _cast_on_target(living: Array[Dictionary]) -> void:
 	if _target_index >= living.size():
 		return
 	var spell: Dictionary = _spells[spell_index]
-	var mp_cost: int = spell.get("mp_cost", 0)
+	var mp_cost: int = SpellHelpers.get_mp_cost(spell, _character_id)
 	if mp_cost > 0 and not PartyState.spend_mp(_character_id, mp_cost):
 		_show_feedback("Not enough MP.")
 		return
@@ -231,7 +231,7 @@ func _update_grid() -> void:
 		if i < visible_count:
 			var spell: Dictionary = _spells[_scroll_offset + i]
 			var spell_name: String = spell.get("name", "???")
-			var mp_cost: int = spell.get("mp_cost", 0)
+			var mp_cost: int = SpellHelpers.get_mp_cost(spell, _character_id)
 			_spell_labels[i].text = "%-14s MP%3d" % [spell_name, mp_cost]
 			_spell_labels[i].visible = true
 			if i == _cursor:

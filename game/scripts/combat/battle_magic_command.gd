@@ -8,6 +8,7 @@ extends RefCounted
 
 const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
 const BattleActions = preload("res://scripts/combat/battle_actions.gd")
+const SpellHelpers = preload("res://scripts/ui/spell_helpers.gd")
 
 ## Weave Gauge earned by the caster for a spell that landed, and the share
 ## Maren banks when somebody else casts
@@ -46,7 +47,8 @@ func do_magic(actor_id: String, command: Dictionary) -> bool:
 		if resolved_enemy_target < 0:
 			_battle.message.emit("No target!")
 			return false
-	if not state.spend_mp(slot, spell.get("mp_cost", 0)):
+	var cost: int = SpellHelpers.get_mp_cost(spell, member.get("character_id", ""))
+	if not state.spend_mp(slot, cost):
 		_battle.message.emit("Not enough MP!")
 		return false
 	var caster_name: String = member.get("character_data", {}).get("name", "???")

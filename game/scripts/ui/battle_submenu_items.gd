@@ -16,7 +16,8 @@ const AbilityCommand := preload("res://scripts/combat/battle_ability_command.gd"
 
 ## The character's known spells (GAP-001), each routing a
 ## {"type": "magic", "spell": <spell_dict>} command; spells the character
-## cannot afford are disabled. Mirrors menu_magic's data access.
+## cannot afford are disabled. The cost shown and checked is the one the cast
+## charges (SpellHelpers.get_mp_cost). Mirrors menu_magic's data access.
 static func magic(character_data: Dictionary, member: Dictionary) -> Array[Dictionary]:
 	var items: Array[Dictionary] = []
 	for spell_v: Variant in SpellHelpers.get_known_spells(
@@ -25,7 +26,7 @@ static func magic(character_data: Dictionary, member: Dictionary) -> Array[Dicti
 		if not spell_v is Dictionary:
 			continue
 		var spell: Dictionary = spell_v
-		var cost: int = int(spell.get("mp_cost", 0))
+		var cost: int = SpellHelpers.get_mp_cost(spell, _id(character_data))
 		var entry: Dictionary = {
 			"label": "%s  %d MP" % [spell.get("name", "Spell"), cost],
 			"command": {"type": "magic", "spell": spell},

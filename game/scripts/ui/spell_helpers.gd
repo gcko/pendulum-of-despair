@@ -6,7 +6,9 @@ const TRADITIONS: Array[String] = ["ley_line", "forgewright", "spirit", "streetw
 const FIELD_CATEGORIES: Array[String] = ["healing"]
 
 
-## Get all spells a character knows at their current level.
+## Get all spells a character knows at their current level. A spell taught by
+## a story event (a cross-training scene) is known once that event's flag is
+## set, as a story-gated ability is (ability_helpers.gd).
 static func get_known_spells(character_id: String, level: int) -> Array:
 	var result: Array = []
 	for tradition: String in TRADITIONS:
@@ -15,15 +17,27 @@ static func get_known_spells(character_id: String, level: int) -> Array:
 			if not spell is Dictionary:
 				continue
 			var s: Dictionary = spell as Dictionary
-			for entry: Variant in s.get("learned_by", []):
-				if not entry is Dictionary:
-					continue
-				var e: Dictionary = entry as Dictionary
-				if e.get("character", "") == character_id and e.get("level", 999) <= level:
-					result.append(s)
-					break
-	result.sort_custom(_sort_by_tier_then_cost)
+			if _has_learned(_learner_entry(s, character_id), level):
+				result.append(s)
+	result.sort_custom(
+		func(a: Dictionary, b: Dictionary) -> bool:
+			return _sort_by_tier_then_cost(a, b, character_id)
+	)
 	return result
+
+
+## The MP [param character_id] pays to cast [param spell]: its base mp_cost,
+## or for a cross-trained learner that cost times their entry's mp_penalty,
+## rounded up (magic.md § Derived Rules, "Cross-training is per-learner").
+## Everything that shows, checks or spends MP reads this, so the cost on the
+## menu is the cost that is charged.
+static func get_mp_cost(spell: Dictionary, character_id: String) -> int:
+	var raw: Variant = spell.get("mp_cost", 0)
+	var base: int = int(raw) if raw != null else 0
+	var entry: Dictionary = _learner_entry(spell, character_id)
+	if not entry.get("cross_trained", false):
+		return base
+	return ceili(base * float(entry.get("mp_penalty", 1.0)))
 
 
 ## Whether a spell can be cast from the field menu.
@@ -41,9 +55,28 @@ static func get_field_heal_amount(caster_mag: int, spell: Dictionary) -> int:
 	return mini(14999, int(caster_mag * power * 0.8))
 
 
-static func _sort_by_tier_then_cost(a: Dictionary, b: Dictionary) -> bool:
+## [param character_id]'s learned_by entry on [param spell], or {} when they
+## do not learn it.
+static func _learner_entry(spell: Dictionary, character_id: String) -> Dictionary:
+	for entry: Variant in spell.get("learned_by", []):
+		if entry is Dictionary and (entry as Dictionary).get("character", "") == character_id:
+			return entry
+	return {}
+
+
+## Whether a learned_by [param entry] is met at [param level]: an event entry
+## by its story flag, a level entry by level.
+static func _has_learned(entry: Dictionary, level: int) -> bool:
+	if entry.is_empty():
+		return false
+	if entry.has("event"):
+		return bool(EventFlags.get_flag(String(entry["event"])))
+	return int(entry.get("level", 999)) <= level
+
+
+static func _sort_by_tier_then_cost(a: Dictionary, b: Dictionary, character_id: String) -> bool:
 	var ta: int = a.get("tier", 0)
 	var tb: int = b.get("tier", 0)
 	if ta != tb:
 		return ta < tb
-	return a.get("mp_cost", 0) < b.get("mp_cost", 0)
+	return get_mp_cost(a, character_id) < get_mp_cost(b, character_id)
