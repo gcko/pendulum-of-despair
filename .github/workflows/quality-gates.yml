@@ -1,0 +1,108 @@
+name: Python Quality Gates
+
+# The Python quality gates from .husky/pre-push, run on every PR. Until #437
+# they ran ONLY in the hook, so a push made with hooks uninstalled (a fresh
+# clone that skipped `pnpm install`) or a PR built anywhere else was never
+# checked by any of them. Of the pre-push gates, CI ran only Godot import and
+# Gates H and L (gut-tests.yml).
+#
+# Gates H and L need Godot and stay in gut-tests.yml. Everything here is stdlib
+# Python reading files from the checkout: Gates M and N parse .tscn text and
+# never start Godot, so this job installs no Godot.
+#
+# The step bodies are executed by test_gut_baseline.py
+# (TestQualityGatesWorkflow) against fixture trees, so a change here that
+# stops a failure from failing the job fails the Gate I self-tests.
+
+on:
+  pull_request:
+    # No `branches:` filter, for the same reason as gut-tests.yml: stacked PRs
+    # target their parent branch rather than main, and a filter of [main] gives
+    # every link in a stack no CI until it is retargeted at merge time.
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  python-gates:
+    name: Python Quality Gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      # The floors are read and shape-checked by check_gut_baseline.py, the same
+      # single implementation the hook, gut-tests.yml and scripts/gates.sh use,
+      # so a missing, duplicated, zero or non-numeric floor fails here instead
+      # of being compared as an empty string (#430). Its stdout is the value
+      # channel and diagnostics go to stderr, which is why it is safe to eval.
+      - name: Read quality-gate floors
+        run: |
+          python3 --version
+          FLOORS=$(python3 scripts/quality-gates/check_gut_baseline.py \
+                     --baseline scripts/quality-gates/gut-baseline.txt --shell --label ci)
+          eval "$FLOORS"
+          : "${MIN_GATES:?MIN_GATES missing from the baseline}"
+          : "${MIN_GATE_TESTS:?MIN_GATE_TESTS missing from the baseline}"
+          echo "MIN_GATES=$MIN_GATES" >> "$GITHUB_ENV"
+          echo "MIN_GATE_TESTS=$MIN_GATE_TESTS" >> "$GITHUB_ENV"
+          echo "floors: gates=$MIN_GATES gate_tests=$MIN_GATE_TESTS"
+
+      # Gate I, first, as in the hook: a scan whose matching broke returns
+      # "nothing found", which reads exactly like "nothing wrong", so the scans
+      # are tested before they run. Same command as .husky/pre-push. The count
+      # is judged against gate_tests as scripts/gates.sh does, because a
+      # discovery pattern that stops matching runs zero tests, and a suite that
+      # collects fewer tests than the floor has lost some without failing any.
+      - name: Quality-gate self-tests (Gate I)
+        run: |
+          : "${MIN_GATE_TESTS:?MIN_GATE_TESTS was not read; see the floors step}"
+          LOG="${RUNNER_TEMP:?}/gate-selftests.log"
+          set -o pipefail
+          if ! python3 -m unittest discover -s scripts/quality-gates -p 'test_*.py' -q 2>&1 \
+               | tee "$LOG"; then
+            echo "GATE SELF-TESTS FAILED"
+            exit 1
+          fi
+          # `|| true`: with pipefail on, a log holding no "Ran N tests" line would
+          # otherwise abort the step here, before the diagnostic below prints.
+          GATE_TESTS=$(grep -E '^Ran [0-9]+ test' "$LOG" | awk '{print $2}' | tail -1 || true)
+          echo "quality-gate self-tests: ${GATE_TESTS:-0} ran (floor $MIN_GATE_TESTS)"
+          if [ -z "$GATE_TESTS" ] || [ "$GATE_TESTS" -lt "$MIN_GATE_TESTS" ]; then
+            echo "GATE SELF-TEST COUNT REGRESSION: ${GATE_TESTS:-0} < $MIN_GATE_TESTS — tests are not"
+            echo "  being collected. Repair discovery; do not lower the floor to match."
+            exit 1
+          fi
+
+      # Gates D, E, F, G, J, K, M and N today. A loop over the directory rather
+      # than a hand-copied list, in the shape scripts/gates.sh uses, so a gate is
+      # covered by CI the day its script lands rather than the day someone
+      # remembers this file. That also runs check_gut_baseline.py bare, which is
+      # its baseline shape check. `!cancelled()` runs it even when Gate I
+      # failed, as gates.sh does, and every gate runs even after one fails, so a
+      # PR sees all of its failures at once. The number that RAN is judged
+      # against the `gates` floor: a glob that matches nothing, or a gate script
+      # that vanished, would otherwise pass having inspected nothing.
+      - name: Python quality gates (every check_*.py)
+        if: ${{ !cancelled() }}
+        run: |
+          : "${MIN_GATES:?MIN_GATES was not read; see the floors step}"
+          FAIL=0
+          GATE_COUNT=0
+          for G in scripts/quality-gates/check_*.py; do
+            [ -f "$G" ] || continue
+            GATE_COUNT=$((GATE_COUNT+1))
+            echo "=== $(basename "$G") ==="
+            python3 "$G" || { echo "$(basename "$G") FAILED"; FAIL=1; }
+          done
+          echo "python quality gates: $GATE_COUNT ran (floor $MIN_GATES)"
+          if [ "$GATE_COUNT" -lt "$MIN_GATES" ]; then
+            echo "GATE COUNT REGRESSION: $GATE_COUNT < $MIN_GATES — a gate script vanished or the"
+            echo "  glob stopped matching. Repair it; do not lower the floor to match."
+            FAIL=1
+          fi
+          exit $FAIL

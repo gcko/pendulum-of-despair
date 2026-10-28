@@ -43,8 +43,8 @@ THE LIMITS, stated so nobody reads more into a pass than it means:
     outside addons/ and .godot/ today; a scene added elsewhere is not read.
   * [connection] entries that target a node inside a non-editable instance
     are not checked (none exist today).
-  * It runs in .husky/pre-push and scripts/gates.sh. CI does not run the
-    static Python gates.
+  * It runs in .husky/pre-push, scripts/gates.sh and
+    .github/workflows/quality-gates.yml.
 
 Exit code 0 = pass, 1 = violations found or too little was scanned.
 """

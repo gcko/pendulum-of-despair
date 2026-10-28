@@ -29,7 +29,7 @@ A typeless node that overrides an instanced layer's tile_map_data has its
 encoding and cells checked, but not against a TileSet.
 Whether the loaded walls leave the map playable is
 game/tests/test_map_tile_layers.gd's job, not this one's. It runs in
-.husky/pre-push and scripts/gates.sh; CI does not run the static Python gates.
+.husky/pre-push, scripts/gates.sh and .github/workflows/quality-gates.yml.
 
 Exit code 0 = pass, 1 = violations found (or the scan inspected too little).
 """
