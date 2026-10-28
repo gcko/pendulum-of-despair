@@ -176,7 +176,11 @@ After verification passes:
 Follow the standard commit workflow:
 ```bash
 git add docs/story/<new-file>.md docs/analysis/game-design-gaps.md
-git commit -F /tmp/commit-msg.txt
+MSG=$(mktemp "${TMPDIR:-/tmp}/commit-msg.XXXXXX")
+cat > "$MSG" << 'EOF'
+docs(story): <description>
+EOF
+git commit -F "$MSG"
 git push
 ```
 

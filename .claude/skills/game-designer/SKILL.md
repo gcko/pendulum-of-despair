@@ -290,7 +290,11 @@ equivalent raw git workflow is below. `/create-pr` automates all of this
 (including the quality gates), so prefer it:
 ```bash
 git add game/ docs/issues/ docs/superpowers/specs/
-git commit -F /tmp/commit-msg.txt
+MSG=$(mktemp "${TMPDIR:-/tmp}/commit-msg.XXXXXX")
+cat > "$MSG" << 'EOF'
+feat(engine): <description>
+EOF
+git commit -F "$MSG"
 git push
 ```
 

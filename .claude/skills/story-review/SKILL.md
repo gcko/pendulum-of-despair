@@ -47,14 +47,19 @@ digraph mode {
 **Posting the review:**
 
 ```bash
+REVIEW=$(mktemp "${TMPDIR:-/tmp}/story-review.XXXXXX")
+cat > "$REVIEW" << 'EOF'
+<review body>
+EOF
+
 # For GO verdicts — approve the PR
-gh pr review {pr_number} --approve --body-file /tmp/story-review.md
+gh pr review {pr_number} --approve --body-file "$REVIEW"
 
 # For NO-GO verdicts — request changes
-gh pr review {pr_number} --request-changes --body-file /tmp/story-review.md
+gh pr review {pr_number} --request-changes --body-file "$REVIEW"
 ```
 
-Always write the review body to a temp file first to avoid shell quoting issues.
+Always write the review body to a temp file from mktemp (as above) first to avoid shell quoting issues.
 
 ### Local Mode (no argument)
 

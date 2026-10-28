@@ -275,8 +275,12 @@ After all rounds complete, all findings fixed, Copilot comments
 replied to, and gap analysis done:
 
 ```bash
+SUMMARY=$(mktemp "${TMPDIR:-/tmp}/godot-review-summary.XXXXXX")
+cat > "$SUMMARY" << 'EOF'
+<summary in the format below>
+EOF
 git push
-gh pr comment <PR#> --body-file /tmp/godot-review-summary.md
+gh pr comment <PR#> --body-file "$SUMMARY"
 ```
 
 Summary format:

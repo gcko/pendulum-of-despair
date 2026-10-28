@@ -230,8 +230,12 @@ round), THIS skill owns the push. Commit, push, and post the summary
 comment:
 
 ```bash
+SUMMARY=$(mktemp "${TMPDIR:-/tmp}/cope-summary.XXXXXX")   # unique per run: parallel loops must not share one file
+cat > "$SUMMARY" << 'EOF'
+<summary in the format below>
+EOF
 git push
-gh pr comment <PR#> --body-file /tmp/cope-summary-<PR#>.md   # per-PR: parallel loops must not share one file
+gh pr comment <PR#> --body-file "$SUMMARY"
 ```
 
 **Case 2 — invoked from pr-review-response Step 6b** (post-fix review,

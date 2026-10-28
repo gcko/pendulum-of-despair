@@ -48,7 +48,7 @@ digraph create_pr {
     status [label="1. CHECK STATUS\ngit status\nCommit if needed", fillcolor="#e6f3ff"];
     push [label="2. PUSH\ngit push -u origin <branch>\n(hooks run quality gates)", fillcolor="#e6ffe6"];
     write [label="3. WRITE PR\nTitle + body to temp file", fillcolor="#ffe6f3"];
-    create [label="4. CREATE PR\ngh pr create --base main\n--body-file /tmp/pr_body.md", fillcolor="#f3e6ff"];
+    create [label="4. CREATE PR\ngh pr create --base main\n--body-file <temp file>", fillcolor="#f3e6ff"];
     url [label="5. OUTPUT\nPR URL", fillcolor=lightgreen];
     handoff [label="6. EXIT\nName next skill", fillcolor=lightgreen];
 
@@ -70,12 +70,13 @@ If there are uncommitted changes, stage and commit them:
 
 ```bash
 git add <specific-files>
-cat > /tmp/commit-msg.txt << 'EOF'
+MSG=$(mktemp "${TMPDIR:-/tmp}/commit-msg.XXXXXX")
+cat > "$MSG" << 'EOF'
 type(scope): description
 
 Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
 EOF
-git commit -s -F /tmp/commit-msg.txt
+git commit -s -F "$MSG"
 ```
 
 The pre-commit hook runs **branch protection**, **gdlint**, **JSON
@@ -109,7 +110,9 @@ that as a silently-skipped test file.
 
 ### 3. Write PR Body
 
-Write title and body to `/tmp/pr_body.md`. **Never use heredoc with
+Write the body to a temp file from mktemp (as in step 4), in the same
+command that runs `gh pr create`: a shell variable does not survive
+between separate tool calls. **Never use heredoc with
 `gh pr create --body`** — special characters break shell escaping.
 
 PR body format:
@@ -129,9 +132,13 @@ Generated with [Claude Code](https://claude.ai/code)
 ### 4. Create PR
 
 ```bash
+BODY=$(mktemp "${TMPDIR:-/tmp}/pr_body.XXXXXX")
+cat > "$BODY" << 'EOF'
+<PR body in the format from step 3>
+EOF
 gh pr create --base main \
   --title "type(scope): short description" \
-  --body-file /tmp/pr_body.md
+  --body-file "$BODY"
 ```
 
 Title should be under 70 characters, following commit conventions:
@@ -178,8 +185,8 @@ After outputting the PR URL, always end with:
   AGENTS.md § Essential Commands.
 - **Never bypass hooks.** Do not use `--no-verify`. If a hook fails,
   fix the issue.
-- **Temp file for body.** Always write to `/tmp/pr_body.md` and use
-  `--body-file`. Never `--body` with inline text.
+- **Temp file for body.** Always write to a temp file from mktemp (as
+  above) and use `--body-file`. Never `--body` with inline text.
 - **Target main.** Always `--base main` unless explicitly told otherwise.
 - **Specific git add.** Stage files by name, not `git add -A` or
   `git add .`.

@@ -277,7 +277,8 @@ If issues are found:
 
 ```bash
 git add <changed-files>
-cat > /tmp/commit-msg.txt << 'EOF'
+MSG=$(mktemp "${TMPDIR:-/tmp}/commit-msg.XXXXXX")
+cat > "$MSG" << 'EOF'
 docs: address story review issues (round N)
 
 - Description of fix 1
@@ -285,7 +286,7 @@ docs: address story review issues (round N)
 
 Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
 EOF
-git commit -F /tmp/commit-msg.txt
+git commit -F "$MSG"
 ```
 
 ### Step 2e: Log and Continue
@@ -315,7 +316,11 @@ After the loop ends (either all N rounds complete or an early clean exit):
 
 2. **Post a summary comment to the PR:**
    ```bash
-   gh pr comment <pr_number> --body-file /tmp/review-loop-summary.md
+   SUMMARY=$(mktemp "${TMPDIR:-/tmp}/review-loop-summary.XXXXXX")
+   cat > "$SUMMARY" << 'EOF'
+   <summary in the format below>
+   EOF
+   gh pr comment <pr_number> --body-file "$SUMMARY"
    ```
 
    The summary format:

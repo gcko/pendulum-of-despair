@@ -304,7 +304,8 @@ across multiple rounds. The process works when followed.
 Write commit message to a temp file:
 
 ```bash
-cat > /tmp/commit-msg.txt << 'EOF'
+MSG=$(mktemp "${TMPDIR:-/tmp}/commit-msg.XXXXXX")
+cat > "$MSG" << 'EOF'
 type(scope): address PR review feedback
 
 - Description of change 1
@@ -314,7 +315,7 @@ Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
 EOF
 
 git add <specific-files>
-git commit -F /tmp/commit-msg.txt
+git commit -F "$MSG"
 # DO NOT PUSH — proceed to Step 6, then 6b
 ```
 
