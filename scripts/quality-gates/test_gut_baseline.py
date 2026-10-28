@@ -1572,11 +1572,135 @@ class TestStaticGatesWorkflow(unittest.TestCase):
         self.assertIn("pull_request:", on_block.group(1))
         self.assertNotRegex(on_block.group(1), r"\b(branches|branches-ignore|paths|paths-ignore):")
 
-    def test_it_holds_least_privilege_and_a_time_limit(self):
-        code = uncommented(self.text)
-        self.assertRegex(code, r"(?m)^permissions:\n\s+contents: read\s*$")
-        self.assertTrue(live_lines(code, r"^persist-credentials: false$"))
-        self.assertTrue(live_lines(code, r"^timeout-minutes: \d+$"))
+
+# --- Least privilege and a time limit, in every gate workflow (#478) --------
+#
+# All three gate workflows run PR code. Each must declare a read-only token
+# rather than lean on the repo default, keep checkout from persisting its auth
+# in the clone, and cap every JOB, not only some steps: gut-tests.yml had step
+# timeouts and no job one, so a `timeout-minutes:` substring test passed on it
+# while a hung download could run for the 360-minute default.
+
+GATE_WORKFLOWS = ("quality-gates.yml", "static-gates.yml", "gut-tests.yml")
+
+
+def _indent(line):
+    return len(line) - len(line.lstrip())
+
+
+def _block(lines, start):
+    """The non-blank lines indented deeper than lines[start], up to the next shallower one."""
+    out = []
+    for line in lines[start + 1:]:
+        if line.strip() and _indent(line) <= _indent(lines[start]):
+            break
+        if line.strip():
+            out.append(line)
+    return out
+
+
+def top_level_permissions(code):
+    """The entries under the top-level `permissions:` key, stripped, or None."""
+    lines = code.splitlines()
+    starts = [i for i, line in enumerate(lines) if line.rstrip() == "permissions:"]
+    if len(starts) != 1:
+        return None
+    return [line.strip() for line in _block(lines, starts[0])]
+
+
+def job_keys(code):
+    """{job id: {key: value}} for each job's own keys, not its steps' keys."""
+    lines = code.splitlines()
+    starts = [i for i, line in enumerate(lines) if line.rstrip() == "jobs:"]
+    if len(starts) != 1:
+        return {}
+    body = _block(lines, starts[0])
+    if not body:
+        return {}
+    job_indent = min(_indent(line) for line in body)
+    jobs, current = {}, None
+    for line in body:
+        if _indent(line) == job_indent:
+            current = jobs.setdefault(line.strip().rstrip(":"), {})
+        elif current is not None and _indent(line) == job_indent + 2:
+            key, _, value = line.strip().partition(":")
+            current[key] = value.strip()
+    return jobs
+
+
+def checkout_inputs(code):
+    """[{input: value}], one per actions/checkout step, from that step's own `with:`."""
+    lines = code.splitlines()
+    found = []
+    for i, line in enumerate(lines):
+        if not re.match(r"^\s*(- )?uses: actions/checkout@", line):
+            continue
+        # The step's keys sit where `uses:` itself starts, after any "- ".
+        key_indent = _indent(line) + (2 if line.strip().startswith("- ") else 0)
+        inputs = {}
+        for j in range(i + 1, len(lines)):
+            nxt = lines[j]
+            if not nxt.strip():
+                continue
+            if _indent(nxt) < key_indent or nxt.strip().startswith("- "):
+                break
+            if _indent(nxt) == key_indent and nxt.strip() == "with:":
+                for entry in _block(lines, j):
+                    key, _, value = entry.strip().partition(":")
+                    inputs[key] = value.strip()
+        found.append(inputs)
+    return found
+
+
+class TestGateWorkflowsHoldLeastPrivilege(unittest.TestCase):
+    """quality-gates.yml, static-gates.yml and gut-tests.yml, read as text.
+
+    The runner provides these settings, so they cannot be executed. They are
+    read per job and per checkout step, never as substrings of the whole file.
+    """
+
+    def test_every_gate_workflow_holds_least_privilege_and_a_job_time_limit(self):
+        for name in GATE_WORKFLOWS:
+            with self.subTest(workflow=name):
+                with io.open(os.path.join(REPO_ROOT, ".github", "workflows", name),
+                             encoding="utf-8") as handle:
+                    code = uncommented(handle.read())
+                self.assertEqual(top_level_permissions(code), ["contents: read"])
+                jobs = job_keys(code)
+                self.assertTrue(jobs, "no jobs found")
+                for job, keys in jobs.items():
+                    self.assertRegex(keys.get("timeout-minutes", ""), r"^\d+$",
+                                     "job %s has no timeout-minutes of its own" % job)
+                    self.assertNotIn("permissions", keys, "job %s sets its own permissions" % job)
+                checkouts = checkout_inputs(code)
+                self.assertTrue(checkouts, "no actions/checkout step found")
+                for inputs in checkouts:
+                    self.assertEqual(inputs.get("persist-credentials"), "false", inputs)
+
+    def test_a_step_timeout_or_a_commented_setting_does_not_count(self):
+        # gut-tests.yml's shape before #478: step timeouts and no job timeout,
+        # plus each setting present only as a comment or on the wrong step.
+        text = (
+            "# permissions:\n#   contents: read\n"
+            "jobs:\n"
+            "  run:\n"
+            "    runs-on: ubuntu-latest\n"
+            "    # timeout-minutes: 10\n"
+            "    steps:\n"
+            "      - name: Checkout\n"
+            "        uses: actions/checkout@v6\n"
+            "        # with:\n"
+            "        #   persist-credentials: false\n"
+            "      - name: Test\n"
+            "        run: make\n"
+            "        timeout-minutes: 5\n"
+            "        with:\n"
+            "          persist-credentials: false\n"
+        )
+        code = uncommented(text)
+        self.assertIsNone(top_level_permissions(code))
+        self.assertEqual(job_keys(code), {"run": {"runs-on": "ubuntu-latest", "steps": ""}})
+        self.assertEqual(checkout_inputs(code), [{}])
 
 
 if __name__ == "__main__":
