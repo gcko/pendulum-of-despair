@@ -3,9 +3,9 @@ extends Node2D
 ## last enemy or the last party member falls.
 ##
 ## The commands a player can pick live in their own modules — BattlePlayerActions
-## (attack/defend/flee), BattleMagicCommand and BattleItemCommand — and
-## battle-start assembly lives in BattleSetup (GAP-087). This script dispatches
-## to them and owns everything they need through the accessors below.
+## (attack/defend/flee), BattleMagicCommand, BattleItemCommand and the unique
+## commands' BattleAbilityCommand — and battle-start assembly lives in
+## BattleSetup (GAP-087). This script dispatches to them and owns what they need.
 
 signal battle_started(party: Array, enemies: Array, enemy_positions: Array)
 signal turn_ready(
@@ -42,6 +42,7 @@ var _ritual_meter_value: float = 100.0
 var _actions: BattlePlayerActions = null
 var _magic: BattleMagicCommand = null
 var _items: BattleItemCommand = null
+var _abilities: BattleAbilityCommand = null
 
 @onready var _atb: Node = $ATBSystem
 @onready var _state: Node = $BattleState
@@ -110,9 +111,6 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if not _battle_active or _battle_resolved:
 		return
-	if not _atb.should_pause_timers():
-		for i: int in range(4):
-			_state.tick_realtime_statuses(i, delta)
 	# Resync living enemies' ATB freeze/mods from their current statuses
 	# (GAP-003) so a cured Sleep unfreezes and an expired Slow clears.
 	for i: int in range(_enemies.size()):
@@ -123,7 +121,12 @@ func _process(delta: float) -> void:
 	# never throttled one.
 	for i: int in range(4):
 		_resync_party_atb(i)
-	_atb.tick(delta)
+	# Real-time statuses (Stop) run on the battle seconds the gauges actually
+	# advanced: tick returns 0 while timers are paused and stops early at the
+	# first gauge to fill, so the two share one clock.
+	var elapsed: float = _atb.tick(delta)
+	for i: int in range(4):
+		_state.tick_realtime_statuses(i, elapsed)
 	_check_end_conditions()
 	if _battle_resolved:
 		return
@@ -134,14 +137,16 @@ func _process(delta: float) -> void:
 		if id.begins_with("party_") and _awaiting_input_for == "":
 			var slot: int = id.replace("party_", "").to_int()
 			var blocked_by: String = _incapacitating_status(slot)
+			# Sleep/Petrify freeze the gauge, and a gauge-frozen member takes
+			# no turn at all (combat-formulas.md § Status Effect ATB
+			# Interactions): no announcement, no tick, and above all no reset
+			# — the skip never writes to the gauge, so whatever the status is
+			# holding survives it. Other combatants act around them.
+			if StatusEffects.atb_effect(blocked_by) == "frozen":
+				continue
+			# The turn begins: Second Wind's regen lands (abilities.md § Cael — Rally).
+			_emit_party_events(_state.begin_turn(slot))
 			if blocked_by != "":
-				# Sleep/Petrify freeze the gauge, and a gauge-frozen member takes
-				# no turn at all (combat-formulas.md § Status Effect ATB
-				# Interactions): no announcement, no tick, and above all no reset
-				# — the skip never writes to the gauge, so whatever the status is
-				# holding survives it. Other combatants act around them.
-				if StatusEffects.atb_effect(blocked_by) == "frozen":
-					continue
 				# Paralysis fills the gauge instead, so it does have a turn to
 				# consume: the status counts down on this would-be turn (the
 				# filling gauge is the clock), then the gauge resets so the next
@@ -155,10 +160,8 @@ func _process(delta: float) -> void:
 				break
 			_awaiting_input_for = id
 			_atb.set_command_menu_open(true)
-			var member: Dictionary = _state.get_member(slot)
-			var char_data: Dictionary = member.get("character_data", {})
-			var lc: int = _targetable_enemy_count()
-			turn_ready.emit(id, true, slot, lc, _is_boss, char_data)
+			var char_data: Dictionary = _state.get_member(slot).get("character_data", {})
+			turn_ready.emit(id, true, slot, _targetable_enemy_count(), _is_boss, char_data)
 			break
 		# Fix: skip enemy processing while a party member is awaiting input
 		elif id.begins_with("enemy_") and not enemy_acted and _awaiting_input_for == "":
@@ -175,6 +178,7 @@ func _on_ui_command(command: Dictionary) -> void:
 	if not _battle_active or _awaiting_input_for == "":
 		return
 	var actor_id: String = _awaiting_input_for
+	var cmd_slot: int = actor_id.replace("party_", "").to_int()
 	_atb.set_command_menu_open(false)
 	_atb.set_submenu_open(false)
 	var ok: bool = true
@@ -194,18 +198,14 @@ func _on_ui_command(command: Dictionary) -> void:
 			else:
 				_get_actions().do_flee()
 		"ability":
-			ok = _get_actions().do_attack(actor_id, command)
+			ok = _get_abilities().do_ability(actor_id, command)
 	if not ok:
 		_atb.set_command_menu_open(true)
-		var s: int = actor_id.replace("party_", "").to_int()
-		var lc: int = _targetable_enemy_count()
-		turn_ready.emit(
-			actor_id, true, s, lc, _is_boss, _state.get_member(s).get("character_data", {})
-		)
+		var char_data: Dictionary = _state.get_member(cmd_slot).get("character_data", {})
+		turn_ready.emit(actor_id, true, cmd_slot, _targetable_enemy_count(), _is_boss, char_data)
 		return
 	if not _battle_active:
 		return
-	var cmd_slot: int = actor_id.replace("party_", "").to_int()
 	# Clear defending from a PREVIOUS turn — skip if this action IS defend
 	if (
 		command.get("type", "") != "defend"
@@ -218,10 +218,7 @@ func _on_ui_command(command: Dictionary) -> void:
 	_turn_counter += 1
 	# Surface party-side DoT (Poison/Burn) through damage_dealt so it shows a
 	# floating number, mirroring the enemy-side tick.
-	for ev: Dictionary in _state.tick_statuses(cmd_slot):
-		damage_dealt.emit(
-			"party_%d" % int(ev.get("slot", 0)), int(ev.get("dmg", 0)), ev.get("type", "poison")
-		)
+	_emit_party_events(_state.tick_statuses(cmd_slot))
 	_check_end_conditions()
 
 
@@ -261,12 +258,18 @@ func _incapacitating_status(slot: int) -> String:
 func _skip_incapacitated_turn(slot: int, id: String, status_name: String) -> void:
 	var nm: String = _state.get_member(slot).get("character_data", {}).get("name", "???")
 	message.emit("%s is %s and can't move!" % [nm, StatusEffects.display_adjective(status_name)])
-	for ev: Dictionary in _state.tick_statuses(slot):
+	_emit_party_events(_state.tick_statuses(slot))
+	_atb.reset_gauge(id)
+	_check_end_conditions()
+
+
+## Surface BattleState's turn events [{slot, dmg, type}] — DoT ticks at a
+## turn's end, Second Wind's heal at its start — as floating numbers.
+func _emit_party_events(events: Array) -> void:
+	for ev: Dictionary in events:
 		damage_dealt.emit(
 			"party_%d" % int(ev.get("slot", 0)), int(ev.get("dmg", 0)), ev.get("type", "poison")
 		)
-	_atb.reset_gauge(id)
-	_check_end_conditions()
 
 
 func _on_party_member_died(slot: int) -> void:
@@ -325,6 +328,7 @@ func _resync_party_atb(slot: int) -> void:
 	var st: Dictionary = StatusEffects.atb_state(m.get("active_statuses", []))
 	_atb.set_frozen(pid, st["frozen"])
 	_atb.set_status_mods(pid, st["mods"])
+	_atb.set_spd(pid, _state.get_effective_stat(slot, "spd"))  # Press Forward's +SPD
 	if st["zeroed"]:
 		_atb.set_gauge(pid, 0)
 
@@ -458,3 +462,9 @@ func _get_items() -> BattleItemCommand:
 	if _items == null:
 		_items = BattleItemCommand.new(self)
 	return _items
+
+
+func _get_abilities() -> BattleAbilityCommand:
+	if _abilities == null:
+		_abilities = BattleAbilityCommand.new(self)
+	return _abilities

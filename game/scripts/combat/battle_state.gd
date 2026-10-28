@@ -10,9 +10,16 @@ signal member_died(slot: int)
 signal member_revived(slot: int)
 signal status_applied(slot: int, status_name: String)
 signal status_removed(slot: int, status_name: String)
+## A member's unique-command state changed (a Rally landed on or left them).
+signal ability_state_changed(slot: int)
 
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 const Helpers = preload("res://scripts/util/inventory_helpers.gd")
+const Rally = preload("res://scripts/combat/battle_rally.gd")
+
+## Modules holding in-force unique-command state (#158), each answering on_damage,
+## on_fainted, on_status, on_turn_begin and on_turn_end, so no seam names one.
+const ABILITY_HOOKS: Array = [Rally]
 
 ## Party member data. Index = slot (0-3). Null entries = empty slots.
 var _members: Array = [null, null, null, null]
@@ -65,7 +72,9 @@ func add_member(slot: int, char_data: Dictionary) -> void:
 		"wg": 0,
 		"favor": {},
 		"stolen_goods": [] as Array[String],
+		# The Rally this member is under; battle_rally.gd owns its shape and rules.
 		"active_rally": {},
+		"turn_open": false,
 		"active_stance": "",
 	}
 
@@ -86,17 +95,24 @@ func get_active_count() -> int:
 	return count
 
 
-## Apply damage to a party member.
-func take_damage(slot: int, amount: int) -> void:
+## Apply damage to a party member. Returns the damage applied after the ability
+## hooks (Unbreakable leaves 1 HP) — the number a damage popup should show.
+func take_damage(slot: int, amount: int) -> int:
 	var m: Dictionary = get_member(slot)
 	if m.is_empty() or not m["is_alive"]:
-		return
-	var clamped: int = maxi(0, amount)
-	m["current_hp"] = maxi(0, m["current_hp"] - clamped)
-	member_damaged.emit(slot, clamped)
+		return 0
+	var applied: int = maxi(0, amount)
+	for hook: Variant in ABILITY_HOOKS:
+		applied = hook.on_damage(self, slot, applied)
+	m["current_hp"] = maxi(0, m["current_hp"] - applied)
+	member_damaged.emit(slot, applied)
 	if m["current_hp"] <= 0:
 		m["is_alive"] = false
+		m["turn_open"] = false
+		for hook: Variant in ABILITY_HOOKS:
+			hook.on_fainted(self, slot)
 		member_died.emit(slot)
+	return applied
 
 
 ## Heal a party member. Returns actual HP restored (clamped to max).
@@ -152,6 +168,8 @@ func apply_status(slot: int, status_name: String, duration_type: String, duratio
 	else:
 		entry["remaining_seconds"] = float(duration)
 	m["active_statuses"].append(entry)
+	for hook: Variant in ABILITY_HOOKS:
+		hook.on_status(self, slot, status_name)
 	status_applied.emit(slot, status_name)
 
 
@@ -179,14 +197,17 @@ func has_status(slot: int, status_name: String) -> bool:
 
 ## Tick turn-based statuses at END of a combatant's turn. Applies Poison/Burn
 ## HP ticks first, then decrements durations. UNTIL_CURED (negative) durations
-## persist — they are cured by remove_status, never by countdown. Returns the
-## DoT events [{slot, dmg, type}] so the battle layer can emit damage feedback
+## persist — they are cured by remove_status, never by countdown. Closes the turn
+## for the ability hooks. Returns DoT events [{slot, dmg, type}] for feedback
 ## (mirrors the enemy-side tick's damage_dealt emission).
 func tick_statuses(slot: int) -> Array:
 	var m: Dictionary = get_member(slot)
 	if m.is_empty():
 		return []
 	var dot_events: Array = _apply_dot(slot, m)
+	m["turn_open"] = false
+	for hook: Variant in ABILITY_HOOKS:
+		hook.on_turn_end(self, slot)
 	for i: int in range(m["active_statuses"].size() - 1, -1, -1):
 		var s: Dictionary = m["active_statuses"][i]
 		if s.get("duration_type", "") != "turns":
@@ -216,8 +237,7 @@ func _apply_dot(slot: int, m: Dictionary) -> Array:
 		var sname: String = s.get("name", "")
 		var pct: float = StatusEffects.tick_pct(sname)
 		if pct > 0.0 and m.get("is_alive", false):
-			var dmg: int = maxi(1, int(max_hp * pct))
-			take_damage(slot, dmg)
+			var dmg: int = take_damage(slot, maxi(1, int(max_hp * pct)))
 			events.append(
 				{"slot": slot, "dmg": dmg, "type": "burn" if sname == "burn" else "poison"}
 			)
@@ -240,15 +260,16 @@ func tick_realtime_statuses(slot: int, delta: float) -> void:
 			status_removed.emit(slot, sname)
 
 
-## Get effective stat with equipment bonuses and buff multiplier applied.
+## Effective stat (base + capsules + equipment) with every buff applied. Buffs are
+## percentages of that one stat, so they add before one floor: Rally +20% with an
+## item's +10% is +30% (combat-formulas.md § Buff & Debuff Interaction).
 func get_effective_stat(slot: int, stat_name: String) -> int:
 	var m: Dictionary = get_member(slot)
 	if m.is_empty():
 		return 0
 	var base: int = m.get("effective_stats", {}).get(stat_name, 0)
-	var mult_key: String = stat_name + "_mult"
-	var mult: float = m.get(mult_key, 1.0)
-	return int(base * mult)
+	var buff_pct: int = roundi((float(m.get(stat_name + "_mult", 1.0)) - 1.0) * 100.0)
+	return base * (100 + buff_pct + Rally.stat_pct(m, stat_name)) / 100
 
 
 ## Set a buff multiplier.
@@ -257,6 +278,19 @@ func set_buff(slot: int, buff_key: String, value: float) -> void:
 	if m.is_empty():
 		return
 	m[buff_key] = value
+
+
+## Start of a member's turn, once until tick_statuses closes it (a canceled menu
+## re-prompts). Returns the hooks' events [{slot, dmg, type}], e.g. Second Wind.
+func begin_turn(slot: int) -> Array:
+	var m: Dictionary = get_member(slot)
+	if m.is_empty() or not m["is_alive"] or m["turn_open"]:
+		return []
+	m["turn_open"] = true
+	var events: Array = []
+	for hook: Variant in ABILITY_HOOKS:
+		events.append_array(hook.on_turn_begin(self, slot))
+	return events
 
 
 ## Swap row (front <-> back). Free action per combat-formulas.md.

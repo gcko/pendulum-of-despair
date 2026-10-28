@@ -3,6 +3,7 @@ extends GutTest
 
 const CommandMenu := preload("res://scripts/ui/battle_command_menu.gd")
 const SpellHelpers := preload("res://scripts/ui/spell_helpers.gd")
+const SubmenuItems := preload("res://scripts/ui/battle_submenu_items.gd")
 
 const CASTER_ID := "sable"
 const CASTER_LEVEL := 5
@@ -24,14 +25,14 @@ func test_magic_submenu_is_populated_from_known_spells() -> void:
 	var known: Array = SpellHelpers.get_known_spells(CASTER_ID, CASTER_LEVEL)
 	assert_gt(known.size(), 0, "precondition: caster knows at least one spell")
 	var m: Node = _make_menu()
-	m.show_commands({"character_id": CASTER_ID, "level": CASTER_LEVEL}, false, 99)
+	m.show_commands({"character_id": CASTER_ID, "level": CASTER_LEVEL}, false, {"current_mp": 99})
 	_open_magic_submenu(m)
 	assert_eq(m._submenu_items.size(), known.size(), "submenu lists every known spell")
 
 
 func test_magic_submenu_items_carry_a_magic_command_with_spell() -> void:
 	var m: Node = _make_menu()
-	m.show_commands({"character_id": CASTER_ID, "level": CASTER_LEVEL}, false, 99)
+	m.show_commands({"character_id": CASTER_ID, "level": CASTER_LEVEL}, false, {"current_mp": 99})
 	_open_magic_submenu(m)
 	assert_gt(m._submenu_items.size(), 0, "submenu has items")
 	var item: Dictionary = m._submenu_items[0]
@@ -43,7 +44,7 @@ func test_magic_submenu_items_carry_a_magic_command_with_spell() -> void:
 
 func test_unaffordable_spells_are_disabled_at_zero_mp() -> void:
 	var m: Node = _make_menu()
-	m.show_commands({"character_id": CASTER_ID, "level": CASTER_LEVEL}, false, 0)
+	m.show_commands({"character_id": CASTER_ID, "level": CASTER_LEVEL}, false, {"current_mp": 0})
 	_open_magic_submenu(m)
 	var checked_any: bool = false
 	for item: Dictionary in m._submenu_items:
@@ -57,7 +58,7 @@ func test_unaffordable_spells_are_disabled_at_zero_mp() -> void:
 func test_id_key_is_accepted_as_a_fallback() -> void:
 	# Raw character JSON uses "id"; the menu should still populate from it.
 	var m: Node = _make_menu()
-	m.show_commands({"id": CASTER_ID, "level": CASTER_LEVEL}, false, 99)
+	m.show_commands({"id": CASTER_ID, "level": CASTER_LEVEL}, false, {"current_mp": 99})
 	_open_magic_submenu(m)
 	assert_gt(m._submenu_items.size(), 0, "id-keyed data still populates the submenu")
 
@@ -65,7 +66,7 @@ func test_id_key_is_accepted_as_a_fallback() -> void:
 func test_empty_submenu_for_caster_with_no_spells() -> void:
 	# A non-caster id yields no known spells; submenu stays empty (only cancel works).
 	var m: Node = _make_menu()
-	m.show_commands({"id": "nobody_xyz", "level": 1}, false, 99)
+	m.show_commands({"id": "nobody_xyz", "level": 1}, false, {"current_mp": 99})
 	_open_magic_submenu(m)
 	assert_eq(m._submenu_items.size(), 0, "no spells -> empty submenu")
 
@@ -134,7 +135,7 @@ func _open_attack_target(m: Node) -> void:
 
 func test_enemy_targeting_uses_the_pushed_enemy_count() -> void:
 	var m: Node = _make_menu()
-	m.show_commands({"id": "cael", "level": 1}, false, 99)
+	m.show_commands({"id": "cael", "level": 1}, false, {"current_mp": 99})
 	m.set_enemy_count(3)
 	_open_attack_target(m)
 	assert_eq(m._target_count, 3, "attack cycles the three enemies in the encounter")
@@ -145,7 +146,7 @@ func test_backing_out_of_an_ally_spell_leaves_every_enemy_reachable() -> void:
 	# targeting capped the enemy cursor at 2 and the third enemy became
 	# unreachable for the rest of the turn (#276).
 	var m: Node = _make_menu()
-	m.show_commands({"id": "cael", "level": 1}, false, 99)
+	m.show_commands({"id": "cael", "level": 1}, false, {"current_mp": 99})
 	m.set_enemy_count(3)
 	_open_single_ally_target(m, 2)
 	assert_eq(m._target_count, 2, "precondition: ally targeting is bounded by the party")
@@ -162,9 +163,150 @@ func test_backing_out_of_an_ally_spell_leaves_every_enemy_reachable() -> void:
 
 func test_ally_targeting_is_not_widened_by_a_larger_enemy_count() -> void:
 	var m: Node = _make_menu()
-	m.show_commands({"id": "cael", "level": 1}, false, 99)
+	m.show_commands({"id": "cael", "level": 1}, false, {"current_mp": 99})
 	m.set_enemy_count(6)
 	_open_attack_target(m)
 	m._handle_target_input(_press("ui_cancel"))  # TARGET -> COMMAND (attack)
 	_open_single_ally_target(m, 2)
 	assert_eq(m._target_count, 2, "ally targeting still stops at the occupied party slots")
+
+
+# --- Ability submenu (GAP-002, #158 slice a) ---
+
+
+## Ability is index 2 in the command list (Attack, Magic, Ability, Item, ...).
+func _open_ability_submenu(m: Node) -> void:
+	m._cursor = 2
+	m._confirm_command()
+
+
+## A living, status-free BattleState record with [param mp] MP.
+func _member(mp: int) -> Dictionary:
+	return {"current_mp": mp, "is_alive": true, "active_statuses": []}
+
+
+func _labels(m: Node) -> Array[String]:
+	var out: Array[String] = []
+	for item: Dictionary in m._submenu_items:
+		out.append(String(item.get("label", "")))
+	return out
+
+
+func test_the_third_command_names_the_live_character_s_unique_command() -> void:
+	# Battle hands the menu PartyState's member shape, keyed "character_id"
+	# (ui-design.md § 2.4: Cael -> Rally).
+	var m: Node = _make_menu()
+	m.show_commands({"character_id": "cael", "level": 1}, false, _member(25))
+	assert_eq(m._commands[2].get("label", ""), "Rally", "Cael's third command reads Rally")
+
+
+func test_ability_submenu_lists_cael_s_known_abilities_with_their_cost() -> void:
+	var m: Node = _make_menu()
+	m.show_commands({"character_id": "cael", "level": 5}, false, _member(25))
+	_open_ability_submenu(m)
+	assert_eq(
+		_labels(m),
+		["Hold the Line  6 MP", "Press Forward  8 MP"] as Array[String],
+		"level 5 knows Hold the Line and Press Forward, not the level 9+ Rallies"
+	)
+
+
+func test_ability_submenu_greys_out_rallies_cael_cannot_afford() -> void:
+	var m: Node = _make_menu()
+	m.show_commands({"character_id": "cael", "level": 5}, false, _member(7))
+	_open_ability_submenu(m)
+	assert_true(m._submenu_items[0].get("enabled", false), "6 MP Hold the Line is affordable at 7")
+	assert_false(m._submenu_items[1].get("enabled", true), "8 MP Press Forward is not")
+
+
+func test_choosing_a_rally_submits_it_with_no_target_step() -> void:
+	# Every Rally targets all allies, so it goes straight to the battle.
+	var m: Node = _make_menu()
+	m.show_commands({"character_id": "cael", "level": 1}, false, _member(25))
+	_open_ability_submenu(m)
+	watch_signals(m)
+	m._handle_submenu_input(_press("ui_accept"))
+	assert_signal_emitted(m, "command_selected")
+	var cmd: Dictionary = get_signal_parameters(m, "command_selected")[0]
+	assert_eq(cmd.get("type", ""), "ability", "routes an ability command")
+	assert_eq(cmd.get("ability", {}).get("id", ""), "hold_the_line", "carrying the Rally chosen")
+
+
+func test_an_unbuilt_cael_ability_is_listed_but_cannot_be_chosen() -> void:
+	# Vanguard Strike (Lv 14) is a Command, not a Rally; not built in 158a.
+	var m: Node = _make_menu()
+	m.show_commands({"character_id": "cael", "level": 14}, false, _member(99))
+	_open_ability_submenu(m)
+	var labels: Array[String] = _labels(m)
+	var idx: int = labels.find("Vanguard Strike  10 MP")
+	assert_gt(idx, -1, "Vanguard Strike is listed")
+	assert_false(m._submenu_items[idx].get("enabled", true), "but not selectable yet")
+
+
+func test_a_character_whose_command_is_unbuilt_can_choose_nothing() -> void:
+	# Bulwark is slice 158b. Its abilities show, none can be chosen, and the
+	# previous submenu's entries (here Magic's) never leak into the list.
+	var m: Node = _make_menu()
+	m.show_commands({"character_id": "edren", "level": 10}, false, _member(99))
+	_open_magic_submenu(m)
+	m._handle_submenu_input(_press("ui_cancel"))
+	_open_ability_submenu(m)
+	assert_gt(m._submenu_items.size(), 0, "Edren's known Bulwark abilities are listed")
+	for item: Dictionary in m._submenu_items:
+		assert_eq(item.get("command", {}).get("type", ""), "ability", "no leftover Magic entry")
+		assert_false(item.get("enabled", true), "%s is not selectable yet" % item.get("label"))
+
+
+func test_passives_are_not_on_the_ability_list() -> void:
+	# Unbreakable Thread is Sable's passive (cost_type "none"); it is never issued.
+	EventFlags.set_flag("trial_sable_complete", true)
+	var m: Node = _make_menu()
+	m.show_commands({"character_id": "sable", "level": 30}, false, _member(99))
+	_open_ability_submenu(m)
+	assert_gt(m._submenu_items.size(), 0, "Sable's Tricks are listed")
+	assert_false(_labels(m).has("Unbreakable Thread  Passive"), "the passive is not")
+	EventFlags.clear_all()
+
+
+func test_a_self_targeted_entry_submits_with_no_target_step() -> void:
+	var m: Node = _make_menu()
+	var items: Array[Dictionary] = [
+		{"label": "Stance", "command": {"type": "ability"}, "target_type": "self", "enabled": true}
+	]
+	m.set_submenu_items(items)
+	m._state = m.MenuState.SUBMENU
+	watch_signals(m)
+	m._handle_submenu_input(_press("ui_accept"))
+	assert_signal_emitted(m, "command_selected")
+
+
+# --- Rally is unavailable while Cael is Silenced (ui-design.md § 2.7) ---
+
+
+func _silenced_cael() -> Dictionary:
+	return {"current_mp": 99, "is_alive": true, "active_statuses": [{"name": "silence"}]}
+
+
+func test_a_silenced_cael_s_rally_command_is_grayed_out() -> void:
+	var m: Node = _make_menu()
+	m.show_commands({"character_id": "cael", "level": 5}, false, _silenced_cael())
+	assert_false(m._commands[2].get("enabled", true), "Rally grays out under Silence")
+	watch_signals(m)
+	_open_ability_submenu(m)
+	assert_signal_not_emitted(m, "submenu_opened", "a grayed command does not open")
+
+
+func test_a_silenced_cael_s_rallies_are_grayed_in_the_submenu() -> void:
+	var m: Node = _make_menu()
+	m.show_commands({"character_id": "cael", "level": 5}, false, _silenced_cael())
+	m.set_submenu_items(
+		SubmenuItems.abilities({"character_id": "cael", "level": 5}, _silenced_cael())
+	)
+	for item: Dictionary in m._submenu_items:
+		assert_false(item.get("enabled", true), "%s unavailable under Silence" % item.get("label"))
+
+
+func test_an_unsilenced_cael_s_rally_command_is_open() -> void:
+	var m: Node = _make_menu()
+	m.show_commands({"character_id": "cael", "level": 5}, false, _member(0))
+	assert_true(m._commands[2].get("enabled", false), "no MP still opens the list, as Magic does")

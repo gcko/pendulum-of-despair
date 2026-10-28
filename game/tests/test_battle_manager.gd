@@ -3,6 +3,15 @@ extends GutTest
 ## Tests full pipeline composition and formula verification.
 
 const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
+const ATBSystem = preload("res://scripts/combat/atb_system.gd")
+const AbilityCommand = preload("res://scripts/combat/battle_ability_command.gd")
+const BATTLE: PackedScene = preload("res://scenes/core/battle.tscn")
+
+## New-game party: Edren in slot 0, Cael in slot 1.
+const EDREN := 0
+const CAEL := 1
+
+var _booted: Node = null
 
 
 func before_each() -> void:
@@ -10,7 +19,14 @@ func before_each() -> void:
 
 
 func after_each() -> void:
+	if _booted != null and is_instance_valid(_booted):
+		_booted.set("_battle_active", false)
+		_booted.free()
+	_booted = null
+	TestHelpers.reset_game_state()
+	DataManager.clear_cache()
 	GameManager.transition_data = {}
+	randomize()
 
 
 # --- Full Physical Pipeline ---
@@ -131,3 +147,117 @@ func test_status_high_mag_vs_low_mdef() -> void:
 		if DamageCalc.roll_status(90, 200, 10, 10):
 			successes += 1
 	assert_gt(successes, 30, "high MAG lands status frequently")
+
+
+# --- The Ability command (GAP-002, #158 slice a) ---
+
+
+## Boot a real battle against one Ley Vermin, driven frame by frame by hand.
+func _boot() -> Node:
+	PartyState.initialize_new_game()
+	GameManager.transition_data = {
+		"return_map_id": "test_overworld",
+		"return_position": Vector2.ZERO,
+		"is_boss": false,
+		"formation_type": "normal",
+		"encounter_group": ["ley_vermin"],
+		"enemy_act": "act_i",
+	}
+	var battle: Node = BATTLE.instantiate()
+	add_child(battle)
+	battle.set_process(false)
+	_booted = battle
+	return battle
+
+
+## Give [param slot] the turn: fill its gauge and run one frame, which prompts it.
+func _give_turn(battle: Node, slot: int) -> void:
+	battle.get_atb().set_gauge("party_%d" % slot, ATBSystem.GAUGE_MAX)
+	battle._process(0.0)
+
+
+## Submit a command the way the battle UI does.
+func _submit(battle: Node, command: Dictionary) -> void:
+	battle.get_node("BattleUI").command_submitted.emit(command)
+
+
+func _ability(character_id: String, ability_id: String) -> Dictionary:
+	for a: Variant in DataManager.load_abilities(character_id):
+		if (a as Dictionary).get("id", "") == ability_id:
+			return a
+	fail_test("%s has no ability '%s'" % [character_id, ability_id])
+	return {}
+
+
+func test_cael_s_ability_issues_the_rally_and_ends_his_turn() -> void:
+	# Hold the Line's +15% DEF on Edren, 6 MP from Cael, and his turn spent.
+	var battle: Node = _boot()
+	var state: Node = battle.get_battle_state()
+	var mp_before: int = state.get_member(CAEL)["current_mp"]
+	var def_before: int = state.get_effective_stat(EDREN, "def")
+	_give_turn(battle, CAEL)
+	_submit(battle, {"type": "ability", "ability": _ability("cael", "hold_the_line")})
+	assert_eq(state.get_member(CAEL)["current_mp"], mp_before - 6, "Hold the Line costs 6 MP")
+	assert_eq(state.get_effective_stat(EDREN, "def"), def_before * 115 / 100, "Edren +15% DEF")
+	assert_eq(battle.get_atb().get_gauge("party_%d" % CAEL), 0, "Cael's turn is spent")
+
+
+func test_second_wind_heals_an_ally_as_its_turn_begins() -> void:
+	var battle: Node = _boot()
+	var state: Node = battle.get_battle_state()
+	state.take_damage(EDREN, 40)
+	var hp_before: int = state.get_member(EDREN)["current_hp"]
+	var regen: int = state.get_member(EDREN)["max_hp"] * 5 / 100
+	BattleRally.start(state, CAEL, "second_wind", AbilityCommand.RALLY_EFFECTS["second_wind"])
+	watch_signals(battle)
+	_give_turn(battle, EDREN)
+	assert_eq(state.get_member(EDREN)["current_hp"], hp_before + regen, "5% max HP restored")
+	assert_signal_emitted_with_parameters(battle, "damage_dealt", ["party_0", regen, "heal"])
+
+
+func test_press_forward_s_speed_is_what_the_atb_gauge_fills_at() -> void:
+	# One fixed tick fills a gauge by calculate_fill_rate(spd, ...); after Press
+	# Forward that spd must be the member's buffed effective SPD.
+	var battle: Node = _boot()
+	var atb: Node = battle.get_atb()
+	var state: Node = battle.get_battle_state()
+	var speed: int = ATBSystem.settings_from_config(PartyState.get_config())["speed"]
+	BattleRally.start(state, CAEL, "press_forward", AbilityCommand.RALLY_EFFECTS["press_forward"])
+	var buffed_spd: int = state.get_effective_stat(EDREN, "spd")
+	atb.set_gauge("party_0", 0)
+	battle._process(1.0 / ATBSystem.TICKS_PER_SECOND)
+	assert_eq(
+		atb.get_gauge("party_0"),
+		atb.calculate_fill_rate(buffed_spd, speed, []),
+		"the gauge filled at Edren's +10% SPD"
+	)
+
+
+func test_cael_s_second_wind_heals_him_on_four_turns_like_every_ally() -> void:
+	# abilities.md § Cael — Rally: "for 4 turns". The turn Cael issues it on is
+	# not one of the four.
+	var battle: Node = _boot()
+	var state: Node = battle.get_battle_state()
+	state.take_damage(CAEL, 60)
+	_give_turn(battle, CAEL)
+	_submit(battle, {"type": "ability", "ability": _ability("cael", "second_wind")})
+	var heals: int = 0
+	for _i: int in range(6):
+		var hp: int = state.get_member(CAEL)["current_hp"]
+		_give_turn(battle, CAEL)
+		if state.get_member(CAEL)["current_hp"] > hp:
+			heals += 1
+		_submit(battle, {"type": "defend"})
+	assert_eq(heals, 4, "four regen turns, then none")
+
+
+func test_real_time_statuses_run_on_the_seconds_the_gauges_advanced() -> void:
+	# A frame stops early at the first gauge to fill, so a Stop timer must
+	# lose only the battle time that frame actually ran, not the raw delta.
+	var battle: Node = _boot()
+	var atb: Node = battle.get_atb()
+	var state: Node = battle.get_battle_state()
+	state.apply_status(CAEL, "stop", "realtime", 0.1)
+	atb.set_gauge("party_0", ATBSystem.GAUGE_MAX - 1)  # fills on the first tick
+	battle._process(0.5)
+	assert_true(state.has_status(CAEL, "stop"), "one tick of battle time is not 0.1 s")

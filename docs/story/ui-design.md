@@ -329,7 +329,7 @@ of the battle screen (over the party panel).
   - Sable (Tricks): technique list (Filch, Ransack, Smokescreen,
     Shiv, etc.) — cooldown-based, front-row indicator for steal abilities.
   - Maren (Arcanum): weave list with Weave Gauge cost (like MP cost).
-  - Cael (Rally): buff list with MP cost.
+  - Cael (Rally): buff list with MP cost. While Cael is Silenced the Rally command and every Rally in the list are grayed out and not selectable, because Silence ends a Rally (see [abilities.md](abilities.md) § Cael — Rally); Vanguard Strike is not a Rally and Silence does not gray it.
 
 **Flee:** No sub-menu. Selecting Flee immediately attempts escape.
 Success: "Escaped!" message, battle dissolve. Failure: "Can't escape!"
