@@ -13,7 +13,12 @@ Commit, push, and open a pull request. Quality gates are enforced
 automatically by husky hooks — no manual test/lint step needed:
 
 - **pre-commit:** branch protection (no direct commits to main) +
-  gdlint + JSON validation + `gdformat --check`.
+  gdlint + JSON validation + `gdformat --check`. **No gdtoolkit
+  installed is a failure, not a skip,** when `.gd` files are staged.
+  On the PR, `.github/workflows/static-gates.yml` runs gdlint and
+  `gdformat --check` over every tracked `.gd` under `game/`, JSON
+  validation over every tracked `.json` (both outside `addons/`), and
+  commitlint over the PR's commits.
 - **pre-push:** quality-gate self-tests + cross-file ID-uniqueness
   scan + stale-count scan + scene-ref scan + doc-citation integrity +
   dialogue sync + American-English spelling + instanced-child edit
@@ -74,6 +79,8 @@ git commit -s -F /tmp/commit-msg.txt
 The pre-commit hook runs **branch protection**, **gdlint**, **JSON
 validation**, and **`gdformat --check`** automatically. If the commit
 fails, fix the reported issues and retry — do not use `--no-verify`.
+`gdlint NOT FOUND` or `gdformat NOT FOUND` means gdtoolkit is missing:
+install the version the message names, never work around it.
 
 ### 2. Push
 
@@ -109,7 +116,7 @@ PR body format:
 - Bullet points describing what changed and why
 
 ## Test plan
-- [x] Pre-commit gates pass (branch protection, gdlint, JSON validation, gdformat --check)
+- [x] Pre-commit gates pass (branch protection, gdlint, JSON validation, gdformat --check; static-gates.yml re-runs all but branch protection over the tracked files in CI)
 - [x] Pre-push gates pass (quality-gate self-tests, ID uniqueness, stale counts, scene refs, doc citations, dialogue sync, spelling, instanced-child edits (Gate M), TileMapLayer tile data (Gate N), Godot import, full GUT suite, Gate L count floor)
 - [ ] Manual verification steps if applicable
 
@@ -146,7 +153,12 @@ After outputting the PR URL, always end with:
   validation, gdformat --check) and pre-push (every gate marked
   pre-push in the registry at the top of `.husky/pre-push`, Gates M and N included,
   then Godot import, the full GUT suite and its count floor) hooks
-  handle it. The one exception is `bash scripts/gates.sh`, on
+  handle it. CI repeats every hook check but branch protection on the
+  PR: `static-gates.yml` (gdlint and `gdformat --check` over tracked
+  `.gd` under `game/`, JSON over every tracked `.json`, commitlint),
+  `quality-gates.yml` (Gate I and every `check_*.py`) and
+  `gut-tests.yml` (Godot import, the GUT suite, Gate L).
+  The one exception is `bash scripts/gates.sh`, on
   work the hooks cannot see: uncommitted state in a parallel worktree
   (pre-commit sees only the index), or a stacked branch that must be
   judged against its own parent rather than `main`
