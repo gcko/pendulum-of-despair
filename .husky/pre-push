@@ -1,5 +1,11 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/usr/bin/env sh
+# POSIX sh. husky runs this file as `sh -e .husky/pre-push` (.husky/_/h),
+# whatever the shebang says, and on Debian/Ubuntu that sh is dash. A dash
+# without pipefail (macOS's /bin/dash is one, Ubuntu 24.04's 0.5.12 another)
+# rejects `set -o pipefail`, and so did `${PIPESTATUS[0]}`: every push died on
+# line 2 (#476). The one pipeline whose first command matters, the GUT run,
+# writes that command's status to a file instead; see Gate H.
+set -eu
 
 GATE_DIR="scripts/quality-gates"
 
@@ -143,18 +149,24 @@ echo "=== Pre-push: GUT tests ==="
 # the verdict is count-based: the reader either saw no summary at all or judged
 # the neighbour's totals, since the LAST summary in the file wins.
 TEMP_LOG="/tmp/gut_prepush_$(basename "$PWD").log"
-# set +e around the pipeline so the status can be REPORTED rather than
-# aborting the hook wordlessly through `set -e`.
+# A pipeline's status is its LAST command's, here tee's, and POSIX sh has no
+# PIPESTATUS. So Godot's status goes to a file from inside the pipeline. The
+# file is removed first, and anything but a literal 0 read back from it fails,
+# so a run that never wrote one cannot pass. set +e around the pipeline so the
+# status is REPORTED rather than aborting the hook wordlessly through `set -e`.
+GUT_STATUS="/tmp/gut_prepush_$(basename "$PWD").status"
+rm -f "$GUT_STATUS"
 set +e
-"$GODOT_BIN" --headless --path game/ -s addons/gut/gut_cmdln.gd 2>&1 | \
+{ "$GODOT_BIN" --headless --path game/ -s addons/gut/gut_cmdln.gd 2>&1; echo $? >"$GUT_STATUS"; } | \
     sed 's/\x1b\[[0-9;]*m//g' | tee "$TEMP_LOG"
-GUT_EXIT=${PIPESTATUS[0]}
+GUT_EXIT=$(cat "$GUT_STATUS" 2>/dev/null)
 set -e
+rm -f "$GUT_STATUS"
 # Godot's own exit status, named rather than left for `set -e` to swallow
 # wordlessly. A printed summary is not evidence the process survived; the
 # status is.
-if [ "$GUT_EXIT" -ne 0 ]; then
-    echo "Godot EXITED $GUT_EXIT during the GUT run. See $TEMP_LOG"
+if [ "$GUT_EXIT" != "0" ]; then
+    echo "Godot EXITED ${GUT_EXIT:-<no status recorded>} during the GUT run. See $TEMP_LOG"
     tail -30 "$TEMP_LOG"
     exit 1
 fi

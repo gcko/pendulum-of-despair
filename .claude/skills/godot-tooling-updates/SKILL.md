@@ -24,7 +24,8 @@ things with versions are:
    (the lint/format gates). Installed via `pip`/`pipx`, not the repo, but
    the version is pinned in `scripts/quality-gates/gdtoolkit-version.txt`:
    `.github/workflows/static-gates.yml` installs exactly that version and
-   `.husky/pre-commit` quotes it when gdtoolkit is missing.
+   `.husky/pre-commit` fails a commit with staged `.gd` files when gdtoolkit
+   is missing or at a version other than the pin, and quotes the pin.
 3. **husky + @commitlint/cli + @commitlint/config-conventional** — the only
    npm `devDependencies` in `package.json`. Used for git hooks, and since
    #472 CI runs commitlint too: `.github/workflows/static-gates.yml` installs

@@ -17,17 +17,23 @@
 # pid, not a kernel lock; godot-lock.sh names the one window it cannot close.
 #
 # What it runs: gdformat, gdlint and JSON validation on the changed files
-# (pre-commit Gates A-C); every scripts/quality-gates/check_*.py, which covers
-# pre-push Gates D-G, J, K, M and N plus check_gut_baseline.py's baseline shape
+# (pre-commit Gates A-C, refusing a gdtoolkit that is missing or off its pin);
+# every scripts/quality-gates/check_*.py, which covers pre-push Gates D-G, J,
+# K, M and N plus check_gut_baseline.py's baseline shape
 # check, held to the `gates` floor; the gate self-tests (Gate I), held to the
 # `gate_tests` floor; then Godot import, the GUT suite and Gate L, unless no
 # game/ file, no doc the suite reads and no Gate L input changed (the fast path
 # below; GATES_FORCE_GODOT=1 overrides it).
 #
+# What it checks first: that this worktree's git hooks are installed and
+# enabled (core.hooksPath is .husky/_, husky's dispatcher and the pre-commit,
+# commit-msg and pre-push shims exist, HUSKY is not 0). If not, it exits 1 and
+# names the pnpm install to run, before it judges anything (#474).
+#
 # What it is NOT: a replacement for the hooks, and nothing runs it for you. It
 # skips the branch-protection and commit-message checks, and it may skip Godot
 # on a diff the pre-push hook would still run the suite for. The hooks still
-# run on every commit and push.
+# run on every commit and push, once pnpm install has run in this worktree.
 set -uo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -41,6 +47,47 @@ BASE="${GATES_BASE:-main}"
 MAX_GODOT="${GATES_MAX_GODOT:-1}"
 FAIL=0
 say() { echo "[$NAME] $*"; }
+
+# --- Hooks installed? ---------------------------------------------------------
+# core.hooksPath is the RELATIVE path .husky/_, which git resolves in each
+# worktree, and .husky/_ is gitignored: pnpm install creates it per worktree.
+# A fresh `git worktree add` has none, so git commit and git push there run no
+# hook at all and say nothing (#474). This runner exists for exactly those
+# worktrees, so it refuses to judge one whose hooks would not run rather than
+# report green on a tree the hooks will never see. "Would not run" is any of:
+#   * HUSKY=0, which makes husky's dispatcher exit 0 before any hook;
+#   * core.hooksPath unset or not .husky/_, so git runs some other directory's
+#     files (another hook manager's in .git/hooks, or git's *.sample files);
+#   * no dispatcher (.husky/_/h) or no pre-commit, commit-msg or pre-push shim.
+hooks_refuse() {
+  say "GIT HOOKS NOT INSTALLED in this worktree: $1"
+  say "  Until they are, git commit and git push here run no hooks and say"
+  say "  nothing. pnpm install creates .husky/_ in each worktree and points"
+  say "  core.hooksPath at it. Install them, then re-run:"
+  say "    cd '$ROOT' && pnpm install --frozen-lockfile"
+  exit 1
+}
+if [ "${HUSKY-}" = "0" ]; then
+  say "GIT HOOKS DISABLED: HUSKY=0 is set, so husky's dispatcher exits 0 before"
+  say "  any hook runs. Unset it and re-run."
+  exit 1
+fi
+HOOKS_PATH="$(git config --get core.hooksPath || true)"
+if [ "$HOOKS_PATH" != ".husky/_" ]; then
+  if [ -z "$HOOKS_PATH" ]; then
+    hooks_refuse "core.hooksPath is unset, so git runs .git/hooks, not husky"
+  fi
+  hooks_refuse "core.hooksPath is '$HOOKS_PATH', not husky's .husky/_"
+fi
+HOOKS_DIR="$(git rev-parse --git-path hooks 2>/dev/null || true)"
+for hook in h pre-commit commit-msg pre-push; do
+  if [ -z "$HOOKS_DIR" ] || [ ! -f "$HOOKS_DIR/$hook" ]; then
+    hooks_refuse "no ${HOOKS_DIR:-.husky/_}/$hook"
+  fi
+  if [ "$hook" != h ] && [ ! -x "$HOOKS_DIR/$hook" ]; then
+    hooks_refuse "$HOOKS_DIR/$hook is not executable, so git skips it"
+  fi
+done
 
 # --- Floors -----------------------------------------------------------------
 # A floor that is absent, duplicated, or non-numeric must stop the run. It used
@@ -89,10 +136,32 @@ CHANGED_GD=$(echo "$LINT_PATHS"  | grep -E '\.gd$'   || true)
 CHANGED_JSON=$(echo "$LINT_PATHS" | grep -E '\.json$' || true)
 CHANGED_GAME=$(echo "$ALL_PATHS"  | grep -E '^game/'  || true)
 
+# gdtoolkit must be present AND at the pinned version, the same check
+# .husky/pre-commit makes through the same helper (#477). Without it a local
+# gdtoolkit at another version passed here, failed pre-commit, and judged the
+# formatting by rules CI does not use. Only asked when .gd files changed, so a
+# docs-only run still needs no gdtoolkit. A tool that fails the check is not
+# run: its verdict would be another release's.
+gd_require() {
+  local out line
+  out=$(gdtoolkit_require "$1" "$2" changed 2>&1) && return 0
+  while IFS= read -r line; do say "$line"; done <<<"$out"
+  return 1
+}
 if [ -n "$CHANGED_GD" ]; then
-  say "gdformat --check ($(echo "$CHANGED_GD" | wc -l | tr -d ' ') file(s))"
-  gdformat --check $CHANGED_GD || { say "GDFORMAT FAILED"; FAIL=1; }
-  say "gdlint"; gdlint $CHANGED_GD || { say "GDLINT FAILED"; FAIL=1; }
+  # shellcheck source=scripts/quality-gates/gdtoolkit-require.sh
+  . scripts/quality-gates/gdtoolkit-require.sh
+  if gd_require gdformat "Gate C"; then
+    say "gdformat --check ($(echo "$CHANGED_GD" | wc -l | tr -d ' ') file(s))"
+    gdformat --check $CHANGED_GD || { say "GDFORMAT FAILED"; FAIL=1; }
+  else
+    say "GDFORMAT FAILED"; FAIL=1
+  fi
+  if gd_require gdlint "Gate A"; then
+    say "gdlint"; gdlint $CHANGED_GD || { say "GDLINT FAILED"; FAIL=1; }
+  else
+    say "GDLINT FAILED"; FAIL=1
+  fi
 fi
 if [ -n "$CHANGED_JSON" ]; then
   say "json validation ($(echo "$CHANGED_JSON" | wc -l | tr -d ' ') file(s))"

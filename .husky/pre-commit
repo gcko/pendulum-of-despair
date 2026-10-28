@@ -17,7 +17,9 @@ fi
 # Gates A and C refuse to pass when .gd files are staged and gdlint or
 # gdformat is missing: they used to sit inside `if command -v` with no else, so
 # a machine without gdtoolkit committed GDScript nothing had checked (#472).
-# The helper prints the install command for the pinned version
+# They also refuse a tool whose `--version` differs from the pin, since CI
+# checks with the pin and formatter rules change between releases (#477). In
+# both cases the helper prints the install command for the pinned version
 # (scripts/quality-gates/gdtoolkit-version.txt). No staged .gd, no requirement.
 #
 # addons/ is excluded by path COMPONENT, `(^|/)addons/`, in all three gates and

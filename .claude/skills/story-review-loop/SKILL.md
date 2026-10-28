@@ -257,7 +257,8 @@ If issues are found:
    section. The ±10-line check is NOT sufficient; full-section
    re-read is required.
 5. **Verify fixes.** Linting and tests run automatically via the git
-   hooks on commit/push (pre-commit: gdlint + JSON validation +
+   hooks on commit/push, once `pnpm install` has run in the worktree; a
+   new worktree has no hooks until it does (pre-commit: gdlint + JSON validation +
    `gdformat --check`; pre-push: every gate marked pre-push in the `.husky/pre-push`
    registry + Godot import + the full GUT suite). To verify manually before committing:
    - **Code touched (`.gd`):** `gdlint <files>` and

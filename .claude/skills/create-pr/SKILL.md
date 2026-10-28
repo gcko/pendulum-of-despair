@@ -14,7 +14,9 @@ automatically by husky hooks — no manual test/lint step needed:
 
 - **pre-commit:** branch protection (no direct commits to main) +
   gdlint + JSON validation + `gdformat --check`. **No gdtoolkit
-  installed is a failure, not a skip,** when `.gd` files are staged.
+  installed is a failure, not a skip,** when `.gd` files are staged,
+  and so is a gdlint or gdformat at a version other than the pin
+  (`VERSION MISMATCH`).
   On the PR, `.github/workflows/static-gates.yml` runs gdlint and
   `gdformat --check` over every tracked `.gd` under `game/`, JSON
   validation over every tracked `.json` (both outside `addons/`), and
@@ -79,8 +81,9 @@ git commit -s -F /tmp/commit-msg.txt
 The pre-commit hook runs **branch protection**, **gdlint**, **JSON
 validation**, and **`gdformat --check`** automatically. If the commit
 fails, fix the reported issues and retry — do not use `--no-verify`.
-`gdlint NOT FOUND` or `gdformat NOT FOUND` means gdtoolkit is missing:
-install the version the message names, never work around it.
+`gdlint NOT FOUND` or `gdformat NOT FOUND` means gdtoolkit is missing;
+`VERSION MISMATCH` means it is installed at a version other than the pin.
+Either way, install the version the message names, never work around it.
 
 ### 2. Push
 
@@ -171,7 +174,8 @@ After outputting the PR URL, always end with:
   names the one window it cannot close. That is the whole
   carve-out — it is not general permission to run tests by hand, it
   does not replace either hook, and both hooks still run on every
-  commit and push. See AGENTS.md § Essential Commands.
+  commit and push once `pnpm install` has run in the worktree. See
+  AGENTS.md § Essential Commands.
 - **Never bypass hooks.** Do not use `--no-verify`. If a hook fails,
   fix the issue.
 - **Temp file for body.** Always write to `/tmp/pr_body.md` and use

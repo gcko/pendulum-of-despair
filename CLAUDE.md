@@ -39,7 +39,7 @@ directory in the Godot editor.
 
 ## Pre-Commit Hook Behavior
 
-The pre-commit hook blocks direct commits to main and runs GDScript quality gates (gdlint, JSON validation, gdformat check). If `.gd` files are staged and gdlint or gdformat is missing, the commit fails and the hook prints the install command for the gdtoolkit version pinned in `scripts/quality-gates/gdtoolkit-version.txt`; a commit with no staged `.gd` files does not need gdtoolkit. The pre-push hook runs every gate that the registry at the top of `.husky/pre-push` marks pre-push: the gate self-tests (Gate I), the data-integrity and doc scans (Gates D-G, J, K), instanced-child edits (Gate M), TileMapLayer tile data (Gate N), Godot import, and the full GUT suite with its count floor (Gates H, L).
+The pre-commit hook blocks direct commits to main and runs GDScript quality gates (gdlint, JSON validation, gdformat check). If `.gd` files are staged and gdlint or gdformat is missing, or its version differs from the gdtoolkit version pinned in `scripts/quality-gates/gdtoolkit-version.txt`, the commit fails and the hook prints the install command for the pin; a commit with no staged `.gd` files does not need gdtoolkit. The pre-push hook runs every gate that the registry at the top of `.husky/pre-push` marks pre-push: the gate self-tests (Gate I), the data-integrity and doc scans (Gates D-G, J, K), instanced-child edits (Gate M), TileMapLayer tile data (Gate N), Godot import, and the full GUT suite with its count floor (Gates H, L).
 
 **Hook architecture:** Husky v9 uses `core.hooksPath = .husky/_`. The `_/` directory is regenerated — never edit it. User hooks live in `.husky/` (e.g., `pre-commit`).
 

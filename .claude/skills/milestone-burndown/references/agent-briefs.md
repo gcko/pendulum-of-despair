@@ -65,6 +65,9 @@ Read AGENTS.md first. Its rules bind you, in particular: never --no-verify, and
 Conventional Commits.
 
 Commit as you go with `git commit -s`; each commit references its issue (Refs #<n>).
+The orchestrator ran `pnpm install -C <worktree> --frozen-lockfile`, so the
+hooks run on your commits. If gates.sh stops with GIT HOOKS NOT INSTALLED, run
+that command yourself and say so in your report.
 When finished, run the gates once from your worktree:
   GATES_BASE=<base-sha> bash <worktree>/scripts/gates.sh
 and copy two lines into your report: the `RESULT scripts=... tests=...` line

@@ -43,7 +43,7 @@ pendulum-of-despair/
 
 - **pnpm** -- for commitlint/husky tooling: `corepack enable`
 - **Godot Engine 4.8** -- open `game/` as the project directory; the pre-push hook needs it to run the GUT suite
-- **gdtoolkit** (gdlint + gdformat) -- at the version in `scripts/quality-gates/gdtoolkit-version.txt`: `pip install "gdtoolkit==$(tr -d '[:space:]' < scripts/quality-gates/gdtoolkit-version.txt)"`. The pre-commit hook fails when `.gd` files are staged and either tool is missing
+- **gdtoolkit** (gdlint + gdformat) -- at the version in `scripts/quality-gates/gdtoolkit-version.txt`: `pip install "gdtoolkit==$(tr -d '[:space:]' < scripts/quality-gates/gdtoolkit-version.txt)"`. The pre-commit hook fails when `.gd` files are staged and either tool is missing or at a version other than that pin
 
 ### Setup
 
