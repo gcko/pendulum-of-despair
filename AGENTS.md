@@ -110,6 +110,8 @@ Godot, which matters when several worktrees run at once.
 
 **Quality checks (pre-push):** Quality-gate self-tests (Gate I), data-integrity and doc scans (Gates D-G, J, K), instanced-child edits (Gate M), TileMapLayer tile data (Gate N), Godot import, and the full GUT suite with its baseline floor (Gates H, L). The gate registry at the top of `.husky/pre-push` is the authoritative list.
 
+**Quality checks (CI):** The hooks are not the only place these run, so a push made without them is still judged once it has a PR. On every pull request, `.github/workflows/quality-gates.yml` runs the gate self-tests (Gate I) and every `scripts/quality-gates/check_*.py` (Gates D-G, J, K, M, N, plus Gate L's baseline shape check), held to the `gates` and `gate_tests` floors in `scripts/quality-gates/gut-baseline.txt`; `.github/workflows/gut-tests.yml` runs Godot import and the GUT suite with its count floor (Gates H, L). The pre-commit gates (gdlint, JSON validation, gdformat) and commitlint are not run in CI; `bash scripts/gates.sh` runs the pre-commit gates locally.
+
 **Commit message validation (commit-msg):** commitlint enforces Conventional Commits format. Non-conforming messages are rejected.
 
 If hooks fail: read error, fix issue, `git add <files>`, commit again.

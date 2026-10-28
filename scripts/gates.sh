@@ -26,7 +26,7 @@
 #
 # What it is NOT: a replacement for the hooks, and nothing runs it for you. It
 # skips the branch-protection and commit-message checks, and it may skip Godot
-# on a diff the pre-push hook would still run the suite for. Both hooks still
+# on a diff the pre-push hook would still run the suite for. The hooks still
 # run on every commit and push.
 set -uo pipefail
 

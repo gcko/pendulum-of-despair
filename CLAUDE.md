@@ -41,8 +41,6 @@ directory in the Godot editor.
 
 The pre-commit hook blocks direct commits to main and runs GDScript quality gates (gdlint, JSON validation, gdformat check). The pre-push hook runs every gate that the registry at the top of `.husky/pre-push` marks pre-push: the gate self-tests (Gate I), the data-integrity and doc scans (Gates D-G, J, K), instanced-child edits (Gate M), TileMapLayer tile data (Gate N), Godot import, and the full GUT suite with its count floor (Gates H, L).
 
-The hooks are not the only place these run, and a push made without them is still judged: on every pull request, `.github/workflows/quality-gates.yml` runs Gate I and every `scripts/quality-gates/check_*.py` (Gates D-G, J, K, M, N), held to the `gates` and `gate_tests` floors in `scripts/quality-gates/gut-baseline.txt`, and `.github/workflows/gut-tests.yml` runs Godot import and Gates H and L. The pre-commit gates (gdlint, JSON validation, gdformat) and commitlint run in the hooks only.
-
 **Hook architecture:** Husky v9 uses `core.hooksPath = .husky/_`. The `_/` directory is regenerated — never edit it. User hooks live in `.husky/` (e.g., `pre-commit`).
 
 **Recovery:** `pnpm install` reinstalls husky and verifies `core.hooksPath`.

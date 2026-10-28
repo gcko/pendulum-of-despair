@@ -5,9 +5,9 @@ Two kinds of test live here and they fail differently, so both are needed:
 
   * fixture tests, which prove the parsing and the verdicts are right; and
   * WIRING tests, which prove the hook, CI and `scripts/gates.sh` actually call
-    the thing. Since #437 they also pin `.github/workflows/quality-gates.yml`:
-    that it runs the gate self-tests and every check_*.py, and holds both to
-    the floors read through `check_gut_baseline.py --shell`.
+    the thing. Since #437, TestQualityGatesWorkflow also EXECUTES the step
+    bodies of `.github/workflows/quality-gates.yml` against fixture trees and
+    requires the job to fail when a gate, a self-test or a floor does.
     `test_quality_gates.py` once had 36 green tests that no hook ran, which is
     the exact shape of bug a fixture-only suite cannot see.
 
@@ -115,25 +115,6 @@ def gate_run_lines(text):
         if pattern.search(line):
             hits.append(stripped)
     return hits
-
-
-def floor_read_lines(text):
-    """Return the UNCOMMENTED commands in `text` that read the floors with `--shell`.
-
-    Comment-only lines are dropped FIRST and backslash continuations joined
-    after, so a call split over two lines counts while a commented-out first
-    half leaves its live tail with no `python3` in it, which does not. Like
-    `gate_run_lines()`, the script may be named directly or through a shell
-    variable assigned its path in the same file.
-    """
-    code = re.sub(r"\\\n\s*", " ", uncommented(text))
-    names = [re.escape(GATE_SCRIPT)]
-    for var in re.findall(
-        r'^\s*([A-Za-z_][A-Za-z0-9_]*)="[^"]*%s"' % re.escape(GATE_SCRIPT), code, re.M
-    ):
-        names.append(r"\$\{?%s\}?" % re.escape(var))
-    pattern = re.compile(r"python3\b.*(?:%s).*--shell\b" % "|".join(names))
-    return [line.strip() for line in code.splitlines() if pattern.search(line)]
 
 
 def _floors(**overrides):
@@ -514,23 +495,6 @@ class TestGateRunLineMatcher(unittest.TestCase):
         )
         self.assertEqual(gate_run_lines(text), [])
 
-    # floor_read_lines() backs the quality-gates.yml wiring tests (#437).
-
-    def test_a_floor_read_split_across_lines_counts(self):
-        text = (
-            "FLOORS=$(python3 scripts/quality-gates/check_gut_baseline.py \\\n"
-            "           --baseline scripts/quality-gates/gut-baseline.txt --shell --label ci)\n"
-        )
-        self.assertEqual(len(floor_read_lines(text)), 1)
-
-    def test_a_commented_out_floor_read_does_not_count(self):
-        text = (
-            "# FLOORS=$(python3 scripts/quality-gates/check_gut_baseline.py \\\n"
-            "           --baseline scripts/quality-gates/gut-baseline.txt --shell --label ci)\n"
-            "#   check_gut_baseline.py --shell reads the floors\n"
-        )
-        self.assertEqual(floor_read_lines(text), [])
-
 
 class TestWiredIntoTheGates(unittest.TestCase):
     """A gate nothing calls is not a gate. These are the tests that notice."""
@@ -658,60 +622,283 @@ class TestWiredIntoTheGates(unittest.TestCase):
         # Defined is not consulted: the skip condition has to read it.
         self.assertIn('[ -z "$GATE_TRIGGER" ]', gates_sh)
 
-    # --- CI runs the Python gates and their self-tests (#437) ---------------
-    #
-    # Until #437 Gates D-G, J, K, M, N and the Gate I self-tests ran only in
-    # .husky/pre-push, so a push made without hooks was never checked by them.
-    # These pin the CI job that closed that, and pin it to the FLOORS: a loop
-    # over a glob that matches nothing, or a discovery that collects nothing,
-    # is a green step that inspected nothing.
 
-    QUALITY_GATES_YML = ".github/workflows/quality-gates.yml"
+# --- Executing quality-gates.yml (#437) -------------------------------------
+#
+# The CI job that runs Gate I and every check_*.py cannot run here, but its
+# step bodies can. These helpers pull each step's `run:` body out of the
+# workflow and execute them in order the way the runner does, against a
+# fixture tree, so the tests below judge what the job DOES when a gate fails
+# rather than how its YAML is spelled. A text match would accept a step that
+# had stopped failing: dropping `set -o pipefail`, `|| true` after `tee`, a
+# deleted `exit 1` and `continue-on-error: true` all kept six text tests green.
 
-    def test_ci_reads_the_python_gate_floors_through_the_judge(self):
-        workflow = self._read(self.QUALITY_GATES_YML)
-        self.assertTrue(
-            floor_read_lines(workflow),
-            "no uncommented `check_gut_baseline.py --shell` floor read in %s"
-            % self.QUALITY_GATES_YML,
+QUALITY_GATES_YML = os.path.join(REPO_ROOT, ".github", "workflows", "quality-gates.yml")
+
+# Keys a step may carry. Anything else raises rather than being ignored, so
+# the emulation cannot quietly drift from what the workflow asks the runner for.
+_STEP_KEYS = {"name", "uses", "with", "run", "if", "continue-on-error", "shell", "timeout-minutes"}
+# `if:` conditions the emulation understands; any other raises.
+_ALWAYS_CONDITIONS = {"!cancelled()", "always()"}
+
+
+def workflow_steps(text):
+    """Return the steps of the only job in `text`, as dicts of their keys.
+
+    Stdlib only, for the one shape these workflows use: a block sequence of
+    `- key: value` mappings under `steps:`, with `run: |` literal blocks. A
+    nested mapping (`with:`) is skipped; a literal block is dedented.
+    """
+    lines = text.splitlines()
+    starts = [i for i, line in enumerate(lines) if re.match(r"^\s*steps:\s*$", line)]
+    if len(starts) != 1:
+        raise ValueError("expected exactly one `steps:` block, found %d" % len(starts))
+    steps_indent = len(lines[starts[0]]) - len(lines[starts[0]].lstrip())
+    steps, step, key_indent = [], None, None
+    i = starts[0] + 1
+    while i < len(lines):
+        line = lines[i]
+        stripped = line.strip()
+        indent = len(line) - len(line.lstrip())
+        if not stripped or stripped.startswith("#"):
+            i += 1
+            continue
+        if indent <= steps_indent:
+            break
+        item = re.match(r"^(\s*)- (.*)$", line)
+        if item and (key_indent is None or len(item.group(1)) < key_indent):
+            step = {}
+            steps.append(step)
+            key_indent = len(item.group(1)) + 2
+            line = " " * key_indent + item.group(2)
+            indent = key_indent
+        if step is None or indent != key_indent:
+            raise ValueError("unexpected line %d in steps: %r" % (i + 1, line))
+        pair = re.match(r"^\s*([A-Za-z-]+):\s*(.*)$", line)
+        if not pair or pair.group(1) not in _STEP_KEYS:
+            raise ValueError("unsupported step line %d: %r" % (i + 1, line))
+        key, value = pair.group(1), pair.group(2).strip()
+        i += 1
+        if value in ("|", "") or value.startswith("|"):
+            block = []
+            while i < len(lines) and (
+                not lines[i].strip() or len(lines[i]) - len(lines[i].lstrip()) > key_indent
+            ):
+                block.append(lines[i])
+                i += 1
+            if value.startswith("|"):
+                body = [b for b in block if b.strip()]
+                cut = min(len(b) - len(b.lstrip()) for b in body) if body else 0
+                value = "\n".join(b[cut:] for b in block).strip("\n") + "\n"
+        step[key] = value
+    return steps
+
+
+def run_workflow_steps(steps, cwd, env_extra=None):
+    """Execute `steps` like the runner: returns (job_failed, [(step, outcome)]).
+
+    A step with no `if:` runs only while the job is still green; `!cancelled()`
+    and `always()` run regardless. The default shell is `bash -e {0}`, and
+    `shell: bash` adds pipefail, as on the runner. A failing step fails the job
+    unless it sets `continue-on-error: true`. $GITHUB_ENV assignments carry to
+    later steps. Outcome is "success", "failure" or "skipped".
+    """
+    scratch = tempfile.mkdtemp(prefix="pod-wf-")
+    env_file = os.path.join(scratch, "github_env")
+    io.open(env_file, "w").close()
+    env = dict(os.environ, GITHUB_ENV=env_file, RUNNER_TEMP=scratch, CI="true")
+    env.pop("MIN_GATES", None)
+    env.pop("MIN_GATE_TESTS", None)
+    env.update(env_extra or {})
+    job_failed, results, output = False, [], []
+    try:
+        for step in steps:
+            condition = step.get("if", "").replace("${{", "").replace("}}", "").strip()
+            if condition and condition not in _ALWAYS_CONDITIONS:
+                raise ValueError("unsupported if: %r" % step["if"])
+            if "run" not in step or (job_failed and not condition):
+                results.append((step, "skipped"))
+                continue
+            shell = step.get("shell", "")
+            if shell not in ("", "bash"):
+                raise ValueError("unsupported shell: %r" % shell)
+            argv = ["bash", "-e"] if not shell else ["bash", "--noprofile", "--norc", "-eo", "pipefail"]
+            with io.open(env_file, encoding="utf-8") as handle:
+                for assignment in handle.read().splitlines():
+                    if "=" in assignment:
+                        name, _, value = assignment.partition("=")
+                        env[name] = value
+            script = os.path.join(scratch, "step.sh")
+            with io.open(script, "w", encoding="utf-8") as handle:
+                handle.write(step["run"])
+            proc = subprocess.run(
+                argv + [script], cwd=cwd, env=env, stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT, universal_newlines=True, timeout=120,
+            )
+            output.append(proc.stdout)
+            outcome = "success" if proc.returncode == 0 else "failure"
+            results.append((step, outcome))
+            if outcome == "failure" and step.get("continue-on-error", "false") != "true":
+                job_failed = True
+    finally:
+        shutil.rmtree(scratch, ignore_errors=True)
+    return job_failed, results, "".join(output)
+
+
+_FIXTURE_CHECK = 'print("FIXTURE GATE %s ran")\nraise SystemExit(%d)\n'
+_FIXTURE_TEST = "    def test_%d(self):\n        self.assertTrue(%s)\n"
+
+
+class TestQualityGatesWorkflow(unittest.TestCase):
+    """quality-gates.yml must FAIL when a gate fails, and only then (#437).
+
+    Each test builds a fixture repo -- the real check_gut_baseline.py, a
+    baseline with gates=3 and gate_tests=3, two fixture check_*.py and a
+    fixture self-test file -- runs the workflow's real step bodies against it,
+    and judges the job's verdict.
+    """
+
+    def setUp(self):
+        with io.open(QUALITY_GATES_YML, encoding="utf-8") as handle:
+            self.text = handle.read()
+        self.steps = workflow_steps(self.text)
+        self.root = tempfile.mkdtemp(prefix="pod-qg-fixture-")
+        self.addCleanup(shutil.rmtree, self.root, True)
+        self.gate_dir = os.path.join(self.root, "scripts", "quality-gates")
+        os.makedirs(self.gate_dir)
+        shutil.copy(os.path.join(REPO_ROOT, "scripts", "quality-gates", GATE_SCRIPT), self.gate_dir)
+        self._write("gut-baseline.txt", "scripts=1\ntests=1\ngates=3\ngate_tests=3\n")
+
+    def _write(self, name, body):
+        with io.open(os.path.join(self.gate_dir, name), "w", encoding="utf-8") as handle:
+            handle.write(body)
+
+    def _fixture(self, checks=("a", "b"), failing_check=None, tests=3, failing_test=None):
+        for name in checks:
+            self._write("check_%s.py" % name, _FIXTURE_CHECK % (name, 1 if name == failing_check else 0))
+        body = "import unittest\n\n\nclass TestFixture(unittest.TestCase):\n"
+        for n in range(tests):
+            body += _FIXTURE_TEST % (n, "False" if n == failing_test else "True")
+        self._write("test_fixture.py", body)
+
+    def _run(self):
+        return run_workflow_steps(self.steps, self.root)
+
+    def test_a_clean_tree_passes_having_run_every_gate_and_self_test(self):
+        self._fixture()
+        failed, results, out = self._run()
+        self.assertFalse(failed, out)
+        # Green is only worth something if the work happened: every fixture
+        # gate printed, and the self-tests ran in full.
+        self.assertIn("FIXTURE GATE a ran", out)
+        self.assertIn("FIXTURE GATE b ran", out)
+        self.assertRegex(out, r"(?m)^Ran 3 tests\b")
+        self.assertEqual({outcome for _, outcome in results}, {"skipped", "success"})
+        self.assertEqual([step.get("uses") for step, o in results if o == "skipped"],
+                         [s.get("uses") for s in self.steps if "run" not in s])
+
+    def test_a_failing_gate_fails_the_job(self):
+        self._fixture(failing_check="a")
+        failed, _, out = self._run()
+        self.assertTrue(failed, out)
+        # ...and the gates after it still ran, so a PR sees every failure.
+        self.assertIn("FIXTURE GATE b ran", out)
+
+    def test_a_failing_self_test_fails_the_job_and_the_gates_still_run(self):
+        self._fixture(failing_test=1)
+        failed, _, out = self._run()
+        self.assertTrue(failed, out)
+        self.assertIn("FIXTURE GATE a ran", out)
+
+    def test_too_few_self_tests_fails_the_job(self):
+        # Two passing tests against a floor of three: a lost test file, not a
+        # failing one, so only the count can catch it.
+        self._fixture(tests=2)
+        failed, _, out = self._run()
+        self.assertTrue(failed, out)
+        self.assertRegex(out, r"(?m)^Ran 2 tests\b")
+
+    def test_a_self_test_run_that_prints_no_count_fails_the_job(self):
+        # A run that exits 0 without printing "Ran N tests" proves nothing ran.
+        # os._exit in a test module ends the discovery that way.
+        self._fixture()
+        self._write("test_fixture.py", "import os\nos._exit(0)\n")
+        failed, _, out = self._run()
+        self.assertTrue(failed, out)
+        self.assertNotRegex(out, r"(?m)^Ran \d+ test")
+
+    def test_a_glob_with_no_gate_scripts_fails_the_job(self):
+        # Only the floor reader is left for the glob to match: 1 < 3.
+        self._fixture(checks=())
+        failed, _, out = self._run()
+        self.assertTrue(failed, out)
+
+    def test_an_unreadable_floor_fails_every_step_that_runs_after_it(self):
+        self._fixture()
+        self._write("gut-baseline.txt", "scripts=1\ntests=1\ngates=abc\ngate_tests=3\n")
+        failed, results, out = self._run()
+        self.assertTrue(failed, out)
+        ran = [outcome for _, outcome in results if outcome != "skipped"]
+        self.assertTrue(ran, "no step ran at all")
+        # A step that runs after the floor read failed must not pass on an
+        # unset floor: `[ 3 -lt "" ]` is an error that reads as false.
+        self.assertEqual(set(ran), {"failure"}, out)
+
+    def test_a_step_that_never_received_its_floor_fails_on_a_clean_tree(self):
+        # Every step that judges a count reads its floor from $GITHUB_ENV.
+        # Run alone, with no floor, each must fail rather than compare against
+        # an empty string and pass.
+        self._fixture()
+        judged = [s for s in self.steps if "run" in s and "$GITHUB_ENV" not in s["run"]]
+        self.assertGreaterEqual(len(judged), 2, "expected Gate I and the gate loop")
+        for step in judged:
+            with self.subTest(step=step.get("name")):
+                failed, _, out = run_workflow_steps([step], self.root)
+                self.assertTrue(failed, out)
+
+    def test_no_step_or_job_is_allowed_to_fail_quietly(self):
+        # continue-on-error on a STEP is executed above; on the JOB it is not,
+        # so it is checked here as text.
+        self.assertNotIn("continue-on-error", uncommented(self.text))
+
+    def test_it_runs_on_every_pull_request_base(self):
+        # A `branches:` filter left stacked PRs with no CI until retargeted.
+        on_block = re.search(r"(?ms)^on:\n(.*?)^\S", uncommented(self.text))
+        self.assertIsNotNone(on_block, "no `on:` block")
+        self.assertIn("pull_request:", on_block.group(1))
+        self.assertNotRegex(on_block.group(1), r"\b(branches|branches-ignore|paths|paths-ignore):")
+
+
+class TestWorkflowStepRunner(unittest.TestCase):
+    """The emulation is what TestQualityGatesWorkflow trusts, so it is tested."""
+
+    def _steps(self, body):
+        return workflow_steps("jobs:\n  j:\n    steps:\n" + body)
+
+    def test_a_failing_step_fails_the_job_and_skips_the_next(self):
+        steps = self._steps(
+            "      - name: one\n        run: |\n          exit 1\n"
+            "      - name: two\n        run: |\n          echo TWO\n"
         )
-        code = uncommented(workflow)
-        self.assertIn('eval "$FLOORS"', code)
-        # Later steps see the floors only through $GITHUB_ENV.
-        self.assertIn('echo "MIN_GATES=$MIN_GATES" >> "$GITHUB_ENV"', code)
-        self.assertIn('echo "MIN_GATE_TESTS=$MIN_GATE_TESTS" >> "$GITHUB_ENV"', code)
+        failed, results, out = run_workflow_steps(steps, tempfile.gettempdir())
+        self.assertTrue(failed)
+        self.assertEqual([o for _, o in results], ["failure", "skipped"])
+        self.assertNotIn("TWO", out)
 
-    def test_ci_does_not_hardcode_the_python_gate_floors(self):
-        # A literal floor in the YAML would compare against a number that no
-        # longer moves with gut-baseline.txt, and pass once the file is raised.
-        code = uncommented(self._read(self.QUALITY_GATES_YML))
-        self.assertNotRegex(code, r"MIN_GATES\s*[:=]\s*[\"']?\d")
-        self.assertNotRegex(code, r"MIN_GATE_TESTS\s*[:=]\s*[\"']?\d")
-
-    def test_ci_runs_the_gate_self_tests(self):
-        # The same discovery the hook runs, against the same directory.
-        code = uncommented(self._read(self.QUALITY_GATES_YML))
-        self.assertRegex(
-            code,
-            r"python3 -m unittest discover -s scripts/quality-gates -p 'test_\*\.py'",
+    def test_not_cancelled_runs_after_a_failure_and_continue_on_error_does_not_fail(self):
+        steps = self._steps(
+            "      - name: one\n        continue-on-error: true\n        run: |\n          exit 1\n"
+            "      - name: two\n        run: |\n          exit 1\n"
+            "      - name: three\n        if: ${{ !cancelled() }}\n        run: |\n          echo THREE\n"
         )
+        failed, results, out = run_workflow_steps(steps, tempfile.gettempdir())
+        self.assertTrue(failed)
+        self.assertEqual([o for _, o in results], ["failure", "failure", "success"])
+        self.assertIn("THREE", out)
 
-    def test_ci_holds_the_self_tests_to_the_gate_tests_floor(self):
-        code = uncommented(self._read(self.QUALITY_GATES_YML))
-        self.assertIn("grep -E '^Ran [0-9]+ test' /tmp/gate-selftests.log", code)
-        self.assertIn('[ "$GATE_TESTS" -lt "$MIN_GATE_TESTS" ]', code)
-
-    def test_ci_runs_every_check_script(self):
-        code = uncommented(self._read(self.QUALITY_GATES_YML))
-        self.assertRegex(code, r"(?m)^\s*for G in scripts/quality-gates/check_\*\.py; do$")
-        self.assertRegex(code, r'(?m)^\s*python3 "\$G" \|\| \{.*FAIL=1; \}$')
-
-    def test_ci_holds_the_gate_loop_to_the_gates_floor(self):
-        code = uncommented(self._read(self.QUALITY_GATES_YML))
-        self.assertIn("GATE_COUNT=$((GATE_COUNT+1))", code)
-        self.assertIn('[ "$GATE_COUNT" -lt "$MIN_GATES" ]', code)
-        # The step must exit with what it found, or every check above is prose.
-        self.assertRegex(code, r"(?m)^\s*exit \$FAIL$")
+    def test_an_unknown_step_key_raises_rather_than_being_ignored(self):
+        with self.assertRaises(ValueError):
+            self._steps("      - name: one\n        working-directory: x\n        run: |\n          true\n")
 
 
 class TestGodotLockMutex(unittest.TestCase):

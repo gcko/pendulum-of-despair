@@ -116,14 +116,14 @@ refactor, so the refactor's diff stays readable as evidence.
 
 ### Deleting tests deliberately
 
-Deleting a test drops the suite below the GUT floor, which `bash
-scripts/gates.sh` fails on. That is the silent-skip guard doing its job, not an
-obstacle.
+Deleting a test drops the suite below the GUT floor. That is the silent-skip
+guard doing its job, not an obstacle.
 
-Know what does NOT catch it: the hooks. `.husky/pre-push` and the CI workflow
-both check `Failing Tests 0` and never read the `Scripts`/`Tests` counts, so a
-deleted — or parse-skipped — test file sails through both. Running `gates.sh`
-is the only thing that notices.
+Gate L judges the `Scripts`/`Tests` counts against that floor in all three
+places the suite runs: `.husky/pre-push`, the GUT workflow
+(`.github/workflows/gut-tests.yml`) and `bash scripts/gates.sh`, each through
+`scripts/quality-gates/check_gut_baseline.py` (#430). A deleted — or
+parse-skipped — test file fails every one of them until the floor moves.
 
 - Update `scripts/quality-gates/gut-baseline.txt` in the SAME commit.
 - Name every deleted test with its one-line justification in the commit body.

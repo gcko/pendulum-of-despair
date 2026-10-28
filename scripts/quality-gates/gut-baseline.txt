@@ -8,25 +8,32 @@
 # rises is the cheapest way to notice either.
 #
 # WHAT ENFORCES THESE: `.husky/pre-push` Gate L, the "GUT summary, failures and
-# count floor" step in .github/workflows/gut-tests.yml, and
-# `bash scripts/gates.sh` — all three through
-# `scripts/quality-gates/check_gut_baseline.py`, which is the single
-# implementation of reading these floors, checking the Run Summary is present,
-# checking nothing failed, checking every collected test PASSED, and judging the
-# counts. None of it is written twice, so the three cannot drift apart (#430).
-# `scripts` and `tests` are used by all three. `gates` and `gate_tests` are used
-# by gates.sh and by the "Python Quality Gates" job in
-# .github/workflows/quality-gates.yml, which reads them through the same
-# `check_gut_baseline.py --shell` and fails when fewer check_*.py gates ran or
-# fewer self-tests were collected (#437). The pre-push hook does not read
-# those two. Only the READING of them is shared: the count-and-compare for
-# `gates` and `gate_tests` is written out in both gates.sh and that workflow.
+# count floor" step in .github/workflows/gut-tests.yml, the "Python Quality
+# Gates" job in .github/workflows/quality-gates.yml, and
+# `bash scripts/gates.sh` — all four read the file through
+# `scripts/quality-gates/check_gut_baseline.py`, which requires all four keys
+# and shape-checks every value.
 #
-# THE LIMIT: pre-push and gates.sh can only read these floors on a machine with
-# Godot, because there is otherwise no GUT log to read. Neither one treats that
-# as a pass — both refuse to run and exit non-zero, so a tree whose suite never
-# ran cannot be pushed from either (#430). CI always has Godot, so every PR is
-# judged regardless.
+# `scripts` and `tests` are judged by pre-push, gut-tests.yml and gates.sh.
+# check_gut_baseline.py is the single implementation of reading them, checking
+# the Run Summary is present, checking nothing failed, checking every collected
+# test PASSED, and judging the counts. For these two, none of it is written
+# twice, so the three cannot drift apart (#430).
+#
+# `gates` and `gate_tests` are judged by gates.sh and quality-gates.yml, which
+# read them through `check_gut_baseline.py --shell` and fail when fewer
+# check_*.py gates ran or fewer self-tests were collected (#437). The pre-push
+# hook and gut-tests.yml read and shape-check them but do not judge them. Only
+# the READING is shared: the count-and-compare for these two is written out in
+# both gates.sh and quality-gates.yml. unittest's "Ran N tests" counts SKIPPED
+# tests, so `gate_tests` does not catch a regression that only skips tests.
+#
+# THE LIMIT: pre-push and gates.sh can judge `scripts` and `tests` only on a
+# machine with Godot, because there is otherwise no GUT log to read. Neither
+# one treats that as a pass — both refuse to run and exit non-zero, so a tree
+# whose suite never ran cannot be pushed from either (#430). gut-tests.yml
+# always has Godot, so every PR's `scripts` and `tests` are judged regardless.
+# `gates` and `gate_tests` need no Godot.
 #
 # It was not always so. Until #430 only the hand-run gates.sh read this file:
 # the hook and CI checked "Failing Tests 0" and never looked at the counts, so a
@@ -58,4 +65,4 @@
 scripts=97
 tests=1342
 gates=9
-gate_tests=413
+gate_tests=418
