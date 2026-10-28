@@ -89,17 +89,40 @@ func _resolve_rally(slot: int, ability: Dictionary, _command: Dictionary) -> voi
 	BattleRally.start(_battle.get_battle_state(), slot, ability["id"], RALLY_EFFECTS[ability["id"]])
 
 
-## Edren's Bulwark: raise a stance, veil an ally, or steel the party.
+## Edren's Bulwark: raise a stance, arm Riposte, veil an ally, break the stance,
+## steel the party, or take up Oathkeeper.
 func _resolve_bulwark(slot: int, ability: Dictionary, command: Dictionary) -> void:
 	var state: Node = _battle.get_battle_state()
 	var target: int = int(command.get("target", -1))
 	match ability["id"]:
 		"ironwall", "rampart":
 			BattleBulwark.enter_stance(state, slot, ability["id"], target)
+		"riposte":
+			BattleBulwark.arm_riposte(state, slot)
 		"aegis_veil":
 			BattleBulwark.aegis_veil(state, target)
+		"shatter_guard":
+			_shatter_guard(slot, BattleBulwark.shatter(state, slot))
 		"steadfast_resolve":
 			BattleBulwark.steadfast_resolve(state)
+		"oathkeeper":
+			BattleBulwark.oathkeeper(state, slot)
+
+
+## Shatter Guard lands [param dmg] on every enemy as fixed damage: no hit roll,
+## no variance, no DEF, no Spirit halving (the ruling on #158).
+func _shatter_guard(slot: int, dmg: int) -> void:
+	var enemies: Array[Node] = _battle.get_enemies()
+	for i: int in range(enemies.size()):
+		var enemy: Node = enemies[i]
+		if not enemy.is_alive or enemy.get_meta("untargetable", false):
+			continue
+		enemy.take_damage(dmg)
+		_battle.get_battle_state().add_threat(slot, dmg)  # GAP-009 highest-threat
+		_battle.damage_dealt.emit("enemy_%d" % i, dmg, "physical")
+		if not enemy.is_alive:
+			_battle.combatant_died.emit("enemy_%d" % i)
+			_battle.get_atb().remove_combatant("enemy_%d" % i)
 
 
 ## Whether [param ability] can be issued at all in this build: its command has
@@ -122,10 +145,13 @@ static func is_rally(ability: Dictionary) -> bool:
 ## Whether [param member] could issue [param ability] now, cost aside: it is
 ## built and no status blocks it. A Rally is unavailable while Cael is
 ## Silenced, since Silence would end it at once (abilities.md § Cael — Rally).
+## Shatter Guard breaks a stance, so it needs one.
 static func is_available(member: Dictionary, ability: Dictionary) -> bool:
 	if not is_built(ability):
 		return false
 	if is_rally(ability) and not BattleRally.caster_can_sustain(member):
+		return false
+	if ability.get("id", "") == "shatter_guard" and not BattleBulwark.in_stance(member):
 		return false
 	return true
 

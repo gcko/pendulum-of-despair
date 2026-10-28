@@ -176,9 +176,9 @@ final_damage = clamp(floor(damage_after_element × reduction_product), 1, 14999)
 > Edren takes `damage × absorption%`. For the `reduction_product`
 > calculation, absorption sources reduce the target's incoming damage
 > identically to flat reduction. The difference is that Edren receives
-> the absorbed portion as damage to himself (subject to his own DEF
-> and any reduction on him). Oathkeeper (+50% absorption on Bulwark
-> stances) increases Ironwall to 75% and Rampart to 45%.
+> the absorbed portion as damage to himself, as the examples below give
+> it: neither his DEF nor any reduction on him shrinks it. Oathkeeper
+> (+50% absorption on Bulwark stances) increases Ironwall to 75% and Rampart to 45%.
 
 ### Stacking Examples
 

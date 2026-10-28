@@ -170,9 +170,9 @@ func _do_spawn(action: Dictionary, enemy: Node, enemies: Array[Node], idx: int) 
 	_tick_enemy_statuses(enemy, idx)
 
 
-func _do_attack_or_ability(action: Dictionary, enemy: Node, _idx: int) -> void:
+func _do_attack_or_ability(action: Dictionary, enemy: Node, idx: int) -> void:
 	var asleep: Array = range(4).filter(func(i: int) -> bool: return _state.has_status(i, "sleep"))
-	_resolve_attack_or_ability(action, enemy)
+	_resolve_attack_or_ability(action, enemy, idx)
 	# A hit cures Sleep (#435); say so for each member this action woke.
 	for i: int in asleep:
 		if not _state.has_status(i, "sleep") and _state.get_member(i).get("is_alive", false):
@@ -180,7 +180,7 @@ func _do_attack_or_ability(action: Dictionary, enemy: Node, _idx: int) -> void:
 			_manager.message.emit(WAKE_NOTICE % who)
 
 
-func _resolve_attack_or_ability(action: Dictionary, enemy: Node) -> void:
+func _resolve_attack_or_ability(action: Dictionary, enemy: Node, idx: int) -> void:
 	var atype: String = action.get("type", "")
 	var elem: String = action.get("element", "")
 	if action.get("target", "") == "all":
@@ -203,7 +203,7 @@ func _resolve_attack_or_ability(action: Dictionary, enemy: Node) -> void:
 			if m.is_empty() or not m.get("is_alive", false):
 				continue
 			var result: Dictionary = _resolve_offensive(action, enemy, i, elem)
-			_emit_hit(i, result)
+			_emit_hit(i, result, idx)
 			if not status_name.is_empty() and result.get("hit", false):
 				(
 					BattleActions
@@ -241,7 +241,7 @@ func _resolve_attack_or_ability(action: Dictionary, enemy: Node) -> void:
 					int(action.get("hits", 1)),
 				)
 			)
-		_emit_hit(tgt, result)
+		_emit_hit(tgt, result, idx)
 		# Offensive status infliction on a landed hit (GAP-024, Venom Spit -> Poison).
 		var status_name: String = action.get("status", "")
 		if not status_name.is_empty() and result.get("hit", false):
@@ -261,9 +261,10 @@ func _resolve_attack_or_ability(action: Dictionary, enemy: Node) -> void:
 		_state.gain_weave_gauge_for_maren(15)
 
 
-## Show the damage [param result] dealt to [param slot], and the share Edren
-## absorbed from it under a Bulwark stance on Edren's own slot.
-func _emit_hit(slot: int, result: Dictionary) -> void:
+## Show the damage [param result] dealt to [param slot], the share Edren
+## absorbed from it under a Bulwark stance on Edren's own slot, and any Riposte
+## he answered with on the attacker, enemy [param idx] — whose fall it reports.
+func _emit_hit(slot: int, result: Dictionary, idx: int) -> void:
 	_manager.damage_dealt.emit(
 		"party_%d" % slot, result.get("damage", 0), result.get("type", "miss")
 	)
@@ -272,6 +273,13 @@ func _emit_hit(slot: int, result: Dictionary) -> void:
 		_manager.damage_dealt.emit(
 			"party_%d" % int(absorbed["slot"]), int(absorbed["damage"]), result.get("type", "miss")
 		)
+	var eid: String = "enemy_%d" % idx
+	for counter: Dictionary in result.get("ripostes", []):
+		_state.add_threat(int(counter["slot"]), int(counter.get("damage", 0)))  # GAP-009
+		_manager.damage_dealt.emit(eid, int(counter.get("damage", 0)), counter.get("type", "miss"))
+		if counter.get("killed", false):
+			_manager.combatant_died.emit(eid)
+			_atb.remove_combatant(eid)
 
 
 ## Resolve one offensive AoE hit against a party slot. Magic when atk_type is

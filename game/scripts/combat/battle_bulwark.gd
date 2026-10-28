@@ -13,11 +13,17 @@ extends RefCounted
 ## Edren's record carries the stance in member["active_stance"] and his AP in
 ## member["ap"]. Everything else Bulwark tracks sits in member["bulwark"]:
 ##   on Edren: guard_slot (Ironwall's ally), stance_fresh (raised this turn),
-##             damaged (took damage since his last turn began);
+##             damaged (took damage since his last turn began), absorbed_total
+##             (absorbed since he last entered a stance), riposte_armed,
+##             oathkeeper_turns;
 ##   on any ally: veil_turns (Aegis Veil), resolve_turns (Steadfast Resolve).
 ##
-## Not built here, pending design answers on #158: Riposte, Shatter Guard,
-## Oathkeeper, and the +1 AP bonus for a heavy absorbed hit.
+## The rulings recorded on #158 settle what the doc left open: the heavy-hit
+## bonus measures the whole incoming hit; Riposte is armed for 2 AP, keeps the
+## stance up and counters the attacker of the next absorbed hit once, until
+## Edren's next turn; Shatter Guard needs a stance and deals its absorbed total
+## as fixed damage; under Oathkeeper every absorbed hit counters, unarmed and
+## free.
 
 ## Max AP (abilities.md § Edren — Bulwark, "Max 10 AP. Starts each battle at 0").
 const AP_MAX: int = 10
@@ -40,8 +46,33 @@ const STEADFAST_RESOLVE: Dictionary = {
 	"turns": 3,
 }
 
+## The extra AP an absorbed hit earns when the whole hit, before the split,
+## exceeds this % of Edren's max HP ("Bonus +1 AP if the absorbed hit exceeds
+## 10% of Edren's max HP").
+const HEAVY_HIT_PCT: int = 10
+
+## Riposte's counter: a physical strike at "1.5x normal damage".
+const RIPOSTE_ABILITY_MULT: float = 1.5
+
+## Shatter Guard's bounds on its absorbed total: at least Edren's Attack x 1,
+## at most 2x his max HP.
+const SHATTER_GUARD: Dictionary = {"min_atk_mult": 1, "cap_max_hp_mult": 2}
+
+## Oathkeeper, from edren.json's absorption_bonus_pct, attack_hits and
+## duration_turns: +50% on every stance's absorption, the Attack command hits
+## twice, for 3 of Edren's turns.
+const OATHKEEPER: Dictionary = {"absorption_bonus_pct": 50, "attack_hits": 2, "turns": 3}
+
 ## The Bulwark abilities this slice resolves.
-const BUILT: Array[String] = ["ironwall", "rampart", "aegis_veil", "steadfast_resolve"]
+const BUILT: Array[String] = [
+	"ironwall",
+	"rampart",
+	"riposte",
+	"aegis_veil",
+	"shatter_guard",
+	"steadfast_resolve",
+	"oathkeeper"
+]
 
 # ---------- Issuing ----------
 
@@ -56,7 +87,46 @@ static func enter_stance(state: Node, slot: int, stance: String, guard_slot: int
 	var b: Dictionary = _record(m)
 	b["guard_slot"] = guard_slot
 	b["stance_fresh"] = true
+	b["absorbed_total"] = 0
 	state.ability_state_changed.emit(slot)
+
+
+## Arm Riposte on Edren at [param slot] until his next turn begins. Arming it
+## holds his stance through this turn, as raising one would.
+static func arm_riposte(state: Node, slot: int) -> void:
+	var b: Dictionary = _record(state.get_member(slot))
+	b["riposte_armed"] = true
+	b["stance_fresh"] = true
+	state.ability_state_changed.emit(slot)
+
+
+## Start Oathkeeper on Edren at [param slot] for OATHKEEPER's turns.
+static func oathkeeper(state: Node, slot: int) -> void:
+	var m: Dictionary = state.get_member(slot)
+	_record(m)["oathkeeper_turns"] = _turns(m, int(OATHKEEPER["turns"]))
+	state.ability_state_changed.emit(slot)
+
+
+## Break Edren's stance: returns Shatter Guard's damage — what he absorbed since
+## entering it, at least his Attack x 1, at most 2x his max HP and the 14,999
+## damage cap — and drops the stance.
+static func shatter(state: Node, slot: int) -> int:
+	var m: Dictionary = state.get_member(slot)
+	var total: int = int(_record(m).get("absorbed_total", 0))
+	var floor_dmg: int = state.get_effective_stat(slot, "atk") * int(SHATTER_GUARD["min_atk_mult"])
+	var cap: int = int(m.get("max_hp", 0)) * int(SHATTER_GUARD["cap_max_hp_mult"])
+	_drop_stance(state, slot)
+	return mini(14999, mini(cap, maxi(floor_dmg, total)))
+
+
+## Whether [param m] holds a stance, which Shatter Guard needs.
+static func in_stance(m: Dictionary) -> bool:
+	return not String(m.get("active_stance", "")).is_empty()
+
+
+## How many times [param m]'s Attack command swings: twice under Oathkeeper.
+static func attack_hits(m: Dictionary) -> int:
+	return int(OATHKEEPER["attack_hits"]) if _oathkeeper_on(m) else 1
 
 
 ## Veil [param target] against magic for AEGIS_VEIL's turns, refreshing any veil
@@ -113,13 +183,14 @@ static func guard_for(state: Node, target: int, kind: String) -> Dictionary:
 		var rule: Dictionary = STANCES[stance]
 		if rule["kind"] != "all" and rule["kind"] != kind:
 			continue
+		var bonus: int = int(OATHKEEPER["absorption_bonus_pct"]) if _oathkeeper_on(m) else 0
 		var covered: bool = (
 			t.get("row", "front") == "back"
 			if stance == "rampart"
 			else int(m.get("bulwark", {}).get("guard_slot", -1)) == target
 		)
 		if covered:
-			return {"slot": i, "pct": int(rule["pct"])}
+			return {"slot": i, "pct": int(rule["pct"]) * (100 + bonus) / 100}
 	return {}
 
 
@@ -139,12 +210,39 @@ static func split(pre: int, reductions: Array, guard: Dictionary) -> Dictionary:
 	}
 
 
-## Edren absorbs [param amount] of a hit: +1 AP for the hit, then he takes it.
-## Returns the damage he took.
-static func absorb(state: Node, guard: Dictionary, amount: int) -> int:
+## Edren absorbs [param amount] of a hit that was [param pre] whole: +1 AP for
+## the hit, +1 more when the whole hit exceeds HEAVY_HIT_PCT of his max HP, the
+## share adds to his stance's absorbed total, then he takes it. Returns the
+## damage he took.
+static func absorb(state: Node, guard: Dictionary, amount: int, pre: int) -> int:
 	var slot: int = int(guard["slot"])
-	_set_ap(state, slot, int(state.get_member(slot).get("ap", 0)) + 1)
+	var m: Dictionary = state.get_member(slot)
+	var heavy: bool = pre * 100 > int(m.get("max_hp", 0)) * HEAVY_HIT_PCT
+	gain_ap(state, slot, 2 if heavy else 1)
+	var b: Dictionary = _record(m)
+	b["absorbed_total"] = int(b.get("absorbed_total", 0)) + amount
 	return state.take_damage(slot, amount)
+
+
+## Whether Edren at [param slot] counters the hit he just absorbed — always
+## under Oathkeeper, else once if Riposte is armed — spending the armed Riposte.
+static func take_riposte(state: Node, slot: int) -> bool:
+	var m: Dictionary = state.get_member(slot)
+	if not m.get("is_alive", false):
+		return false
+	if _oathkeeper_on(m):
+		return true
+	var b: Dictionary = _record(m)
+	if not b.get("riposte_armed", false):
+		return false
+	b["riposte_armed"] = false
+	state.ability_state_changed.emit(slot)
+	return true
+
+
+## Give Edren at [param slot] [param amount] AP, up to AP_MAX.
+static func gain_ap(state: Node, slot: int, amount: int) -> void:
+	_set_ap(state, slot, int(state.get_member(slot).get("ap", 0)) + amount)
 
 
 ## The flat damage reductions Bulwark puts on [param target] against a
@@ -185,23 +283,28 @@ static func on_status(_state: Node, _slot: int, _status: String) -> void:
 	pass
 
 
-## Start of a member's turn: lose 1 AP if no damage landed since the last one.
+## Start of a member's turn: an armed Riposte lapses, and the member loses 1 AP
+## if no damage landed since the last one.
 static func on_turn_begin(state: Node, slot: int) -> Array:
 	var m: Dictionary = state.get_member(slot)
 	var b: Dictionary = _record(m)
+	if b.get("riposte_armed", false):
+		b["riposte_armed"] = false
+		state.ability_state_changed.emit(slot)
 	if not b.get("damaged", false) and int(m.get("ap", 0)) > 0:
 		_set_ap(state, slot, int(m["ap"]) - 1)
 	b["damaged"] = false
 	return []
 
 
-## End of a member's turn: count its Aegis Veil and Steadfast Resolve down, and
-## drop Edren's stance unless he raised it this turn.
+## End of a member's turn: count its Aegis Veil, Steadfast Resolve and
+## Oathkeeper down, and drop Edren's stance unless he raised it (or armed
+## Riposte) this turn.
 static func on_turn_end(state: Node, slot: int) -> void:
 	var m: Dictionary = state.get_member(slot)
 	var b: Dictionary = _record(m)
 	var changed: bool = false
-	for key: String in ["veil_turns", "resolve_turns"]:
+	for key: String in ["veil_turns", "resolve_turns", "oathkeeper_turns"]:
 		if int(b.get(key, 0)) > 0:
 			b[key] = int(b[key]) - 1
 			changed = changed or b[key] == 0
@@ -227,6 +330,10 @@ static func _record(m: Dictionary) -> Dictionary:
 ## otherwise spend one (BattleRally.start follows the same rule).
 static func _turns(m: Dictionary, turns: int) -> int:
 	return turns + (1 if m.get("turn_open", false) else 0)
+
+
+static func _oathkeeper_on(m: Dictionary) -> bool:
+	return int(m.get("bulwark", {}).get("oathkeeper_turns", 0)) > 0
 
 
 static func _set_ap(state: Node, slot: int, ap: int) -> void:

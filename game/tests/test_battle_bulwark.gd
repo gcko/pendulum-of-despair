@@ -31,12 +31,14 @@ class FakeBattle:
 		return state
 
 
-## An enemy fast enough that its hits all but always land.
+## An enemy fast enough that its hits all but always land, and light enough
+## that none exceeds a tenth of Edren's max HP (no heavy-hit bonus AP).
 class FakeEnemy:
 	extends Node
+	var is_alive: bool = true
 
 	func get_stats() -> Dictionary:
-		return {"atk": 60, "mag": 60, "spd": 255}
+		return {"atk": 40, "mag": 60, "spd": 255}
 
 
 var _battle: FakeBattle
@@ -488,17 +490,6 @@ func test_raising_and_dropping_a_stance_is_signalled_for_edren() -> void:
 	assert_signal_emit_count(_state, "ability_state_changed", 2, "raised, then dropped")
 
 
-# --- What 158b does not build yet ---
-
-
-func test_riposte_shatter_guard_and_oathkeeper_are_refused_without_cost() -> void:
-	_state.get_member(EDREN)["ap"] = 10
-	for ability_id: String in ["riposte", "shatter_guard", "oathkeeper"]:
-		assert_false(AbilityCommand.is_built(_ability(ability_id)), "%s not built" % ability_id)
-		assert_false(_use(ability_id), "%s refused" % ability_id)
-	assert_eq(_ap(), 10, "nothing spent")
-
-
 # --- The enemy turn shows Edren's share ---
 
 
@@ -521,7 +512,7 @@ func test_an_enemy_turn_shows_a_damage_number_on_edren_for_his_share() -> void:
 	var driver: BattleEnemyTurn = BattleEnemyTurn.new(mgr, _state, atb, area)
 	var enemy: Enemy = preload("res://scenes/entities/enemy.tscn").instantiate()
 	add_child_autofree(enemy)
-	enemy.enemy_data = {"atk": 60, "spd": 255, "type": "humanoid", "hp": 100}
+	enemy.enemy_data = {"atk": 40, "spd": 255, "type": "humanoid", "hp": 100}
 	enemy.current_hp = 100
 	enemy.is_alive = true
 	_use("rampart")
