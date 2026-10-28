@@ -275,17 +275,29 @@ If issues are found:
 
 ### Step 2d: Commit Locally
 
+Use the temp-file pattern from `/create-pr` step 1 (no heredoc).
+Create the file:
+
 ```bash
-git add <changed-files>
-cat > /tmp/commit-msg.txt << 'EOF'
+mktemp "${TMPDIR:-/tmp}/commit-msg.XXXXXX"   # prints the file's absolute path
+```
+
+Write the message into the printed path with the Write tool:
+
+```text
 docs: address story review issues (round N)
 
 - Description of fix 1
 - Description of fix 2
 
 Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
-EOF
-git commit -F /tmp/commit-msg.txt
+```
+
+Then stage and commit with that literal path:
+
+```bash
+git add <changed-files>
+test -s '<path from mktemp>' && git commit -s -F '<path from mktemp>' && rm -f '<path from mktemp>'
 ```
 
 ### Step 2e: Log and Continue
@@ -313,9 +325,15 @@ After the loop ends (either all N rounds complete or an early clean exit):
    git push
    ```
 
-2. **Post a summary comment to the PR:**
+2. **Post a summary comment to the PR**, through a temp file (no
+   heredoc). Create the file:
    ```bash
-   gh pr comment <pr_number> --body-file /tmp/review-loop-summary.md
+   mktemp "${TMPDIR:-/tmp}/review-loop-summary.XXXXXX"   # prints the file's absolute path
+   ```
+   Write the summary, in the format below, into the printed path with
+   the Write tool, then post it with that literal path:
+   ```bash
+   test -s '<path from mktemp>' && gh pr comment <pr_number> --body-file '<path from mktemp>' && rm -f '<path from mktemp>'
    ```
 
    The summary format:
@@ -392,8 +410,10 @@ After the loop ends (either all N rounds complete or an early clean exit):
   for stale references.
 - **Report honestly.** If issues remain after N rounds, say so. Do not
   claim clean when it is not.
-- **Use temp files for commit messages and PR comments.** No heredocs
-  with special characters.
+- **Use temp files for commit messages and PR comments.** `mktemp`
+  prints a path, the Write tool fills it, and the command uses that
+  literal path behind `test -s`, then `rm -f` (Step 2d). That is the
+  approved form. No heredocs.
 - **Track agent effectiveness.** In the summary, note which agent found
   which issues. This data improves agent prompts over time.
 

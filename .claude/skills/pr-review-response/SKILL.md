@@ -301,20 +301,29 @@ rounds 2 and 3, directly causing 25+ additional Copilot comments
 across multiple rounds. The process works when followed.
 </HARD-GATE>
 
-Write commit message to a temp file:
+Write the commit message through a temp file, using the temp-file
+pattern from `/create-pr` step 1 (no heredoc). Create the file:
 
 ```bash
-cat > /tmp/commit-msg.txt << 'EOF'
+mktemp "${TMPDIR:-/tmp}/commit-msg.XXXXXX"   # prints the file's absolute path
+```
+
+Write the message into the printed path with the Write tool:
+
+```text
 type(scope): address PR review feedback
 
 - Description of change 1
 - Description of change 2
 
 Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
-EOF
+```
 
+Then stage and commit with that literal path:
+
+```bash
 git add <specific-files>
-git commit -F /tmp/commit-msg.txt
+test -s '<path from mktemp>' && git commit -s -F '<path from mktemp>' && rm -f '<path from mktemp>'
 # DO NOT PUSH — proceed to Step 6, then 6b
 ```
 
@@ -497,7 +506,9 @@ Always end with one of these messages:
 - **Tests must pass.** Do not push broken code to silence a reviewer.
 - **One commit per review round.** Group all fixes into a single commit.
 - **Temp file for commit messages.** Heredocs with special characters
-  break in shell. Always write to a temp file and use `git commit -F`.
+  break in shell. Use the temp-file pattern (Step 5): `mktemp` prints a
+  path, the Write tool fills it, and `git commit -s -F` uses that literal
+  path behind `test -s`, then `rm -f`. That is the approved form.
 - **Explicit handoff at every exit.** Name the next action or confirm
   the PR is ready to merge.
 - **NEVER skip Copilot gap analysis.** If Copilot commented, Step 6

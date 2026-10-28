@@ -222,8 +222,12 @@ with these overrides:
 
 ```bash
 git -C <wt> push -u origin <branch>          # first push: the pre-push hook runs
-gh pr create --base <parent-branch> --head <branch> --title "<type(scope): ...>" --body-file <body.md>
+test -s '<path from mktemp>' && gh pr create --base <parent-branch> --head <branch> --title "<type(scope): ...>" --body-file '<path from mktemp>' && rm -f '<path from mktemp>'
 ```
+
+The body goes through the temp-file pattern from `/create-pr` steps 3
+and 4: `mktemp` prints a path, the Write tool fills it, and the command
+uses that literal path.
 
 List a `Closes #N` line for every issue. On a stacked child
 those lines will **not** fire (stack-and-merge section 6), so the ledger

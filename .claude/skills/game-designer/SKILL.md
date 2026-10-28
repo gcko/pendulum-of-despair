@@ -288,9 +288,22 @@ PR over multiple rounds). Every session ends by naming the next steps:
 **Optional manual fallback only** — if `/create-pr` is unavailable, the
 equivalent raw git workflow is below. `/create-pr` automates all of this
 (including the quality gates), so prefer it:
+The message goes through the temp-file pattern from `/create-pr`
+step 1 (no heredoc). Create the file:
+```bash
+mktemp "${TMPDIR:-/tmp}/commit-msg.XXXXXX"   # prints the file's absolute path
+```
+Write the message into the printed path with the Write tool, picking the
+type as in `/pr-review-response` "Commit type selection":
+```text
+type(scope): <description>
+
+Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
+```
+Then stage, commit with that literal path, and push:
 ```bash
 git add game/ docs/issues/ docs/superpowers/specs/
-git commit -F /tmp/commit-msg.txt
+test -s '<path from mktemp>' && git commit -s -F '<path from mktemp>' && rm -f '<path from mktemp>'
 git push
 ```
 

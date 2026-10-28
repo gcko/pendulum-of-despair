@@ -187,10 +187,20 @@ if [ "$GATE_COUNT" -lt "$MIN_GATES" ]; then
   FAIL=1
 fi
 
-SELFTEST_LOG="/tmp/gatetests_$NAME.log"
+# The self-test log is unique to this run and removed when the run is done. A
+# fixed /tmp/gatetests_$NAME.log was shared by every run in this worktree, and
+# by any other worktree with the same folder name, and it is written before the
+# Godot lock is taken, so two runs could read each other's count (#487).
+SELFTEST_LOG=$(mktemp "${TMPDIR:-/tmp}/gatetests_$NAME.XXXXXX") \
+  || { say "GATE SELF-TESTS FAILED — could not create a log file with mktemp"; exit 1; }
+trap 'rm -f "$SELFTEST_LOG"' EXIT
 python3 -m unittest discover -s scripts/quality-gates -p 'test_*.py' > "$SELFTEST_LOG" 2>&1 \
   || { say "GATE SELF-TESTS FAILED"; tail -30 "$SELFTEST_LOG"; FAIL=1; }
 GATE_TESTS=$(grep -E '^Ran [0-9]+ test' "$SELFTEST_LOG" | awk '{print $2}' | tail -1)
+# Removed here, not only by the trap: godot_lock_acquire below sets its own
+# EXIT trap, which replaces this one.
+rm -f "$SELFTEST_LOG"
+trap - EXIT
 say "quality-gate self-tests: ${GATE_TESTS:-0} ran (floor $MIN_GATE_TESTS)"
 if [ -z "$GATE_TESTS" ] || [ "$GATE_TESTS" -lt "$MIN_GATE_TESTS" ]; then
   say "GATE SELF-TEST COUNT REGRESSION: ${GATE_TESTS:-0} < $MIN_GATE_TESTS — tests are not"

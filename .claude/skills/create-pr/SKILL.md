@@ -47,8 +47,8 @@ digraph create_pr {
 
     status [label="1. CHECK STATUS\ngit status\nCommit if needed", fillcolor="#e6f3ff"];
     push [label="2. PUSH\ngit push -u origin <branch>\n(hooks run quality gates)", fillcolor="#e6ffe6"];
-    write [label="3. WRITE PR\nTitle + body to temp file", fillcolor="#ffe6f3"];
-    create [label="4. CREATE PR\ngh pr create --base main\n--body-file /tmp/pr_body.md", fillcolor="#f3e6ff"];
+    write [label="3. WRITE PR BODY\nmktemp prints <path>\nWrite tool fills <path>", fillcolor="#ffe6f3"];
+    create [label="4. CREATE PR\ntest -s <path> &&\ngh pr create --base main\n--body-file <path> && rm -f <path>", fillcolor="#f3e6ff"];
     url [label="5. OUTPUT\nPR URL", fillcolor=lightgreen];
     handoff [label="6. EXIT\nName next skill", fillcolor=lightgreen];
 
@@ -66,17 +66,38 @@ digraph create_pr {
 git status
 ```
 
-If there are uncommitted changes, stage and commit them:
+If there are uncommitted changes, stage and commit them. The message
+goes through a temp file in three steps, never a heredoc. This is the
+**temp-file pattern** the other skills point to:
+
+1. Create the file. The command prints its absolute path:
 
 ```bash
-git add <specific-files>
-cat > /tmp/commit-msg.txt << 'EOF'
+mktemp "${TMPDIR:-/tmp}/commit-msg.XXXXXX"   # prints the file's absolute path
+```
+
+2. Write the message into that path with the Write tool. This is a tool
+   step, not shell, so quotes, backticks or a bare `EOF` line in the text
+   cannot break anything:
+
+```text
 type(scope): description
 
 Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
-EOF
-git commit -s -F /tmp/commit-msg.txt
 ```
+
+3. Stage, then commit with the literal path printed in step 1. `test -s`
+   refuses an empty or missing file, and the file is removed only after
+   the commit succeeds:
+
+```bash
+git add <specific-files>
+test -s '<path from mktemp>' && git commit -s -F '<path from mktemp>' && rm -f '<path from mktemp>'
+```
+
+Paste the printed path itself, never a shell variable: a variable does
+not survive between separate tool calls, and an empty one would point the
+command at the wrong file.
 
 The pre-commit hook runs **branch protection**, **gdlint**, **JSON
 validation**, and **`gdformat --check`** automatically. If the commit
@@ -109,8 +130,15 @@ that as a silently-skipped test file.
 
 ### 3. Write PR Body
 
-Write title and body to `/tmp/pr_body.md`. **Never use heredoc with
-`gh pr create --body`** — special characters break shell escaping.
+Use the temp-file pattern from step 1. Create the body file:
+
+```bash
+mktemp "${TMPDIR:-/tmp}/pr_body.XXXXXX"   # prints the file's absolute path
+```
+
+Write the body into the printed path with the Write tool. **Never pass
+the body with `gh pr create --body` or a heredoc** — special characters,
+or a bare `EOF` line in a quoted snippet, break shell parsing.
 
 PR body format:
 
@@ -128,10 +156,12 @@ Generated with [Claude Code](https://claude.ai/code)
 
 ### 4. Create PR
 
+Use the literal path printed in step 3:
+
 ```bash
-gh pr create --base main \
+test -s '<path from mktemp>' && gh pr create --base main \
   --title "type(scope): short description" \
-  --body-file /tmp/pr_body.md
+  --body-file '<path from mktemp>' && rm -f '<path from mktemp>'
 ```
 
 Title should be under 70 characters, following commit conventions:
@@ -178,8 +208,11 @@ After outputting the PR URL, always end with:
   AGENTS.md § Essential Commands.
 - **Never bypass hooks.** Do not use `--no-verify`. If a hook fails,
   fix the issue.
-- **Temp file for body.** Always write to `/tmp/pr_body.md` and use
-  `--body-file`. Never `--body` with inline text.
+- **Temp file for body.** Use the temp-file pattern (steps 1, 3 and 4):
+  `mktemp` prints a path, the Write tool fills it, and the command uses
+  that literal path with `--body-file` behind `test -s`, then `rm -f`.
+  That is the approved form. Never `--body` with inline text, never a
+  heredoc.
 - **Target main.** Always `--base main` unless explicitly told otherwise.
 - **Specific git add.** Stage files by name, not `git add -A` or
   `git add .`.
