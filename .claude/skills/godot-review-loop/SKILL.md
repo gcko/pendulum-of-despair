@@ -274,13 +274,17 @@ the review is considered complete.
 After all rounds complete, all findings fixed, Copilot comments
 replied to, and gap analysis done:
 
+The summary goes through a temp file (no heredoc). Create it:
+
 ```bash
-SUMMARY=$(mktemp "${TMPDIR:-/tmp}/godot-review-summary.XXXXXX")
-cat > "$SUMMARY" << 'EOF'
-<summary in the format below>
-EOF
-git push
-gh pr comment <PR#> --body-file "$SUMMARY"
+mktemp "${TMPDIR:-/tmp}/godot-review-summary.XXXXXX"   # prints the file's absolute path
+```
+
+Write the summary, in the format below, into the printed path with the
+Write tool. Then push, and post the summary only if the push succeeded:
+
+```bash
+git push && test -s '<path from mktemp>' && gh pr comment <PR#> --body-file '<path from mktemp>' && rm -f '<path from mktemp>'
 ```
 
 Summary format:

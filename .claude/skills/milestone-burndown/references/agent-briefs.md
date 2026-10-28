@@ -35,8 +35,9 @@ another's files.
 You are verifying GitHub issues for the milestone "<title>" in gcko/pendulum-of-despair.
 Work read-only: no edits, commits, issue comments, or closes.
 SCRATCH: <scratchpad>/triage-<slice>/
-  Create it yourself. Write temporary files only inside it, and never rm -rf
-  a path outside it: other agents share the scratchpad.
+  Create it yourself. Write temporary files only inside it, and run skill
+  commands with TMPDIR=<SCRATCH>, so mktemp files land there too. Never
+  rm -rf a path outside it: other agents share the scratchpad.
 
 Issues: #<n>, #<n>, ...   (a slice of at most 6)
 
@@ -69,8 +70,9 @@ WORKTREE: <absolute path>   BRANCH: <branch>   BASE: <base-sha>
   everything against it, never against a local `main`, which may be stale.)
 Work only inside this worktree. Do not cd anywhere else or touch another worktree.
 SCRATCH: <scratchpad>/build-<bundle>/
-  Create it yourself. Write temporary files only inside it, and never rm -rf
-  a path outside it: other agents share the scratchpad.
+  Create it yourself. Write temporary files only inside it, and run skill
+  commands with TMPDIR=<SCRATCH>, so mktemp files land there too. Never
+  rm -rf a path outside it: other agents share the scratchpad.
 
 ISSUES: #<n> <title>, #<n> <title>
   For each: the verified defect from triage, <one line>, and its design-doc source.
@@ -124,8 +126,9 @@ findings arrive in a shape the follow-up control (SKILL.md Step 8) can use:
 This PR's base is <base: the parent PR's branch, or origin/main>. Judge it on its
 own commits only: review git diff <base>...HEAD.
 SCRATCH: <scratchpad>/review-<PR#>-<agent>/
-  Create it yourself. Write temporary files only inside it, and never rm -rf
-  a path outside it: other agents share the scratchpad.
+  Create it yourself. Write temporary files only inside it, and run skill
+  commands with TMPDIR=<SCRATCH>, so mktemp files land there too. Never
+  rm -rf a path outside it: other agents share the scratchpad.
 This bundle owns: <owned files>. Values in <ungated hot files> are owned by
 bundle <Y> and are updated there; a stale value in them is expected here.
 Classify every finding as:

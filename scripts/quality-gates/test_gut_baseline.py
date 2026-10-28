@@ -1691,9 +1691,11 @@ class _GatesShFixture(object):
 
     def _build(self):
         self.repo = _scratch_repo(self, "pod-gates-")
-        self.addCleanup(self._remove_if_present,
-                        "/tmp/gatetests_%s.log" % os.path.basename(self.repo))
-        self.env = _scrubbed_env(_path_without_gdtoolkit())
+        # gates.sh writes its self-test log under TMPDIR; a private one per
+        # fixture lets a test see what a run leaves behind.
+        self.tmpdir = tempfile.mkdtemp(prefix="pod-gates-tmp-")
+        self.addCleanup(shutil.rmtree, self.tmpdir, True)
+        self.env = _scrubbed_env(_path_without_gdtoolkit(), TMPDIR=self.tmpdir)
         self.probe = os.path.join(tempfile.mkdtemp(prefix="pod-gates-probe-"), "ran")
         self.addCleanup(shutil.rmtree, os.path.dirname(self.probe), True)
         for relative, source in (
@@ -1781,6 +1783,58 @@ class TestGatesShRequiresInstalledHooks(_GatesShFixture, unittest.TestCase):
         code, out, _, probed = self._gates()
         self.assertEqual(code, 0, out)
         self.assertTrue(probed, "the probe gate never ran:\n" + out)
+
+    def test_a_run_leaves_no_self_test_log_behind_whether_it_passes_or_fails(self):
+        # The log is per run (#487): a shared one let two runs read each
+        # other's self-test count. Per run means it is gone once the run ends.
+        code, out, _, _ = self._gates()
+        self.assertEqual(code, 0, out)
+        self.assertEqual(os.listdir(self.tmpdir), [], out)
+        self._write("scripts/quality-gates/test_fixture.py",
+                    "import unittest\n\n\nclass T(unittest.TestCase):\n"
+                    "    def test_ok(self):\n        self.fail('broken')\n")
+        code, out, _, _ = self._gates()
+        self.assertEqual(code, 1, out)
+        self.assertIn("GATE SELF-TESTS FAILED", out)
+        self.assertEqual(os.listdir(self.tmpdir), [], out)
+
+    def test_two_runs_in_same_named_worktrees_each_report_their_own_self_test_count(self):
+        # Two worktrees with one folder name used to share one self-test log
+        # (#487). Run A is held inside its self-tests while run B, with many
+        # more tests, finishes; A must still report its own one test.
+        twin = os.path.join(tempfile.mkdtemp(prefix="pod-gates-twin-"), os.path.basename(self.repo))
+        self.addCleanup(shutil.rmtree, os.path.dirname(twin), True)
+        shutil.copytree(self.repo, twin, symlinks=True)
+        self._write("scripts/quality-gates/test_fixture.py",
+                    "import unittest\n\n\nclass T(unittest.TestCase):\n" + "".join(
+                        "    def test_%d(self):\n        pass\n" % i for i in range(60)), root=twin)
+        hold = os.path.join(self.tmpdir, "hold")
+        self._write("scripts/quality-gates/test_fixture.py",
+                    "import os, time, unittest\n\n\nclass T(unittest.TestCase):\n"
+                    "    def test_ok(self):\n"
+                    "        open(os.environ['HOLD'] + '.in', 'w').close()\n"
+                    "        for _ in range(600):\n"
+                    "            if os.path.exists(os.environ['HOLD']):\n"
+                    "                return\n"
+                    "            time.sleep(0.1)\n")
+        env = dict(self.env, PATH=self.fake_bin + os.pathsep + self.env["PATH"],
+                   GATES_BASE="HEAD", GATES_PROBE=self.probe, HOLD=hold)
+        held = subprocess.Popen(
+            ["bash", os.path.join(self.repo, "scripts", "gates.sh")], cwd=self.repo, env=env,
+            stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True)
+        try:
+            for _ in range(600):
+                if os.path.exists(hold + ".in") or held.poll() is not None:
+                    break
+                time.sleep(0.1)
+            self.assertTrue(os.path.exists(hold + ".in"), "run A never reached its self-tests")
+            code_b, out_b, _, _ = self._gates(twin)
+            self.assertIn("quality-gate self-tests: 60 ran", out_b)
+        finally:
+            open(hold, "w").close()
+            out_a = held.communicate(timeout=120)[0]
+        self.assertEqual(held.returncode, 0, out_a)
+        self.assertIn("quality-gate self-tests: 1 ran", out_a)
 
     def test_a_new_worktree_without_hooks_fails_naming_the_install_command(self):
         worktree = os.path.join(tempfile.mkdtemp(prefix="pod-gates-wt-"), "wt")

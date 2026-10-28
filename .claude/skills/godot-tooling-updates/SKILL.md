@@ -266,10 +266,13 @@ Closes #<n>
 ```
 
 Push and open ONE chore PR targeting `main` using the repo template
-(`.github/pull_request_template.md` auto-populates — fill every section):
+(`.github/pull_request_template.md` auto-populates — fill every section).
+The body goes through the temp-file pattern from `/create-pr` steps 3
+and 4: `mktemp` prints a path, the Write tool fills it, and the command
+uses that literal path:
 ```bash
 git push -u origin chore/tooling-updates
-gh pr create --title "chore(deps): update Godot tooling" --body-file <tmpfile>
+test -s '<path from mktemp>' && gh pr create --title "chore(deps): update Godot tooling" --body-file '<path from mktemp>' && rm -f '<path from mktemp>'
 ```
 
 ---

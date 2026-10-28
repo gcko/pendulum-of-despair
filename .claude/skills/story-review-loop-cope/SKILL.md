@@ -229,13 +229,18 @@ on its own): after all rounds complete (or early exit on a clean
 round), THIS skill owns the push. Commit, push, and post the summary
 comment:
 
+The summary goes through a temp file unique to this run, because
+parallel loops must not share one file (no heredoc). Create it:
+
 ```bash
-SUMMARY=$(mktemp "${TMPDIR:-/tmp}/cope-summary.XXXXXX")   # unique per run: parallel loops must not share one file
-cat > "$SUMMARY" << 'EOF'
-<summary in the format below>
-EOF
-git push
-gh pr comment <PR#> --body-file "$SUMMARY"
+mktemp "${TMPDIR:-/tmp}/cope-summary.XXXXXX"   # prints the file's absolute path
+```
+
+Write the summary (format below) into the printed path with the Write
+tool. Then push, and post the summary only if the push succeeded:
+
+```bash
+git push && test -s '<path from mktemp>' && gh pr comment <PR#> --body-file '<path from mktemp>' && rm -f '<path from mktemp>'
 ```
 
 **Case 2 — invoked from pr-review-response Step 6b** (post-fix review,

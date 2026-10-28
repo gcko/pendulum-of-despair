@@ -44,22 +44,22 @@ digraph mode {
 3. Run all validation passes
 4. Post the review as a PR comment via `gh pr review` or `gh pr comment`
 
-**Posting the review:**
+**Posting the review** goes through a temp file, never a heredoc, to
+avoid shell quoting issues. Create the file:
 
 ```bash
-REVIEW=$(mktemp "${TMPDIR:-/tmp}/story-review.XXXXXX")
-cat > "$REVIEW" << 'EOF'
-<review body>
-EOF
-
-# For GO verdicts — approve the PR
-gh pr review {pr_number} --approve --body-file "$REVIEW"
-
-# For NO-GO verdicts — request changes
-gh pr review {pr_number} --request-changes --body-file "$REVIEW"
+mktemp "${TMPDIR:-/tmp}/story-review.XXXXXX"   # prints the file's absolute path
 ```
 
-Always write the review body to a temp file from mktemp (as above) first to avoid shell quoting issues.
+Write the review body into the printed path with the Write tool, then
+post it with that literal path. `<verdict>` is `--approve` for a GO
+verdict and `--request-changes` for NO-GO:
+
+```bash
+test -s '<path from mktemp>' && gh pr review {pr_number} <verdict> --body-file '<path from mktemp>' && rm -f '<path from mktemp>'
+```
+
+The `test -s` guard matters: an empty body would post a bare verdict.
 
 ### Local Mode (no argument)
 
@@ -855,8 +855,9 @@ The review body (used for both PR comments and inline output):
 - **Read each file against itself.** The most common issues are internal
   contradictions within a single document — a definition in one section
   contradicted by usage in another section of the same file.
-- **Temp files for GitHub posts.** Always write review body to a temp file
-  before posting via `gh`. Never use heredocs with special characters.
+- **Temp files for GitHub posts.** `mktemp` prints a path, the Write tool
+  fills it with the review body, and `gh` posts that literal path behind
+  `test -s`, then `rm -f`. That is the approved form. Never use heredocs.
 
 ## References
 

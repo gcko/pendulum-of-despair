@@ -173,14 +173,22 @@ After verification passes:
 
 ### 7. Commit & Push
 
-Follow the standard commit workflow:
+Follow the standard commit workflow, the temp-file pattern from
+`/create-pr` step 1 (no heredoc). Create the file:
+```bash
+mktemp "${TMPDIR:-/tmp}/commit-msg.XXXXXX"   # prints the file's absolute path
+```
+Write the message into the printed path with the Write tool, picking the
+type as in `/pr-review-response` "Commit type selection":
+```text
+type(scope): <description>
+
+Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
+```
+Then stage, commit with that literal path, and push:
 ```bash
 git add docs/story/<new-file>.md docs/analysis/game-design-gaps.md
-MSG=$(mktemp "${TMPDIR:-/tmp}/commit-msg.XXXXXX")
-cat > "$MSG" << 'EOF'
-docs(story): <description>
-EOF
-git commit -F "$MSG"
+test -s '<path from mktemp>' && git commit -s -F '<path from mktemp>' && rm -f '<path from mktemp>'
 git push
 ```
 
