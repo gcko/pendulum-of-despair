@@ -184,6 +184,9 @@ After the bundle lands (merged, issues auto-closed), choose explicitly:
 
 State which you're doing and why.
 
+When the goal is a whole milestone (several bundles at once), use
+`/milestone-burndown` instead of looping this skill by hand.
+
 ---
 
 ## Worked example — the combat-resolution bundle
