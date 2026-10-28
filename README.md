@@ -27,13 +27,13 @@ pendulum-of-despair/
 │   ├── references/         # SNES-era reference data (FF4/FF6/CT/SoM)
 │   ├── plans/              # Architecture decisions
 │   └── superpowers/        # Design specs and implementation plans
-├── .github/                # CI workflows (Claude review, SAST)
+├── .github/                # CI: gut-tests, quality-gates, static-gates; Claude review, SAST
 ├── .husky/                 # Git hooks (conventional commits, branch protection)
 ├── package.json            # Commitlint + Husky tooling only
 └── commitlint.config.ts    # Conventional commit rules
 ```
 
-> **Note:** The Godot project structure (`project.godot`, scenes, scripts, assets) will be created in a future issue. This repo currently contains only game design documentation and project tooling.
+> **Note:** The Godot 4.8 project (`project.godot`, scenes, scripts, assets, data, tests) lives in `game/`. See AGENTS.md for its layout.
 
 ---
 
@@ -42,7 +42,8 @@ pendulum-of-despair/
 ### Prerequisites
 
 - **pnpm** -- for commitlint/husky tooling: `corepack enable`
-- **Godot Engine 4.x** -- for game development (when project is initialized)
+- **Godot Engine 4.8** -- open `game/` as the project directory; the pre-push hook needs it to run the GUT suite
+- **gdtoolkit** (gdlint + gdformat) -- at the version in `scripts/quality-gates/gdtoolkit-version.txt`: `pip install "gdtoolkit==$(tr -d '[:space:]' < scripts/quality-gates/gdtoolkit-version.txt)"`. The pre-commit hook fails when `.gd` files are staged and either tool is missing
 
 ### Setup
 

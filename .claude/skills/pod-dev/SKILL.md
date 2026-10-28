@@ -105,7 +105,9 @@ Read [`references/tech-stack.md`](references/tech-stack.md) for full detail.
 
 **Git hooks (Husky v9, `core.hooksPath=.husky/_` -- never edit `_/`):**
 - **pre-commit:** branch protection (no direct commits to main) + gdlint +
-  JSON validation + `gdformat --check`
+  JSON validation + `gdformat --check`. With `.gd` files staged, a missing
+  gdlint or gdformat fails the commit; install the gdtoolkit version in
+  `scripts/quality-gates/gdtoolkit-version.txt`
 - **pre-push:** quality-gate self-tests + data-integrity/doc scans (Gates D-G,
   J, K, M, N) + Godot `--import` + the full GUT suite (Gates H, L); the
   registry at the top of `.husky/pre-push` is the full list

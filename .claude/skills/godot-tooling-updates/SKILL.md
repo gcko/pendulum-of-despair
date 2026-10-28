@@ -26,8 +26,13 @@ things with versions are:
    `.github/workflows/static-gates.yml` installs exactly that version and
    `.husky/pre-commit` quotes it when gdtoolkit is missing.
 3. **husky + @commitlint/cli + @commitlint/config-conventional** — the only
-   npm `devDependencies` in `package.json`. Used **purely for git hooks**.
-   `pnpm` exists solely for these.
+   npm `devDependencies` in `package.json`. Used for git hooks, and since
+   #472 CI runs commitlint too: `.github/workflows/static-gates.yml` installs
+   them with `pnpm/action-setup@v6` (pnpm from `packageManager`) on Node 24.
+   `pnpm` exists solely for these. A commitlint or pnpm bump must re-check
+   those minimums: pnpm 11 needs pnpm/action-setup v6 or later, and the
+   `engines.node` of the new pnpm and @commitlint/cli must be at or below
+   that Node (`pnpm view <pkg>@<ver> engines`).
 
 There is no Phaser/TypeScript/Vitest/Express/SQLite/`packages/*`. Do not run
 `pnpm outdated --recursive` against a workspace — there isn't one.
@@ -108,7 +113,7 @@ hook tooling can be auto-applied unless the user objects):
 ```
 === Tooling Update Plan ===
 GUT:        <cur> -> <tag>   [major? notes]   APPROVE / DEFER / SKIP
-gdtoolkit:  <cur> -> <new>   (reformats game/scripts/)   APPROVE / DEFER / SKIP
+gdtoolkit:  <cur> -> <new>   (reformats game/ outside addons/)   APPROVE / DEFER / SKIP
 husky:      <cur> -> <new>
 @commitlint/cli: <cur> -> <new>
 @commitlint/config-conventional: <cur> -> <new>
@@ -175,13 +180,16 @@ the pin, not the newest release, so a bump that skips the pin file leaves CI
 on the old version.
 ```bash
 echo "<new>" > scripts/quality-gates/gdtoolkit-version.txt
-pip install "gdtoolkit==$(cat scripts/quality-gates/gdtoolkit-version.txt)"   # or pipx
-gdlint --version                     # must print <new>
+pip install "gdtoolkit==$(tr -d '[:space:]' < scripts/quality-gates/gdtoolkit-version.txt)"   # or pipx
+gdlint --version                     # must print gdlint <new>
+gdformat --version                   # must print gdformat <new>
 ```
-If the formatter changed, reformat and review the diff before committing:
+If the formatter changed, reformat and review the diff before committing. Use
+the file list CI checks (every tracked `.gd` under `game/`, `game/tests/`
+included, outside `addons/`), not just `game/scripts/`:
 ```bash
-gdformat game/scripts/
-git diff --stat game/scripts/   # review what the new formatter touched
+git ls-files -- 'game/*.gd' | grep -Ev '(^|/)addons/' | tr '\n' '\0' | xargs -0 gdformat
+git diff --stat game/   # review what the new formatter touched
 ```
 
 **husky / commitlint** (pnpm only — no npm/yarn/npx):
@@ -198,9 +206,9 @@ These are the gates the hooks actually run. **Never `--no-verify`.**
 ```bash
 GODOT="$(command -v godot || echo /Applications/Godot.app/Contents/MacOS/Godot)"
 
-# Lint + format (pre-commit gates)
-gdlint game/scripts/
-gdformat --check game/scripts/
+# Lint + format (pre-commit Gates A and C), over the list static-gates.yml checks
+git ls-files -- 'game/*.gd' | grep -Ev '(^|/)addons/' | tr '\n' '\0' | xargs -0 gdlint
+git ls-files -- 'game/*.gd' | grep -Ev '(^|/)addons/' | tr '\n' '\0' | xargs -0 gdformat --check
 
 # Import (must pass before tests)
 "$GODOT" --headless --path game/ --import
@@ -270,7 +278,10 @@ gh pr create --title "chore(deps): update Godot tooling" --body-file <tmpfile>
 - **Three things have versions here: GUT, gdtoolkit, and the husky/commitlint
   hook tooling.** Nothing else. No monorepo, no `packages/*`, no runtime deps.
 - **pnpm only** for the npm tooling — never npm/yarn/npx — and it touches
-  *only* husky + the two commitlint packages.
+  *only* husky + the two commitlint packages. CI runs commitlint with them
+  (`static-gates.yml`: `pnpm/action-setup@v6`, Node 24), so a pnpm or
+  commitlint bump re-checks that action version and Node against the new
+  releases' requirements.
 - **Verify with the real gates** (`gdlint`, `gdformat --check`, Godot
   `--import`, GUT suite) — not `pnpm test`/`pnpm lint`, which don't exist here.
 - **Research before bumping.** GUT can rename asserts/flags; gdformat can

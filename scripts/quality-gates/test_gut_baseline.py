@@ -20,6 +20,7 @@ the matcher, and it is itself tested against a commented-out call.
 
 Run: python3 -m unittest discover -s scripts/quality-gates -p 'test_*.py'
 """
+import atexit
 import io
 import os
 import re
@@ -642,6 +643,28 @@ _STEP_KEYS = {"name", "uses", "with", "run", "if", "continue-on-error", "shell",
 _ALWAYS_CONDITIONS = {"!cancelled()", "always()"}
 
 
+def step_condition(step):
+    """A step's `if:` as the runner reads it: YAML quotes and `${{ }}` removed.
+
+    `if: ${{ !cancelled() }}` and `if: "!cancelled()"` are one condition, so the
+    emulation and the tests that ask "does this step run after a failure?" must
+    read them identically.
+    """
+    raw = step.get("if", "").strip()
+    if len(raw) >= 2 and raw[0] == raw[-1] and raw[0] in "'\"":
+        raw = raw[1:-1].strip()
+    wrapped = re.match(r"^\$\{\{\s*(.*?)\s*\}\}$", raw)
+    return wrapped.group(1) if wrapped else raw
+
+
+def runs_after_a_failure(step):
+    """True if the runner would still run `step` once an earlier step failed."""
+    condition = step_condition(step)
+    if condition and condition not in _ALWAYS_CONDITIONS:
+        raise ValueError("unsupported if: %r" % step["if"])
+    return bool(condition)
+
+
 def workflow_steps(text):
     """Return the steps of the only job in `text`, as dicts of their keys.
 
@@ -694,7 +717,7 @@ def workflow_steps(text):
     return steps
 
 
-def run_workflow_steps(steps, cwd, env_extra=None):
+def run_workflow_steps(steps, cwd, env_extra=None, expressions=None):
     """Execute `steps` like the runner: returns (job_failed, [(step, outcome)]).
 
     A step with no `if:` runs only while the job is still green; `!cancelled()`
@@ -702,6 +725,12 @@ def run_workflow_steps(steps, cwd, env_extra=None):
     `shell: bash` adds pipefail, as on the runner. A failing step fails the job
     unless it sets `continue-on-error: true`. $GITHUB_ENV assignments carry to
     later steps. Outcome is "success", "failure" or "skipped".
+
+    `${{ expr }}` inside a `run:` body is replaced from `expressions`, as the
+    runner substitutes it before bash sees the script; an expression with no
+    entry raises rather than reaching bash as a "bad substitution". GIT_*
+    variables are dropped, as a runner has none: inherited from a git hook they
+    would point a fixture's `git` at the real repository.
     """
     scratch = tempfile.mkdtemp(prefix="pod-wf-")
     env_file = os.path.join(scratch, "github_env")
@@ -709,14 +738,20 @@ def run_workflow_steps(steps, cwd, env_extra=None):
     env = dict(os.environ, GITHUB_ENV=env_file, RUNNER_TEMP=scratch, CI="true")
     env.pop("MIN_GATES", None)
     env.pop("MIN_GATE_TESTS", None)
+    for name in [k for k in env if k.startswith("GIT_")]:
+        env.pop(name)
     env.update(env_extra or {})
+
+    def substitute(match):
+        if match.group(1) not in (expressions or {}):
+            raise ValueError("unsupported expression in run: %r" % match.group(0))
+        return expressions[match.group(1)]
+
     job_failed, results, output = False, [], []
     try:
         for step in steps:
-            condition = step.get("if", "").replace("${{", "").replace("}}", "").strip()
-            if condition and condition not in _ALWAYS_CONDITIONS:
-                raise ValueError("unsupported if: %r" % step["if"])
-            if "run" not in step or (job_failed and not condition):
+            always = runs_after_a_failure(step)
+            if "run" not in step or (job_failed and not always):
                 results.append((step, "skipped"))
                 continue
             shell = step.get("shell", "")
@@ -730,7 +765,7 @@ def run_workflow_steps(steps, cwd, env_extra=None):
                         env[name] = value
             script = os.path.join(scratch, "step.sh")
             with io.open(script, "w", encoding="utf-8") as handle:
-                handle.write(step["run"])
+                handle.write(re.sub(r"\$\{\{\s*(.*?)\s*\}\}", substitute, step["run"]))
             proc = subprocess.run(
                 argv + [script], cwd=cwd, env=env, stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT, universal_newlines=True, timeout=120,
@@ -900,6 +935,25 @@ class TestWorkflowStepRunner(unittest.TestCase):
         with self.assertRaises(ValueError):
             self._steps("      - name: one\n        working-directory: x\n        run: |\n          true\n")
 
+    def test_a_quoted_condition_is_the_same_condition(self):
+        # `if: "!cancelled()"` is what the runner reads as `${{ !cancelled() }}`.
+        steps = self._steps(
+            "      - name: one\n        run: |\n          exit 1\n"
+            "      - name: two\n        if: \"!cancelled()\"\n        run: |\n          echo TWO\n"
+        )
+        failed, results, out = run_workflow_steps(steps, tempfile.gettempdir())
+        self.assertTrue(failed)
+        self.assertEqual([o for _, o in results], ["failure", "success"])
+        self.assertIn("TWO", out)
+
+    def test_expressions_are_substituted_and_an_unknown_one_raises(self):
+        steps = self._steps("      - name: one\n        run: |\n          echo \"sha=${{ a.b }}\"\n")
+        failed, _, out = run_workflow_steps(steps, tempfile.gettempdir(), expressions={"a.b": "f00"})
+        self.assertFalse(failed, out)
+        self.assertIn("sha=f00", out)
+        with self.assertRaises(ValueError):
+            run_workflow_steps(steps, tempfile.gettempdir(), expressions={})
+
 
 class TestGodotLockMutex(unittest.TestCase):
     """Behavioural coverage for scripts/quality-gates/godot-lock.sh.
@@ -1042,10 +1096,17 @@ class TestGodotLockMutex(unittest.TestCase):
 # Gates A and C used to sit inside `if command -v gdlint` / `gdformat` with no
 # else, so a machine without gdtoolkit committed GDScript that nothing checked
 # and the hook exited 0. No workflow ran Gates A-C or commitlint either, so a
-# commit made with hooks uninstalled reached a PR unchecked. The hook tests
-# below RUN the real .husky/pre-commit in a scratch repo with gdtoolkit removed
-# from PATH; the workflow tests execute the steps that need no gdtoolkit, pnpm
-# or PR history, and check the rest as uncommented text.
+# commit made with hooks uninstalled reached a PR unchecked.
+#
+# Everything below is judged by what it DOES. The hook tests run the real
+# .husky/pre-commit the way husky runs it, `sh -e <hook>`, in a scratch repo
+# with gdtoolkit removed from PATH. The workflow tests run every `run:` body of
+# static-gates.yml, in order, against a fixture repo with fake pip, gdlint,
+# gdformat and pnpm on PATH. The fakes are content-driven: a file holding
+# LINT_ERROR fails gdlint, one holding BADFORMAT fails `gdformat --check`, and
+# both refuse a path that does not exist, so an argument split wrongly fails
+# instead of linting nothing. Only what the runner provides (checkout depth,
+# the setup actions, the trigger, permissions) is checked as text.
 
 GDTOOLKIT_PIN = os.path.join(REPO_ROOT, "scripts", "quality-gates", "gdtoolkit-version.txt")
 GDTOOLKIT_HELPER = os.path.join(REPO_ROOT, "scripts", "quality-gates", "gdtoolkit-require.sh")
@@ -1056,84 +1117,154 @@ GDTOOLKIT_TOOLS = ("gdlint", "gdformat")
 # PEP 440 public version: release segment, optional pre, post and dev parts.
 _PEP440 = re.compile(r"^\d+(\.\d+)*((a|b|rc)\d+)?(\.post\d+)?(\.dev\d+)?$")
 
+_FAKES = {
+    "gdlint": r'''#!/bin/sh
+if [ "${1-}" = "--version" ]; then echo "gdlint $(cat "$FAKE_BIN/.gdtoolkit")"; exit 0; fi
+echo "gdlint $*" >> "$FAKE_TOOL_LOG"
+for f in "$@"; do
+  [ -f "$f" ] || { echo "fake gdlint: no such file: $f"; exit 2; }
+  if grep -q LINT_ERROR "$f"; then echo "$f:1: Error: fake lint error"; exit 1; fi
+done
+exit 0
+''',
+    "gdformat": r'''#!/bin/sh
+if [ "${1-}" = "--version" ]; then echo "gdformat $(cat "$FAKE_BIN/.gdtoolkit")"; exit 0; fi
+echo "gdformat $*" >> "$FAKE_TOOL_LOG"
+check=0
+bad=0
+for f in "$@"; do
+  if [ "$f" = "--check" ]; then check=1; continue; fi
+  [ -f "$f" ] || { echo "fake gdformat: no such file: $f"; exit 2; }
+  if grep -q BADFORMAT "$f"; then
+    if [ "$check" = 1 ]; then echo "would reformat $f"; bad=1; fi
+  fi
+done
+[ "$bad" = 0 ]
+''',
+    # Installs the fakes above, reporting FAKE_PIP_RESOLVES as their version
+    # when set, so a resolver that hands back the wrong release can be staged.
+    "pip": r'''#!/bin/sh
+echo "pip $*" >> "$FAKE_TOOL_LOG"
+[ "$#" -eq 2 ] && [ "$1" = "install" ] || { echo "fake pip: unexpected: $*"; exit 2; }
+case "$2" in gdtoolkit==?*) ;; *) echo "fake pip: not a pinned gdtoolkit: $2"; exit 2;; esac
+echo "${FAKE_PIP_RESOLVES:-${2#gdtoolkit==}}" > "$FAKE_BIN/.gdtoolkit"
+cp "$FAKE_TEMPLATES/gdlint" "$FAKE_TEMPLATES/gdformat" "$FAKE_BIN/"
+''',
+    "pnpm": '#!/bin/sh\necho "pnpm $*" >> "$FAKE_TOOL_LOG"\n',
+}
+
 
 def live_lines(text, pattern):
     """The uncommented lines of `text` matching `pattern`, stripped.
 
-    A step whose call is commented out still names the tool in its rationale,
-    so wiring is a live line that runs the thing, never a substring (#430).
+    A setting that is commented out still appears in its own rationale, so
+    presence is a live line, never a substring (#430).
     """
     rx = re.compile(pattern)
     return [line.strip() for line in uncommented(text).splitlines() if rx.search(line.strip())]
 
 
-def _read_pin():
-    with io.open(GDTOOLKIT_PIN, encoding="utf-8") as handle:
-        return handle.read().strip()
-
-
 def _clean_env(path):
     """os.environ minus every GIT_* variable, with PATH replaced.
 
-    Gate I runs inside the pre-push hook, where git exports GIT_DIR and friends;
-    left in place they would point the scratch repo's git at the real one.
+    Gate I runs inside the pre-push hook, where git may export GIT_DIR and
+    friends; left in place they would point the scratch repo's git at the real one.
     """
     env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
     env["PATH"] = path
     return env
 
 
-def _path_without(tools, shadow_root):
-    """PATH with `tools` removed, keeping every other executable reachable.
+_STRIPPED_PATH = {}
 
-    A directory holding one of the tools is replaced by a shadow directory of
+
+def _path_without_gdtoolkit():
+    """PATH with gdlint and gdformat removed, keeping everything else reachable.
+
+    A directory holding either tool is replaced by a shadow directory of
     symlinks to everything else in it, so dropping gdlint does not also drop the
-    python3 or git that happens to live beside it (a pyenv shims directory holds
-    both).
+    python3 or git beside it (a pyenv shims directory holds both). Built once.
     """
+    if "path" in _STRIPPED_PATH:
+        return _STRIPPED_PATH["path"]
+    shadow_root = tempfile.mkdtemp(prefix="pod-nogdtk-")
+    atexit.register(shutil.rmtree, shadow_root, True)
     out = []
     for index, directory in enumerate(os.environ.get("PATH", "").split(os.pathsep)):
         if not directory or not os.path.isdir(directory):
             continue
-        if not any(os.path.exists(os.path.join(directory, t)) for t in tools):
+        if not any(os.path.exists(os.path.join(directory, t)) for t in GDTOOLKIT_TOOLS):
             out.append(directory)
             continue
         shadow = os.path.join(shadow_root, "path%d" % index)
         os.makedirs(shadow)
         for name in os.listdir(directory):
             source = os.path.join(directory, name)
-            if name in tools or not os.path.isfile(source) or not os.access(source, os.X_OK):
+            if name in GDTOOLKIT_TOOLS or not os.path.isfile(source) or not os.access(source, os.X_OK):
                 continue
             os.symlink(source, os.path.join(shadow, name))
         out.append(shadow)
-    return os.pathsep.join(out)
+    path = os.pathsep.join(out)
+    for tool in GDTOOLKIT_TOOLS:
+        if shutil.which(tool, path=path):
+            raise AssertionError("could not strip %s from PATH" % tool)
+    for tool in ("sh", "bash", "git", "python3", "xargs", "tr"):
+        if not shutil.which(tool, path=path):
+            raise AssertionError("stripping gdtoolkit also removed %s" % tool)
+    _STRIPPED_PATH["path"] = path
+    return path
 
 
-_FAKE_TOOL = '#!/bin/sh\necho "$(basename "$0") $*" >> "$FAKE_TOOL_LOG"\nexit 0\n'
+def _write_executable(path, body):
+    with io.open(path, "w", encoding="utf-8") as handle:
+        handle.write(body)
+    os.chmod(path, 0o755)
+
+
+def _scratch_repo(test, prefix):
+    """A git repo on branch feature/x with one empty commit; returns its path."""
+    repo = tempfile.mkdtemp(prefix=prefix)
+    test.addCleanup(shutil.rmtree, repo, True)
+    env = _clean_env(_path_without_gdtoolkit())
+    for args in (
+        ["init", "-q"],
+        ["-c", "core.hooksPath=/dev/null", "-c", "commit.gpgsign=false", "-c", "user.name=t",
+         "-c", "user.email=t@example.invalid", "commit", "-q", "--allow-empty", "-m", "init"],
+        # The hook refuses commits to main, which is not what is under test.
+        ["checkout", "-q", "-b", "feature/x"],
+    ):
+        subprocess.run(["git"] + args, cwd=repo, env=env, check=True,
+                       stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    return repo
+
+
+def _stage(repo, relative, body="extends Node\n"):
+    target = os.path.join(repo, relative)
+    os.makedirs(os.path.dirname(target), exist_ok=True)
+    with io.open(target, "w", encoding="utf-8") as handle:
+        handle.write(body)
+    subprocess.run(["git", "add", "--", relative], cwd=repo, check=True,
+                   env=_clean_env(_path_without_gdtoolkit()))
+
+
+def _hook_shells():
+    """The shells husky would run the hook with: `sh`, plus dash when it is a
+    different binary (macOS's sh is bash; Debian's is dash). Each verdict is
+    asserted under every one, so a bashism fails on the developer's machine
+    rather than only on a Linux one."""
+    path = _path_without_gdtoolkit()
+    shells = [shutil.which("sh", path=path)]
+    dash = shutil.which("dash", path=path)
+    if dash and os.path.realpath(dash) != os.path.realpath(shells[0]):
+        shells.append(dash)
+    return shells
 
 
 class TestPreCommitRequiresGdtoolkit(unittest.TestCase):
-    """.husky/pre-commit, run for real in a scratch repo with no gdtoolkit."""
-
-    @classmethod
-    def setUpClass(cls):
-        cls.shadow = tempfile.mkdtemp(prefix="pod-nogdtk-")
-        cls.path = _path_without(GDTOOLKIT_TOOLS, cls.shadow)
-        for tool in GDTOOLKIT_TOOLS:
-            if shutil.which(tool, path=cls.path):
-                raise AssertionError("could not strip %s from PATH" % tool)
-        for tool in ("bash", "git", "python3"):
-            if not shutil.which(tool, path=cls.path):
-                raise AssertionError("stripping gdtoolkit also removed %s" % tool)
-        cls.bash = shutil.which("bash", path=cls.path)
-
-    @classmethod
-    def tearDownClass(cls):
-        shutil.rmtree(cls.shadow, ignore_errors=True)
+    """.husky/pre-commit, run as husky runs it, in a scratch repo with no gdtoolkit."""
 
     def setUp(self):
-        self.repo = tempfile.mkdtemp(prefix="pod-precommit-")
-        self.addCleanup(shutil.rmtree, self.repo, True)
+        self.repo = _scratch_repo(self, "pod-precommit-")
         for source, relative in (
             (PRE_COMMIT, ".husky/pre-commit"),
             (GDTOOLKIT_HELPER, "scripts/quality-gates/gdtoolkit-require.sh"),
@@ -1145,39 +1276,29 @@ class TestPreCommitRequiresGdtoolkit(unittest.TestCase):
         self.fake_bin = os.path.join(self.repo, ".fake-bin")
         os.makedirs(self.fake_bin)
         self.fake_log = os.path.join(self.repo, ".fake-tool.log")
-        self._git("init", "-q")
-        self._git("-c", "core.hooksPath=/dev/null", "-c", "commit.gpgsign=false",
-                  "-c", "user.name=t", "-c", "user.email=t@example.invalid",
-                  "commit", "-q", "--allow-empty", "-m", "init")
-        # The hook refuses commits to main, which is not what is under test.
-        self._git("checkout", "-q", "-b", "feature/x")
 
-    def _git(self, *args):
-        subprocess.run(["git"] + list(args), cwd=self.repo, env=_clean_env(self.path),
-                       check=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-
-    def _stage(self, relative, body="extends Node\n"):
-        target = os.path.join(self.repo, relative)
-        os.makedirs(os.path.dirname(target), exist_ok=True)
-        with io.open(target, "w", encoding="utf-8") as handle:
+    def _pin(self, body):
+        with io.open(os.path.join(self.repo, "scripts/quality-gates/gdtoolkit-version.txt"),
+                     "w", encoding="utf-8") as handle:
             handle.write(body)
-        self._git("add", "--", relative)
 
     def _fake(self, *tools):
         for tool in tools:
-            script = os.path.join(self.fake_bin, tool)
-            with io.open(script, "w", encoding="utf-8") as handle:
-                handle.write(_FAKE_TOOL)
-            os.chmod(script, 0o755)
+            _write_executable(os.path.join(self.fake_bin, tool), _FAKES[tool])
 
     def _hook(self):
-        env = _clean_env(self.fake_bin + os.pathsep + self.path)
+        """Run the hook under every husky shell; returns [(shell, code, output)]."""
+        env = _clean_env(self.fake_bin + os.pathsep + _path_without_gdtoolkit())
         env["FAKE_TOOL_LOG"] = self.fake_log
-        proc = subprocess.run(
-            [self.bash, ".husky/pre-commit"], cwd=self.repo, env=env, timeout=60,
-            stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True,
-        )
-        return proc.returncode, proc.stdout
+        env["FAKE_BIN"] = self.fake_bin
+        runs = []
+        for shell in _hook_shells():
+            proc = subprocess.run(
+                [shell, "-e", ".husky/pre-commit"], cwd=self.repo, env=env, timeout=60,
+                stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True,
+            )
+            runs.append((shell, proc.returncode, proc.stdout))
+        return runs
 
     def _ran(self):
         if not os.path.exists(self.fake_log):
@@ -1185,57 +1306,79 @@ class TestPreCommitRequiresGdtoolkit(unittest.TestCase):
         with io.open(self.fake_log, encoding="utf-8") as handle:
             return handle.read()
 
-    def test_a_staged_gd_file_without_gdlint_fails_and_names_the_pinned_version(self):
-        self._stage("game/scripts/a.gd")
-        code, out = self._hook()
-        self.assertNotEqual(code, 0, out)
-        self.assertIn("gdlint NOT FOUND", out)
-        self.assertIn('pip install "gdtoolkit==%s"' % _read_pin(), out)
+    def test_a_staged_gd_file_without_gdlint_fails_and_quotes_the_pin_file(self):
+        # A pin no release has, so a hardcoded version cannot satisfy this.
+        self._pin("  9.9.9 \n")
+        _stage(self.repo, "game/scripts/a.gd")
+        for shell, code, out in self._hook():
+            with self.subTest(shell=shell):
+                self.assertNotEqual(code, 0, out)
+                self.assertIn("gdlint NOT FOUND", out)
+                self.assertIn('pip install "gdtoolkit==9.9.9"', out)
 
-    def test_the_message_quotes_the_pin_file_rather_than_a_hardcoded_version(self):
-        with io.open(os.path.join(self.repo, "scripts/quality-gates/gdtoolkit-version.txt"),
-                     "w", encoding="utf-8") as handle:
-            handle.write("9.9.9\n")
-        self._stage("game/scripts/a.gd")
-        code, out = self._hook()
-        self.assertNotEqual(code, 0, out)
-        self.assertIn('pip install "gdtoolkit==9.9.9"', out)
-        self.assertNotIn("gdtoolkit==%s" % _read_pin(), out)
+    def test_a_missing_pin_file_still_fails_without_a_raw_shell_error(self):
+        os.remove(os.path.join(self.repo, "scripts/quality-gates/gdtoolkit-version.txt"))
+        _stage(self.repo, "game/scripts/a.gd")
+        for shell, code, out in self._hook():
+            with self.subTest(shell=shell):
+                self.assertNotEqual(code, 0, out)
+                self.assertIn("gdlint NOT FOUND", out)
+                self.assertIn("<unreadable:", out)
+                self.assertNotRegex(out, r"(?i)no such file|cannot open")
 
     def test_a_commit_with_no_staged_gd_passes_without_gdtoolkit(self):
-        self._stage("game/data/items.json", '{"ok": true}\n')
-        self._stage("docs/notes.md", "# notes\n")
-        code, out = self._hook()
-        self.assertEqual(code, 0, out)
-        self.assertNotIn("NOT FOUND", out)
+        _stage(self.repo, "game/data/items.json", '{"ok": true}\n')
+        _stage(self.repo, "docs/notes.md", "# notes\n")
+        for shell, code, out in self._hook():
+            with self.subTest(shell=shell):
+                self.assertEqual(code, 0, out)
+                self.assertNotIn("NOT FOUND", out)
 
     def test_a_staged_addon_gd_file_alone_passes_without_gdtoolkit(self):
         # addons/ is vendored GUT and was never linted; requiring a linter for a
         # file the hook does not lint would block every GUT bump for nothing.
-        self._stage("game/addons/gut/gut.gd")
-        code, out = self._hook()
-        self.assertEqual(code, 0, out)
+        _stage(self.repo, "game/addons/gut/gut.gd")
+        for shell, code, out in self._hook():
+            with self.subTest(shell=shell):
+                self.assertEqual(code, 0, out)
+
+    def test_a_directory_merely_named_like_addons_is_still_linted(self):
+        # The exclusion is by path component: myaddons/ is ours, not vendored.
+        _stage(self.repo, "scripts/myaddons/tool.gd")
+        for shell, code, out in self._hook():
+            with self.subTest(shell=shell):
+                self.assertNotEqual(code, 0, out)
+                self.assertIn("gdlint NOT FOUND", out)
+
+    def test_invalid_json_under_a_myaddons_directory_fails_gate_b(self):
+        _stage(self.repo, "scripts/myaddons/bad.json", "{not json\n")
+        for shell, code, out in self._hook():
+            with self.subTest(shell=shell):
+                self.assertNotEqual(code, 0, out)
+                self.assertIn("INVALID JSON: scripts/myaddons/bad.json", out)
 
     def test_gdformat_missing_alone_still_fails_gate_c(self):
         self._fake("gdlint")
-        self._stage("game/scripts/a.gd")
-        code, out = self._hook()
-        self.assertNotEqual(code, 0, out)
-        self.assertIn("gdformat NOT FOUND", out)
+        _stage(self.repo, "game/scripts/a.gd")
+        for shell, code, out in self._hook():
+            with self.subTest(shell=shell):
+                self.assertNotEqual(code, 0, out)
+                self.assertIn("gdformat NOT FOUND", out)
         self.assertIn("gdlint game/scripts/a.gd", self._ran(), "Gate A should still have run")
 
     def test_with_both_tools_present_the_hook_runs_them_and_passes(self):
         self._fake("gdlint", "gdformat")
-        self._stage("game/scripts/a.gd")
-        code, out = self._hook()
-        self.assertEqual(code, 0, out)
+        _stage(self.repo, "game/scripts/a.gd")
+        for shell, code, out in self._hook():
+            with self.subTest(shell=shell):
+                self.assertEqual(code, 0, out)
         ran = self._ran()
         self.assertIn("gdlint game/scripts/a.gd", ran)
         self.assertIn("gdformat --check game/scripts/a.gd", ran)
 
 
 class TestGdtoolkitPin(unittest.TestCase):
-    """One version, read by the hook's message and by CI's install."""
+    """The real pin file. What reads it is judged by the hook and job tests."""
 
     def test_the_pin_file_holds_a_single_pep440_version(self):
         with io.open(GDTOOLKIT_PIN, encoding="utf-8") as handle:
@@ -1243,133 +1386,182 @@ class TestGdtoolkitPin(unittest.TestCase):
         self.assertEqual(len(lines), 1, "gdtoolkit-version.txt must hold one version: %r" % lines)
         self.assertRegex(lines[0], _PEP440)
 
-    def test_ci_installs_the_pinned_version_and_no_other(self):
-        with io.open(STATIC_GATES_YML, encoding="utf-8") as handle:
-            text = handle.read()
-        installs = live_lines(text, r"\bpip install\b.*gdtoolkit")
-        self.assertEqual(
-            installs,
-            ['pip install "gdtoolkit==$(cat scripts/quality-gates/gdtoolkit-version.txt)"'],
-        )
-        # A literal version anywhere else would be a second pin to drift.
-        self.assertEqual(live_lines(text, r"gdtoolkit\s*[=<>~!]=?\s*\d"), [])
+
+_PR_SHAS = {
+    "github.event.pull_request.base.sha": "BASESHA",
+    "github.event.pull_request.head.sha": "HEADSHA",
+}
 
 
 class TestStaticGatesWorkflow(unittest.TestCase):
-    """static-gates.yml: Gates A-C and commitlint on every PR (#472)."""
+    """static-gates.yml must FAIL when a gate fails, and only then (#472).
 
-    RUNNABLE = ("Collect GDScript files", "JSON validation (Gate B)")
+    Each test builds a fixture repo, runs every `run:` body of the job in order
+    through run_workflow_steps with the fakes on PATH, and judges the verdict.
+    """
+
+    PIN = "1.2.3"  # not the real pin, so a hardcoded version is caught
 
     def setUp(self):
         with io.open(STATIC_GATES_YML, encoding="utf-8") as handle:
             self.text = handle.read()
         self.steps = workflow_steps(self.text)
-        self.root = tempfile.mkdtemp(prefix="pod-sg-fixture-")
-        self.addCleanup(shutil.rmtree, self.root, True)
+        self.repo = _scratch_repo(self, "pod-sg-fixture-")
+        self.tools = tempfile.mkdtemp(prefix="pod-sg-tools-")
+        self.addCleanup(shutil.rmtree, self.tools, True)
+        self.fake_bin = os.path.join(self.tools, "bin")
+        self.templates = os.path.join(self.tools, "templates")
+        os.makedirs(self.fake_bin)
+        os.makedirs(self.templates)
+        for tool in ("gdlint", "gdformat"):
+            _write_executable(os.path.join(self.templates, tool), _FAKES[tool])
+        for tool in ("pip", "pnpm"):
+            _write_executable(os.path.join(self.fake_bin, tool), _FAKES[tool])
+        self.fake_log = os.path.join(self.tools, "calls.log")
+        _stage(self.repo, "scripts/quality-gates/gdtoolkit-version.txt", self.PIN + "\n")
 
-    def _step(self, name):
-        found = [s for s in self.steps if s.get("name") == name]
-        self.assertEqual(len(found), 1, "expected one step named %r" % name)
-        return found[0]
+    def _tree(self, gd=(), json_files=()):
+        for relative, body in gd:
+            _stage(self.repo, relative, body)
+        for relative, body in json_files:
+            _stage(self.repo, relative, body)
 
-    def _write(self, relative, body="extends Node\n"):
-        target = os.path.join(self.root, relative)
-        os.makedirs(os.path.dirname(target), exist_ok=True)
-        with io.open(target, "w", encoding="utf-8") as handle:
-            handle.write(body)
+    def _clean_tree(self):
+        self._tree(
+            gd=[("game/scripts/a.gd", "extends Node\n"),
+                ("game/tests/deep/b c.gd", "extends Node\n"),  # a space in the path
+                ("game/myaddons/d.gd", "extends Node\n"),
+                ("game/addons/gut/vendored.gd", "LINT_ERROR BADFORMAT\n"),
+                ("tools/elsewhere.gd", "LINT_ERROR\n")],  # outside game/
+            json_files=[("package.json", "{}\n"),
+                        ("game/data/enemies/deep/x.json", "[]\n"),
+                        ("game/addons/gut/versions.json", "{not json\n")],
+        )
 
-    def _run(self, name, cwd=None):
-        return run_workflow_steps([self._step(name)], cwd or self.root)
+    def _job(self, **env):
+        env_extra = {
+            "PATH": self.fake_bin + os.pathsep + _path_without_gdtoolkit(),
+            "FAKE_TOOL_LOG": self.fake_log,
+            "FAKE_BIN": self.fake_bin,
+            "FAKE_TEMPLATES": self.templates,
+            # A real pip reached by a refactor must not install anything.
+            "PIP_NO_INDEX": "1",
+            "PIP_REQUIRE_VIRTUALENV": "1",
+        }
+        env_extra.update(env)
+        failed, results, out = run_workflow_steps(
+            self.steps, self.repo, env_extra=env_extra, expressions=_PR_SHAS)
+        outcomes = {step.get("name"): outcome for step, outcome in results}
+        return failed, outcomes, out
+
+    def _calls(self, tool):
+        if not os.path.exists(self.fake_log):
+            return []
+        with io.open(self.fake_log, encoding="utf-8") as handle:
+            return [line for line in handle.read().splitlines() if line.split(" ", 1)[0] == tool]
+
+    def _run_steps(self):
+        return [s.get("name") for s in self.steps if "run" in s]
 
     # --- executed --------------------------------------------------------
 
-    def test_collect_counts_every_nested_gd_file_and_skips_addons(self):
-        self._write("game/scripts/a.gd")
-        self._write("game/scripts/battle/deep/b.gd")
-        self._write("game/tests/c.gd")
-        self._write("game/addons/gut/d.gd")
-        failed, _, out = self._run("Collect GDScript files")
+    def test_a_clean_tree_passes_having_installed_the_pin_and_checked_every_file(self):
+        self._clean_tree()
+        failed, outcomes, out = self._job()
         self.assertFalse(failed, out)
-        self.assertIn("gdscript files: 3 under game/", out)
+        self.assertEqual({outcomes[n] for n in self._run_steps()}, {"success"}, out)
+        self.assertEqual(self._calls("pip"), ["pip install gdtoolkit==%s" % self.PIN])
+        linted = " ".join(self._calls("gdlint"))
+        formatted = self._calls("gdformat")
+        expected = ["game/myaddons/d.gd", "game/scripts/a.gd", "game/tests/deep/b c.gd"]
+        for path in expected:
+            self.assertIn(path, linted)
+        self.assertNotIn("addons/gut", linted)
+        self.assertNotIn("tools/elsewhere.gd", linted)
+        self.assertTrue(formatted and all(c.startswith("gdformat --check ") for c in formatted), formatted)
+        self.assertIn("gdscript files: 3 ", out)
+        self.assertIn("JSON validation passed: 2 tracked files", out)
+        self.assertEqual(self._calls("pnpm"), [
+            "pnpm install --frozen-lockfile --ignore-scripts",
+            "pnpm exec commitlint --verbose --from BASESHA --to HEADSHA",
+        ])
 
-    def test_collect_fails_when_no_gd_file_is_found(self):
-        self._write("game/addons/gut/d.gd")
-        failed, _, out = self._run("Collect GDScript files")
+    def test_a_version_mismatch_fails_the_job(self):
+        self._clean_tree()
+        failed, outcomes, out = self._job(FAKE_PIP_RESOLVES="1.2.4")
         self.assertTrue(failed, out)
+        self.assertEqual(outcomes["Install pinned gdtoolkit"], "failure", out)
+
+    def test_a_lint_failure_fails_the_job_and_every_later_step_still_runs(self):
+        self._clean_tree()
+        _stage(self.repo, "game/scripts/a.gd", "LINT_ERROR\n")
+        failed, outcomes, out = self._job()
+        self.assertTrue(failed, out)
+        self.assertEqual(outcomes["gdlint (Gate A)"], "failure", out)
+        names = self._run_steps()
+        for name in names[names.index("gdlint (Gate A)") + 1:]:
+            with self.subTest(step=name):
+                self.assertEqual(outcomes[name], "success", out)
+
+    def test_a_format_mismatch_fails_the_job(self):
+        self._clean_tree()
+        _stage(self.repo, "game/tests/deep/b c.gd", "BADFORMAT\n")
+        failed, outcomes, out = self._job()
+        self.assertTrue(failed, out)
+        self.assertEqual(outcomes["gdformat check (Gate C)"], "failure", out)
+        self.assertIn("would reformat game/tests/deep/b c.gd", out)
+
+    def test_no_gd_files_fails_the_job(self):
+        self._tree(gd=[("game/addons/gut/vendored.gd", "extends Node\n")],
+                   json_files=[("package.json", "{}\n")])
+        failed, outcomes, out = self._job()
+        self.assertTrue(failed, out)
+        self.assertEqual(outcomes["Collect GDScript files"], "failure", out)
         self.assertIn("NO .gd FILES FOUND", out)
 
-    def test_json_validation_fails_on_a_nested_invalid_file(self):
-        self._write("game/data/items.json", '{"ok": true}\n')
-        self._write("game/data/enemies/deep/bad.json", '{"ok": tru\n')
-        failed, _, out = self._run("JSON validation (Gate B)")
+    def test_no_json_files_fails_the_job(self):
+        self._tree(gd=[("game/scripts/a.gd", "extends Node\n")],
+                   json_files=[("game/addons/gut/versions.json", "{}\n")])
+        failed, outcomes, out = self._job()
         self.assertTrue(failed, out)
-        self.assertIn("INVALID JSON: game/data/enemies/deep/bad.json", out)
-
-    def test_json_validation_skips_addons_and_passes_a_valid_tree(self):
-        self._write("game/data/items.json", "[]\n")
-        self._write("game/data/sub/more.json", "{}\n")
-        self._write("game/data/addons/vendor.json", "{not json\n")
-        failed, _, out = self._run("JSON validation (Gate B)")
-        self.assertFalse(failed, out)
-        self.assertIn("JSON validation passed: 2 files under game/data", out)
-
-    def test_json_validation_fails_when_game_data_holds_no_json(self):
-        self._write("game/data/README.md", "# no json here\n")
-        failed, _, out = self._run("JSON validation (Gate B)")
-        self.assertTrue(failed, out)
+        self.assertEqual(outcomes["JSON validation (Gate B)"], "failure", out)
         self.assertIn("NO .json FILES FOUND", out)
 
-    def test_the_real_tree_is_collected_and_its_json_is_valid(self):
-        for name in self.RUNNABLE:
-            with self.subTest(step=name):
-                failed, _, out = self._run(name, cwd=REPO_ROOT)
-                self.assertFalse(failed, out)
-                self.assertRegex(out, r"(gdscript files|passed): [1-9]\d* ")
+    def test_invalid_json_anywhere_in_the_tracked_tree_fails_the_job(self):
+        # Gate B's scope is every tracked .json outside addons/, as in the hook:
+        # not only game/data, and myaddons/ is not addons/.
+        self._clean_tree()
+        _stage(self.repo, ".claude/settings.json", "{not json\n")
+        _stage(self.repo, "scripts/myaddons/urls.json", "[1,\n")
+        failed, outcomes, out = self._job()
+        self.assertTrue(failed, out)
+        self.assertEqual(outcomes["JSON validation (Gate B)"], "failure", out)
+        self.assertIn("INVALID JSON: .claude/settings.json", out)
+        self.assertIn("INVALID JSON: scripts/myaddons/urls.json", out)
 
-    # --- text: needs gdtoolkit, pnpm or the PR's history -----------------
+    def test_every_step_after_checkout_runs_after_an_earlier_failure(self):
+        # The emulation runs `run:` steps only; the setup actions commitlint
+        # needs are judged by the same condition reader the emulation uses.
+        for step in self.steps[1:]:
+            with self.subTest(step=step.get("name")):
+                self.assertTrue(runs_after_a_failure(step), step.get("if"))
 
-    def test_the_wiring_matcher_rejects_a_commented_out_call(self):
-        live = 'xargs gdlint < "$GD_FILES"'
-        self.assertEqual(live_lines(live, r"^xargs gdlint"), [live])
-        self.assertEqual(live_lines("    " + live, r"^xargs gdlint"), [live])
-        self.assertEqual(live_lines("# " + live, r"^xargs gdlint"), [])
+    # --- text: only what the runner itself provides ----------------------
 
-    def test_gdlint_runs_over_the_collected_list(self):
-        body = self._step("gdlint (Gate A)")["run"]
-        self.assertTrue(live_lines(body, r'^xargs gdlint < "\$GD_FILES"$'), body)
-        self.assertTrue(live_lines(body, r'\$\{GD_FILES:\?'), "an unset list must fail, not lint nothing")
+    def test_the_wiring_matcher_rejects_a_commented_out_setting(self):
+        live = "fetch-depth: 0"
+        self.assertEqual(live_lines("    " + live, r"^fetch-depth: 0$"), [live])
+        self.assertEqual(live_lines("    # " + live, r"^fetch-depth: 0$"), [])
 
-    def test_gdformat_checks_the_collected_list(self):
-        body = self._step("gdformat check (Gate C)")["run"]
-        self.assertTrue(live_lines(body, r'^xargs gdformat --check < "\$GD_FILES"$'), body)
-        self.assertTrue(live_lines(body, r'\$\{GD_FILES:\?'), "an unset list must fail, not check nothing")
-
-    def test_the_install_verifies_it_got_the_pinned_version(self):
-        body = self._step("Install pinned gdtoolkit")["run"]
-        self.assertTrue(live_lines(body, r'^PIN=.*scripts/quality-gates/gdtoolkit-version\.txt'), body)
-        self.assertTrue(live_lines(body, r'gdlint --version \| grep -qF "\$PIN" \|\| \{.*exit 1'), body)
-
-    def test_commitlint_lints_the_pr_commits(self):
-        body = self._step("commitlint (PR commits)")["run"]
-        self.assertTrue(live_lines(body, r"^pnpm install --frozen-lockfile --ignore-scripts$"), body)
-        self.assertTrue(live_lines(
-            body,
-            r"^pnpm exec commitlint --from \$\{\{ github\.event\.pull_request\.base\.sha \}\} "
-            r"--to \$\{\{ github\.event\.pull_request\.head\.sha \}\}$",
-        ), body)
+    def test_commitlint_gets_full_history_node_and_the_pinned_pnpm(self):
         uses = [s.get("uses", "") for s in self.steps]
         self.assertTrue(any(u.startswith("pnpm/action-setup@") for u in uses), uses)
         self.assertTrue(any(u.startswith("actions/setup-node@") for u in uses), uses)
         # A shallow clone holds only the merge commit: commitlint would have no range.
         self.assertTrue(live_lines(self.text, r"^fetch-depth: 0$"))
+        self.assertTrue(live_lines(self.text, r'^node-version: "?\d+"?$'))
         # pnpm/action-setup must take pnpm's version from packageManager.
         self.assertEqual(live_lines(self.text, r"^version:"), [])
-
-    def test_a_failing_gate_does_not_hide_the_ones_after_it(self):
-        for name in ("gdlint (Gate A)", "JSON validation (Gate B)",
-                     "gdformat check (Gate C)", "commitlint (PR commits)"):
-            with self.subTest(step=name):
-                self.assertEqual(self._step(name).get("if"), "${{ !cancelled() }}")
 
     def test_no_step_or_job_is_allowed_to_fail_quietly(self):
         self.assertNotIn("continue-on-error", uncommented(self.text))

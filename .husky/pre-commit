@@ -1,5 +1,10 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/usr/bin/env sh
+# POSIX sh. husky runs this file as `sh -e .husky/pre-commit` (.husky/_/h),
+# whatever the shebang says, and on Debian/Ubuntu that sh is dash. A dash
+# without pipefail (macOS's /bin/dash is one) rejects `set -o pipefail` and
+# the hook died on line 2. Nothing below depends on pipefail: each pipeline's
+# verdict is its last command.
+set -eu
 
 # --- Block direct commits to main ---
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
@@ -14,12 +19,16 @@ fi
 # a machine without gdtoolkit committed GDScript nothing had checked (#472).
 # The helper prints the install command for the pinned version
 # (scripts/quality-gates/gdtoolkit-version.txt). No staged .gd, no requirement.
+#
+# addons/ is excluded by path COMPONENT, `(^|/)addons/`, in all three gates and
+# in .github/workflows/static-gates.yml: game/addons/gut/ is vendored, but a
+# directory merely named like it (scripts/myaddons/) is ours and is checked.
 # shellcheck source=scripts/quality-gates/gdtoolkit-require.sh
 . "$(git rev-parse --show-toplevel)/scripts/quality-gates/gdtoolkit-require.sh"
 
 # === QUALITY GATE A: GDScript linting (gdtoolkit) ===
 # Lint only staged .gd files (excludes addons/).
-STAGED_GD=$(git diff --cached --name-only --diff-filter=ACM -- '*.gd' | grep -v 'addons/' || true)
+STAGED_GD=$(git diff --cached --name-only --diff-filter=ACM -- '*.gd' | grep -Ev '(^|/)addons/' || true)
 if [ -n "$STAGED_GD" ]; then
     gdtoolkit_require gdlint "Gate A" || exit 1
     echo "=== Pre-commit: gdlint ==="
@@ -29,7 +38,7 @@ fi
 
 # === QUALITY GATE B: JSON validation ===
 # Verify all staged .json files are valid JSON (excludes addons/).
-STAGED_JSON=$(git diff --cached --name-only --diff-filter=ACM -- '*.json' | grep -v 'addons/' || true)
+STAGED_JSON=$(git diff --cached --name-only --diff-filter=ACM -- '*.json' | grep -Ev '(^|/)addons/' || true)
 if [ -n "$STAGED_JSON" ]; then
     echo "=== Pre-commit: JSON validation ==="
     FAIL=0
@@ -51,7 +60,7 @@ fi
 # === QUALITY GATE C: gdformat check (formatting) ===
 # Verify staged .gd files match gdformat output (excludes addons/).
 # Only checks — does not auto-fix. Run `gdformat file.gd` to fix.
-STAGED_GD=$(git diff --cached --name-only --diff-filter=ACM -- '*.gd' | grep -v 'addons/' || true)
+STAGED_GD=$(git diff --cached --name-only --diff-filter=ACM -- '*.gd' | grep -Ev '(^|/)addons/' || true)
 if [ -n "$STAGED_GD" ]; then
     gdtoolkit_require gdformat "Gate C" || exit 1
     echo "=== Pre-commit: gdformat check ==="

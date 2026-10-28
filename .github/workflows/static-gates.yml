@@ -6,15 +6,17 @@ name: Static Gates
 # that skipped `pnpm install`), or a commit from a machine without gdtoolkit,
 # reached a PR with none of them checked.
 #
-# CI checks EVERY .gd file under game/ and every JSON file under game/data,
-# not just the PR's changes, because a file that slipped past an absent hook
-# earlier is still unchecked today. addons/ (vendored GUT) is excluded, as it
-# is in the hook.
+# CI checks EVERY tracked file, not just the PR's changes, because a file that
+# slipped past an absent hook earlier is still unchecked today: every tracked
+# .gd under game/ for Gates A and C, every tracked .json in the repo for Gate
+# B. addons/ is excluded by path component, `(^|/)addons/`, the same rule the
+# hook uses, so vendored GUT is skipped and scripts/myaddons/ would not be.
 #
-# The collection and JSON steps are executed by test_gut_baseline.py
-# (TestStaticGatesWorkflow) against fixture trees. The install, lint, format
-# and commitlint steps need gdtoolkit, pnpm or the PR's history, so the tests
-# check those as text.
+# test_gut_baseline.py (TestStaticGatesWorkflow) executes every `run:` body of
+# this job, in order, against fixture repos with fake pip, gdlint, gdformat
+# and pnpm on PATH, and judges the job's verdict. Only what the runner itself
+# provides (checkout depth, the setup actions, the trigger and permissions) is
+# checked as text.
 
 on:
   pull_request:
@@ -31,6 +33,9 @@ jobs:
     name: Static Gates
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    # Every step after Checkout carries `!cancelled()`, so one failing gate
+    # hides neither the other gates nor the setup steps commitlint needs: a PR
+    # sees all of its failures in one run.
     steps:
       # fetch-depth: 0 so commitlint can walk base..head; a shallow clone holds
       # only the merge commit.
@@ -41,83 +46,100 @@ jobs:
           fetch-depth: 0
 
       - name: Set up Python
+        if: ${{ !cancelled() }}
         uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
-      # The version comes from the pin file, the same one .husky/pre-commit
-      # quotes when gdtoolkit is missing, so the hook and CI name one version.
-      # The --version check fails the job if pip resolved anything else.
+      # The pin is read the way .husky/pre-commit reads it: the file with all
+      # whitespace stripped. The --version checks fail the job if pip resolved
+      # anything else.
       - name: Install pinned gdtoolkit
+        if: ${{ !cancelled() }}
         run: |
           PIN=$(tr -d '[:space:]' < scripts/quality-gates/gdtoolkit-version.txt)
           : "${PIN:?scripts/quality-gates/gdtoolkit-version.txt is empty}"
-          pip install "gdtoolkit==$(cat scripts/quality-gates/gdtoolkit-version.txt)"
-          gdlint --version
-          gdlint --version | grep -qF "$PIN" || { echo "gdlint is not gdtoolkit $PIN"; exit 1; }
+          pip install "gdtoolkit==$PIN"
+          for TOOL in gdlint gdformat; do
+            GOT=$("$TOOL" --version)
+            echo "$GOT"
+            if [ "$GOT" != "$TOOL $PIN" ]; then
+              echo "VERSION MISMATCH: '$GOT', but the pin is gdtoolkit $PIN"
+              exit 1
+            fi
+          done
 
-      # One list, read by both Gate A and Gate C below. A find that matches
-      # nothing (a moved game/ directory, a broken -path filter) would otherwise
-      # hand gdlint no files and pass having inspected nothing.
+      # One list, read by both Gate A and Gate C below. A list that matches
+      # nothing (a moved game/ directory, a broken filter) would otherwise hand
+      # gdlint no files and pass having inspected nothing.
       - name: Collect GDScript files
+        if: ${{ !cancelled() }}
         run: |
-          LIST="${RUNNER_TEMP:?}/gd-files.txt"
-          find game -type f -name '*.gd' -not -path '*/addons/*' | sort > "$LIST"
+          ALL="${RUNNER_TEMP:?}/gd-all.txt"
+          LIST="$RUNNER_TEMP/gd-files.txt"
+          git -c core.quotePath=false ls-files -- 'game/*.gd' > "$ALL"
+          grep -Ev '(^|/)addons/' "$ALL" > "$LIST" || true
           COUNT=$(wc -l < "$LIST" | tr -d ' ')
           echo "GD_FILES=$LIST" >> "$GITHUB_ENV"
-          echo "gdscript files: $COUNT under game/ (addons/ excluded)"
+          echo "gdscript files: $COUNT tracked under game/ (addons/ excluded)"
           if [ "$COUNT" -eq 0 ]; then
             echo "NO .gd FILES FOUND under game/ — the scan inspected nothing. Repair the"
-            echo "  find; an empty list is not a pass."
+            echo "  list; an empty list is not a pass."
             exit 1
           fi
 
-      # `!cancelled()` on every gate from here on, so one failing gate does not
-      # hide the others: a PR sees all of its failures in one run.
+      # Newline-delimited, so a path with a space stays one argument. `tr | xargs
+      # -0` rather than `xargs -d '\n'`: BSD xargs has no -d, and Gate I runs this
+      # body on macOS.
       - name: gdlint (Gate A)
         if: ${{ !cancelled() }}
         run: |
           : "${GD_FILES:?GD_FILES was not set; see the collect step}"
-          xargs gdlint < "$GD_FILES"
+          tr '\n' '\0' < "$GD_FILES" | xargs -0 gdlint
 
       - name: JSON validation (Gate B)
         if: ${{ !cancelled() }}
         run: |
-          python3 - <<'PY'
+          ALL="${RUNNER_TEMP:?}/json-all.txt"
+          LIST="$RUNNER_TEMP/json-files.txt"
+          git -c core.quotePath=false ls-files -- '*.json' > "$ALL"
+          grep -Ev '(^|/)addons/' "$ALL" > "$LIST" || true
+          python3 - "$LIST" <<'PY'
           import json
-          import pathlib
           import sys
 
-          root = pathlib.Path("game/data")
-          files = sorted(p for p in root.rglob("*.json") if "addons" not in p.parts)
+          with open(sys.argv[1], encoding="utf-8") as handle:
+              files = [line for line in handle.read().splitlines() if line]
           bad = []
           for path in files:
               try:
-                  json.loads(path.read_text(encoding="utf-8"))
-              except (ValueError, UnicodeDecodeError) as exc:
+                  with open(path, encoding="utf-8") as handle:
+                      json.load(handle)
+              except (OSError, ValueError) as exc:
                   bad.append("INVALID JSON: %s (%s)" % (path, exc))
           for line in bad:
               print(line)
           if not files:
-              print("NO .json FILES FOUND under game/data — the scan inspected nothing.")
-              print("  Repair the walk; an empty corpus is not a pass.")
+              print("NO .json FILES FOUND among tracked files — the scan inspected nothing.")
+              print("  Repair the list; an empty corpus is not a pass.")
               sys.exit(1)
           if bad:
               print("JSON validation FAILED: %d of %d files" % (len(bad), len(files)))
               sys.exit(1)
-          print("JSON validation passed: %d files under game/data" % len(files))
+          print("JSON validation passed: %d tracked files (addons/ excluded)" % len(files))
           PY
 
       - name: gdformat check (Gate C)
         if: ${{ !cancelled() }}
         run: |
           : "${GD_FILES:?GD_FILES was not set; see the collect step}"
-          xargs gdformat --check < "$GD_FILES"
+          tr '\n' '\0' < "$GD_FILES" | xargs -0 gdformat --check
 
       # commitlint over the PR's own commits, as .husky/commit-msg runs it on
       # each one. pnpm/action-setup reads the version from package.json's
       # packageManager; --ignore-scripts skips husky's `prepare`, which has no
-      # hooks to install here.
+      # hooks to install here. --verbose prints every commit it checked, so a
+      # pass shows what it covered.
       - name: Set up pnpm
         if: ${{ !cancelled() }}
         uses: pnpm/action-setup@v6
@@ -132,4 +154,4 @@ jobs:
         if: ${{ !cancelled() }}
         run: |
           pnpm install --frozen-lockfile --ignore-scripts
-          pnpm exec commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }}
+          pnpm exec commitlint --verbose --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }}
