@@ -28,7 +28,10 @@ func after_each() -> void:
 
 func test_project_max_fps_is_set() -> void:
 	var fps: int = ProjectSettings.get_setting("application/run/max_fps", 0)
-	assert_eq(fps, 60, "max_fps should be 60 for ATB combat tick rate")
+	# technical-architecture.md locks the frame rate at 60 fps. The ATB no longer
+	# depends on it: gauges tick at ATBSystem.TICKS_PER_SECOND whatever the
+	# rendered frame rate is (#441).
+	assert_eq(fps, 60, "max_fps should be 60, the locked frame rate of technical-architecture.md")
 
 
 # ==========================================================================

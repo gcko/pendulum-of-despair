@@ -715,7 +715,7 @@ All intermediate values use real-number arithmetic. The final fill_rate is floor
 |----------|-------|---------|
 | Base speed | 25 | Floor ensures even SPD 1 is playable |
 | Gauge max | 16,000 | Total gauge capacity |
-| Tick rate | 60/second | Fixed frame rate for gauge updates |
+| Tick rate | 60/second | Fixed tick rate for gauge updates, independent of the rendered frame rate |
 
 **Time to fill:** `seconds = 16000 / fill_rate / 60`
 
@@ -750,15 +750,15 @@ FF6 parity for the retune, with no measurement behind it.
 
 `game/tests/test_atb_system.gd` now measures **both** columns of this table and
 every row of § ATB Pacing at Key Milestones below, by ticking a real gauge and
-counting frames to ready. It checks each cell twice over: the gauge must reach
+counting ticks to ready. It checks each cell twice over: the gauge must reach
 ready on exactly the tick its fill rate implies, and the seconds printed here
 must be `16000 / rate / 60` rounded to the precision the cell is printed at. So
 the constants cannot drift from the table without the suite going red, and
 neither can the table drift from the constants — the Sable-at-speed-5 cell read
 4.1s until this guard was widened past the Maren column, which is the arithmetic
-you get by dropping the floor the fill-rate formula mandates. The 60 in that
-expression is `run/max_fps`, which `game/tests/test_battle_regressions.gd` pins
-at 60 and the seconds measurement reads rather than assumes.
+you get by dropping the floor the fill-rate formula mandates. The 60 is
+`ATBSystem.TICKS_PER_SECOND`, independent of `run/max_fps`. A single frame
+applies at most a quarter second (15 ticks) of battle time; the excess is dropped.
 
 ### Active/Wait Mode
 
