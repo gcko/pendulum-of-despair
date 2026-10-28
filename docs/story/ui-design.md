@@ -1224,7 +1224,7 @@ only renders for characters that have one.
 | Ley Crystal system | [progression.md](progression.md) § Ley Crystal System |
 | Character stats | [progression.md](progression.md) § Character Growth |
 | Shop inventories | [economy.md](economy.md) § Shop Inventories |
-| Save data structure | `packages/shared/src/types/game.ts` |
+| Save data structure | [save-system.md](save-system.md) § Save Data Schema; built by `PartyState.build_save_data()` in `game/scripts/autoload/party_state.gd` and written by `game/scripts/autoload/save_manager.gd` |
 | Visual style / palette | [visual-style.md](visual-style.md) |
 | Physical damage formula | [combat-formulas.md](combat-formulas.md) § Physical Damage |
 | Magic damage formula | [combat-formulas.md](combat-formulas.md) § Magic Damage |
