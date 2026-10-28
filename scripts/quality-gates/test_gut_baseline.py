@@ -1690,6 +1690,118 @@ class TestGatesShRequiresInstalledHooks(unittest.TestCase):
         self.assertNotIn("GATES_BASE=", out)
 
 
+class TestGatesShChecksTheGdtoolkitPin(unittest.TestCase):
+    """scripts/gates.sh holds gdtoolkit to the pin, as pre-commit does (#477).
+
+    A scratch repo with the real gates.sh, helper and gate judge, floors low
+    enough for a one-gate, one-test fixture, its hooks installed, and a change
+    outside game/ so the run ends at STATIC GATES PASSED without Godot. The
+    verdict therefore turns on Gates A-C alone.
+    """
+
+    PIN = "9.9.9"  # not the real pin, so a hardcoded version is caught
+
+    def setUp(self):
+        self.repo = _scratch_repo(self, "pod-gates-pin-")
+        self.name = os.path.basename(self.repo)
+        self.addCleanup(lambda: os.path.exists("/tmp/gatetests_%s.log" % self.name)
+                        and os.remove("/tmp/gatetests_%s.log" % self.name))
+        self.env = _clean_env(_path_without_gdtoolkit())
+        files = {
+            "scripts/gates.sh": GATES_SH,
+            "scripts/quality-gates/gdtoolkit-require.sh": GDTOOLKIT_HELPER,
+            "scripts/quality-gates/check_gut_baseline.py":
+                os.path.join(REPO_ROOT, "scripts", "quality-gates", "check_gut_baseline.py"),
+        }
+        for relative, source in files.items():
+            target = os.path.join(self.repo, relative)
+            os.makedirs(os.path.dirname(target), exist_ok=True)
+            shutil.copy(source, target)
+        for relative, body in (
+            ("scripts/quality-gates/gdtoolkit-version.txt", " %s \n" % self.PIN),
+            ("scripts/quality-gates/gut-baseline.txt",
+             "scripts=1\ntests=1\ngates=1\ngate_tests=1\n"),
+            ("scripts/quality-gates/test_fixture.py",
+             "import unittest\n\n\nclass T(unittest.TestCase):\n"
+             "    def test_ok(self):\n        self.assertTrue(True)\n"),
+            (".gitignore", ".husky/_\n.fake-bin/\n__pycache__/\n"),
+        ):
+            with io.open(os.path.join(self.repo, relative), "w", encoding="utf-8") as handle:
+                handle.write(body)
+        self._git("add", "-A")
+        self._git("commit", "-q", "-m", "fixture")
+        self._git("config", "core.hooksPath", ".husky/_")
+        os.makedirs(os.path.join(self.repo, ".husky", "_"))
+        for hook in _HUSKY_SHIMS:
+            _write_executable(os.path.join(self.repo, ".husky", "_", hook), "#!/bin/sh\n")
+        self.fake_bin = os.path.join(self.repo, ".fake-bin")
+        os.makedirs(self.fake_bin)
+        self.fake_log = os.path.join(self.repo, ".fake-tool.log")
+
+    def _git(self, *args):
+        subprocess.run(
+            ["git", "-c", "commit.gpgsign=false", "-c", "user.name=t",
+             "-c", "user.email=t@example.invalid"] + list(args),
+            cwd=self.repo, env=self.env, check=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
+    def _change(self, relative, body="extends Node\n"):
+        target = os.path.join(self.repo, relative)
+        os.makedirs(os.path.dirname(target), exist_ok=True)
+        with io.open(target, "w", encoding="utf-8") as handle:
+            handle.write(body)
+
+    def _fake(self, version, **per_tool):
+        with io.open(os.path.join(self.fake_bin, ".gdtoolkit"), "w", encoding="utf-8") as handle:
+            handle.write(version + "\n")
+        for tool in GDTOOLKIT_TOOLS:
+            body = _FAKES[tool]
+            if tool in per_tool:
+                body = body.replace('$(cat "$FAKE_BIN/.gdtoolkit")', per_tool[tool])
+            _write_executable(os.path.join(self.fake_bin, tool), body)
+
+    def _gates(self):
+        env = dict(self.env, PATH=self.fake_bin + os.pathsep + self.env["PATH"],
+                   FAKE_BIN=self.fake_bin, FAKE_TOOL_LOG=self.fake_log, GATES_BASE="HEAD")
+        proc = subprocess.run(
+            ["bash", "scripts/gates.sh"], cwd=self.repo, env=env, timeout=120,
+            stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True)
+        ran = ""
+        if os.path.exists(self.fake_log):
+            with io.open(self.fake_log, encoding="utf-8") as handle:
+                ran = handle.read()
+        return proc.returncode, proc.stdout, ran
+
+    def test_a_changed_gd_with_gdlint_at_another_version_fails_naming_both_versions(self):
+        self._change("tools/a.gd")
+        self._fake(self.PIN, gdlint="4.4.0")
+        code, out, ran = self._gates()
+        self.assertEqual(code, 1, out)
+        self.assertIn("gdlint VERSION MISMATCH", out)
+        self.assertIn("installed: gdlint 4.4.0", out)
+        self.assertIn("pinned:    gdlint %s" % self.PIN, out)
+        self.assertIn('pip install "gdtoolkit==%s"' % self.PIN, out)
+        self.assertIn("STATIC GATES FAILED", out)
+        self.assertIn("gdformat --check tools/a.gd", ran, "gdformat matched the pin and should run")
+        self.assertNotIn("gdlint tools/", ran, "a mismatched gdlint must not judge the change")
+
+    def test_a_changed_gd_with_both_tools_at_the_pin_gets_past_the_check(self):
+        self._change("tools/a.gd")
+        self._fake(self.PIN)
+        code, out, ran = self._gates()
+        self.assertEqual(code, 0, out)
+        self.assertNotIn("MISMATCH", out)
+        self.assertIn("STATIC GATES PASSED", out)
+        self.assertIn("gdformat --check tools/a.gd", ran)
+        self.assertIn("gdlint tools/a.gd", ran)
+
+    def test_a_run_with_no_changed_gd_needs_no_gdtoolkit(self):
+        self._change("docs/notes.md", "# notes\n")
+        code, out, ran = self._gates()
+        self.assertEqual(code, 0, out)
+        self.assertNotIn("NOT FOUND", out)
+        self.assertIn("STATIC GATES PASSED", out)
+
+
 _PR_SHAS = {
     "github.event.pull_request.base.sha": "BASESHA",
     "github.event.pull_request.head.sha": "HEADSHA",
