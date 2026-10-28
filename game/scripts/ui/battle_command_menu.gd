@@ -11,6 +11,18 @@ enum MenuState { HIDDEN, COMMAND, SUBMENU, TARGET }
 
 const SpellHelpers := preload("res://scripts/ui/spell_helpers.gd")
 const InvHelpers := preload("res://scripts/util/inventory_helpers.gd")
+const AbilityHelpers := preload("res://scripts/ui/ability_helpers.gd")
+const AbilityCommand := preload("res://scripts/combat/battle_ability_command.gd")
+
+## Third-slot label per character (ui-design.md § 2.4 Command Panel).
+const UNIQUE_COMMAND_NAMES: Dictionary = {
+	"edren": "Bulwark",
+	"cael": "Rally",
+	"lira": "Forgewright",
+	"torren": "Spiritcall",
+	"sable": "Tricks",
+	"maren": "Arcanum",
+}
 
 const COLOR_SELECTED: Color = Color("#ffff88")
 const COLOR_NORMAL: Color = Color("#ccddff")
@@ -60,7 +72,7 @@ func show_commands(character_data: Dictionary, is_boss: bool, current_mp: int = 
 	_cursor = 0
 	_state = MenuState.COMMAND
 
-	var ability_name: String = _get_ability_name(character_data.get("id", ""))
+	var ability_name: String = _get_ability_name(_character_id())
 	_commands = [
 		{"label": "Attack", "type": "attack", "enabled": true},
 		{"label": "Magic", "type": "magic", "enabled": true},
@@ -200,6 +212,7 @@ func _confirm_command() -> void:
 			_build_magic_submenu()
 			_show_submenu()
 		"ability":
+			_build_ability_submenu()
 			_show_submenu()
 		"item":
 			_build_item_submenu()
@@ -258,9 +271,7 @@ func _confirm_submenu() -> void:
 ## Each item routes a {"type": "magic", "spell": <spell_dict>} command; spells
 ## the character cannot afford are disabled. Mirrors menu_magic's data access.
 func _build_magic_submenu() -> void:
-	# Live battle character_data uses key "character_id" (PartyState member shape);
-	# fall back to "id" (raw character JSON shape) for safety.
-	var char_id: String = _character_data.get("character_id", _character_data.get("id", ""))
+	var char_id: String = _character_id()
 	var level: int = int(_character_data.get("level", 1))
 	var items: Array[Dictionary] = []
 	for spell_v: Variant in SpellHelpers.get_known_spells(char_id, level):
@@ -279,6 +290,27 @@ func _build_magic_submenu() -> void:
 				}
 			)
 		)
+	set_submenu_items(items)
+
+
+## Populate the submenu with the acting character's known unique-command
+## abilities (GAP-002) as {"type": "ability", "ability": <dict>} commands,
+## greying unaffordable MP costs as Magic does. Hook for #158 slices b-f: an
+## ability whose command is not built yet is listed but disabled, so those
+## characters keep today's outcome of nothing to pick.
+func _build_ability_submenu() -> void:
+	var items: Array[Dictionary] = []
+	var level: int = int(_character_data.get("level", 1))
+	for ability: Dictionary in AbilityHelpers.get_known_abilities(_character_id(), level):
+		var cost: int = int(ability.get("cost_value", 0))
+		var affordable: bool = ability.get("cost_type", "") != "mp" or _current_mp >= cost
+		var entry: Dictionary = {
+			"label": "%s  %s" % [ability.get("name", ""), AbilityHelpers.format_cost(ability)],
+			"command": {"type": "ability", "ability": ability},
+			"target_type": ability.get("target", "single_enemy"),
+			"enabled": affordable and AbilityCommand.is_built(ability),
+		}
+		items.append(entry)
 	set_submenu_items(items)
 
 
@@ -355,18 +387,11 @@ func _update_submenu_display() -> void:
 		_submenu_list.add_child(label)
 
 
+## The acting character's id. Live battle character_data is PartyState's member
+## shape, keyed "character_id"; raw character JSON uses "id".
+func _character_id() -> String:
+	return _character_data.get("character_id", _character_data.get("id", ""))
+
+
 func _get_ability_name(character_id: String) -> String:
-	match character_id:
-		"edren":
-			return "Bulwark"
-		"cael":
-			return "Rally"
-		"lira":
-			return "Forgewright"
-		"torren":
-			return "Spiritcall"
-		"sable":
-			return "Tricks"
-		"maren":
-			return "Arcanum"
-	return "Ability"
+	return UNIQUE_COMMAND_NAMES.get(character_id, "Ability")

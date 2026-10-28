@@ -168,3 +168,84 @@ func test_ally_targeting_is_not_widened_by_a_larger_enemy_count() -> void:
 	m._handle_target_input(_press("ui_cancel"))  # TARGET -> COMMAND (attack)
 	_open_single_ally_target(m, 2)
 	assert_eq(m._target_count, 2, "ally targeting still stops at the occupied party slots")
+
+
+# --- Ability submenu (GAP-002, #158 slice a) ---
+
+
+## Ability is index 2 in the command list (Attack, Magic, Ability, Item, ...).
+func _open_ability_submenu(m: Node) -> void:
+	m._cursor = 2
+	m._confirm_command()
+
+
+func _labels(m: Node) -> Array[String]:
+	var out: Array[String] = []
+	for item: Dictionary in m._submenu_items:
+		out.append(String(item.get("label", "")))
+	return out
+
+
+func test_the_third_command_names_the_live_character_s_unique_command() -> void:
+	# Battle hands the menu PartyState's member shape, keyed "character_id"
+	# (ui-design.md § 2.4: Cael -> Rally).
+	var m: Node = _make_menu()
+	m.show_commands({"character_id": "cael", "level": 1}, false, 25)
+	assert_eq(m._commands[2].get("label", ""), "Rally", "Cael's third command reads Rally")
+
+
+func test_ability_submenu_lists_cael_s_known_abilities_with_their_cost() -> void:
+	var m: Node = _make_menu()
+	m.show_commands({"character_id": "cael", "level": 5}, false, 25)
+	_open_ability_submenu(m)
+	assert_eq(
+		_labels(m),
+		["Hold the Line  6 MP", "Press Forward  8 MP"] as Array[String],
+		"level 5 knows Hold the Line and Press Forward, not the level 9+ Rallies"
+	)
+
+
+func test_ability_submenu_greys_out_rallies_cael_cannot_afford() -> void:
+	var m: Node = _make_menu()
+	m.show_commands({"character_id": "cael", "level": 5}, false, 7)
+	_open_ability_submenu(m)
+	assert_true(m._submenu_items[0].get("enabled", false), "6 MP Hold the Line is affordable at 7")
+	assert_false(m._submenu_items[1].get("enabled", true), "8 MP Press Forward is not")
+
+
+func test_choosing_a_rally_submits_it_with_no_target_step() -> void:
+	# Every Rally targets all allies, so it goes straight to the battle.
+	var m: Node = _make_menu()
+	m.show_commands({"character_id": "cael", "level": 1}, false, 25)
+	_open_ability_submenu(m)
+	watch_signals(m)
+	m._handle_submenu_input(_press("ui_accept"))
+	assert_signal_emitted(m, "command_selected")
+	var cmd: Dictionary = get_signal_parameters(m, "command_selected")[0]
+	assert_eq(cmd.get("type", ""), "ability", "routes an ability command")
+	assert_eq(cmd.get("ability", {}).get("id", ""), "hold_the_line", "carrying the Rally chosen")
+
+
+func test_an_unbuilt_cael_ability_is_listed_but_cannot_be_chosen() -> void:
+	# Vanguard Strike (Lv 14) is a Command, not a Rally; not built in 158a.
+	var m: Node = _make_menu()
+	m.show_commands({"character_id": "cael", "level": 14}, false, 99)
+	_open_ability_submenu(m)
+	var labels: Array[String] = _labels(m)
+	var idx: int = labels.find("Vanguard Strike  10 MP")
+	assert_gt(idx, -1, "Vanguard Strike is listed")
+	assert_false(m._submenu_items[idx].get("enabled", true), "but not selectable yet")
+
+
+func test_a_character_whose_command_is_unbuilt_can_choose_nothing() -> void:
+	# Bulwark is slice 158b. Its abilities show, none can be chosen, and the
+	# previous submenu's entries (here Magic's) never leak into the list.
+	var m: Node = _make_menu()
+	m.show_commands({"character_id": "edren", "level": 10}, false, 99)
+	_open_magic_submenu(m)
+	m._handle_submenu_input(_press("ui_cancel"))
+	_open_ability_submenu(m)
+	assert_gt(m._submenu_items.size(), 0, "Edren's known Bulwark abilities are listed")
+	for item: Dictionary in m._submenu_items:
+		assert_eq(item.get("command", {}).get("type", ""), "ability", "no leftover Magic entry")
+		assert_false(item.get("enabled", true), "%s is not selectable yet" % item.get("label"))
