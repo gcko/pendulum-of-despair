@@ -1601,6 +1601,95 @@ class TestHooksRunUnderPosixSh(unittest.TestCase):
                 self.assertIn("pnpm exec commitlint --edit %s" % path, calls)
 
 
+# --- scripts/gates.sh refuses a worktree with no hooks installed (#474) -----
+#
+# core.hooksPath is the relative `.husky/_`, which is gitignored, so a fresh
+# `git worktree add` has no hooks and its commits and pushes run none, without
+# a word. gates.sh is the runner for exactly those worktrees, so it must refuse
+# one. These build a scratch repo with the same shape, a second worktree cut
+# from it, and run the real gates.sh in each.
+
+GATES_SH = os.path.join(REPO_ROOT, "scripts", "gates.sh")
+_HUSKY_SHIMS = ("pre-commit", "commit-msg", "pre-push")
+
+
+class TestGatesShRequiresInstalledHooks(unittest.TestCase):
+
+    def setUp(self):
+        self.repo = _scratch_repo(self, "pod-gates-hooks-")
+        self.env = _clean_env(os.environ.get("PATH", ""))
+        for source, relative in (
+            (GATES_SH, "scripts/gates.sh"),
+            (os.path.join(REPO_ROOT, "scripts", "quality-gates", "check_gut_baseline.py"),
+             "scripts/quality-gates/check_gut_baseline.py"),
+            (os.path.join(REPO_ROOT, "scripts", "quality-gates", "gut-baseline.txt"),
+             "scripts/quality-gates/gut-baseline.txt"),
+        ):
+            target = os.path.join(self.repo, relative)
+            os.makedirs(os.path.dirname(target), exist_ok=True)
+            shutil.copy(source, target)
+        with io.open(os.path.join(self.repo, ".gitignore"), "w", encoding="utf-8") as handle:
+            handle.write(".husky/_\n")
+        self._git(self.repo, "add", "-A")
+        self._git(self.repo, "commit", "-q", "-m", "fixture")
+        self._git(self.repo, "config", "core.hooksPath", ".husky/_")
+        # pnpm install's result in the main checkout: the husky shims.
+        os.makedirs(os.path.join(self.repo, ".husky", "_"))
+        for hook in _HUSKY_SHIMS:
+            _write_executable(os.path.join(self.repo, ".husky", "_", hook), "#!/bin/sh\n")
+
+    def _git(self, cwd, *args):
+        subprocess.run(
+            ["git", "-c", "commit.gpgsign=false", "-c", "user.name=t",
+             "-c", "user.email=t@example.invalid"] + list(args),
+            cwd=cwd, env=self.env, check=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
+    def _gates(self, root):
+        # An unresolvable base is the first thing gates.sh checks after the
+        # hooks and the floors, so reaching that refusal proves it got past both
+        # without running a single gate.
+        env = dict(self.env, GATES_BASE="no-such-ref")
+        proc = subprocess.run(
+            ["bash", os.path.join(root, "scripts", "gates.sh")], cwd=root, env=env, timeout=60,
+            stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True)
+        return proc.returncode, proc.stdout
+
+    def test_a_new_worktree_without_hooks_fails_naming_the_install_command(self):
+        worktree = os.path.join(tempfile.mkdtemp(prefix="pod-gates-wt-"), "wt")
+        self.addCleanup(shutil.rmtree, os.path.dirname(worktree), True)
+        self._git(self.repo, "worktree", "add", "-q", "--detach", worktree)
+        self.assertFalse(os.path.exists(os.path.join(worktree, ".husky", "_")))
+        # With no floors either, only a guard that runs first names the hooks.
+        os.remove(os.path.join(worktree, "scripts", "quality-gates", "gut-baseline.txt"))
+        code, out = self._gates(worktree)
+        self.assertEqual(code, 1, out)
+        self.assertIn("GIT HOOKS NOT INSTALLED", out)
+        self.assertIn("cd '%s' && pnpm install --frozen-lockfile" % worktree, out)
+        self.assertNotIn("cannot read", out, "the guard must run before the floors are read")
+        self.assertNotIn("GATES_BASE=", out, "the guard must stop the run")
+
+    def test_a_checkout_with_its_hooks_installed_gets_past_the_guard(self):
+        code, out = self._gates(self.repo)
+        self.assertNotIn("NOT INSTALLED", out)
+        self.assertIn("GATES_BASE='no-such-ref' does not resolve to a commit", out)
+        self.assertEqual(code, 1, out)
+
+    def test_one_missing_shim_is_enough_to_fail(self):
+        os.remove(os.path.join(self.repo, ".husky", "_", "pre-push"))
+        code, out = self._gates(self.repo)
+        self.assertEqual(code, 1, out)
+        self.assertIn("GIT HOOKS NOT INSTALLED in this worktree: no .husky/_/pre-push", out)
+        self.assertNotIn("GATES_BASE=", out)
+
+    def test_an_unset_hooks_path_fails_too(self):
+        # git's default .git/hooks holds only *.sample files, which run nothing.
+        self._git(self.repo, "config", "--unset", "core.hooksPath")
+        code, out = self._gates(self.repo)
+        self.assertEqual(code, 1, out)
+        self.assertIn("GIT HOOKS NOT INSTALLED", out)
+        self.assertNotIn("GATES_BASE=", out)
+
+
 _PR_SHAS = {
     "github.event.pull_request.base.sha": "BASESHA",
     "github.event.pull_request.head.sha": "HEADSHA",

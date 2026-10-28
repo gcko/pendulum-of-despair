@@ -42,6 +42,25 @@ MAX_GODOT="${GATES_MAX_GODOT:-1}"
 FAIL=0
 say() { echo "[$NAME] $*"; }
 
+# --- Hooks installed? ---------------------------------------------------------
+# core.hooksPath is the RELATIVE path .husky/_, which git resolves in each
+# worktree, and .husky/_ is gitignored: pnpm install creates it per worktree.
+# A fresh `git worktree add` has none, so git commit and git push there run no
+# hook at all and say nothing (#474). This runner exists for exactly those
+# worktrees, so it refuses to judge one whose hooks are not installed rather
+# than report green on a tree the hooks will never see.
+HOOKS_DIR="$(git rev-parse --git-path hooks 2>/dev/null || true)"
+for hook in pre-commit commit-msg pre-push; do
+  if [ -z "$HOOKS_DIR" ] || [ ! -x "$HOOKS_DIR/$hook" ]; then
+    say "GIT HOOKS NOT INSTALLED in this worktree: no ${HOOKS_DIR:-<hooks dir>}/$hook"
+    say "  core.hooksPath is '$(git config --get core.hooksPath || true)', which pnpm install"
+    say "  creates in each worktree. Until it exists, git commit and git push here run"
+    say "  no hooks and say nothing. Install them, then re-run:"
+    say "    cd '$ROOT' && pnpm install --frozen-lockfile"
+    exit 1
+  fi
+done
+
 # --- Floors -----------------------------------------------------------------
 # A floor that is absent, duplicated, or non-numeric must stop the run. It used
 # not to: `[ "$SCRIPTS" -lt abc ]` prints "integer expression expected" and
