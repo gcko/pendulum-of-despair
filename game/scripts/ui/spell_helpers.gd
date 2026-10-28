@@ -8,7 +8,7 @@ const FIELD_CATEGORIES: Array[String] = ["healing"]
 
 ## Get all spells a character knows at their current level. A spell taught by
 ## a story event (a cross-training scene) is known once that event's flag is
-## set, as a story-gated ability is (ability_helpers.gd).
+## set, as a story-gated ability is (ability_helpers.gd); see knows_spell.
 static func get_known_spells(character_id: String, level: int) -> Array:
 	var result: Array = []
 	for tradition: String in TRADITIONS:
@@ -17,13 +17,28 @@ static func get_known_spells(character_id: String, level: int) -> Array:
 			if not spell is Dictionary:
 				continue
 			var s: Dictionary = spell as Dictionary
-			if _has_learned(_learner_entry(s, character_id), level):
+			if knows_spell(s, character_id, level):
 				result.append(s)
 	result.sort_custom(
 		func(a: Dictionary, b: Dictionary) -> bool:
 			return _sort_by_tier_then_cost(a, b, character_id)
 	)
 	return result
+
+
+## Whether [param character_id] at [param level] has learned [param spell]
+## through their learned_by entry. Each gate the entry names must be met: an
+## event by its story flag, a level by level, and an entry naming both
+## ("Lv 32, after Act III spirit communion") needs both.
+static func knows_spell(spell: Dictionary, character_id: String, level: int) -> bool:
+	var entry: Dictionary = _learner_entry(spell, character_id)
+	if not (entry.has("event") or entry.has("level")):
+		return false
+	if entry.has("event") and not EventFlags.get_flag(String(entry["event"])):
+		return false
+	if entry.has("level") and int(entry["level"]) > level:
+		return false
+	return true
 
 
 ## The MP [param character_id] pays to cast [param spell]: its base mp_cost,
@@ -37,7 +52,9 @@ static func get_mp_cost(spell: Dictionary, character_id: String) -> int:
 	var entry: Dictionary = _learner_entry(spell, character_id)
 	if not entry.get("cross_trained", false):
 		return base
-	return ceili(base * float(entry.get("mp_penalty", 1.0)))
+	var raw_penalty: Variant = entry.get("mp_penalty", 1.0)
+	var penalty: float = float(raw_penalty) if raw_penalty != null else 1.0
+	return ceili(base * penalty)
 
 
 ## Whether a spell can be cast from the field menu.
@@ -62,16 +79,6 @@ static func _learner_entry(spell: Dictionary, character_id: String) -> Dictionar
 		if entry is Dictionary and (entry as Dictionary).get("character", "") == character_id:
 			return entry
 	return {}
-
-
-## Whether a learned_by [param entry] is met at [param level]: an event entry
-## by its story flag, a level entry by level.
-static func _has_learned(entry: Dictionary, level: int) -> bool:
-	if entry.is_empty():
-		return false
-	if entry.has("event"):
-		return bool(EventFlags.get_flag(String(entry["event"])))
-	return int(entry.get("level", 999)) <= level
 
 
 static func _sort_by_tier_then_cost(a: Dictionary, b: Dictionary, character_id: String) -> bool:

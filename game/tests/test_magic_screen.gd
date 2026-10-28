@@ -5,8 +5,13 @@ const SpellHelpers = preload("res://scripts/ui/spell_helpers.gd")
 
 
 func before_each() -> void:
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
 	PartyState.initialize_new_game()
+
+
+func after_each() -> void:
+	TestHelpers.reset_game_state()
 
 
 # --- Spell resolution ---
@@ -92,6 +97,32 @@ func test_spells_sorted_by_tier_then_cost() -> void:
 					% [a.get("name", ""), ta, b.get("name", ""), tb]
 				)
 			)
+
+
+# --- An entry naming a level and an event needs both. Ancestor's Fury is
+# learned at "Lv 32, after Act III spirit communion scene" (magic.md
+# § Spirit Spells). ---
+
+
+func _dual_gated() -> Dictionary:
+	return {
+		"id": "dual_fixture",
+		"learned_by": [{"character": "torren", "level": 32, "event": "act_iii_spirit_communion"}],
+	}
+
+
+func test_a_dual_gated_spell_is_not_known_below_its_level_after_the_event() -> void:
+	EventFlags.set_flag("act_iii_spirit_communion", true)
+	assert_false(SpellHelpers.knows_spell(_dual_gated(), "torren", 31), "Lv 31 is short of 32")
+
+
+func test_a_dual_gated_spell_is_not_known_at_its_level_before_the_event() -> void:
+	assert_false(SpellHelpers.knows_spell(_dual_gated(), "torren", 32), "the scene has not played")
+
+
+func test_a_dual_gated_spell_is_known_once_both_are_met() -> void:
+	EventFlags.set_flag("act_iii_spirit_communion", true)
+	assert_true(SpellHelpers.knows_spell(_dual_gated(), "torren", 32), "Lv 32 and the scene")
 
 
 # --- Field cast tests ---

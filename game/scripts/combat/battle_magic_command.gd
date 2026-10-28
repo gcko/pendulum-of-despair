@@ -67,15 +67,6 @@ func do_magic(actor_id: String, command: Dictionary) -> bool:
 	return true
 
 
-## Whether [param member] (a BattleState record) can cast at all: no status
-## that blocks casting. The battle Magic menu grays out on the same answer.
-static func can_cast(member: Dictionary) -> bool:
-	for s: Dictionary in member.get("active_statuses", []):
-		if s.get("name", "") in CAST_BLOCKING_STATUSES:
-			return false
-	return true
-
-
 ## Apply the spell to its target side. Returns whether at least one target was
 ## affected, which is what drives the Weave Gauge gain.
 func _resolve(
@@ -207,3 +198,12 @@ func _status_on_enemy(caster_slot: int, spell: Dictionary, idx: int) -> bool:
 		_:
 			_battle.damage_dealt.emit("enemy_%d" % idx, 0, "miss")
 	return false
+
+
+## Whether [param member] (a BattleState record) can cast at all: no status
+## that blocks casting. The battle Magic menu grays out on the same answer.
+static func can_cast(member: Dictionary) -> bool:
+	for s: Dictionary in member.get("active_statuses", []):
+		if s.get("name", "") in CAST_BLOCKING_STATUSES:
+			return false
+	return true

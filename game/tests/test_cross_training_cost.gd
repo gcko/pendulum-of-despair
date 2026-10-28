@@ -165,6 +165,12 @@ func test_a_native_learner_is_charged_the_base_cost() -> void:
 	assert_eq(SpellHelpers.get_mp_cost(_odd_cost_spell(), "torren"), 7, "Torren learns it natively")
 
 
+func test_a_cross_trained_entry_with_a_null_penalty_pays_the_base_cost() -> void:
+	var spell: Dictionary = _odd_cost_spell()
+	spell["learned_by"][1]["mp_penalty"] = null
+	assert_eq(SpellHelpers.get_mp_cost(spell, "edren"), 7, "no multiplier means x1, not a crash")
+
+
 func test_a_cross_trained_spell_is_learned_at_its_story_event() -> void:
 	# Edren's Kindle Breath comes from the Act III campfire, not from a level.
 	var before: Array = SpellHelpers.get_known_spells("edren", 99).map(
@@ -271,6 +277,13 @@ func _press(action: String) -> InputEventAction:
 ## Walk the grid cursor onto [param spell_id] the way a player does, then pick
 ## it and pick the first target.
 func _field_cast(screen: Node, cid: String, spell_id: String) -> void:
+	_field_pick(screen, cid, spell_id)
+	screen.handle_input(_press("ui_accept"))
+
+
+## Walk the grid cursor onto [param spell_id] the way a player does and pick
+## it, stopping before a target is chosen.
+func _field_pick(screen: Node, cid: String, spell_id: String) -> void:
 	var idx: int = -1
 	var known: Array = SpellHelpers.get_known_spells(cid, 1)
 	for i: int in range(known.size()):
@@ -283,7 +296,6 @@ func _field_cast(screen: Node, cid: String, spell_id: String) -> void:
 		screen.handle_input(_press("ui_down"))
 	if idx % 2 == 1:
 		screen.handle_input(_press("ui_right"))
-	screen.handle_input(_press("ui_accept"))
 	screen.handle_input(_press("ui_accept"))
 
 
@@ -317,5 +329,11 @@ func test_the_field_menu_refuses_a_learner_holding_only_the_base_cost() -> void:
 	EventFlags.set_flag("act_iii_campfire", true)
 	var edren: Dictionary = PartyState.get_member("edren")
 	edren["current_mp"] = 6
-	_field_cast(_open_field_magic("edren"), "edren", "breath_of_the_wilds")
+	var screen: Node = _open_field_magic("edren")
+	_field_pick(screen, "edren", "breath_of_the_wilds")
+	var feedback: Label = screen.get_node("Layout/DescPanel/DescLabel")
+	var targets: Control = screen.get_node("Layout/TargetPanel")
+	assert_eq(feedback.text, "Not enough MP.", "the spell is refused at the pick, not at the cast")
+	assert_false(targets.visible, "so no target is ever offered")
+	screen.handle_input(_press("ui_accept"))
 	assert_eq(edren["current_mp"], 6, "6 MP does not cover Edren's 9, so nothing is spent")
