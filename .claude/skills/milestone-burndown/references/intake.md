@@ -38,7 +38,8 @@ call is merge authority (section 3).
 
 These were checked against the model lineup and the effort guidance as of
 **2026-10**. Pricing per million tokens, input/output: Fable 5.1 $10/$50,
-Opus 5.5 $4/$20, Sonnet 5.5 $2/$10, Haiku 5.5 $0.10/$0.50.
+Opus 5.5 $4/$20, Sonnet 5.5 $2/$10, Haiku 5.5 $0.10/$0.50 (prompts up to
+100K tokens; $0.50/$2.50 beyond).
 
 - **Planning → `fable:high`.** Planning uses few tokens: it reads issues and
   splits files once per wave. It also has the most leverage. A wrong file split
@@ -58,8 +59,10 @@ Opus 5.5 $4/$20, Sonnet 5.5 $2/$10, Haiku 5.5 $0.10/$0.50.
   from the builders'. Review spend multiplies quickly: `/story-review-loop`
   runs six agents per round, on every PR, every round.
 - **Haiku is never recommended for a stage.** Wrong triage, building or review
-  is more expensive than the tokens Haiku saves. The planner may still hand
-  Haiku a purely mechanical lookup, such as "does this path exist on main".
+  is more expensive than the tokens Haiku saves. The one exception to
+  section 5's "every Agent call in a stage" rule: the orchestrator may hand
+  Haiku a purely mechanical lookup, such as "does this path exist on
+  origin/main", and should say that it did.
 
 **When these go stale:** the Agent tool's `model` parameter lists the aliases
 that exist right now. If a recommended alias is not in that list, recommend the
@@ -72,13 +75,16 @@ Header chip `Merging`. Merging is outward-facing and hard to undo, so the user
 chooses how much of it to delegate:
 
 1. **Ask before each merge (Recommended)**, `merge=ask`. You present each PR's pre-merge
-   checklist (`references/stack-and-merge.md`) and merge it after a yes.
-2. **One approval per wave**, `merge=wave`. You present the whole stack's checklists once and
-   merge it bottom-up after a yes. Any check that fails mid-sequence stops the
-   sequence and returns the decision to the user.
-3. **I merge myself**, `merge=never`. You prepare everything, then hand over the ordered list
-   along with the post-merge steps, which you still run once told the merges
-   are done.
+   checklist (`references/stack-and-merge.md` section 4) and merge it after
+   a yes.
+2. **One approval per wave**, `merge=wave`. One yes covers merging the
+   whole stack bottom-up. The checklist still runs immediately before each
+   merge, and any check that fails stops the sequence and returns the decision
+   to the user.
+3. **I merge myself**, `merge=never`. You prepare everything and hand over
+   the ordered list. The user merges one PR at a time and tells you after each.
+   You run the after-merge steps, then the next PR's checklist, before they
+   merge that one.
 
 ## 4. Optional second call, only when the first left gaps
 
@@ -87,7 +93,8 @@ this milestone (more than 12 open issues, or a mix of code and docs):
 
 - **Bundles per wave** (`Parallel`): 3 (Recommended), 2, or 4. More than 4
   makes stack review and restacking cost more than the parallelism saves, and
-  headless Godot is serialized anyway (`GATES_MAX_GODOT`).
+  headless Godot runs one at a time anyway (the mutex in
+  `scripts/quality-gates/godot-lock.sh`).
 
 ## 5. How the answers are applied
 

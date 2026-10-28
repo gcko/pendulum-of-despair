@@ -32,24 +32,25 @@ Never fix it from memory.
 ## Settings
 plan=fable:high  build=opus:high  review=opus:xhigh  merge=ask  parallel=3
 substitutions: none
-wave base-sha: 6622cf5
+created by: this session, 2026-10-28
 
 ## Waves
-| wave | started | open at start | closed | filed into milestone | open at end |
-|------|---------|---------------|--------|----------------------|-------------|
-| 1    | 2026-10-28 | 8 | 5 | 1 | 4 |
+| wave | started | base-sha | open at start | closed | filed into milestone | open at end |
+|------|---------|----------|---------------|--------|----------------------|-------------|
+| 1    | 2026-10-28 | 6622cf5 | 8 | 5 | 1 | 4 |
 
 ## Issues
 | # | verdict | bundle | branch | PR | state | evidence |
 |---|---------|--------|--------|----|-------|----------|
-| 101 | open-valid | A | fix/p4-shop-sell | 470 | merged, closed by hand | merge 1a2b3c4 |
+| 101 | open-valid | A | fix/p4-shop-sell | 470 | merged, auto-closed (PR opened against main) | merge 1a2b3c4 |
+| 104 | open-valid | B | fix/p4-craft-recipes | 471 | merged after retarget, closed by hand | merge 5d6e7f8 |
 | 102 | already-fixed | - | - | - | closed | fixed by 9f8e7d6, test test_sell_price |
 | 103 | needs-design-decision | - | - | - | waiting on user | docs/story/economy.md silent on resale |
 
 ## Bundles
-| bundle | agent | worktree | branch | parent | tip | last content head | owned files | hot files | PR | gate state |
-|--------|-------|----------|--------|--------|-----|-------------------|-------------|-----------|----|-----------|
-| A | build-A | ../pod-wt-p4a | fix/p4-shop-sell | origin/main | 3c4d5e6 | 3c4d5e6 | game/scripts/shop/** | - | 470 | PUSH-GATE passed; merged |
+| bundle | agent | worktree | branch | parent | tip | previous tip | last content head | owned files | hot files | PR | gate state |
+|--------|-------|----------|--------|--------|-----|--------------|-------------------|-------------|-----------|----|-----------|
+| A | build-A | ../pod-wt-p4-shop-sell | fix/p4-shop-sell | origin/main | 3c4d5e6 | 9a8b7c6 | 3c4d5e6 | game/scripts/shop/** | - | 470 | PUSH-GATE passed; merged at 3c4d5e6 |
 
 ## Pending user decisions
 - #103: design doc silent on resale value. Options given: ...

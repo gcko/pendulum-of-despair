@@ -42,10 +42,12 @@ the review gate, or close something on a guess.
 1. **Evidence before every outward action.** A subagent report is a claim.
    Check it before you close, push, or merge on it.
 2. **Every PR is green at its own tip**, judged against its own parent.
-3. **`/pr-review-response`'s PUSH-GATE (Step 6b) is the only push point once
-   Copilot has commented.** Read `.claude/skills/pr-review-response/SKILL.md`
-   from disk. The system-reminder summary of that skill leaves out Steps 6
-   and 6b.
+3. **`/pr-review-response`'s PUSH-GATE (Step 6b) is the only push point for
+   review fixes.** Read `.claude/skills/pr-review-response/SKILL.md` from
+   disk. The system-reminder summary of that skill leaves out Steps 6 and 6b.
+   The one named exception is a *base-only push*: a branch that only moved
+   onto a new base and carries no new content
+   (`references/stack-and-merge.md`, "Base-only pushes").
 4. **Merge only into `main`, with a merge commit, after the pre-merge
    checklist** (`references/stack-and-merge.md` section 4), under the merge
    authority the user chose.
@@ -61,11 +63,12 @@ Breaking the letter of these rules breaks their spirit.
 
 1. Resolve the milestone to a number and a title:
    `gh api 'repos/gcko/pendulum-of-despair/milestones?state=all' -q '.[] | "\(.number) \(.title) open=\(.open_issues)"'`.
-2. Find the ledger. If one exists from an earlier session, this is a
-   **resume**: follow `references/ledger.md` "Resuming" and skip to the step
-   it points at. A compaction inside this session is not a resume. Re-read the
-   ledger and carry on with the settings already recorded, without asking
-   again.
+2. Find the ledger. If this conversation created it (you wrote it, or the
+   compaction summary says you did), re-read it and carry on with the settings
+   it records, without asking again. If it came from another session, this is
+   a **resume**: follow `references/ledger.md` "Resuming" and skip to the step
+   it points at. Values given in the invocation override recorded settings in
+   both cases.
 3. **Ask the intake questions.** REQUIRED: read `references/intake.md` and use
    AskUserQuestion. It asks for model and effort for planning, building and
    review separately, each with a recommendation, plus merge authority.
@@ -75,13 +78,16 @@ Breaking the letter of these rules breaks their spirit.
 
    | Check | Command | Pass |
    |---|---|---|
-   | main checkout clean and current | `git fetch -q origin && git status -sb` | no changes; not behind `origin/main` |
+   | main checkout clean and current | `git fetch -q origin`, `git status --porcelain`, `git rev-list --count main..origin/main` | no output; `0` (else `git -C <main-checkout> pull --ff-only`) |
    | hooks installed | `git config core.hooksPath` | `.husky/_` (else `pnpm install`) |
    | commit signing works | `git log -1 --format=%G? $(git commit-tree -S HEAD^{tree} -p HEAD -m probe)` | `G` (the probe is an unreferenced object, so it changes nothing) |
    | gh authenticated | `gh auth status` | logged in, `repo` scope |
-   | Godot reachable | `command -v godot \|\| test -x "${GODOT_BIN:-/Applications/Godot.app/Contents/MacOS/Godot}"` | found; without it, `gates.sh` refuses to report success |
+   | Godot reachable | the command below the table | exits 0; without Godot, `gates.sh` refuses to report success |
    | in-flight work | `git worktree list`, `gh pr list --state open` | any open PR or worktree already serving a milestone issue is recorded, and that issue is left out of new bundles |
    | stale state | `git stash list` | stashes you did not create are reported, never dropped |
+
+   Godot check:
+   `command -v godot || test -x "${GODOT_BIN:-/Applications/Godot.app/Contents/MacOS/Godot}"`
 
 5. Snapshot the milestone into the ledger: every open issue, and wave 1's
    open-at-start count.
@@ -106,7 +112,7 @@ for the wrong fix.
 | `already-fixed` | **re-check the evidence yourself**, then close it with the evidence in the comment (`--reason completed`) |
 | `example-wrong` | bundle the real defect; the PR says the example was wrong |
 | `wrong-fix-requested` | bundle the real fix. Measure live callers before changing shared code, because the requested fix may break them |
-| `duplicate` | close as `--reason "not planned"`, linking the survivor |
+| `duplicate` | `gh issue close <n> --duplicate-of <survivor>` |
 | `needs-design-decision` | ask the user. Design docs are law, and a value is never invented |
 | `blocked-external` | leave it open with the blocker in a comment. It goes to Step 9 |
 | `epic-split` | propose the split to the user; do not split it unilaterally |
@@ -139,7 +145,7 @@ shared indexes. Each hot file gets exactly one rule:
 
 **Topology:**
 
-- **File-disjoint and no hot file:** independent PRs, each off `main`. No
+- **File-disjoint and no hot file:** independent PRs, each off `origin/main`. No
   stack means no retarget trap, and the PRs can merge in any order. Prefer
   this.
 - **Otherwise, a stack.** Put the owner of any ungated hot file on top, and
@@ -157,17 +163,17 @@ Include any per-bundle build-setting override you propose
 (`references/intake.md` section 5), the issues closed in triage, and the
 questions waiting on the user.
 
-## Step 3: Build in parallel, off `main`
+## Step 3: Build in parallel, off `origin/main`
 
 Do **not** create the stack up front with each agent branching from an
-unfinished parent. Every bundle branches from `main`, the bundles run in
-parallel, and the stack is formed afterwards (Step 4).
+unfinished parent. Every bundle branches from the same `origin/main` commit,
+the bundles run in parallel, and the stack is formed afterwards (Step 4).
 
 1. `git fetch -q origin`, then record `origin/main`'s SHA as this wave's
    `<base-sha>` in the ledger. Create each worktree yourself, so the branch
    names and paths are known:
-   `git worktree add ../pod-wt-<slug> -b <type>/<slug> <base-sha>`
-   (`feature/`, `fix/`, `chore/`).
+   `git worktree add ../pod-wt-<slug> -b <prefix>/<slug> <base-sha>`, where
+   `<prefix>` is `feature`, `fix` or `chore` (AGENTS.md).
 2. Dispatch one **builder** per bundle, at the build setting, all in one
    message, with the builder brief. Name each one `build-<bundle>` and record
    the name in the ledger, so that after a compaction you can still reach a
@@ -176,8 +182,9 @@ parallel, and the stack is formed afterwards (Step 4).
    - **Ownership audit.** `git -C <wt> diff --name-only <base-sha>...HEAD`
      must list only that bundle's owned files and gated hot files. Any other
      path is a defect. Revert it or re-dispatch.
-   - **Gates.** The report quotes the final line of `gates.sh`. Re-run it
-     yourself for any bundle whose report is `partial`, or whose line is
+   - **Gates.** The report quotes the `RESULT` line and the last status line
+     of `gates.sh`; stack-and-merge section 2 defines a pass. Re-run the gates
+     yourself for any bundle whose report is `partial`, or whose lines are
      missing or not a pass.
    - **Signatures.** `git -C <wt> log --format='%h %G? %s' <base-sha>..HEAD`.
      Step 4 re-signs, but an `N` here tells you the agent's environment
@@ -185,6 +192,11 @@ parallel, and the stack is formed afterwards (Step 4).
 4. A `blocked` or `partial` builder: put its question to the user, or re-brief
    with the failure. Do not quietly finish its work in the orchestrator, and
    do not drop the issue without a ledger entry saying why.
+5. **Route the cross-bundle notes now, before any PR opens.** Each note goes to
+   the bundle that owns the file: `SendMessage` to `build-<owner>` with the
+   note, then re-check that bundle's report. If the owner has finished and its
+   fix would change its scope, hold the note for the next wave as a candidate
+   issue (Step 8).
 
 ## Step 4: Stack, sign, and prove each tip green
 
@@ -195,8 +207,18 @@ for each branch.
 
 ## Step 5: Open the PRs
 
-Open each PR with `/create-pr` against its parent branch (or `main`), using
-the PR template. List a `Closes #N` line for every issue. On a stacked child
+`/create-pr` always targets `main` and pushes the current directory's branch.
+That fits independent PRs and the bottom of a stack, when run with the
+worktree as the current directory. For a stacked child, do what it does
+(commit with `-s`, fill every section of `.github/pull_request_template.md`)
+with these overrides:
+
+```bash
+git -C <wt> push -u origin <branch>          # first push: the pre-push hook runs
+gh pr create --base <parent-branch> --head <branch> --title "<type(scope): ...>" --body-file <body.md>
+```
+
+List a `Closes #N` line for every issue. On a stacked child
 those lines will **not** fire (stack-and-merge section 6), so the ledger
 records which issues each PR is responsible for. Do not assign PRs to the
 milestone: the milestone counter can count them as open items.
@@ -208,9 +230,33 @@ setting into every reviewer agent it dispatches. Its user-facing steps (the
 Step 6 gap analysis waits for the user's approval) stay with the orchestrator.
 Never hand the whole skill to a subagent that cannot ask the user.
 
-- Copilot sometimes never reviews a stacked PR. "No comments" is not "clean"
-  unless a Copilot review exists for the current head. Request one. If Copilot
-  is unavailable, run `/story-review-loop-cope`, and record which was used.
+**Run it from the PR's worktree.** The review loops it calls edit, commit and
+push in the current directory, and `/story-review-loop` starts with
+`gh pr checkout`, which fails because the branch is already checked out in
+`<wt>`. With `<wt>` as the current directory, skip that checkout. Three
+burn-down rules override the loops' own:
+
+- The diff under review is `git diff <parent>...HEAD`, not `git diff main`.
+- A finding in a file this bundle does not own is not fixed here. It becomes
+  a candidate issue, even where a loop says every finding must be fixed.
+- A stale value in an ungated hot file owned by a later bundle is expected,
+  not a defect (Step 2).
+
+**Copilot.** "No comments" is not "clean" unless a Copilot review exists for
+the ledger's last content head.
+
+- The ruleset's automatic review covers only PRs that target `main`, so a
+  stacked child often gets none. Request one on every PR that has none:
+  `gh pr edit <N> --add-reviewer "@copilot"`.
+- Copilot is **unavailable** when its review body says it could not review
+  (quota, for example), or when no review arrives within 30 minutes of the
+  request. Then use the fallback for the PR's type, and record which one ran:
+  - story or docs PR: `/story-review-loop-cope <PR#> 1`
+  - code or data PR: `/godot-review-loop <PR#> 1`
+  - no Copilot emulation exists for code PRs, so say so in the PR's summary.
+
+**Every PR, and the stack as a whole:**
+
 - A stack of N PRs means N review passes. The PR you skip is the one that gets
   merged red at position 2 of 4.
 - Once the whole stack has had its pass, restack once
@@ -224,6 +270,12 @@ retarget, check the CI result still applies, close the issues `Closes` missed,
 fix the board, update the ledger) before touching the next PR. All of this is
 in `references/stack-and-merge.md` sections 4 to 6. Any failed check stops the
 sequence and goes back to the user.
+
+- `merge=ask`: present each PR's checklist and merge after a yes.
+- `merge=wave`: one yes covers the stack, but the checklist still runs
+  immediately before each merge.
+- `merge=never`: the user merges one PR at a time and tells you. You run the
+  after-merge steps and the next PR's checklist before they merge that one.
 
 ## Step 8: Control the follow-ups, then decide on the next wave
 
@@ -241,15 +293,24 @@ Subagents never file issues. They return `candidate_issues` (defects),
    by the topic of the **fix**, not by the PR that found it. A follow-up goes
    into this milestone only if this milestone's goal cannot be met without it.
 
-**Stop rule.** Record the wave's numbers in the ledger. If this wave's
-open-at-end count is not below its open-at-start count, or it filed as many
-issues into the milestone as it closed, **stop**. Show the user the numbers and
-the new issues before planning another wave. That pattern means the reviews
-are producing opinions rather than findings, or the milestone's scope is
-moving.
+**Stop rule.** Record the wave's numbers in the ledger. Issues closed in
+triage count as closed. **Stop** and show the user the numbers and the new
+issues if either is true:
 
-Otherwise, clean up the merged worktrees (Step 9 cleanup) and go back to
-Step 1 with the issues still open.
+- the milestone did not shrink: this wave filed at least as many issues into
+  it as it closed, or
+- this wave filed more follow-ups than the wave before it.
+
+Either one means the reviews are producing opinions rather than findings, or
+the milestone's scope is moving. The user decides whether to continue, raise
+the filing bar, or stop. Ask with AskUserQuestion.
+
+**Next step:**
+
+- **Nothing open**, or **only `blocked-external` and `needs-design-decision`
+  issues** left: go to Step 9.
+- **Otherwise:** clean up the merged worktrees (Step 9 cleanup) and go back to
+  Step 1 with the issues still open.
 
 ## Step 9: Declare done, or say why it cannot be
 
@@ -264,12 +325,16 @@ gh issue list --milestone "<title>" --state open --limit 500 --json number -q le
 The first count can include PRs assigned to the milestone. The second counts
 issues only. If they disagree, find out why before you claim anything.
 
-**`main` is actually green.** On `main`, `HEAD` equals the default base, so the
-diff is empty and `gates.sh` takes its fast path, skipping the GUT suite. A
-pass on that signal means nothing. Force it:
+**`main` is actually green.** Judge `origin/main`, not a local `main` that
+may lag it. On `main`, `HEAD` equals the default base, so the diff is empty and
+`gates.sh` takes its fast path, skipping the GUT suite. A pass on that signal
+means nothing. Force it, in a throwaway worktree:
 
 ```bash
-GATES_FORCE_GODOT=1 bash <main-checkout>/scripts/gates.sh
+git fetch -q origin
+git worktree add --detach ../pod-wt-verify origin/main
+GATES_BASE=origin/main GATES_FORCE_GODOT=1 bash ../pod-wt-verify/scripts/gates.sh
+git worktree remove ../pod-wt-verify
 ```
 
 Read the `RESULT scripts=... tests=...` line and check that the counts moved
@@ -290,7 +355,11 @@ comment on the issue saying why.
   refuses, because local `main` lags `origin/main`, and the GitHub state is
   the proof the branch merged. Finish with `git worktree prune`. Leave stashes
   and worktrees you did not create alone.
-- Write the ledger's final summary, then land the plane per AGENTS.md.
+- Write the ledger's final summary, then land the plane per AGENTS.md. The
+  "remaining work" its first step files means genuine defects (Step 8).
+  Observations are reported to the user, not filed. Every push has already
+  happened from the bundles' worktrees, and nothing is pushed from the main
+  checkout.
 
 ---
 
@@ -298,14 +367,14 @@ comment on the issue saying why.
 
 | Thought | Reality |
 |---|---|
-| "The builder said gates passed" | Read the RESULT line, or run it yourself. A report is a claim. |
+| "The builder said gates passed" | Read the RESULT line and the status line, or run the gates yourself. A report is a claim. |
 | "Defaults are fine, skip the intake questions" | The user chooses the models, the effort and the merge authority. Ask. |
 | "I'll fork the reviewers, it's quicker" | A fork ignores `model` and `effort`, which drops the user's choice. |
 | "The bottom branch is already on main, no need to rebase it" | Then its unsigned commits ship, and the PR sits `BLOCKED` with green CI. |
 | "I'll fix the derived count once, in the top branch" | Only if no gate checks it. Otherwise every lower PR is red at its own tip. |
 | "This restack push only moves the base" | Then it carries nothing else. Unpushed review fixes go through the PUSH-GATE. |
-| "No Copilot comments, so it's clean" | Check that a Copilot review exists for this head. |
-| "CI was green before the retarget" | Only if `main`'s tree equals the old parent tip. Otherwise rebase and re-run. |
+| "No Copilot comments, so it's clean" | Check that a real Copilot review exists for the last content head. "Unable to review" is not one. |
+| "CI was green before the retarget" | Only if `main`'s tree equals the parent's head at merge. Otherwise rebase and re-run. |
 | "The child still targets A, merging it is fine" | A has already merged. That merge lands nowhere. Retarget to `main`. |
 | "Move the blocked issue to the next milestone and we're at zero" | That is rule 5. The user decides. |
 | "The subagent can just file that issue" | Only the orchestrator files: deduped, filtered for defects, milestoned. |
@@ -315,7 +384,8 @@ comment on the issue saying why.
 
 - `/issue-bundle`: one coherent bundle, one PR
 - `/pr-review-response`: the mandatory PUSH-GATE (read it from disk)
-- `/story-review-loop-cope`: Copilot-style review when Copilot does not run
+- `/story-review-loop-cope`: Copilot-style review of story PRs when Copilot does not run
+- `/godot-review-loop`: the review fallback for code PRs
 - `/quality-gate-authoring`: for any gate or guard a bundle adds
 - `/gut-tdd`: the behavioral standard tests must meet
 - `references/intake.md`, `references/agent-briefs.md`,

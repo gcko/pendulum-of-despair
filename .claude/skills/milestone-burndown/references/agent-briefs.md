@@ -60,13 +60,15 @@ FILES YOU DO NOT OWN: <path> (bundle <Y>), <path> (bundle <Z>), everything else
 HOT FILES:            <path>: gated, update it for your own changes | ungated, leave it (bundle <Y> owns it)
 
 Use /gut-tdd for game logic and /quality-gate-authoring for any gate or guard.
+Stop where /gut-tdd hands off to /create-pr: the orchestrator opens PRs.
 Read AGENTS.md first. Its rules bind you, in particular: never --no-verify, and
 Conventional Commits.
 
-Commit as you go; each commit references its issue (Refs #<n>).
+Commit as you go with `git commit -s`; each commit references its issue (Refs #<n>).
 When finished, run the gates once from your worktree:
   GATES_BASE=<base-sha> bash <worktree>/scripts/gates.sh
-and copy its final RESULT/PASSED line into your report.
+and copy two lines into your report: the `RESULT scripts=... tests=...` line
+(when Godot ran) and the last status line (ALL GATES PASSED or STATIC GATES PASSED).
 
 Do NOT: push, open a PR, file, comment on or close any issue, edit a file you
 do not own (gated hot files above excepted), or "just fix" something you noticed in someone else's file.
@@ -80,7 +82,7 @@ Report:
   per_issue: <n>: fixed | not fixed. <what changed>, <test that pins it>
   files_changed: <output of git diff --name-only <base-sha>...HEAD>
   commits: <output of git log --format='%h %G? %s' <base-sha>..HEAD>
-  gates: <the final line of scripts/gates.sh, verbatim>
+  gates: <the RESULT line and the last status line of scripts/gates.sh, verbatim>
   cross_bundle_notes: <path, what, which bundle owns it>
   candidate_issues: <genuine defects someone must fix that you could not fix in
     your ownership; title + one-line evidence each. Do NOT file them.>
@@ -96,12 +98,16 @@ they run inside a burn-down, add this block to each reviewer prompt so the
 findings arrive in a shape the follow-up control (SKILL.md Step 8) can use:
 
 ```
-This PR is one link in a stack: base <parent branch>, judged on its own commits.
-Review only what this PR changes (git diff <parent>...HEAD).
+This PR's base is <base: the parent PR's branch, or origin/main>. Judge it on its
+own commits only: review git diff <base>...HEAD.
+This bundle owns: <owned files>. Values in <ungated hot files> are owned by
+bundle <Y> and are updated there; a stale value in them is expected here.
 Classify every finding as:
   defect: wrong behavior, a broken gate, or a doc claim that is false now
   observation: could be clearer or stronger; nothing is wrong
 Only defects block the PR. Whether an observation still gets fixed inside this
-PR is decided by the loop's own rules. Neither kind is ever filed as an issue
-by you; list anything that needs work outside this PR as candidate_issues.
+PR is decided by the loop's own rules. A defect in a file this bundle does not
+own is never fixed here, whatever the loop says: report it as a candidate_issue
+or, if a sibling bundle owns the file, as a cross_bundle_note.
+You never file issues. Report observations as observations.
 ```
