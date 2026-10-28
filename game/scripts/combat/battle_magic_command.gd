@@ -16,6 +16,10 @@ const SpellHelpers = preload("res://scripts/ui/spell_helpers.gd")
 const CASTER_WEAVE_GAIN: int = 5
 const MAREN_WEAVE_GAIN: int = 10
 
+## Statuses under which a party member cannot cast: Silence, "Cannot cast
+## spells" (magic.md § Status Effect Reference).
+const CAST_BLOCKING_STATUSES: Array[String] = ["silence"]
+
 var _battle: Node
 
 
@@ -24,12 +28,13 @@ func _init(battle: Node) -> void:
 
 
 ## Cast the spell in [param command]. Returns false when the cast never
-## happened — no target, or not enough MP — so the caller re-opens the menu.
+## happened — the caster is Silenced, no target, or not enough MP — so the
+## caller re-opens the menu. Nothing is spent unless the cast resolves.
 func do_magic(actor_id: String, command: Dictionary) -> bool:
 	var state: Node = _battle.get_battle_state()
 	var slot: int = actor_id.replace("party_", "").to_int()
 	var member: Dictionary = state.get_member(slot)
-	if member.is_empty():
+	if member.is_empty() or not can_cast(member):
 		return false
 	var spell: Dictionary = command.get("spell", {})
 	var target_type: String = spell.get("target", "single_enemy")
@@ -59,6 +64,15 @@ func do_magic(actor_id: String, command: Dictionary) -> bool:
 		state.gain_weave_gauge(slot, CASTER_WEAVE_GAIN)
 		if member.get("character_id", "") != "maren":
 			state.gain_weave_gauge_for_maren(MAREN_WEAVE_GAIN)
+	return true
+
+
+## Whether [param member] (a BattleState record) can cast at all: no status
+## that blocks casting. The battle Magic menu grays out on the same answer.
+static func can_cast(member: Dictionary) -> bool:
+	for s: Dictionary in member.get("active_statuses", []):
+		if s.get("name", "") in CAST_BLOCKING_STATUSES:
+			return false
 	return true
 
 

@@ -64,7 +64,8 @@ func _ready() -> void:
 
 ## Show command menu for a party member.
 ## [param member] is the actor's BattleState record; it drives MP affordability
-## in the Magic and Ability submenus and status blocks on the unique command.
+## in the Magic and Ability submenus, and status blocks on Magic (Silence) and
+## on the unique command.
 func show_commands(character_data: Dictionary, is_boss: bool, member: Dictionary = {}) -> void:
 	_is_boss = is_boss
 	_character_data = character_data
@@ -75,9 +76,10 @@ func show_commands(character_data: Dictionary, is_boss: bool, member: Dictionary
 	var cid: String = character_data.get("character_id", character_data.get("id", ""))
 	var ability_name: String = UNIQUE_COMMAND_NAMES.get(cid, "Ability")
 	var ability_on: bool = SubmenuItems.ability_command_enabled(character_data, _member)
+	var magic_on: bool = SubmenuItems.magic_command_enabled(_member)
 	_commands = [
 		{"label": "Attack", "type": "attack", "enabled": true},
-		{"label": "Magic", "type": "magic", "enabled": true},
+		{"label": "Magic", "type": "magic", "enabled": magic_on},
 		{"label": ability_name, "type": "ability", "enabled": ability_on},
 		{"label": "Item", "type": "item", "enabled": true},
 		{"label": "Defend", "type": "defend", "enabled": true},
