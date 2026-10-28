@@ -524,9 +524,6 @@ class TestWiredIntoTheGates(unittest.TestCase):
         hook = self._read(".husky/pre-push")
         self.assertRegex(hook, r"#\s+L\s+.*check_gut_baseline\.py")
 
-    def test_pre_push_checks_godot_exit_status(self):
-        self.assertIn("PIPESTATUS", self._read(".husky/pre-push"))
-
     # --- Absence of Godot must not be reported as success -------------------
 
     def test_pre_push_refuses_to_pass_when_godot_is_absent(self):
@@ -1449,6 +1446,159 @@ class TestGdtoolkitPin(unittest.TestCase):
             lines = [line.strip() for line in handle.read().splitlines() if line.strip()]
         self.assertEqual(len(lines), 1, "gdtoolkit-version.txt must hold one version: %r" % lines)
         self.assertRegex(lines[0], _PEP440)
+
+
+# --- pre-push and commit-msg run as husky runs them (#476) ------------------
+#
+# husky runs every hook as `sh -e <hook>`, and Debian's sh is dash. Both hooks
+# used to open with `set -euo pipefail`, which a dash without pipefail rejects,
+# and pre-push read `${PIPESTATUS[0]}`, which no POSIX sh has. The test this
+# replaces asserted the literal string "PIPESTATUS" in pre-push, so it pinned
+# the bashism instead of the behavior. These run the real hooks under every
+# shell _hook_shells() finds, with fakes for godot, python3 and pnpm.
+
+PRE_PUSH = os.path.join(REPO_ROOT, ".husky", "pre-push")
+COMMIT_MSG = os.path.join(REPO_ROOT, ".husky", "commit-msg")
+GODOT_LOCK_SH = os.path.join(REPO_ROOT, "scripts", "quality-gates", "godot-lock.sh")
+
+_HOOK_FAKES = {
+    # Import succeeds; the GUT run prints a green, ANSI-coloured summary and
+    # then exits $FAKE_GUT_EXIT, so a clean summary from a dying process can
+    # be staged.
+    "godot": r'''#!/bin/sh
+echo "godot $*" >> "$FAKE_TOOL_LOG"
+case " $* " in
+  *" --import "*) exit 0 ;;
+  *gut_cmdln.gd*)
+    printf '\033[32mScripts              90\033[0m\nTests              1289\n'
+    printf 'Passing Tests      1289\n---- All tests passed! ----\n'
+    exit "${FAKE_GUT_EXIT:-0}" ;;
+esac
+echo "fake godot: unexpected: $*"
+exit 2
+''',
+    # Every Python gate passes; Gate L exits $FAKE_GATE_L_EXIT.
+    "python3": r'''#!/bin/sh
+echo "python3 $*" >> "$FAKE_TOOL_LOG"
+case " $* " in
+  *check_gut_baseline.py*--log*) exit "${FAKE_GATE_L_EXIT:-0}" ;;
+esac
+exit 0
+''',
+    # commitlint's verdict, reduced to the header shape, on the file it is given.
+    "pnpm": r'''#!/bin/sh
+echo "pnpm $*" >> "$FAKE_TOOL_LOG"
+[ "$1 $2 $3" = "exec commitlint --edit" ] || { echo "fake pnpm: unexpected: $*"; exit 2; }
+head -n 1 "$4" | grep -Eq '^[a-z]+(\([a-z]+\))?: .+' || { echo "fake commitlint: bad header"; exit 1; }
+''',
+}
+
+
+class TestHooksRunUnderPosixSh(unittest.TestCase):
+    """.husky/pre-push and .husky/commit-msg under `sh -e` and dash."""
+
+    def setUp(self):
+        self.dir = tempfile.mkdtemp(prefix="pod-hooksh-")
+        self.addCleanup(shutil.rmtree, self.dir, True)
+        name = os.path.basename(self.dir)
+        # pre-push writes its log and status beside other worktrees' in /tmp.
+        self.log = "/tmp/gut_prepush_%s.log" % name
+        for leftover in (self.log, "/tmp/gut_prepush_%s.status" % name):
+            self.addCleanup(lambda path=leftover: os.path.exists(path) and os.remove(path))
+        for source, relative in (
+            (PRE_PUSH, ".husky/pre-push"),
+            (COMMIT_MSG, ".husky/commit-msg"),
+            (GODOT_LOCK_SH, "scripts/quality-gates/godot-lock.sh"),
+        ):
+            target = os.path.join(self.dir, relative)
+            os.makedirs(os.path.dirname(target), exist_ok=True)
+            shutil.copy(source, target)
+        gut = os.path.join(self.dir, "game", "addons", "gut", "gut_cmdln.gd")
+        os.makedirs(os.path.dirname(gut))
+        io.open(gut, "w").close()
+        self.fake_bin = os.path.join(self.dir, ".fake-bin")
+        os.makedirs(self.fake_bin)
+        for tool, body in _HOOK_FAKES.items():
+            _write_executable(os.path.join(self.fake_bin, tool), body)
+        self.fake_log = os.path.join(self.dir, ".fake-tool.log")
+
+    def _hook(self, hook, *args, **env_extra):
+        """Run `hook` under every husky shell; returns [(shell, code, output, calls)]."""
+        env = _clean_env(self.fake_bin + os.pathsep + _path_without_gdtoolkit())
+        env.update(
+            FAKE_TOOL_LOG=self.fake_log,
+            GODOT_BIN=os.path.join(self.fake_bin, "godot"),
+            GODOT_LOCK=os.path.join(self.dir, "godot.lock"),
+            GODOT_LOCK_POLL="1",
+            GODOT_LOCK_TIMEOUT="5",
+        )
+        env.update(env_extra)
+        runs = []
+        for shell in _hook_shells():
+            if os.path.exists(self.fake_log):
+                os.remove(self.fake_log)
+            proc = subprocess.run(
+                [shell, "-e", hook] + list(args), cwd=self.dir, env=env, timeout=60,
+                stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True,
+            )
+            calls = ""
+            if os.path.exists(self.fake_log):
+                with io.open(self.fake_log, encoding="utf-8") as handle:
+                    calls = handle.read()
+            runs.append((shell, proc.returncode, proc.stdout, calls))
+        return runs
+
+    # --- pre-push ---------------------------------------------------------
+
+    def test_pre_push_fails_when_godot_exits_nonzero_in_the_gut_run(self):
+        # The summary is green; only the process status says the run died.
+        for shell, code, out, calls in self._hook(".husky/pre-push", FAKE_GUT_EXIT="3"):
+            with self.subTest(shell=shell):
+                self.assertEqual(code, 1, out)
+                self.assertIn("Godot EXITED 3 during the GUT run", out)
+                self.assertNotIn("check_gut_baseline.py --log", calls)
+                self.assertNotIn("All pre-push quality gates passed", out)
+
+    def test_pre_push_passes_and_hands_gate_l_the_stripped_log(self):
+        for shell, code, out, calls in self._hook(".husky/pre-push"):
+            with self.subTest(shell=shell):
+                self.assertEqual(code, 0, out)
+                self.assertIn("All pre-push quality gates passed", out)
+                self.assertNotIn("EXITED", out)
+                self.assertIn("check_gut_baseline.py --log %s" % self.log, calls)
+                with io.open(self.log, encoding="utf-8") as handle:
+                    logged = handle.read()
+                self.assertIn("Scripts              90", logged)
+                self.assertNotIn("\x1b", logged)
+
+    def test_pre_push_fails_with_gate_ls_status_when_gate_l_fails(self):
+        for shell, code, out, calls in self._hook(".husky/pre-push", FAKE_GATE_L_EXIT="4"):
+            with self.subTest(shell=shell):
+                self.assertEqual(code, 4, out)
+                self.assertIn("check_gut_baseline.py --log", calls)
+                self.assertNotIn("All pre-push quality gates passed", out)
+
+    # --- commit-msg -------------------------------------------------------
+
+    def _message(self, text):
+        path = os.path.join(self.dir, "COMMIT_EDITMSG")
+        with io.open(path, "w", encoding="utf-8") as handle:
+            handle.write(text)
+        return path
+
+    def test_commit_msg_rejects_a_message_commitlint_rejects(self):
+        path = self._message("Fixed some stuff\n")
+        for shell, code, out, calls in self._hook(".husky/commit-msg", path):
+            with self.subTest(shell=shell):
+                self.assertNotEqual(code, 0, out)
+                self.assertIn("fake commitlint: bad header", out)
+
+    def test_commit_msg_accepts_a_conventional_message_and_lints_that_file(self):
+        path = self._message("fix(ci): run hooks under dash\n")
+        for shell, code, out, calls in self._hook(".husky/commit-msg", path):
+            with self.subTest(shell=shell):
+                self.assertEqual(code, 0, out)
+                self.assertIn("pnpm exec commitlint --edit %s" % path, calls)
 
 
 _PR_SHAS = {

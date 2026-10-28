@@ -1,4 +1,8 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/usr/bin/env sh
+# POSIX sh. husky runs this file as `sh -e .husky/commit-msg <file>`
+# (.husky/_/h), whatever the shebang says, and on Debian/Ubuntu that sh is dash.
+# A dash without pipefail rejects `set -o pipefail`, so every commit died on
+# line 2 before commitlint ran (#476). There is no pipeline here to need it.
+set -eu
 
 pnpm exec commitlint --edit "$1"
