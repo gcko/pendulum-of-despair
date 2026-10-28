@@ -9,6 +9,9 @@ const BossAI = preload("res://scripts/combat/boss_ai.gd")
 const BattleActions = preload("res://scripts/combat/battle_actions.gd")
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 const ENEMY_SCENE: PackedScene = preload("res://scenes/entities/enemy.tscn")
+## The line for a member a hit has woken (battle-dialogue.md § Status Effect
+## Notifications, "[Character] woke up!"), "[Character]" replaced by "%s".
+const WAKE_NOTICE: String = "%s woke up!"
 
 ## References injected by BattleManager
 var _manager: Node2D
@@ -168,6 +171,16 @@ func _do_spawn(action: Dictionary, enemy: Node, enemies: Array[Node], idx: int) 
 
 
 func _do_attack_or_ability(action: Dictionary, enemy: Node, _idx: int) -> void:
+	var asleep: Array = range(4).filter(func(i: int) -> bool: return _state.has_status(i, "sleep"))
+	_resolve_attack_or_ability(action, enemy)
+	# A hit cures Sleep (#435); say so for each member this action woke.
+	for i: int in asleep:
+		if not _state.has_status(i, "sleep") and _state.get_member(i).get("is_alive", false):
+			var who: String = _state.get_member(i).get("character_data", {}).get("name", "???")
+			_manager.message.emit(WAKE_NOTICE % who)
+
+
+func _resolve_attack_or_ability(action: Dictionary, enemy: Node) -> void:
 	var atype: String = action.get("type", "")
 	var elem: String = action.get("element", "")
 	if action.get("target", "") == "all":

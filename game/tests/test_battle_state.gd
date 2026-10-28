@@ -438,3 +438,59 @@ func test_highest_threat_skips_dead_and_empty() -> void:
 	assert_eq(_state.get_highest_threat_slot(), 0, "the only living member is highest threat")
 	_state.take_damage(0, 99999)  # KO slot 0
 	assert_eq(_state.get_highest_threat_slot(), -1, "no living members -> -1")
+
+
+# --- Wake on damage (#435; magic.md § Status Effect Reference) ---
+
+
+func test_a_hit_wakes_a_sleeping_member() -> void:
+	# Sleep lasts "Until cured or damaged".
+	_state.add_member(0, _make_char_data())
+	_state.apply_status(0, "sleep", "turns", -1)
+	watch_signals(_state)
+	_state.take_damage(0, 10)
+	assert_false(_state.has_status(0, "sleep"), "the hit woke them")
+	assert_signal_emitted_with_parameters(_state, "status_removed", [0, "sleep"])
+
+
+func test_a_hit_snaps_a_confused_member_out_of_it() -> void:
+	# Confusion lasts "3 turns or until damaged".
+	_state.add_member(0, _make_char_data())
+	_state.apply_status(0, "confusion", "turns", 3)
+	_state.take_damage(0, 10)
+	assert_false(_state.has_status(0, "confusion"), "damage cured the Confusion")
+
+
+func test_a_hit_does_not_cure_a_status_damage_does_not_end() -> void:
+	_state.add_member(0, _make_char_data())
+	_state.apply_status(0, "paralysis", "turns", 3)
+	_state.take_damage(0, 10)
+	assert_true(_state.has_status(0, "paralysis"), "Paralysis does not wake on damage")
+
+
+func test_a_members_own_poison_tick_does_not_wake_them() -> void:
+	# The enemy side passes wakes=false for its DoT; the party side matches it.
+	_state.add_member(0, _make_char_data())
+	_state.apply_status(0, "poison", "turns", -1)
+	_state.apply_status(0, "sleep", "turns", -1)
+	_state.apply_status(0, "confusion", "turns", 5)
+	var hp: int = _state.get_member(0)["current_hp"]
+	_state.tick_statuses(0)
+	assert_lt(_state.get_member(0)["current_hp"], hp, "the Poison tick landed")
+	assert_true(_state.has_status(0, "sleep"), "still asleep after their own Poison tick")
+	assert_true(_state.has_status(0, "confusion"), "still confused after their own tick")
+
+
+func test_waking_does_not_end_a_rally_carried_by_the_sleeper() -> void:
+	# Sleep ends a Rally only when it lands on the caster; an ally waking up
+	# keeps the copy it carries.
+	_state.add_member(0, _make_char_data())
+	_state.add_member(1, _make_char_data())
+	BattleRally.start(_state, 1, "hold_the_line", {"stat_pct": {"def": 15}, "turns": 3})
+	_state.apply_status(0, "sleep", "turns", -1)
+	_state.take_damage(0, 10)
+	assert_false(_state.has_status(0, "sleep"), "woke up")
+	assert_eq(
+		BattleRally.active(_state).get("id", ""), "hold_the_line", "the Rally is still in force"
+	)
+	assert_false(_state.get_member(0)["active_rally"].is_empty(), "and the sleeper still has it")

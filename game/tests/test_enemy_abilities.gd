@@ -420,3 +420,51 @@ func test_shadow_touch_scales_with_the_casters_magic() -> void:
 		int(weak.get("damage", 0)),
 		"The Flickering's MAG 14 out-damages Mine Shade's MAG 12 on the same move",
 	)
+
+
+# --- A hit wakes a sleeping party member, out loud (#435) ---
+
+
+class _WakeManager:
+	extends Node2D
+	signal message(text: String)
+	signal damage_dealt(target_id: String, amount: int, damage_type: String)
+	signal combatant_died(combatant_id: String)
+
+
+## The canonical wake line from battle_status_effect_notifications.json
+## (battle-dialogue.md § Status Effect Notifications), for [param who].
+func _canonical_wake_line(who: String) -> String:
+	var data: Variant = JSON.parse_string(
+		FileAccess.get_file_as_string("res://data/dialogue/battle_status_effect_notifications.json")
+	)
+	for entry: Variant in (data as Dictionary).get("entries", []):
+		for line: Variant in (entry as Dictionary).get("lines", []):
+			if String(line).ends_with("woke up!"):
+				return String(line).replace("[Character]", who)
+	fail_test("no wake line in battle_status_effect_notifications.json")
+	return ""
+
+
+func test_an_enemy_hit_wakes_a_sleeping_member_and_says_so() -> void:
+	var mgr: _WakeManager = _WakeManager.new()
+	add_child_autofree(mgr)
+	var messages: Array[String] = []
+	mgr.message.connect(func(t: String) -> void: messages.append(t))
+	var state: Node = _party_with({"def": 5, "spd": 1}, 5000)
+	state.get_member(0)["character_data"]["name"] = "Edren"
+	state.apply_status(0, "sleep", "turns", UNTIL_CURED)
+	var atb: Node = preload("res://scripts/combat/atb_system.gd").new()
+	add_child_autofree(atb)
+	var area: Node2D = Node2D.new()
+	add_child_autofree(area)
+	var driver: BattleEnemyTurn = BattleEnemyTurn.new(mgr, state, atb, area)
+	var enemy: Enemy = _make_synthetic_enemy({"atk": 40, "spd": 50, "type": "humanoid", "hp": 100})
+	seed(3)
+	for i: int in range(40):  # 70% of turns are an attack, and most land
+		if not state.has_status(0, "sleep"):
+			break
+		driver.execute("enemy_0", [enemy] as Array[Node], false, i)
+	assert_false(state.has_status(0, "sleep"), "an enemy hit woke Edren")
+	assert_has(messages, _canonical_wake_line("Edren"), "and the battle said so")
+	assert_eq(messages.count(_canonical_wake_line("Edren")), 1, "once")

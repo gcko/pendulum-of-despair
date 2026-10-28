@@ -88,16 +88,14 @@ func get_member(slot: int) -> Dictionary:
 
 ## Get count of active (non-null) members.
 func get_active_count() -> int:
-	var count: int = 0
-	for m in _members:
-		if m != null:
-			count += 1
-	return count
+	return _members.size() - _members.count(null)
 
 
 ## Apply damage to a party member. Returns the damage applied after the ability
 ## hooks (Unbreakable leaves 1 HP) — the number a damage popup should show.
-func take_damage(slot: int, amount: int) -> int:
+## A hit cures Sleep and Confusion (#435); [param wakes] is false for the
+## bearer's own Poison/Burn tick, as enemy.take_damage does.
+func take_damage(slot: int, amount: int, wakes: bool = true) -> int:
 	var m: Dictionary = get_member(slot)
 	if m.is_empty() or not m["is_alive"]:
 		return 0
@@ -106,6 +104,10 @@ func take_damage(slot: int, amount: int) -> int:
 		applied = hook.on_damage(self, slot, applied)
 	m["current_hp"] = maxi(0, m["current_hp"] - applied)
 	member_damaged.emit(slot, applied)
+	if wakes and applied > 0:
+		for s: Dictionary in (m["active_statuses"] as Array).duplicate():
+			if StatusEffects.wakes_on_damage(s.get("name", "")):
+				remove_status(slot, s["name"])
 	if m["current_hp"] <= 0:
 		m["is_alive"] = false
 		m["turn_open"] = false
@@ -225,9 +227,8 @@ func tick_statuses(slot: int) -> Array:
 
 ## Apply damage-over-time (Poison 8%/turn, Burn 5%/turn; magic.md
 ## § Status Effect Reference > 'Poison') to a member. Mirrors the enemy-side
-## tick: floor(max_hp * tick_pct), min 1. DoT does not wake-cure here (party
-## has no Sleep/Confusion infliction yet). Returns the
-## per-status events [{slot, dmg, type}] for damage feedback.
+## tick: floor(max_hp * tick_pct), min 1, and like it never wakes the bearer.
+## Returns the per-status events [{slot, dmg, type}] for damage feedback.
 func _apply_dot(slot: int, m: Dictionary) -> Array:
 	var events: Array = []
 	if not m.get("is_alive", false):
@@ -237,7 +238,7 @@ func _apply_dot(slot: int, m: Dictionary) -> Array:
 		var sname: String = s.get("name", "")
 		var pct: float = StatusEffects.tick_pct(sname)
 		if pct > 0.0 and m.get("is_alive", false):
-			var dmg: int = take_damage(slot, maxi(1, int(max_hp * pct)))
+			var dmg: int = take_damage(slot, maxi(1, int(max_hp * pct)), false)
 			events.append(
 				{"slot": slot, "dmg": dmg, "type": "burn" if sname == "burn" else "poison"}
 			)
@@ -335,20 +336,13 @@ func set_defending(slot: int, defending: bool) -> void:
 
 ## Check if all party members are dead.
 func is_party_wiped() -> bool:
-	for m: Variant in _members:
-		if m != null and m["is_alive"]:
-			return false
-	return true
+	return not _members.any(func(m: Variant) -> bool: return m != null and m["is_alive"])
 
 
 ## Check if a member is a valid heal target (alive for normal heal, any for revive).
 func is_valid_heal_target(slot: int, can_revive: bool = false) -> bool:
 	var m: Dictionary = get_member(slot)
-	if m.is_empty():
-		return false
-	if not m["is_alive"] and not can_revive:
-		return false
-	return true
+	return not m.is_empty() and (m["is_alive"] or can_revive)
 
 
 ## Get average SPD of living party members.
