@@ -19,8 +19,8 @@
 
 <!-- How was this verified? Check all that apply. -->
 
-- [ ] `pnpm test` passes
-- [ ] `pnpm lint` passes
+- [ ] `bash scripts/gates.sh` passes (or the hooks ran on commit and push)
+- [ ] GUT suite green in CI
 - [ ] Manual testing (describe below)
 
 ## Notes

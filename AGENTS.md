@@ -4,9 +4,9 @@ Instructions for AI coding agents working with this repository.
 
 ## Project Overview
 
-Pendulum of Despair is a JRPG inspired by 16-bit golden age RPGs (FF4/VI, Chrono Trigger, Secret of Mana). The game will be built with **Godot Engine** as a locally-run desktop application.
+Pendulum of Despair is a JRPG inspired by 16-bit golden age RPGs (FF4/VI, Chrono Trigger, Secret of Mana). The game is built with **Godot Engine** as a locally-run desktop application.
 
-**Status:** All mechanical game design is complete (25 gaps closed across 4 tiers in `docs/story/`). The Godot 4.8 project lives in `game/` with 6 autoload singletons; its main scene (`run/main_scene`) is `res://scenes/core/title.tscn`.
+**Status:** Mechanical game design is complete in `docs/story/`: 24 of 25 design gaps are closed across 4 tiers, with 4.5 Localization deferred. The Godot 4.8 project lives in `game/` with 6 autoload singletons; its main scene (`run/main_scene`) is `res://scenes/core/title.tscn`.
 
 ---
 
@@ -71,9 +71,9 @@ Godot, which matters when several worktrees run at once.
 | `game/scenes/` | Scene files (.tscn) — core, overlay, entities, maps |
 | `game/data/` | JSON game data (enemies, items, equipment, shops, etc.) |
 | `game/assets/` | Art and audio assets (sprites, tilesets, music, SFX) |
-| `docs/story/` | Canonical game design documents (35+ files) |
+| `docs/story/` | Canonical game design documents |
 | `docs/story/bestiary/` | Enemy stat tables, type rules, families |
-| `docs/story/script/` | Full dialogue script (8 files, 6,300+ lines) |
+| `docs/story/script/` | Full dialogue script |
 | `docs/analysis/` | Gap analysis and audit docs |
 | `docs/references/` | Reference data (SNES, audio, graphics) |
 | `docs/plans/` | Architecture decisions and implementation plans |
