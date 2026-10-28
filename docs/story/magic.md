@@ -343,9 +343,9 @@ unstated. `game/tests/test_spell_balance.gd` asserts all of them against
   neither key. There is deliberately **no spell-level `cross_trained` or
   `mp_penalty` field** — one existed, was `false`/`null` on all 89 spells, was
   read by nothing, and invited someone to set it and expect an effect.
-  *The multiplier is data only so far:* the cast path spends the spell's base
-  `mp_cost` without consulting the learner's entry, so no character is charged
-  the +50% yet.
+  *The multiplier is charged:* a cross-trained learner pays `mp_cost` × 1.5
+  rounded **up** (an odd cost of 7 costs 11), and the battle and field menus
+  show and check that same figure. A native learner pays the base `mp_cost`.
 
 ---
 
