@@ -715,7 +715,7 @@ All intermediate values use real-number arithmetic. The final fill_rate is floor
 |----------|-------|---------|
 | Base speed | 25 | Floor ensures even SPD 1 is playable |
 | Gauge max | 16,000 | Total gauge capacity |
-| Tick rate | 60/second | Fixed frame rate for gauge updates |
+| Tick rate | 60/second | Fixed tick rate for gauge updates, independent of the rendered frame rate |
 
 **Time to fill:** `seconds = 16000 / fill_rate / 60`
 
