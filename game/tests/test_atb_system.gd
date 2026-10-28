@@ -82,17 +82,12 @@ func test_fill_rate_haste_and_despair() -> void:
 
 
 ## The tick rate the documented seconds are printed at. `atb_system.tick()`
-## advances every gauge by exactly one fill_rate per call and ignores its delta
-## (battle_manager drives it from `_process`), so a "second" in the tables above
-## is a count of calls — and that is a second only while the project runs at
-## this frame rate. Reading it from the project setting rather than hard-coding
-## 60 joins the two halves: raise `run/max_fps` and the measured seconds stop
-## matching the canon tables here, on top of test_battle_regressions.gd failing
-## on the setting itself.
+## applies one fill_rate per whole 1/TICKS_PER_SECOND of the delta it is given
+## (#441), so a "second" in the tables above is TICKS_PER_SECOND ticks whatever
+## the rendered frame rate is. Reading the engine's constant rather than
+## hard-coding 60 means a change to it fails here against the canon tables.
 func _ticks_per_second() -> float:
-	var fps: int = int(ProjectSettings.get_setting("application/run/max_fps", 0))
-	assert_gt(fps, 0, "the seconds tables assume a capped frame rate; run/max_fps sets it")
-	return float(maxi(fps, 1))
+	return float(ATBScript.TICKS_PER_SECOND)
 
 
 ## Tick a real gauge until it is ready and return the frame count. This is what
