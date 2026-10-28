@@ -146,8 +146,9 @@ shared indexes. Each hot file gets exactly one rule:
 **Topology:**
 
 - **File-disjoint and no hot file:** independent PRs, each off `origin/main`. No
-  stack means no retarget trap, and the PRs can merge in any order. Prefer
-  this.
+  stack means no retarget trap, and the PRs can merge in any order. Each
+  merge leaves the open siblings' CI stale, so the next one to merge is
+  rebased and re-run first (Step 7). Prefer this.
 - **Otherwise, a stack.** Put the owner of any ungated hot file on top, and
   the smallest, most certain bundle at the bottom. A review fix in a lower PR
   forces a restack of everything above it. Keep a stack at 4 PRs or fewer.
@@ -256,10 +257,15 @@ the ledger's last content head.
   `gh pr edit <N> --add-reviewer "@copilot"`.
 - Copilot is **unavailable** when its review body says it could not review
   (quota, for example), or when no review arrives within 30 minutes of the
-  request. Then use the fallback for the PR's type, and record which one ran:
-  - story or docs PR: `/story-review-loop-cope <PR#> 1`
-  - code or data PR: `/godot-review-loop <PR#> 1`
-  - no Copilot emulation exists for code PRs, so say so in the PR's summary.
+  request. Then use the fallback for the PR's type (`/pr-review-response`
+  Step 1), and record which one ran:
+
+  | PR type | Fallback |
+  |---|---|
+  | Story or Docs | `/story-review-loop-cope <PR#> 1` |
+  | Code or Data | `/godot-review-loop <PR#> 1`. No Copilot emulation exists for code PRs, so say so in the PR's summary. |
+  | Mixed | `/story-review-loop-cope <PR#> 1` first, then `/godot-review-loop <PR#> 1`, the order `/pr-review-response` Step 2 uses for Mixed PRs. |
+  | Tooling (`.claude/**`, `.github/**`, `scripts/**`, `.husky/**`, root config) | `/story-review-loop-cope <PR#> 1`, three agents at the review setting. Keep each agent's gap categories and re-point its focus at the PR's real surface: shell, hooks, workflows, gates, test behavior, and the docs that describe them. `/godot-review-loop` is wrong for a PR with no `game/` files: its agents review GDScript, scenes and design-doc compliance. |
 
 **Every PR, and the stack as a whole:**
 
@@ -273,9 +279,12 @@ the ledger's last content head.
 For each PR, in order: run the pre-merge checklist, merge with
 `gh pr merge <N> --merge`, then do all of the after-merge steps (wait for the
 retarget, check the CI result still applies, close the issues `Closes` missed,
-fix the board, update the ledger) before touching the next PR. All of this is
-in `references/stack-and-merge.md` sections 4 to 6. Any failed check stops the
-sequence and goes back to the user.
+fix the board, update the ledger) before touching the next PR. If the next
+PR is an independent sibling, rebase only that one onto the new `main`, and
+wait for its fresh CI, immediately before its checklist; never every sibling
+after every merge. All of this is in `references/stack-and-merge.md` sections
+4 to 6 (siblings: section 6, "Independent siblings"). Any failed check stops
+the sequence and goes back to the user.
 
 - `merge=ask`: present each PR's checklist and merge after a yes.
 - `merge=wave`: one yes covers the stack, but the checklist still runs
@@ -382,6 +391,7 @@ comment on the issue saying why.
 | "This restack push only moves the base" | Then it carries nothing else. Unpushed review fixes go through the PUSH-GATE. |
 | "No Copilot comments, so it's clean" | Check that a real Copilot review exists for the last content head. "Unable to review" is not one. |
 | "CI was green before the retarget" | Only if `main`'s tree equals the parent's head at merge. Otherwise rebase and re-run. |
+| "CI was green on the sibling before the other merged" | Those checks ran on the old `main`: not on the combined tree, and not any job the merged PR added. Rebase it just before its checklist and wait for CI on the new head (stack-and-merge section 6, "Independent siblings"). |
 | "The child still targets A, merging it is fine" | A has already merged. That merge lands nowhere. Retarget to `main`. |
 | "Move the blocked issue to the next milestone and we're at zero" | That is rule 5. The user decides. |
 | "The subagent can just file that issue" | Only the orchestrator files: deduped, filtered for defects, milestoned. |
@@ -391,7 +401,7 @@ comment on the issue saying why.
 
 - `/issue-bundle`: one coherent bundle, one PR
 - `/pr-review-response`: the mandatory PUSH-GATE (read it from disk)
-- `/story-review-loop-cope`: Copilot-style review of story PRs when Copilot does not run
+- `/story-review-loop-cope`: Copilot-style review of story, docs and tooling PRs when Copilot does not run
 - `/godot-review-loop`: the review fallback for code PRs
 - `/quality-gate-authoring`: for any gate or guard a bundle adds
 - `/gut-tdd`: the behavioral standard tests must meet

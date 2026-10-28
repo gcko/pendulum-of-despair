@@ -59,6 +59,8 @@ side. Recompute the value for this branch's tip (count the lines, or re-run
 whatever the gate measures), stage it, and continue without an editor:
 `GIT_EDITOR=true git -C wt-C rebase --continue`. Any other conflict means the
 ownership split was wrong. Stop and re-plan that bundle; do not hand-merge.
+The one exception is an independent sibling rebased after another PR merged
+(section 6, "Independent siblings"), which has its own conflict rules.
 
 Verify each branch against **its own parent**. `origin/main..C` would blame
 A's and B's commits on C:
@@ -172,9 +174,12 @@ ledger at merge time.
    until `base` is `main`. If it stays on the old parent, run
    `gh pr edit <child> --base main`. Never merge it where it points.
 2. **Make sure the child's CI result still applies.** A retarget is an `edited`
-   event, and `gut-tests.yml` runs only on `opened`, `synchronize` and
-   `reopened`. The checks shown are from the old base. They are still valid
-   only if `main` now has exactly the tree the child was built on:
+   event, and no workflow triggered on `opened`, `synchronize` and `reopened`
+   runs on it. `grep -l 'types: \[opened, synchronize, reopened\]'
+   <wt>/.github/workflows/*.yml` lists them; a `pull_request:` with no
+   `types:` counts too, because those three are its default. The checks shown
+   are from the old base. They are still valid only if `main` now has exactly
+   the tree the child was built on:
 
    ```bash
    git fetch -q origin
@@ -207,4 +212,67 @@ ledger at merge time.
    `--query "is:closed"` must return closed items. Move each listed item with
    `gh project item-edit`, or list it for the user if the token lacks the
    `project` scope.
-5. Update the ledger, then go on to the next PR.
+5. Update the ledger. If the next PR is an independent sibling, run
+   "Independent siblings" below for it, then go on to it.
+
+### Independent siblings
+
+An open PR cut from `origin/main` (no stack) is not retargeted, but a merge
+leaves its CI just as stale: its checks ran on the old `main`, never on the
+combined tree, and never ran any job the merged PR added.
+
+**Lazily, one sibling at a time.** Rebase only the next PR to merge,
+immediately before its section 4 checklist. Do not force-push every sibling
+after every merge: each push to a PR that targets `main` starts another
+Copilot review (section 3). Skip this when `X` already sits on the current
+`main` (`git -C wt-X merge-base --is-ancestor origin/main X` exits 0).
+
+1. Record `X`'s tip in the ledger as `<old-X-tip>`, then:
+
+   ```bash
+   git fetch -q origin
+   old_base=$(git -C wt-X merge-base <old-X-tip> origin/main)
+   git -C wt-X rebase --force-rebase --gpg-sign origin/main
+   ```
+
+2. **On a conflict, read `X`'s own change first**, for each conflicted file:
+   `git -C wt-X diff "$old_base" <old-X-tip> -- <file>`. During a rebase,
+   `--ours` is the new base (`main`), and `--theirs` is `X`'s commit.
+
+   | `X`'s change at the conflicted hunk | Do this | Push |
+   |---|---|---|
+   | already in `main`: the merged PR made it too, so it is empty now | take `main`'s side of the hunk (`git -C wt-X checkout --ours -- <file>` when it is `X`'s only hunk in that file), stage, `GIT_EDITOR=true git -C wt-X rebase --continue`, then prove it in step 3 | base-only |
+   | real, and it still applies on top of `main` | resolve it, stage, and continue. This is new content: it goes through `X`'s `/pr-review-response` PUSH-GATE and moves `X`'s last content head. Record it as an ownership slip under the ledger's "Pending user decisions", with the next step | through the PUSH-GATE |
+   | it no longer makes sense on top of `main`: the split was wrong | `git -C wt-X rebase --abort` and take it to the user | none |
+
+3. **Prove `X`'s net content is unchanged.** Compare the added and removed
+   lines against the old base. Use `command diff`: a shell alias or function
+   named `diff` can print unchanged lines as changed.
+
+   ```bash
+   lines() { git -C wt-X diff "$1" "$2" | grep -E '^[-+]' | grep -Ev '^(\+\+\+|---) (a/|b/|/dev/null)'; }
+   net() { command diff <(lines "$old_base" <old-X-tip>) <(lines origin/main X); }
+   net                                                                     # read it
+   net | grep '^>'                                                         # must print nothing: X gained content
+   net | sed -n 's/^< //p' | grep -vxFf <(lines "$old_base" origin/main)   # must print nothing: X lost content main lacks
+   ```
+
+   A clean rebase prints nothing at all. A first-row conflict prints only `<`
+   lines: `X`'s lines from that hunk, which `main` now carries. Anything else
+   is new content, and this is not a base-only push.
+4. Re-check signatures and re-run the section 2 gates. Push a base-only result
+   with `git -C wt-X push --force-with-lease`.
+5. **Wait for CI on the new head.** `gh pr checks --watch` can return before
+   the new run registers, so check first:
+
+   ```bash
+   gh pr view <X-PR> --json headRefOid,statusCheckRollup \
+     -q '{head:.headRefOid, workflows:[.statusCheckRollup[].workflowName]|unique}'
+   ```
+
+   `head` must equal `git -C wt-X rev-parse X`, and `workflows` must list
+   the `name:` of every workflow the section 6 step 2 grep finds (an empty
+   name is a status context, such as GitGuardian). Then
+   `gh pr checks <X-PR> --watch`, then `X`'s section 4 checklist. Section 3's
+   last-content-head rule holds: a base-only push does not reset the Copilot
+   requirement.

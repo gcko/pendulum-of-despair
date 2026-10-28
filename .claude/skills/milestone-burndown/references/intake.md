@@ -103,6 +103,9 @@ this milestone (more than 12 open issues, or a mix of code and docs):
   default is not what the user chose.
 - Never use `subagent_type: "fork"` for staged work. A fork ignores both
   `model` and `effort`.
+- A research agent dispatched while planning gets the same `SCRATCH:` line as
+  every staged agent, `<scratchpad>/research-<n>/`, with the same rules
+  (`references/agent-briefs.md`).
 - The review settings follow review work into sub-skills.
   `/pr-review-response`, `/godot-review-loop`, `/story-review-loop` and
   `/story-review-loop-cope` dispatch reviewer agents of their own. Every one of

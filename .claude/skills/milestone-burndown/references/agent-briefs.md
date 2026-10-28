@@ -13,6 +13,20 @@ you verified and how; never report something as done or fixed without the
 command or file evidence.* The orchestrator spot-checks reports before acting
 on them (SKILL.md Steps 1 and 3).
 
+Every brief carries a `SCRATCH:` line, `<scratchpad>/<stage>-<name>/`.
+`<scratchpad>` is the orchestrator's session scratchpad; `<stage>-<name>` is
+unique to the agent:
+
+| Agent | `<stage>-<name>` | Example |
+|---|---|---|
+| triage verifier | `triage-<slice>`, the slice index | `triage-1` |
+| research agent while planning (`references/intake.md` section 5) | `research-<n>` | `research-1` |
+| builder | `build-<bundle>`, the agent's own name | `build-A` |
+| reviewer | `review-<PR#>-<agent>` | `review-485-A` |
+
+Agents share the scratchpad, so a shared scratch name lets one agent delete
+another's files.
+
 ---
 
 ## Triage verifier (planning stage, read-only)
@@ -20,6 +34,9 @@ on them (SKILL.md Steps 1 and 3).
 ```
 You are verifying GitHub issues for the milestone "<title>" in gcko/pendulum-of-despair.
 Work read-only: no edits, commits, issue comments, or closes.
+SCRATCH: <scratchpad>/triage-<slice>/
+  Create it yourself. Write temporary files only inside it, and never rm -rf
+  a path outside it: other agents share the scratchpad.
 
 Issues: #<n>, #<n>, ...   (a slice of at most 6)
 
@@ -51,6 +68,9 @@ WORKTREE: <absolute path>   BRANCH: <branch>   BASE: <base-sha>
   (<base-sha> is the origin/main commit your worktree was cut from. Judge
   everything against it, never against a local `main`, which may be stale.)
 Work only inside this worktree. Do not cd anywhere else or touch another worktree.
+SCRATCH: <scratchpad>/build-<bundle>/
+  Create it yourself. Write temporary files only inside it, and never rm -rf
+  a path outside it: other agents share the scratchpad.
 
 ISSUES: #<n> <title>, #<n> <title>
   For each: the verified defect from triage, <one line>, and its design-doc source.
@@ -103,6 +123,9 @@ findings arrive in a shape the follow-up control (SKILL.md Step 8) can use:
 ```
 This PR's base is <base: the parent PR's branch, or origin/main>. Judge it on its
 own commits only: review git diff <base>...HEAD.
+SCRATCH: <scratchpad>/review-<PR#>-<agent>/
+  Create it yourself. Write temporary files only inside it, and never rm -rf
+  a path outside it: other agents share the scratchpad.
 This bundle owns: <owned files>. Values in <ungated hot files> are owned by
 bundle <Y> and are updated there; a stale value in them is expected here.
 Classify every finding as:

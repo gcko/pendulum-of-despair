@@ -89,7 +89,7 @@ Classify based on file paths:
 | `game/scripts/**/*.gd`, `game/tests/**/*.gd`, `game/scenes/**/*.tscn`, `game/addons/**` | **Code** |
 | `game/data/**/*.json` | **Data** |
 | Both Story and Code patterns present | **Mixed** |
-| `.claude/**`, `.github/**`, root config (`*.json`, `*.yaml`, `*.toml`) only | **Tooling** |
+| `.claude/**`, `.github/**`, `scripts/**`, `.husky/**`, root config (`*.json`, `*.yaml`, `*.toml`) only | **Tooling** |
 | Any other `docs/**` or `*.md` (e.g., `CLAUDE.md`, `docs/analysis/`) | **Docs** |
 
 **Priority rules:**
