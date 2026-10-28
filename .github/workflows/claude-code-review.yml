@@ -95,15 +95,15 @@ jobs:
             - If no EXISTING_COMMENT_ID: This is a fresh review.
 
             **IMPORTANT - Do NOT:**
-            - Run tests (npm test, pnpm test, etc.)
+            - Run tests or gates (GUT, `bash scripts/gates.sh`, Godot); CI runs them
             - Execute the code or start servers
             - Modify any files
 
             **Project context:**
-            - This is a TypeScript pnpm workspace monorepo (packages/shared, packages/server, packages/client)
-            - Server uses Express 5 + node:sqlite (Node 24+)
-            - Client uses Phaser 3 + Vite 7
-            - Strict TypeScript with no `any` types
+            - Godot 4.8 project in `game/` (open `game/` in the editor), GDScript only
+            - Tests: the GUT suite in `game/tests/`, plus the quality gates (`bash scripts/gates.sh` locally; CI runs both in its own workflows)
+            - Game data is JSON in `game/data/`; canonical design docs live in `docs/story/`
+            - pnpm is used only for husky and commitlint (git hooks); there is no Node or TypeScript application code
 
             **Posting your review:**
             - If EXISTING_COMMENT_ID is set, update the existing comment:

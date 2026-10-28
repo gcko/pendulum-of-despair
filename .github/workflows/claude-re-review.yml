@@ -133,7 +133,7 @@ jobs:
             Use AGENTS.md for universal agent guidance and CLAUDE.md for Claude-specific guidance.
 
             **IMPORTANT - Do NOT:**
-            - Run tests (npm test, pnpm test, etc.)
+            - Run tests or gates (GUT, `bash scripts/gates.sh`, Godot); CI runs them
             - Execute the code or start servers
             - Modify any files
           claude_args: '--allowed-tools "Bash(gh:*),Bash(cat:*),Bash(head:*),Bash(tail:*),Bash(grep:*),Bash(find:*),Bash(ls:*),Bash(stat:*),Bash(wc:*),Bash(diff:*),Read,Glob,Grep"'
