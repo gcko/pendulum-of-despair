@@ -10,11 +10,11 @@ const ATBScript := preload("res://scripts/combat/atb_system.gd")
 ## formula makes it 4.2s, and a guard that ticked only Maren could not see it
 ## (#177).
 const DOCUMENTED_BATTLE_SPEED_SECONDS: Dictionary = {
-	1: {8: 1.3, 18: 1.0},
-	2: {8: 1.6, 18: 1.2},
+	1: {8: 1.4, 18: 1.1},
+	2: {8: 1.6, 18: 1.3},
 	3: {8: 2.7, 18: 2.1},
-	4: {8: 4.0, 18: 3.1},
-	5: {8: 5.4, 18: 4.2},
+	4: {8: 4.1, 18: 3.1},
+	5: {8: 5.5, 18: 4.2},
 	6: {8: 8.1, 18: 6.2},
 }
 
@@ -24,18 +24,18 @@ const DOCUMENTED_BATTLE_SPEED_SECONDS: Dictionary = {
 const DOCUMENTED_PACING_MILESTONES: Array = [
 	{"who": "Maren Lv1", "spd": 8, "mods": [], "rate": 99, "seconds": 2.7, "step": 0.1},
 	{"who": "Sable Lv1", "spd": 18, "mods": [], "rate": 129, "seconds": 2.1, "step": 0.1},
-	{"who": "Maren Lv70", "spd": 49, "mods": [], "rate": 222, "seconds": 1.20, "step": 0.01},
-	{"who": "Edren Lv70", "spd": 65, "mods": [], "rate": 270, "seconds": 0.99, "step": 0.01},
+	{"who": "Maren Lv70", "spd": 49, "mods": [], "rate": 222, "seconds": 1.22, "step": 0.01},
+	{"who": "Edren Lv70", "spd": 65, "mods": [], "rate": 270, "seconds": 1.00, "step": 0.01},
 	{"who": "Sable Lv70", "spd": 128, "mods": [], "rate": 459, "seconds": 0.58, "step": 0.01},
 	{
 		"who": "Sable Lv70 + Haste",
 		"spd": 128,
 		"mods": [1.5],
 		"rate": 688,
-		"seconds": 0.39,
+		"seconds": 0.40,
 		"step": 0.01,
 	},
-	{"who": "Lv70 enemy", "spd": 60, "mods": [], "rate": 255, "seconds": 1.0, "step": 0.1},
+	{"who": "Lv70 enemy", "spd": 60, "mods": [], "rate": 255, "seconds": 1.1, "step": 0.1},
 ]
 
 var _atb: Node
@@ -106,33 +106,46 @@ func _frames_to_ready(spd: int, battle_speed: int, mods: Array) -> int:
 	return frames
 
 
-## Assert one printed cell three ways, with no tolerance anywhere.
+## Assert one printed cell, with no tolerance anywhere.
 ##
 ## An earlier version compared the measured seconds to the printed figure under
 ## a +/- 0.06 tolerance, which is wider than the gap between the wrong 4.1s and
 ## the right 4.2s — the guard would have straddled the very defect it was
 ## written for. So the two roundings are separated instead: the gauge must land
-## on the exact tick the rate implies, and the doc must print the exact seconds
-## rounded to its own precision.
+## on the exact tick the rate implies, and the doc must print the ticks it
+## actually took, divided by the tick rate and rounded half up to its own
+## precision.
+##
+## The printed figure is checked against the MEASURED tick count, not against
+## `GAUGE_MAX / rate / 60`. The gauge only moves on whole ticks, so it is ready
+## after ceil(GAUGE_MAX / rate) of them, and the bare quotient is up to one
+## tick short: Maren Lv70 printed 1.20s for a gauge that takes 73 ticks, 1.22s
+## (#492). The comparison is in whole units of the printed precision, in integer
+## arithmetic, so a cell that lands exactly on a half (81 ticks = 1.35s) rounds
+## up deterministically instead of on a float's last bit.
 func _assert_documented_cell(
 	label: String, spd: int, battle_speed: int, mods: Array, printed: float, step: float
 ) -> void:
-	var ticks: float = _ticks_per_second()
 	var rate: int = _atb.calculate_fill_rate(spd, battle_speed, mods)
 	assert_gt(rate, 0, "%s: a zero fill rate never becomes ready" % label)
 	if rate <= 0:
 		return
-	var expected_frames: int = int(ceil(float(ATBScript.GAUGE_MAX) / float(rate)))
+	var expected_ticks: int = int(ceil(float(ATBScript.GAUGE_MAX) / float(rate)))
+	var measured_ticks: int = _frames_to_ready(spd, battle_speed, mods)
 	assert_eq(
-		_frames_to_ready(spd, battle_speed, mods),
-		expected_frames,
-		"%s: the gauge must fill at exactly its fill rate" % label,
+		measured_ticks, expected_ticks, "%s: the gauge must fill at exactly its fill rate" % label
 	)
-	assert_almost_eq(
-		snappedf(float(ATBScript.GAUGE_MAX) / float(rate) / ticks, step),
-		printed,
-		0.0001,
-		"%s: combat-formulas.md prints %s s for this cell" % [label, str(printed)],
+	var units_per_second: int = roundi(1.0 / step)
+	var tps: int = ATBScript.TICKS_PER_SECOND
+	# measured_ticks / tps seconds, in units of `step`, rounded half up.
+	var measured_units: int = (2 * measured_ticks * units_per_second + tps) / (2 * tps)
+	assert_eq(
+		roundi(printed * units_per_second),
+		measured_units,
+		(
+			"%s: combat-formulas.md prints %s s; the gauge took %d ticks"
+			% [label, str(printed), measured_ticks]
+		),
 	)
 
 
