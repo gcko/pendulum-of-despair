@@ -44,7 +44,7 @@
 			"cost_type": "ap",
 			"cost_value": 2,
 			"cooldown": null,
-			"target": "single_enemy",
+			"target": "self",
 			"effect": "Reaction. When Edren absorbs an attack in any stance, he counters with a physical strike dealing 1.5x normal damage. Can trigger once per enemy turn. Grants 1 AP on hit.",
 			"row_restriction": null,
 			"story_gated": false,

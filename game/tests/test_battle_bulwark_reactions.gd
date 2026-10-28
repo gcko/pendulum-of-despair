@@ -408,3 +408,34 @@ func test_under_oathkeeper_the_attack_command_hits_twice() -> void:
 	actions.do_attack("party_%d" % EDREN, {"type": "attack", "target": 0})
 	assert_eq(_hits.size(), 2, "two Attack-command hits under it")
 	assert_true(_hits.all(func(h: Array) -> bool: return h[0] == "enemy_0"), "on the target")
+
+
+func test_choosing_riposte_arms_it_without_an_enemy_target_cursor() -> void:
+	# Riposte is a reaction that counters whoever hits Edren next
+	# (abilities.md § Edren — Bulwark), so the menu asks for no target.
+	var menu: Node = preload("res://scripts/ui/battle_command_menu.gd").new()
+	add_child_autofree(menu)
+	menu.show_commands(
+		{"character_id": "edren", "level": 10},
+		false,
+		{"ap": 2, "is_alive": true, "active_statuses": []}
+	)
+	menu._cursor = 2  # Attack, Magic, Ability, ...
+	menu._confirm_command()
+	var idx: int = (menu._submenu_items as Array).find_custom(
+		func(item: Dictionary) -> bool:
+			return item.get("command", {}).get("ability", {}).get("id", "") == "riposte"
+	)
+	assert_gt(idx, -1, "Riposte is on Edren's list at level 10")
+	menu._submenu_cursor = idx
+	watch_signals(menu)
+	var accept: InputEventAction = InputEventAction.new()
+	accept.action = "ui_accept"
+	accept.pressed = true
+	menu._handle_submenu_input(accept)
+	assert_signal_not_emitted(menu, "target_changed", "no target cursor opened")
+	assert_signal_emitted(menu, "command_selected", "chosen straight from the list")
+	_set_ap(2)
+	var cmd: Dictionary = get_signal_parameters(menu, "command_selected")[0]
+	assert_true(_cmd.do_ability("party_%d" % EDREN, cmd), "and the command arms Riposte")
+	assert_eq(_ap(), 0, "2 AP paid on arming")
