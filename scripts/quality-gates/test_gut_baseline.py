@@ -5,8 +5,11 @@ Two kinds of test live here and they fail differently, so both are needed:
 
   * fixture tests, which prove the parsing and the verdicts are right; and
   * WIRING tests, which prove the hook, CI and `scripts/gates.sh` actually call
-    the thing. `test_quality_gates.py` once had 36 green tests that no hook ran,
-    which is the exact shape of bug a fixture-only suite cannot see.
+    the thing. Since #437 they also pin `.github/workflows/quality-gates.yml`:
+    that it runs the gate self-tests and every check_*.py, and holds both to
+    the floors read through `check_gut_baseline.py --shell`.
+    `test_quality_gates.py` once had 36 green tests that no hook ran, which is
+    the exact shape of bug a fixture-only suite cannot see.
 
 The wiring tests match an UNCOMMENTED invocation, not the string
 `check_gut_baseline.py`. They were substring assertions once, and the name also
@@ -112,6 +115,25 @@ def gate_run_lines(text):
         if pattern.search(line):
             hits.append(stripped)
     return hits
+
+
+def floor_read_lines(text):
+    """Return the UNCOMMENTED commands in `text` that read the floors with `--shell`.
+
+    Comment-only lines are dropped FIRST and backslash continuations joined
+    after, so a call split over two lines counts while a commented-out first
+    half leaves its live tail with no `python3` in it, which does not. Like
+    `gate_run_lines()`, the script may be named directly or through a shell
+    variable assigned its path in the same file.
+    """
+    code = re.sub(r"\\\n\s*", " ", uncommented(text))
+    names = [re.escape(GATE_SCRIPT)]
+    for var in re.findall(
+        r'^\s*([A-Za-z_][A-Za-z0-9_]*)="[^"]*%s"' % re.escape(GATE_SCRIPT), code, re.M
+    ):
+        names.append(r"\$\{?%s\}?" % re.escape(var))
+    pattern = re.compile(r"python3\b.*(?:%s).*--shell\b" % "|".join(names))
+    return [line.strip() for line in code.splitlines() if pattern.search(line)]
 
 
 def _floors(**overrides):
@@ -492,6 +514,23 @@ class TestGateRunLineMatcher(unittest.TestCase):
         )
         self.assertEqual(gate_run_lines(text), [])
 
+    # floor_read_lines() backs the quality-gates.yml wiring tests (#437).
+
+    def test_a_floor_read_split_across_lines_counts(self):
+        text = (
+            "FLOORS=$(python3 scripts/quality-gates/check_gut_baseline.py \\\n"
+            "           --baseline scripts/quality-gates/gut-baseline.txt --shell --label ci)\n"
+        )
+        self.assertEqual(len(floor_read_lines(text)), 1)
+
+    def test_a_commented_out_floor_read_does_not_count(self):
+        text = (
+            "# FLOORS=$(python3 scripts/quality-gates/check_gut_baseline.py \\\n"
+            "           --baseline scripts/quality-gates/gut-baseline.txt --shell --label ci)\n"
+            "#   check_gut_baseline.py --shell reads the floors\n"
+        )
+        self.assertEqual(floor_read_lines(text), [])
+
 
 class TestWiredIntoTheGates(unittest.TestCase):
     """A gate nothing calls is not a gate. These are the tests that notice."""
@@ -618,6 +657,61 @@ class TestWiredIntoTheGates(unittest.TestCase):
         self.assertIn('$GUT_FLOOR_GATE', gates_sh)
         # Defined is not consulted: the skip condition has to read it.
         self.assertIn('[ -z "$GATE_TRIGGER" ]', gates_sh)
+
+    # --- CI runs the Python gates and their self-tests (#437) ---------------
+    #
+    # Until #437 Gates D-G, J, K, M, N and the Gate I self-tests ran only in
+    # .husky/pre-push, so a push made without hooks was never checked by them.
+    # These pin the CI job that closed that, and pin it to the FLOORS: a loop
+    # over a glob that matches nothing, or a discovery that collects nothing,
+    # is a green step that inspected nothing.
+
+    QUALITY_GATES_YML = ".github/workflows/quality-gates.yml"
+
+    def test_ci_reads_the_python_gate_floors_through_the_judge(self):
+        workflow = self._read(self.QUALITY_GATES_YML)
+        self.assertTrue(
+            floor_read_lines(workflow),
+            "no uncommented `check_gut_baseline.py --shell` floor read in %s"
+            % self.QUALITY_GATES_YML,
+        )
+        code = uncommented(workflow)
+        self.assertIn('eval "$FLOORS"', code)
+        # Later steps see the floors only through $GITHUB_ENV.
+        self.assertIn('echo "MIN_GATES=$MIN_GATES" >> "$GITHUB_ENV"', code)
+        self.assertIn('echo "MIN_GATE_TESTS=$MIN_GATE_TESTS" >> "$GITHUB_ENV"', code)
+
+    def test_ci_does_not_hardcode_the_python_gate_floors(self):
+        # A literal floor in the YAML would compare against a number that no
+        # longer moves with gut-baseline.txt, and pass once the file is raised.
+        code = uncommented(self._read(self.QUALITY_GATES_YML))
+        self.assertNotRegex(code, r"MIN_GATES\s*[:=]\s*[\"']?\d")
+        self.assertNotRegex(code, r"MIN_GATE_TESTS\s*[:=]\s*[\"']?\d")
+
+    def test_ci_runs_the_gate_self_tests(self):
+        # The same discovery the hook runs, against the same directory.
+        code = uncommented(self._read(self.QUALITY_GATES_YML))
+        self.assertRegex(
+            code,
+            r"python3 -m unittest discover -s scripts/quality-gates -p 'test_\*\.py'",
+        )
+
+    def test_ci_holds_the_self_tests_to_the_gate_tests_floor(self):
+        code = uncommented(self._read(self.QUALITY_GATES_YML))
+        self.assertIn("grep -E '^Ran [0-9]+ test' /tmp/gate-selftests.log", code)
+        self.assertIn('[ "$GATE_TESTS" -lt "$MIN_GATE_TESTS" ]', code)
+
+    def test_ci_runs_every_check_script(self):
+        code = uncommented(self._read(self.QUALITY_GATES_YML))
+        self.assertRegex(code, r"(?m)^\s*for G in scripts/quality-gates/check_\*\.py; do$")
+        self.assertRegex(code, r'(?m)^\s*python3 "\$G" \|\| \{.*FAIL=1; \}$')
+
+    def test_ci_holds_the_gate_loop_to_the_gates_floor(self):
+        code = uncommented(self._read(self.QUALITY_GATES_YML))
+        self.assertIn("GATE_COUNT=$((GATE_COUNT+1))", code)
+        self.assertIn('[ "$GATE_COUNT" -lt "$MIN_GATES" ]', code)
+        # The step must exit with what it found, or every check above is prose.
+        self.assertRegex(code, r"(?m)^\s*exit \$FAIL$")
 
 
 class TestGodotLockMutex(unittest.TestCase):
