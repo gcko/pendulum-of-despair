@@ -16,9 +16,18 @@
 # a push do not start two Godots between them. That is a mkdir lock with an owner
 # pid, not a kernel lock; godot-lock.sh names the one window it cannot close.
 #
-# What it is NOT: a replacement for the hooks. It does not run the pre-push
-# data-integrity scans that live inside the hook itself, and nothing runs it for
-# you. Both hooks still run on every commit and push.
+# What it runs: gdformat, gdlint and JSON validation on the changed files
+# (pre-commit Gates A-C); every scripts/quality-gates/check_*.py, which covers
+# pre-push Gates D-G, J, K, M and N plus check_gut_baseline.py's baseline shape
+# check, held to the `gates` floor; the gate self-tests (Gate I), held to the
+# `gate_tests` floor; then Godot import, the GUT suite and Gate L, unless no
+# game/ file, no doc the suite reads and no Gate L input changed (the fast path
+# below; GATES_FORCE_GODOT=1 overrides it).
+#
+# What it is NOT: a replacement for the hooks, and nothing runs it for you. It
+# skips the branch-protection and commit-message checks, and it may skip Godot
+# on a diff the pre-push hook would still run the suite for. Both hooks still
+# run on every commit and push.
 set -uo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"

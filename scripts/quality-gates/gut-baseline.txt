@@ -14,8 +14,13 @@
 # implementation of reading these floors, checking the Run Summary is present,
 # checking nothing failed, checking every collected test PASSED, and judging the
 # counts. None of it is written twice, so the three cannot drift apart (#430).
-# `gates` and `gate_tests` are used by gates.sh alone; `scripts` and `tests` by
-# all three.
+# `scripts` and `tests` are used by all three. `gates` and `gate_tests` are used
+# by gates.sh and by the "Python Quality Gates" job in
+# .github/workflows/quality-gates.yml, which reads them through the same
+# `check_gut_baseline.py --shell` and fails when fewer check_*.py gates ran or
+# fewer self-tests were collected (#437). The pre-push hook does not read
+# those two. Only the READING of them is shared: the count-and-compare for
+# `gates` and `gate_tests` is written out in both gates.sh and that workflow.
 #
 # THE LIMIT: pre-push and gates.sh can only read these floors on a machine with
 # Godot, because there is otherwise no GUT log to read. Neither one treats that
