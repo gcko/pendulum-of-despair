@@ -88,7 +88,12 @@ func _ready() -> void:
 	_turn_counter = 0
 	_enemy_turn.reset()
 	_enemies = BattleSetup.setup_enemies(
-		encounter_group, data.get("enemy_act", "act_i"), _enemy_area, _atb, _on_enemy_died
+		encounter_group,
+		data.get("enemy_act", "act_i"),
+		_enemy_area,
+		_atb,
+		_on_enemy_died,
+		_on_enemy_status_applied
 	)
 	BattleSetup.apply_atb_config(_atb)
 	_atb.apply_formation(_formation_type)
@@ -337,13 +342,24 @@ func _resync_party_atb(slot: int) -> void:
 ## the one registry table so the wording is battle-dialogue.md
 ## § Status Effect Notifications rather than a per-caller invention, and so
 ## every path that lands a status on the PARTY announces it the same way,
-## whatever inflicted it. The enemy-facing side is not yet converged:
-## battle_magic_command still hand-rolls "X is afflicted with <raw id>!" when
-## the player lands a status on an enemy, which is not a shipped line (#439).
-## A status with no canonical line lands silently.
+## whatever inflicted it. A status with no canonical line lands silently.
 func _on_party_status_applied(slot: int, status_name: String) -> void:
 	var nm: String = _state.get_member(slot).get("character_data", {}).get("name", "???")
 	var line: String = StatusEffects.application_notice(status_name, nm)
+	if not line.is_empty():
+		message.emit(line)
+
+
+## Enemy-side mirror of _on_party_status_applied (#439), wired to each enemy's
+## own status_applied, so a status spell, a spell's rider or any later path
+## shows the same marker and reads the same registry line.
+func _on_enemy_status_applied(status_name: String, _duration: int, enemy: Node) -> void:
+	var idx: int = _enemies.find(enemy)
+	if idx < 0:
+		return
+	resync_enemy_atb(idx)
+	damage_dealt.emit("enemy_%d" % idx, 0, "status")
+	var line: String = StatusEffects.application_notice(status_name, enemy.get_display_name())
 	if not line.is_empty():
 		message.emit(line)
 

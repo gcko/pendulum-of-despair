@@ -25,6 +25,9 @@ class _FakeManager:
 	func _on_enemy_died(_enemy: Node) -> void:
 		pass
 
+	func _on_enemy_status_applied(_status: String, _duration: int, _enemy: Node) -> void:
+		pass
+
 
 func after_each() -> void:
 	randomize()

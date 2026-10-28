@@ -45,6 +45,36 @@ static func apply_status_to_enemy(
 	return {"hit": true, "inflicted": true, "type": "status", "status": status_name}
 
 
+## Roll an offensive spell's status [param rider] (`{status, chance}`) against
+## [param enemy], whose damage the caller has already landed (#434). A rider is
+## not the spell's hit_rate: magic.md § Derived Rules prices it at 30-50% and
+## names it separately. It rolls Stage 1 only — `chance x MAG / (MAG + MDEF)` —
+## because "damage spells skip the MEVA% check entirely" (progression.md
+## § Derived Stats). Immunity is checked after the roll, the order given in
+## combat-formulas.md § Status Spell Resolution. The status lands at its
+## canonical duration. The caller owns the "landed and survived" check;
+## an ability that inflicts a status on hit reuses this with the same shape.
+## Returns {inflicted, type, status}; type is
+## "status" | "resisted" | "immune" | "no_effect".
+static func roll_status_rider(
+	state: Node, caster_slot: int, rider: Dictionary, enemy: Node
+) -> Dictionary:
+	var status_name: String = str(rider.get("status", ""))
+	if not StatusEffects.is_known(status_name):
+		return {"inflicted": false, "type": "no_effect", "status": status_name}
+	var caster_mag: int = state.get_effective_stat(caster_slot, "mag")
+	var denom: int = caster_mag + int(enemy.get_stats().get("mdef", 0))
+	var effective: int = 0
+	if denom > 0:
+		effective = int(int(rider.get("chance", 0)) * (float(caster_mag) / float(denom)))
+	if randi() % 100 >= effective:
+		return {"inflicted": false, "type": "resisted", "status": status_name}
+	if enemy.is_immune_to_status(status_name):
+		return {"inflicted": false, "type": "immune", "status": status_name}
+	enemy.apply_status(status_name, StatusEffects.default_duration(status_name))
+	return {"inflicted": true, "type": "status", "status": status_name}
+
+
 ## Resolve an enemy offensive status against a party member (GAP-024).
 ## Mirror of apply_status_to_enemy, enemy->party: the enemy's MAG drives the
 ## two-stage roll's Stage 1, the member's MDEF/SPD drive resistance. Reuses

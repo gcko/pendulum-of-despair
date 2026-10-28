@@ -195,12 +195,12 @@ unstated. `game/tests/test_spell_balance.gd` asserts all of them against
   precisely because the caster is already being paid in damage; pricing it
   inside either status band would make an offensive spell strictly better than
   the status spell it duplicates. A rider is **not** encoded as `hit_rate`:
-  `hit_rate` is the spell's own to-hit roll, and an offensive spell's damage
-  does not roll to hit, so `game/tests/test_spell_balance.gd` holds every
+  `hit_rate` is the spell's own to-hit roll, and an offensive spell has no
+  spell-specific to-hit roll, so `game/tests/test_spell_balance.gd` holds every
   non-status, non-debuff spell to `hit_rate: null`. A rider has its own field,
-  `rider: {status, chance}` (Pendulum's Echo: despair, 40), and `chance` must sit
-  in this 30-50% band. Combat rolls it only once the damage lands on a living
-  target: immunity check, then the two-stage status roll, at canonical duration.
+  `rider: {status, chance}` (Pendulum's Echo: despair, 40), `chance` in this
+  30-50% band. Once the damage lands on a living target it rolls Stage 1 only
+  (damage spells skip Magic Evasion), then immunity, at canonical duration.
 - **AoE MP pricing needs a named *same-tier* counterpart.** The 1.5-2x rule binds
   only on the nine AoE/single-target pairs listed below, where both halves sit in
   the same tier and deliver the same effect.
