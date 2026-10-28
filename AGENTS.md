@@ -155,6 +155,7 @@ git commit -m "docs(story): add combat formulas"
 ## Additional Resources
 
 - **[CLAUDE.md](./CLAUDE.md)** - Claude-specific extensions and session workflow
+- **[`/milestone-burndown`](./.claude/skills/milestone-burndown/SKILL.md)** - Milestone-scale work: drives a whole milestone to zero with several bundles in parallel worktrees (one bundle at a time is `/issue-bundle`)
 
 ## Quick Reference (GitHub Issues)
 

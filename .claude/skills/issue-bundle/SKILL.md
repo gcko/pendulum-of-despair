@@ -21,6 +21,10 @@ twice, two PRs, two review loops, two sets of husky gate runs — and the
 second PR rebases onto the first. Bundling related issues amortizes all
 of that into one coherent change.
 
+**Not for a whole milestone.** When the goal is to take a milestone to zero
+(several bundles at once), use `/milestone-burndown` instead of looping this
+skill by hand.
+
 ## Invocation
 
 ```
