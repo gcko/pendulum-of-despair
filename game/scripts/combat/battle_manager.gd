@@ -3,7 +3,8 @@ extends Node2D
 ## last enemy or the last party member falls.
 ##
 ## The commands a player can pick live in their own modules — BattlePlayerActions
-## (attack/defend/flee), BattleMagicCommand and BattleItemCommand — and
+## (attack/defend/flee), BattleMagicCommand, BattleItemCommand and
+## BattleAbilityCommand (the unique commands) — and
 ## battle-start assembly lives in BattleSetup (GAP-087). This script dispatches
 ## to them and owns everything they need through the accessors below.
 
@@ -42,6 +43,7 @@ var _ritual_meter_value: float = 100.0
 var _actions: BattlePlayerActions = null
 var _magic: BattleMagicCommand = null
 var _items: BattleItemCommand = null
+var _abilities: BattleAbilityCommand = null
 
 @onready var _atb: Node = $ATBSystem
 @onready var _state: Node = $BattleState
@@ -146,6 +148,7 @@ func _process(delta: float) -> void:
 				# consume: the status counts down on this would-be turn (the
 				# filling gauge is the clock), then the gauge resets so the next
 				# skip is one turn later (#248).
+				_begin_party_turn(slot)
 				_skip_incapacitated_turn(slot, id, blocked_by)
 				# break, not continue: the skip consumes this frame's single
 				# action slot, so nothing else resolves alongside it (#260). The
@@ -153,6 +156,7 @@ func _process(delta: float) -> void:
 				# frame. The announcement's readability is the UI's job —
 				# battle_ui queues messages (ui-design.md § 2.5).
 				break
+			_begin_party_turn(slot)
 			_awaiting_input_for = id
 			_atb.set_command_menu_open(true)
 			var member: Dictionary = _state.get_member(slot)
@@ -194,7 +198,7 @@ func _on_ui_command(command: Dictionary) -> void:
 			else:
 				_get_actions().do_flee()
 		"ability":
-			ok = _get_actions().do_attack(actor_id, command)
+			ok = _get_abilities().do_ability(actor_id, command)
 	if not ok:
 		_atb.set_command_menu_open(true)
 		var s: int = actor_id.replace("party_", "").to_int()
@@ -269,6 +273,14 @@ func _skip_incapacitated_turn(slot: int, id: String, status_name: String) -> voi
 	_check_end_conditions()
 
 
+## A party member's turn begins: Second Wind's regen lands here (abilities.md
+## § Cael — Rally > 'at the start of each of their turns').
+func _begin_party_turn(slot: int) -> void:
+	var healed: int = _state.begin_turn(slot)
+	if healed > 0:
+		damage_dealt.emit("party_%d" % slot, healed, "heal")
+
+
 func _on_party_member_died(slot: int) -> void:
 	_atb.remove_combatant("party_%d" % slot)
 	if _awaiting_input_for == "party_%d" % slot:
@@ -325,6 +337,7 @@ func _resync_party_atb(slot: int) -> void:
 	var st: Dictionary = StatusEffects.atb_state(m.get("active_statuses", []))
 	_atb.set_frozen(pid, st["frozen"])
 	_atb.set_status_mods(pid, st["mods"])
+	_atb.set_spd(pid, _state.get_effective_stat(slot, "spd"))  # Press Forward's +SPD
 	if st["zeroed"]:
 		_atb.set_gauge(pid, 0)
 
@@ -458,3 +471,9 @@ func _get_items() -> BattleItemCommand:
 	if _items == null:
 		_items = BattleItemCommand.new(self)
 	return _items
+
+
+func _get_abilities() -> BattleAbilityCommand:
+	if _abilities == null:
+		_abilities = BattleAbilityCommand.new(self)
+	return _abilities
