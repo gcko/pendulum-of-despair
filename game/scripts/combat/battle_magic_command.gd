@@ -8,6 +8,7 @@ extends RefCounted
 
 const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
 const BattleActions = preload("res://scripts/combat/battle_actions.gd")
+const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 
 ## Weave Gauge earned by the caster for a spell that landed, and the share
 ## Maren banks when somebody else casts
@@ -170,13 +171,7 @@ func _status_on_enemy(caster_slot: int, spell: Dictionary, idx: int) -> bool:
 		enemies[idx]
 	)
 	if result.get("inflicted", false):
-		_battle.resync_enemy_atb(idx)
-		# enemy.apply_status already emitted status_applied with the real
-		# duration; don't re-emit it here with a fabricated value.
-		_battle.damage_dealt.emit("enemy_%d" % idx, 0, "status")
-		_battle.message.emit(
-			"%s is afflicted with %s!" % [enemies[idx].get_display_name(), result.get("status", "")]
-		)
+		_show_enemy_status(idx, str(result.get("status", "")))
 		return true
 	match result.get("type", ""):
 		"immune":
@@ -187,3 +182,19 @@ func _status_on_enemy(caster_slot: int, spell: Dictionary, idx: int) -> bool:
 		_:
 			_battle.damage_dealt.emit("enemy_%d" % idx, 0, "miss")
 	return false
+
+
+## Show the player that a status just landed on enemy [param idx]: resync its
+## gauge, float the status marker and announce it. The line comes from the one
+## registry table (battle-dialogue.md § Status Effect Notifications), the same
+## table the party side reads, so a status reads the same whichever side it
+## lands on (#439). A status with no canonical line lands silently.
+func _show_enemy_status(idx: int, status: String) -> void:
+	_battle.resync_enemy_atb(idx)
+	# enemy.apply_status already emitted status_applied with the real
+	# duration; don't re-emit it here with a fabricated value.
+	_battle.damage_dealt.emit("enemy_%d" % idx, 0, "status")
+	var enemy: Node = _battle.get_enemies()[idx]
+	var line: String = StatusEffects.application_notice(status, enemy.get_display_name())
+	if not line.is_empty():
+		_battle.message.emit(line)
