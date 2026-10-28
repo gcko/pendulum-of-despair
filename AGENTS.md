@@ -53,7 +53,9 @@ authorized push point in the entire pr-review-response workflow.
 
 `scripts/gates.sh` does not replace the hooks and is not a general "run the
 tests" command — `/create-pr`'s Iron Rule still holds, and the hooks still run
-on every commit and push. Reach for the script only where the hooks are blind:
+on every commit and push once `pnpm install` has run in the worktree. The
+script refuses to run in a worktree whose hooks are not installed or are
+disabled by `HUSKY=0`. Reach for it only where the hooks are blind:
 work sitting uncommitted in a parallel worktree, or a stacked branch that must
 be judged against its own parent rather than `main`. It also serializes headless
 Godot, which matters when several worktrees run at once.

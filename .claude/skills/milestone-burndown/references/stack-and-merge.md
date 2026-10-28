@@ -80,6 +80,10 @@ GATES_BASE=A bash wt-B/scripts/gates.sh
 GATES_BASE=B bash wt-C/scripts/gates.sh
 ```
 
+Each worktree needs its hooks installed (`pnpm install -C <wt> --frozen-lockfile`,
+done in SKILL.md Step 3). Without them `gates.sh` exits 1 with `GIT HOOKS NOT
+INSTALLED` and judges nothing.
+
 The mutex in `scripts/quality-gates/godot-lock.sh` lets only one headless
 Godot run at a time, so run these one after another. Running them in parallel
 saves nothing.

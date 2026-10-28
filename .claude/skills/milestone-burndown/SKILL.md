@@ -79,7 +79,7 @@ Breaking the letter of these rules breaks their spirit.
    | Check | Command | Pass |
    |---|---|---|
    | main checkout clean and current | `git fetch -q origin`, `git status --porcelain`, `git rev-list --count main..origin/main` | no output; `0` (else `git -C <main-checkout> pull --ff-only`) |
-   | hooks installed | `git config core.hooksPath` | `.husky/_` (else `pnpm install`) |
+   | hooks installed | `test "${HUSKY-}" != 0 && test "$(git config core.hooksPath)" = .husky/_ && ls .husky/_/h .husky/_/pre-commit .husky/_/commit-msg .husky/_/pre-push` | exits 0: the check `scripts/gates.sh` makes at startup (else `pnpm install --frozen-lockfile`; unset `HUSKY`) |
    | commit signing works | `git log -1 --format=%G? $(git commit-tree -S HEAD^{tree} -p HEAD -m probe)` | `G` (the probe is an unreferenced object, so it changes nothing) |
    | gh authenticated | `gh auth status` | logged in, `repo` scope |
    | Godot reachable | the command below the table | exits 0; without Godot, `gates.sh` refuses to report success |
@@ -173,7 +173,11 @@ the bundles run in parallel, and the stack is formed afterwards (Step 4).
    `<base-sha>` in the ledger. Create each worktree yourself, so the branch
    names and paths are known:
    `git worktree add ../pod-wt-<slug> -b <prefix>/<slug> <base-sha>`, where
-   `<prefix>` is `feature`, `fix` or `chore` (AGENTS.md).
+   `<prefix>` is `feature`, `fix` or `chore` (AGENTS.md), then
+   `pnpm install -C ../pod-wt-<slug> --frozen-lockfile`. The install is not
+   optional: `core.hooksPath` is the relative, gitignored `.husky/_`, so a new
+   worktree has no hooks, its commits and pushes skip them without a word, and
+   `gates.sh` exits 1 there with `GIT HOOKS NOT INSTALLED`.
 2. Dispatch one **builder** per bundle, at the build setting, all in one
    message, with the builder brief. Name each one `build-<bundle>` and record
    the name in the ledger, so that after a compaction you can still reach a
@@ -203,7 +207,9 @@ the bundles run in parallel, and the stack is formed afterwards (Step 4).
 Follow `references/stack-and-merge.md` sections 1 and 2: force-rebase every
 branch, **including the bottom one**, with `--gpg-sign` onto its parent;
 verify signatures per parent; run `GATES_BASE=<parent> bash <wt>/scripts/gates.sh`
-for each branch.
+for each branch. Each worktree has its hooks from Step 3; any worktree you add
+or re-create here needs `pnpm install -C <wt> --frozen-lockfile` first, or
+`gates.sh` exits 1 before judging anything.
 
 ## Step 5: Open the PRs
 
@@ -333,6 +339,7 @@ means nothing. Force it, in a throwaway worktree:
 ```bash
 git fetch -q origin
 git worktree add --detach ../pod-wt-verify origin/main
+pnpm install -C ../pod-wt-verify --frozen-lockfile   # else gates.sh refuses: no hooks
 GATES_BASE=origin/main GATES_FORCE_GODOT=1 bash ../pod-wt-verify/scripts/gates.sh
 git worktree remove ../pod-wt-verify
 ```

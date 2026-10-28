@@ -382,8 +382,9 @@ trace these paths. Write the answer for each. "I didn't check" = bug.
 - **Expanding file rule.** Never declare clean without checking
   unexplored related files.
 - **Run gdlint and gdformat --check, at the pinned version.** They are
-  required, not optional: the pre-commit hook fails without them and
-  `static-gates.yml` runs both in CI. Install the gdtoolkit version in
+  required, not optional: the pre-commit hook fails when either is
+  missing or at a version other than the pin, and `static-gates.yml`
+  runs both in CI. Install the gdtoolkit version in
   `scripts/quality-gates/gdtoolkit-version.txt`, then run both on changed
   .gd files: `gdlint <files>` and `gdformat --check <files>`
 - **Test if GUT/gdUnit4 available.** If a test framework is installed,

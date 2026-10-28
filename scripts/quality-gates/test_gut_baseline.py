@@ -1407,8 +1407,8 @@ class TestPreCommitRequiresGdtoolkit(unittest.TestCase):
             with self.subTest(shell=shell):
                 self.assertNotEqual(code, 0, out)
                 self.assertIn("gdlint VERSION MISMATCH", out)
-                self.assertIn("installed: gdlint 4.4.0", out)
-                self.assertIn("pinned:    gdlint 9.9.9", out)
+                self.assertIn("gdlint 4.4.0", out)
+                self.assertIn("gdlint 9.9.9", out)
                 self.assertIn('pip install "gdtoolkit==9.9.9"', out)
         self.assertNotIn("gdlint game/", self._ran(), "a mismatched gdlint must not judge the commit")
 
@@ -1421,21 +1421,42 @@ class TestPreCommitRequiresGdtoolkit(unittest.TestCase):
             with self.subTest(shell=shell):
                 self.assertNotEqual(code, 0, out)
                 self.assertIn("gdformat VERSION MISMATCH", out)
-                self.assertIn("installed: gdformat 4.4.0", out)
-                self.assertIn("pinned:    gdformat 9.9.9", out)
+                self.assertIn("gdformat 4.4.0", out)
+                self.assertIn("gdformat 9.9.9", out)
+                self.assertIn('pip install "gdtoolkit==9.9.9"', out)
                 self.assertNotIn("gdlint VERSION MISMATCH", out)
         ran = self._ran()
         self.assertIn("gdlint game/scripts/a.gd", ran, "Gate A should still have run")
         self.assertNotIn("gdformat --check", ran)
 
-    def test_a_mismatched_version_does_not_block_a_commit_with_no_staged_gd(self):
-        self._pin("9.9.9\n")
-        self._fake("gdlint", "gdformat", version="4.4.0")
-        _stage(self.repo, "docs/notes.md", "# notes\n")
+    # --- The version is read from stdout, as static-gates.yml reads it ----
+
+    def test_a_tool_whose_version_command_fails_counts_as_not_found(self):
+        # A pyenv shim with no gdtoolkit behind it: on PATH, prints to stderr,
+        # exits 127. That is a missing tool, not some other version.
+        self._fake("gdformat")
+        _write_executable(os.path.join(self.fake_bin, "gdlint"),
+                          '#!/bin/sh\necho "pyenv: gdlint: command not found" >&2\nexit 127\n')
+        _stage(self.repo, "game/scripts/a.gd")
+        for shell, code, out in self._hook():
+            with self.subTest(shell=shell):
+                self.assertNotEqual(code, 0, out)
+                self.assertIn("gdlint NOT FOUND", out)
+                self.assertNotIn("MISMATCH", out)
+                self.assertNotIn("installed: pyenv", out)
+
+    def test_stderr_beside_the_pinned_version_does_not_count_against_it(self):
+        self._fake("gdlint", "gdformat")
+        body = _FAKES["gdlint"].replace(
+            'if [ "${1-}" = "--version" ]; then ',
+            'if [ "${1-}" = "--version" ]; then echo "DeprecationWarning: x" >&2; ')
+        _write_executable(os.path.join(self.fake_bin, "gdlint"), body)
+        _stage(self.repo, "game/scripts/a.gd")
         for shell, code, out in self._hook():
             with self.subTest(shell=shell):
                 self.assertEqual(code, 0, out)
                 self.assertNotIn("MISMATCH", out)
+        self.assertIn("gdlint game/scripts/a.gd", self._ran())
 
 
 class TestGdtoolkitPin(unittest.TestCase):
@@ -1464,7 +1485,8 @@ GODOT_LOCK_SH = os.path.join(REPO_ROOT, "scripts", "quality-gates", "godot-lock.
 _HOOK_FAKES = {
     # Import succeeds; the GUT run prints a green, ANSI-coloured summary and
     # then exits $FAKE_GUT_EXIT, so a clean summary from a dying process can
-    # be staged.
+    # be staged. FAKE_GUT_KILL_PARENT kills the pipeline stage that would
+    # record Godot's status, so a run that records none can be staged too.
     "godot": r'''#!/bin/sh
 echo "godot $*" >> "$FAKE_TOOL_LOG"
 case " $* " in
@@ -1472,6 +1494,7 @@ case " $* " in
   *gut_cmdln.gd*)
     printf '\033[32mScripts              90\033[0m\nTests              1289\n'
     printf 'Passing Tests      1289\n---- All tests passed! ----\n'
+    [ -n "${FAKE_GUT_KILL_PARENT:-}" ] && kill -9 "$PPID"
     exit "${FAKE_GUT_EXIT:-0}" ;;
 esac
 echo "fake godot: unexpected: $*"
@@ -1522,8 +1545,10 @@ class TestHooksRunUnderPosixSh(unittest.TestCase):
             _write_executable(os.path.join(self.fake_bin, tool), body)
         self.fake_log = os.path.join(self.dir, ".fake-tool.log")
 
-    def _hook(self, hook, *args, **env_extra):
-        """Run `hook` under every husky shell; returns [(shell, code, output, calls)]."""
+    def _hook(self, hook, *args, before=None, **env_extra):
+        """Run `hook` under every husky shell; returns [(shell, code, output, calls)].
+
+        `before`, if given, is called before each shell's run."""
         env = _clean_env(self.fake_bin + os.pathsep + _path_without_gdtoolkit())
         env.update(
             FAKE_TOOL_LOG=self.fake_log,
@@ -1537,6 +1562,8 @@ class TestHooksRunUnderPosixSh(unittest.TestCase):
         for shell in _hook_shells():
             if os.path.exists(self.fake_log):
                 os.remove(self.fake_log)
+            if before:
+                before()
             proc = subprocess.run(
                 [shell, "-e", hook] + list(args), cwd=self.dir, env=env, timeout=60,
                 stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True,
@@ -1556,6 +1583,22 @@ class TestHooksRunUnderPosixSh(unittest.TestCase):
             with self.subTest(shell=shell):
                 self.assertEqual(code, 1, out)
                 self.assertIn("Godot EXITED 3 during the GUT run", out)
+                self.assertNotIn("check_gut_baseline.py --log", calls)
+                self.assertNotIn("All pre-push quality gates passed", out)
+
+    def test_pre_push_fails_when_godot_records_no_status_over_a_stale_zero(self):
+        # A previous run's "0" must not stand in for this run's status.
+        status = "/tmp/gut_prepush_%s.status" % os.path.basename(self.dir)
+
+        def stale_zero():
+            with io.open(status, "w", encoding="utf-8") as handle:
+                handle.write("0\n")
+
+        for shell, code, out, calls in self._hook(
+                ".husky/pre-push", before=stale_zero, FAKE_GUT_KILL_PARENT="1"):
+            with self.subTest(shell=shell):
+                self.assertEqual(code, 1, out)
+                self.assertIn("Godot EXITED <no status recorded> during the GUT run", out)
                 self.assertNotIn("check_gut_baseline.py --log", calls)
                 self.assertNotIn("All pre-push quality gates passed", out)
 
@@ -1601,142 +1644,81 @@ class TestHooksRunUnderPosixSh(unittest.TestCase):
                 self.assertIn("pnpm exec commitlint --edit %s" % path, calls)
 
 
-# --- scripts/gates.sh refuses a worktree with no hooks installed (#474) -----
+# --- scripts/gates.sh in a scratch repo (#474, #477) ------------------------
 #
 # core.hooksPath is the relative `.husky/_`, which is gitignored, so a fresh
 # `git worktree add` has no hooks and its commits and pushes run none, without
 # a word. gates.sh is the runner for exactly those worktrees, so it must refuse
-# one. These build a scratch repo with the same shape, a second worktree cut
-# from it, and run the real gates.sh in each.
+# one, and it must hold gdtoolkit to the pin as pre-commit does. Both classes
+# below run the real gates.sh, gdtoolkit helper and gate judge in a scratch
+# repo whose floors fit a fixture of two gates and one self-test. One of the
+# gates is a probe that records it ran, so "the guard stopped the run" is
+# observed as no gate running, not read off a message. Changes go outside
+# game/, so a passing run ends at STATIC GATES PASSED without Godot.
 
 GATES_SH = os.path.join(REPO_ROOT, "scripts", "gates.sh")
-_HUSKY_SHIMS = ("pre-commit", "commit-msg", "pre-push")
+# What pnpm install puts in .husky/_: husky's dispatcher and one shim per hook.
+_HUSKY_FILES = ("h", "pre-commit", "commit-msg", "pre-push")
+_PROBE_GATE = 'import os\nwith open(os.environ["GATES_PROBE"], "a") as fh:\n    fh.write("ran\\n")\n'
 
 
-class TestGatesShRequiresInstalledHooks(unittest.TestCase):
-
-    def setUp(self):
-        self.repo = _scratch_repo(self, "pod-gates-hooks-")
-        self.env = _clean_env(os.environ.get("PATH", ""))
-        for source, relative in (
-            (GATES_SH, "scripts/gates.sh"),
-            (os.path.join(REPO_ROOT, "scripts", "quality-gates", "check_gut_baseline.py"),
-             "scripts/quality-gates/check_gut_baseline.py"),
-            (os.path.join(REPO_ROOT, "scripts", "quality-gates", "gut-baseline.txt"),
-             "scripts/quality-gates/gut-baseline.txt"),
-        ):
-            target = os.path.join(self.repo, relative)
-            os.makedirs(os.path.dirname(target), exist_ok=True)
-            shutil.copy(source, target)
-        with io.open(os.path.join(self.repo, ".gitignore"), "w", encoding="utf-8") as handle:
-            handle.write(".husky/_\n")
-        self._git(self.repo, "add", "-A")
-        self._git(self.repo, "commit", "-q", "-m", "fixture")
-        self._git(self.repo, "config", "core.hooksPath", ".husky/_")
-        # pnpm install's result in the main checkout: the husky shims.
-        os.makedirs(os.path.join(self.repo, ".husky", "_"))
-        for hook in _HUSKY_SHIMS:
-            _write_executable(os.path.join(self.repo, ".husky", "_", hook), "#!/bin/sh\n")
-
-    def _git(self, cwd, *args):
-        subprocess.run(
-            ["git", "-c", "commit.gpgsign=false", "-c", "user.name=t",
-             "-c", "user.email=t@example.invalid"] + list(args),
-            cwd=cwd, env=self.env, check=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-
-    def _gates(self, root):
-        # An unresolvable base is the first thing gates.sh checks after the
-        # hooks and the floors, so reaching that refusal proves it got past both
-        # without running a single gate.
-        env = dict(self.env, GATES_BASE="no-such-ref")
-        proc = subprocess.run(
-            ["bash", os.path.join(root, "scripts", "gates.sh")], cwd=root, env=env, timeout=60,
-            stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True)
-        return proc.returncode, proc.stdout
-
-    def test_a_new_worktree_without_hooks_fails_naming_the_install_command(self):
-        worktree = os.path.join(tempfile.mkdtemp(prefix="pod-gates-wt-"), "wt")
-        self.addCleanup(shutil.rmtree, os.path.dirname(worktree), True)
-        self._git(self.repo, "worktree", "add", "-q", "--detach", worktree)
-        self.assertFalse(os.path.exists(os.path.join(worktree, ".husky", "_")))
-        # With no floors either, only a guard that runs first names the hooks.
-        os.remove(os.path.join(worktree, "scripts", "quality-gates", "gut-baseline.txt"))
-        code, out = self._gates(worktree)
-        self.assertEqual(code, 1, out)
-        self.assertIn("GIT HOOKS NOT INSTALLED", out)
-        self.assertIn("cd '%s' && pnpm install --frozen-lockfile" % worktree, out)
-        self.assertNotIn("cannot read", out, "the guard must run before the floors are read")
-        self.assertNotIn("GATES_BASE=", out, "the guard must stop the run")
-
-    def test_a_checkout_with_its_hooks_installed_gets_past_the_guard(self):
-        code, out = self._gates(self.repo)
-        self.assertNotIn("NOT INSTALLED", out)
-        self.assertIn("GATES_BASE='no-such-ref' does not resolve to a commit", out)
-        self.assertEqual(code, 1, out)
-
-    def test_one_missing_shim_is_enough_to_fail(self):
-        os.remove(os.path.join(self.repo, ".husky", "_", "pre-push"))
-        code, out = self._gates(self.repo)
-        self.assertEqual(code, 1, out)
-        self.assertIn("GIT HOOKS NOT INSTALLED in this worktree: no .husky/_/pre-push", out)
-        self.assertNotIn("GATES_BASE=", out)
-
-    def test_an_unset_hooks_path_fails_too(self):
-        # git's default .git/hooks holds only *.sample files, which run nothing.
-        self._git(self.repo, "config", "--unset", "core.hooksPath")
-        code, out = self._gates(self.repo)
-        self.assertEqual(code, 1, out)
-        self.assertIn("GIT HOOKS NOT INSTALLED", out)
-        self.assertNotIn("GATES_BASE=", out)
-
-
-class TestGatesShChecksTheGdtoolkitPin(unittest.TestCase):
-    """scripts/gates.sh holds gdtoolkit to the pin, as pre-commit does (#477).
-
-    A scratch repo with the real gates.sh, helper and gate judge, floors low
-    enough for a one-gate, one-test fixture, its hooks installed, and a change
-    outside game/ so the run ends at STATIC GATES PASSED without Godot. The
-    verdict therefore turns on Gates A-C alone.
-    """
+class _GatesShFixture(object):
+    """Mixin: a scratch repo holding gates.sh, with its hooks installed."""
 
     PIN = "9.9.9"  # not the real pin, so a hardcoded version is caught
 
-    def setUp(self):
-        self.repo = _scratch_repo(self, "pod-gates-pin-")
-        self.name = os.path.basename(self.repo)
-        self.addCleanup(lambda: os.path.exists("/tmp/gatetests_%s.log" % self.name)
-                        and os.remove("/tmp/gatetests_%s.log" % self.name))
+    def _build(self):
+        self.repo = _scratch_repo(self, "pod-gates-")
+        self.addCleanup(self._remove_if_present,
+                        "/tmp/gatetests_%s.log" % os.path.basename(self.repo))
         self.env = _clean_env(_path_without_gdtoolkit())
-        files = {
-            "scripts/gates.sh": GATES_SH,
-            "scripts/quality-gates/gdtoolkit-require.sh": GDTOOLKIT_HELPER,
-            "scripts/quality-gates/check_gut_baseline.py":
-                os.path.join(REPO_ROOT, "scripts", "quality-gates", "check_gut_baseline.py"),
-        }
-        for relative, source in files.items():
+        self.env.pop("HUSKY", None)
+        self.probe = os.path.join(tempfile.mkdtemp(prefix="pod-gates-probe-"), "ran")
+        self.addCleanup(shutil.rmtree, os.path.dirname(self.probe), True)
+        for relative, source in (
+            ("scripts/gates.sh", GATES_SH),
+            ("scripts/quality-gates/gdtoolkit-require.sh", GDTOOLKIT_HELPER),
+            ("scripts/quality-gates/check_gut_baseline.py",
+             os.path.join(REPO_ROOT, "scripts", "quality-gates", "check_gut_baseline.py")),
+        ):
             target = os.path.join(self.repo, relative)
             os.makedirs(os.path.dirname(target), exist_ok=True)
             shutil.copy(source, target)
         for relative, body in (
             ("scripts/quality-gates/gdtoolkit-version.txt", " %s \n" % self.PIN),
             ("scripts/quality-gates/gut-baseline.txt",
-             "scripts=1\ntests=1\ngates=1\ngate_tests=1\n"),
+             "scripts=1\ntests=1\ngates=2\ngate_tests=1\n"),
+            ("scripts/quality-gates/check_probe.py", _PROBE_GATE),
             ("scripts/quality-gates/test_fixture.py",
              "import unittest\n\n\nclass T(unittest.TestCase):\n"
              "    def test_ok(self):\n        self.assertTrue(True)\n"),
-            (".gitignore", ".husky/_\n.fake-bin/\n__pycache__/\n"),
+            (".gitignore", ".husky/_\n.fake-bin/\n.fake-tool.log\n__pycache__/\n"),
         ):
-            with io.open(os.path.join(self.repo, relative), "w", encoding="utf-8") as handle:
-                handle.write(body)
+            self._write(relative, body)
         self._git("add", "-A")
         self._git("commit", "-q", "-m", "fixture")
         self._git("config", "core.hooksPath", ".husky/_")
-        os.makedirs(os.path.join(self.repo, ".husky", "_"))
-        for hook in _HUSKY_SHIMS:
-            _write_executable(os.path.join(self.repo, ".husky", "_", hook), "#!/bin/sh\n")
+        self._install_husky(os.path.join(self.repo, ".husky", "_"))
         self.fake_bin = os.path.join(self.repo, ".fake-bin")
         os.makedirs(self.fake_bin)
         self.fake_log = os.path.join(self.repo, ".fake-tool.log")
+
+    @staticmethod
+    def _remove_if_present(path):
+        if os.path.exists(path):
+            os.remove(path)
+
+    @staticmethod
+    def _install_husky(directory):
+        os.makedirs(directory, exist_ok=True)
+        for name in _HUSKY_FILES:
+            _write_executable(os.path.join(directory, name), "#!/bin/sh\n")
+
+    def _write(self, relative, body, root=None):
+        target = os.path.join(root or self.repo, relative)
+        os.makedirs(os.path.dirname(target), exist_ok=True)
+        with io.open(target, "w", encoding="utf-8") as handle:
+            handle.write(body)
 
     def _git(self, *args):
         subprocess.run(
@@ -1744,11 +1726,88 @@ class TestGatesShChecksTheGdtoolkitPin(unittest.TestCase):
              "-c", "user.email=t@example.invalid"] + list(args),
             cwd=self.repo, env=self.env, check=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
-    def _change(self, relative, body="extends Node\n"):
-        target = os.path.join(self.repo, relative)
-        os.makedirs(os.path.dirname(target), exist_ok=True)
-        with io.open(target, "w", encoding="utf-8") as handle:
-            handle.write(body)
+    def _gates(self, root=None, **env_extra):
+        """Run gates.sh from `root` against HEAD: (code, output, tool calls, probe ran)."""
+        root = root or self.repo
+        self._remove_if_present(self.probe)
+        env = dict(self.env, PATH=self.fake_bin + os.pathsep + self.env["PATH"],
+                   FAKE_BIN=self.fake_bin, FAKE_TOOL_LOG=self.fake_log,
+                   GATES_BASE="HEAD", GATES_PROBE=self.probe)
+        env.update(env_extra)
+        proc = subprocess.run(
+            ["bash", os.path.join(root, "scripts", "gates.sh")], cwd=root, env=env, timeout=120,
+            stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True)
+        ran = ""
+        if os.path.exists(self.fake_log):
+            with io.open(self.fake_log, encoding="utf-8") as handle:
+                ran = handle.read()
+            os.remove(self.fake_log)
+        return proc.returncode, proc.stdout, ran, os.path.exists(self.probe)
+
+
+class TestGatesShRequiresInstalledHooks(_GatesShFixture, unittest.TestCase):
+
+    def setUp(self):
+        self._build()
+
+    def _assert_refused(self, code, out, probed, *expected):
+        self.assertEqual(code, 1, out)
+        for text in expected:
+            self.assertIn(text, out)
+        self.assertFalse(probed, "a gate ran in a worktree whose hooks would not:\n" + out)
+
+    def test_a_checkout_with_its_hooks_installed_runs_the_gates_and_passes(self):
+        code, out, _, probed = self._gates()
+        self.assertEqual(code, 0, out)
+        self.assertTrue(probed, "the probe gate never ran:\n" + out)
+
+    def test_a_new_worktree_without_hooks_fails_naming_the_install_command(self):
+        worktree = os.path.join(tempfile.mkdtemp(prefix="pod-gates-wt-"), "wt")
+        self.addCleanup(shutil.rmtree, os.path.dirname(worktree), True)
+        self._git("worktree", "add", "-q", "--detach", worktree)
+        self.assertFalse(os.path.exists(os.path.join(worktree, ".husky", "_")))
+        code, out, _, probed = self._gates(worktree)
+        self._assert_refused(code, out, probed, "GIT HOOKS NOT INSTALLED",
+                             "cd '%s' && pnpm install --frozen-lockfile" % worktree)
+
+    def test_each_missing_husky_file_fails(self):
+        for name in _HUSKY_FILES:
+            with self.subTest(missing=name):
+                path = os.path.join(self.repo, ".husky", "_", name)
+                os.remove(path)
+                try:
+                    code, out, _, probed = self._gates()
+                finally:
+                    _write_executable(path, "#!/bin/sh\n")
+                self._assert_refused(code, out, probed, "GIT HOOKS NOT INSTALLED",
+                                     ".husky/_/%s" % name, "pnpm install --frozen-lockfile")
+
+    def test_an_unset_hooks_path_fails_and_says_it_is_unset(self):
+        self._git("config", "--unset", "core.hooksPath")
+        code, out, _, probed = self._gates()
+        self._assert_refused(code, out, probed, "GIT HOOKS NOT INSTALLED", "core.hooksPath is unset")
+        self.assertNotIn("''", out)
+
+    def test_another_hook_managers_files_do_not_count_as_husky(self):
+        # Every file husky would install, in .git/hooks, owned by something else.
+        self._git("config", "--unset", "core.hooksPath")
+        self._install_husky(os.path.join(self.repo, ".git", "hooks"))
+        code, out, _, probed = self._gates()
+        self._assert_refused(code, out, probed, "GIT HOOKS NOT INSTALLED")
+        self._git("config", "core.hooksPath", ".git/hooks")
+        code, out, _, probed = self._gates()
+        self._assert_refused(code, out, probed, "GIT HOOKS NOT INSTALLED", "'.git/hooks'")
+
+    def test_husky_0_fails_because_the_hooks_would_run_nothing(self):
+        code, out, _, probed = self._gates(HUSKY="0")
+        self._assert_refused(code, out, probed, "HUSKY=0")
+
+
+class TestGatesShChecksTheGdtoolkitPin(_GatesShFixture, unittest.TestCase):
+    """gates.sh holds gdtoolkit to the pin, as pre-commit does (#477)."""
+
+    def setUp(self):
+        self._build()
 
     def _fake(self, version, **per_tool):
         with io.open(os.path.join(self.fake_bin, ".gdtoolkit"), "w", encoding="utf-8") as handle:
@@ -1759,48 +1818,45 @@ class TestGatesShChecksTheGdtoolkitPin(unittest.TestCase):
                 body = body.replace('$(cat "$FAKE_BIN/.gdtoolkit")', per_tool[tool])
             _write_executable(os.path.join(self.fake_bin, tool), body)
 
-    def _gates(self):
-        env = dict(self.env, PATH=self.fake_bin + os.pathsep + self.env["PATH"],
-                   FAKE_BIN=self.fake_bin, FAKE_TOOL_LOG=self.fake_log, GATES_BASE="HEAD")
-        proc = subprocess.run(
-            ["bash", "scripts/gates.sh"], cwd=self.repo, env=env, timeout=120,
-            stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True)
-        ran = ""
-        if os.path.exists(self.fake_log):
-            with io.open(self.fake_log, encoding="utf-8") as handle:
-                ran = handle.read()
-        return proc.returncode, proc.stdout, ran
-
     def test_a_changed_gd_with_gdlint_at_another_version_fails_naming_both_versions(self):
-        self._change("tools/a.gd")
+        self._write("tools/a.gd", "extends Node\n")
         self._fake(self.PIN, gdlint="4.4.0")
-        code, out, ran = self._gates()
+        code, out, ran, _ = self._gates()
         self.assertEqual(code, 1, out)
         self.assertIn("gdlint VERSION MISMATCH", out)
-        self.assertIn("installed: gdlint 4.4.0", out)
-        self.assertIn("pinned:    gdlint %s" % self.PIN, out)
+        self.assertIn("gdlint 4.4.0", out)
+        self.assertIn("gdlint %s" % self.PIN, out)
         self.assertIn('pip install "gdtoolkit==%s"' % self.PIN, out)
-        self.assertIn("STATIC GATES FAILED", out)
         self.assertIn("gdformat --check tools/a.gd", ran, "gdformat matched the pin and should run")
         self.assertNotIn("gdlint tools/", ran, "a mismatched gdlint must not judge the change")
 
+    def test_a_changed_gd_with_gdformat_at_another_version_fails_naming_both_versions(self):
+        self._write("tools/a.gd", "extends Node\n")
+        self._fake(self.PIN, gdformat="4.4.0")
+        code, out, ran, _ = self._gates()
+        self.assertEqual(code, 1, out)
+        self.assertIn("gdformat VERSION MISMATCH", out)
+        self.assertIn("gdformat 4.4.0", out)
+        self.assertIn("gdformat %s" % self.PIN, out)
+        self.assertIn('pip install "gdtoolkit==%s"' % self.PIN, out)
+        self.assertIn("gdlint tools/a.gd", ran, "gdlint matched the pin and should run")
+        self.assertNotIn("gdformat --check", ran, "a mismatched gdformat must not judge the change")
+
     def test_a_changed_gd_with_both_tools_at_the_pin_gets_past_the_check(self):
-        self._change("tools/a.gd")
+        self._write("tools/a.gd", "extends Node\n")
         self._fake(self.PIN)
-        code, out, ran = self._gates()
+        code, out, ran, _ = self._gates()
         self.assertEqual(code, 0, out)
         self.assertNotIn("MISMATCH", out)
-        self.assertIn("STATIC GATES PASSED", out)
         self.assertIn("gdformat --check tools/a.gd", ran)
         self.assertIn("gdlint tools/a.gd", ran)
 
     def test_a_run_with_no_changed_gd_needs_no_gdtoolkit(self):
-        self._change("docs/notes.md", "# notes\n")
-        code, out, ran = self._gates()
+        self._write("docs/notes.md", "# notes\n")
+        code, out, ran, _ = self._gates()
         self.assertEqual(code, 0, out)
         self.assertNotIn("NOT FOUND", out)
-        self.assertIn("STATIC GATES PASSED", out)
-
+        self.assertEqual(ran, "")
 
 _PR_SHAS = {
     "github.event.pull_request.base.sha": "BASESHA",

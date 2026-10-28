@@ -137,9 +137,10 @@ is a **prerequisite gate** — it must pass before the GUT suite runs,
 because GUT cannot load a project that fails to import.
 
 ```bash
-# 1. Lint and format-check the GDScript
-gdlint game/scripts/
-gdformat --check game/scripts/
+# 1. Lint and format-check the GDScript at the pinned gdtoolkit, as
+#    pre-commit and CI do. gates.sh checks the pin, lints every changed .gd
+#    outside addons/, and also runs steps 2 and 3 when game/ changed.
+GATES_BASE=<PR base> bash scripts/gates.sh
 
 # 2. Import gate (MUST pass before tests — parses scripts, scenes,
 #    and every game/data/**/*.json data file)
@@ -266,9 +267,9 @@ Verification adapts to the detected PR type:
 ```bash
 # Code / Data / Mixed PRs — GDScript gates (import is a prerequisite
 # gate that must pass before GUT runs)
-gdlint game/scripts/ && gdformat --check game/scripts/ \
-  && godot --headless --path game/ --import \
-  && godot --headless --path game/ -s addons/gut/gut_cmdln.gd
+# scripts/gates.sh: gdlint and gdformat at the pin on changed .gd, then
+# Godot import, the GUT suite and Gate L
+GATES_BASE=<PR base> GATES_FORCE_GODOT=1 bash scripts/gates.sh
 
 # Story PRs — re-run the story review loop instead
 /story-review-loop <PR#> 3

@@ -1,8 +1,13 @@
-#!/usr/bin/env bash
+# shellcheck shell=sh disable=SC3043
 # The headless-Godot mutex, shared by `.husky/pre-push` and `scripts/gates.sh`.
 #
 # SOURCE this file; do not execute it. It defines functions and sets no traps
 # until `godot_lock_acquire` is called.
+#
+# POSIX sh, not bash: husky runs .husky/pre-push as `sh -e` (.husky/_/h)
+# whatever its shebang says, and on Linux that sh is dash, so this file is
+# sourced by dash there; gates.sh sources it from bash. The one thing beyond
+# POSIX is `local` (SC3043), which dash, bash and busybox ash all provide.
 #
 # WHY A SECOND HEADLESS GODOT IS A WRONG ANSWER, NOT A SLOW ONE
 #

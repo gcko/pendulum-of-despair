@@ -25,10 +25,15 @@
 # game/ file, no doc the suite reads and no Gate L input changed (the fast path
 # below; GATES_FORCE_GODOT=1 overrides it).
 #
+# What it checks first: that this worktree's git hooks are installed and
+# enabled (core.hooksPath is .husky/_, husky's dispatcher and the pre-commit,
+# commit-msg and pre-push shims exist, HUSKY is not 0). If not, it exits 1 and
+# names the pnpm install to run, before it judges anything (#474).
+#
 # What it is NOT: a replacement for the hooks, and nothing runs it for you. It
 # skips the branch-protection and commit-message checks, and it may skip Godot
 # on a diff the pre-push hook would still run the suite for. The hooks still
-# run on every commit and push.
+# run on every commit and push, once pnpm install has run in this worktree.
 set -uo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -48,17 +53,39 @@ say() { echo "[$NAME] $*"; }
 # worktree, and .husky/_ is gitignored: pnpm install creates it per worktree.
 # A fresh `git worktree add` has none, so git commit and git push there run no
 # hook at all and say nothing (#474). This runner exists for exactly those
-# worktrees, so it refuses to judge one whose hooks are not installed rather
-# than report green on a tree the hooks will never see.
+# worktrees, so it refuses to judge one whose hooks would not run rather than
+# report green on a tree the hooks will never see. "Would not run" is any of:
+#   * HUSKY=0, which makes husky's dispatcher exit 0 before any hook;
+#   * core.hooksPath unset or not .husky/_, so git runs some other directory's
+#     files (another hook manager's in .git/hooks, or git's *.sample files);
+#   * no dispatcher (.husky/_/h) or no pre-commit, commit-msg or pre-push shim.
+hooks_refuse() {
+  say "GIT HOOKS NOT INSTALLED in this worktree: $1"
+  say "  Until they are, git commit and git push here run no hooks and say"
+  say "  nothing. pnpm install creates .husky/_ in each worktree and points"
+  say "  core.hooksPath at it. Install them, then re-run:"
+  say "    cd '$ROOT' && pnpm install --frozen-lockfile"
+  exit 1
+}
+if [ "${HUSKY-}" = "0" ]; then
+  say "GIT HOOKS DISABLED: HUSKY=0 is set, so husky's dispatcher exits 0 before"
+  say "  any hook runs. Unset it and re-run."
+  exit 1
+fi
+HOOKS_PATH="$(git config --get core.hooksPath || true)"
+if [ "$HOOKS_PATH" != ".husky/_" ]; then
+  if [ -z "$HOOKS_PATH" ]; then
+    hooks_refuse "core.hooksPath is unset, so git runs .git/hooks, not husky"
+  fi
+  hooks_refuse "core.hooksPath is '$HOOKS_PATH', not husky's .husky/_"
+fi
 HOOKS_DIR="$(git rev-parse --git-path hooks 2>/dev/null || true)"
-for hook in pre-commit commit-msg pre-push; do
-  if [ -z "$HOOKS_DIR" ] || [ ! -x "$HOOKS_DIR/$hook" ]; then
-    say "GIT HOOKS NOT INSTALLED in this worktree: no ${HOOKS_DIR:-<hooks dir>}/$hook"
-    say "  core.hooksPath is '$(git config --get core.hooksPath || true)', which pnpm install"
-    say "  creates in each worktree. Until it exists, git commit and git push here run"
-    say "  no hooks and say nothing. Install them, then re-run:"
-    say "    cd '$ROOT' && pnpm install --frozen-lockfile"
-    exit 1
+for hook in h pre-commit commit-msg pre-push; do
+  if [ -z "$HOOKS_DIR" ] || [ ! -f "$HOOKS_DIR/$hook" ]; then
+    hooks_refuse "no ${HOOKS_DIR:-.husky/_}/$hook"
+  fi
+  if [ "$hook" != h ] && [ ! -x "$HOOKS_DIR/$hook" ]; then
+    hooks_refuse "$HOOKS_DIR/$hook is not executable, so git skips it"
   fi
 done
 
@@ -117,7 +144,7 @@ CHANGED_GAME=$(echo "$ALL_PATHS"  | grep -E '^game/'  || true)
 # run: its verdict would be another release's.
 gd_require() {
   local out line
-  out=$(gdtoolkit_require "$1" "$2" 2>&1) && return 0
+  out=$(gdtoolkit_require "$1" "$2" changed 2>&1) && return 0
   while IFS= read -r line; do say "$line"; done <<<"$out"
   return 1
 }
