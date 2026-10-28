@@ -1282,9 +1282,22 @@ class TestPreCommitRequiresGdtoolkit(unittest.TestCase):
                      "w", encoding="utf-8") as handle:
             handle.write(body)
 
-    def _fake(self, *tools):
+    def _fake(self, *tools, **versions):
+        """Install fake tools. Each answers `--version` from $FAKE_BIN/.gdtoolkit,
+        written here as the scratch repo's pin unless `version=` says otherwise;
+        `<tool>=<version>` gives one tool its own answer."""
+        version = versions.pop("version", None)
+        if version is None:
+            with io.open(os.path.join(self.repo, "scripts/quality-gates/gdtoolkit-version.txt"),
+                         encoding="utf-8") as handle:
+                version = "".join(handle.read().split())
+        with io.open(os.path.join(self.fake_bin, ".gdtoolkit"), "w", encoding="utf-8") as handle:
+            handle.write(version + "\n")
         for tool in tools:
-            _write_executable(os.path.join(self.fake_bin, tool), _FAKES[tool])
+            body = _FAKES[tool]
+            if tool in versions:
+                body = body.replace('$(cat "$FAKE_BIN/.gdtoolkit")', versions[tool])
+            _write_executable(os.path.join(self.fake_bin, tool), body)
 
     def _hook(self):
         """Run the hook under every husky shell; returns [(shell, code, output)]."""
@@ -1375,6 +1388,57 @@ class TestPreCommitRequiresGdtoolkit(unittest.TestCase):
         ran = self._ran()
         self.assertIn("gdlint game/scripts/a.gd", ran)
         self.assertIn("gdformat --check game/scripts/a.gd", ran)
+
+    # --- The installed version must be the pinned one (#477) -------------
+
+    def test_tools_at_the_pinned_version_pass_with_the_pin_read_as_ci_reads_it(self):
+        # Whitespace around the pin is stripped, as static-gates.yml strips it,
+        # and a pin no release has means a hardcoded version cannot pass.
+        self._pin("  9.9.9 \n")
+        self._fake("gdlint", "gdformat", version="9.9.9")
+        _stage(self.repo, "game/scripts/a.gd")
+        for shell, code, out in self._hook():
+            with self.subTest(shell=shell):
+                self.assertEqual(code, 0, out)
+                self.assertNotIn("MISMATCH", out)
+
+    def test_a_gdlint_at_another_version_fails_naming_both_versions(self):
+        self._pin("9.9.9\n")
+        self._fake("gdlint", "gdformat", version="4.4.0")
+        _stage(self.repo, "game/scripts/a.gd")
+        for shell, code, out in self._hook():
+            with self.subTest(shell=shell):
+                self.assertNotEqual(code, 0, out)
+                self.assertIn("gdlint VERSION MISMATCH", out)
+                self.assertIn("installed: gdlint 4.4.0", out)
+                self.assertIn("pinned:    gdlint 9.9.9", out)
+                self.assertIn('pip install "gdtoolkit==9.9.9"', out)
+        self.assertNotIn("gdlint game/", self._ran(), "a mismatched gdlint must not judge the commit")
+
+    def test_a_gdformat_alone_at_another_version_fails_gate_c(self):
+        # The comparison is per tool: gdlint matching does not excuse gdformat.
+        self._pin("9.9.9\n")
+        self._fake("gdlint", "gdformat", version="9.9.9", gdformat="4.4.0")
+        _stage(self.repo, "game/scripts/a.gd")
+        for shell, code, out in self._hook():
+            with self.subTest(shell=shell):
+                self.assertNotEqual(code, 0, out)
+                self.assertIn("gdformat VERSION MISMATCH", out)
+                self.assertIn("installed: gdformat 4.4.0", out)
+                self.assertIn("pinned:    gdformat 9.9.9", out)
+                self.assertNotIn("gdlint VERSION MISMATCH", out)
+        ran = self._ran()
+        self.assertIn("gdlint game/scripts/a.gd", ran, "Gate A should still have run")
+        self.assertNotIn("gdformat --check", ran)
+
+    def test_a_mismatched_version_does_not_block_a_commit_with_no_staged_gd(self):
+        self._pin("9.9.9\n")
+        self._fake("gdlint", "gdformat", version="4.4.0")
+        _stage(self.repo, "docs/notes.md", "# notes\n")
+        for shell, code, out in self._hook():
+            with self.subTest(shell=shell):
+                self.assertEqual(code, 0, out)
+                self.assertNotIn("MISMATCH", out)
 
 
 class TestGdtoolkitPin(unittest.TestCase):

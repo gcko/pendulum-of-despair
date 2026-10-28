@@ -12,25 +12,48 @@
 # files are staged, so a commit touching no GDScript still passes on a machine
 # without gdtoolkit.
 #
+# A tool at another version is not a pass either (#477). CI installs exactly
+# the pin and checks with it, and formatter rules move between releases, so a
+# change gdformat 4.4 calls clean could fail Static Gates after the push.
+# gdtoolkit_require compares `<tool> --version` with "<tool> <pin>", the same
+# string comparison .github/workflows/static-gates.yml makes, and returns 1
+# with both versions and the install command when they differ.
+#
 # The pin lives in gdtoolkit-version.txt beside this file. CI installs that
-# version (.github/workflows/static-gates.yml) and /godot-tooling-updates bumps
-# it. Both read it the same way: the file with all whitespace stripped. This
-# helper only QUOTES the pin; it does not compare the installed version.
+# version and /godot-tooling-updates bumps it. All three read it the same way:
+# the file with all whitespace stripped.
 
 GDTOOLKIT_VERSION_FILE="$(git rev-parse --show-toplevel)/scripts/quality-gates/gdtoolkit-version.txt"
 
-# gdtoolkit_require <tool> <gate label>
-gdtoolkit_require() {
-    if command -v "$1" >/dev/null 2>&1; then
-        return 0
-    fi
-    # 2>/dev/null comes first so a missing pin file prints no raw shell error.
+# Sets gdtoolkit_pin to the pin, or to a placeholder naming the file when it is
+# missing or empty. 2>/dev/null comes first so a missing pin file prints no raw
+# shell error.
+gdtoolkit_read_pin() {
     gdtoolkit_pin=$(tr -d '[:space:]' 2>/dev/null <"$GDTOOLKIT_VERSION_FILE" || true)
     [ -n "$gdtoolkit_pin" ] || gdtoolkit_pin="<unreadable: $GDTOOLKIT_VERSION_FILE>"
-    echo "ERROR: $1 NOT FOUND, and staged .gd files need it ($2)." >&2
+}
+
+# gdtoolkit_require <tool> <gate label>
+gdtoolkit_require() {
+    gdtoolkit_read_pin
+    if ! command -v "$1" >/dev/null 2>&1; then
+        echo "ERROR: $1 NOT FOUND, and staged .gd files need it ($2)." >&2
+        echo "  Install the pinned gdtoolkit $gdtoolkit_pin:" >&2
+        echo "    pip install \"gdtoolkit==$gdtoolkit_pin\"" >&2
+        echo "  Refusing to commit GDScript that was never checked: a missing" >&2
+        echo "  tool is not a pass (#472)." >&2
+        return 1
+    fi
+    gdtoolkit_got=$("$1" --version 2>&1 || true)
+    if [ "$gdtoolkit_got" = "$1 $gdtoolkit_pin" ]; then
+        return 0
+    fi
+    echo "ERROR: $1 VERSION MISMATCH, and staged .gd files need it ($2)." >&2
+    echo "  installed: $gdtoolkit_got" >&2
+    echo "  pinned:    $1 $gdtoolkit_pin" >&2
     echo "  Install the pinned gdtoolkit $gdtoolkit_pin:" >&2
     echo "    pip install \"gdtoolkit==$gdtoolkit_pin\"" >&2
-    echo "  Refusing to commit GDScript that was never checked: a missing" >&2
-    echo "  tool is not a pass (#472)." >&2
+    echo "  CI checks with the pin (static-gates.yml), so a commit this version" >&2
+    echo "  calls clean can still fail there (#477)." >&2
     return 1
 }

@@ -106,7 +106,7 @@ Godot, which matters when several worktrees run at once.
 - Source of truth for hook logic: `.husky/pre-commit` (and sibling user hooks).
 - Recovery: `pnpm install` (reinstalls husky).
 
-**Quality checks (pre-commit):** Branch protection + GDScript quality gates (gdlint, JSON validation, gdformat check). With `.gd` files staged, a missing gdlint or gdformat fails the commit and the hook prints the install command for the gdtoolkit version pinned in `scripts/quality-gates/gdtoolkit-version.txt`; a commit with no staged `.gd` does not need gdtoolkit.
+**Quality checks (pre-commit):** Branch protection + GDScript quality gates (gdlint, JSON validation, gdformat check). With `.gd` files staged, a missing gdlint or gdformat fails the commit, and so does one whose `--version` is not the gdtoolkit version pinned in `scripts/quality-gates/gdtoolkit-version.txt`; either way the hook prints the install command for the pin. A commit with no staged `.gd` does not need gdtoolkit.
 
 **Quality checks (pre-push):** Quality-gate self-tests (Gate I), data-integrity and doc scans (Gates D-G, J, K), instanced-child edits (Gate M), TileMapLayer tile data (Gate N), Godot import, and the full GUT suite with its baseline floor (Gates H, L). The gate registry at the top of `.husky/pre-push` is the authoritative list.
 
