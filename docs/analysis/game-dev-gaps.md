@@ -51,7 +51,7 @@ in these docs.**
 | Crafting | `crafting.md` (403) |
 | Encounters | `dungeons-world.md` (5,352), `dungeons-city.md` (1,489), `combat-formulas.md` |
 | Dialogue | `dialogue-system.md` (639), `script/` (9 files) |
-| UI & menus | `ui-design.md` (1,251) |
+| UI & menus | `ui-design.md` (1,252) |
 | Save/load | `save-system.md` (622) |
 | Audio | `audio.md` (323), `music.md` (528) |
 | Overworld & maps | `overworld.md` (512), `geography.md` (718), `locations.md` (1,244), `biomes.md` (999) |

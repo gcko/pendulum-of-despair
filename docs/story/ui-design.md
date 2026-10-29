@@ -284,8 +284,8 @@ Vertical list of battle commands:
 
 ### 2.6 Target Selection
 
-- Blinking pixel-art arrow cursor above targeted enemy (for offensive
-  actions) or beside the targeted party member (for support/healing).
+- Blinking pixel-art arrow cursor above the targeted enemy or beside the
+  targeted party member.
 - The party has no sprites on the battle screen, so a party-side cursor
   anchors to the targeted member's row in the party panel: immediately
   left of the row, vertically centered on it (FF6's row-list convention).
@@ -301,9 +301,10 @@ Vertical list of battle commands:
   than pointing at empty space.
 - A single-ally spell or item can be turned on an enemy: while it is
   targeting the party, left/right moves the cursor onto the enemy line,
-  and up/down brings it back. This is how a heal reaches an Undead or
-  Pallor enemy (see [bestiary/README.md](bestiary/README.md) § Undead).
-  Attacks and enemy-targeted actions never cross to the party.
+  and up/down brings it back. This is how a heal reaches an Undead (see
+  [bestiary/README.md](bestiary/README.md) § Undead) or a Pallor (Pallor
+  Feedback, [combat-formulas.md](combat-formulas.md) § Tier 2:
+  Experimental). Abilities, attacks and enemy-targeted actions never cross.
 - Multi-target spells: all valid targets highlighted simultaneously,
   cursor shows "All" text indicator.
 - Confirm executes; cancel returns to sub-menu or command panel.
