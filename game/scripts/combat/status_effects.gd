@@ -96,6 +96,16 @@ const APPLICATION_NOTICES: Dictionary = {
 	"blind": "%s is Blinded!",
 }
 
+## The line for a combatant a hit has woken, "[Character] woke up!" from
+## battle-dialogue.md § Status Effect Notifications, "[Character]" replaced by "%s".
+## Used for party members and enemies alike.
+const WAKE_NOTICE: String = "%s woke up!"
+
+
+## The "Edren woke up!" line for [param bearer_name].
+static func wake_notice(bearer_name: String) -> String:
+	return WAKE_NOTICE % bearer_name
+
 
 ## Whether the registry knows this status (and 2b can inflict it).
 static func is_known(status: String) -> bool:

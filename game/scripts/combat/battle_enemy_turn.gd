@@ -9,9 +9,6 @@ const BossAI = preload("res://scripts/combat/boss_ai.gd")
 const BattleActions = preload("res://scripts/combat/battle_actions.gd")
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 const ENEMY_SCENE: PackedScene = preload("res://scenes/entities/enemy.tscn")
-## The line for a member a hit has woken (battle-dialogue.md § Status Effect
-## Notifications, "[Character] woke up!"), "[Character]" replaced by "%s".
-const WAKE_NOTICE: String = "%s woke up!"
 
 ## References injected by BattleManager
 var _manager: Node2D
@@ -164,6 +161,7 @@ func _do_spawn(action: Dictionary, enemy: Node, enemies: Array[Node], idx: int) 
 		_atb.add_combatant(eid, new_enemy.get_stats().get("spd", 10), true)
 		new_enemy.died.connect(_manager._on_enemy_died.bind(new_enemy))
 		new_enemy.status_applied.connect(_manager._on_enemy_status_applied.bind(new_enemy))
+		announce_wakes(new_enemy)
 		spawned += 1
 	if spawned > 0:
 		_manager.message.emit("Corrupted Spawns emerge from the depths!")
@@ -171,13 +169,42 @@ func _do_spawn(action: Dictionary, enemy: Node, enemies: Array[Node], idx: int) 
 
 
 func _do_attack_or_ability(action: Dictionary, enemy: Node, idx: int) -> void:
-	var asleep: Array = range(4).filter(func(i: int) -> bool: return _state.has_status(i, "sleep"))
+	var asleep: Array[int] = sleeping_slots(_state)
 	_resolve_attack_or_ability(action, enemy, idx)
 	# A hit cures Sleep (#435); say so for each member this action woke.
-	for i: int in asleep:
-		if not _state.has_status(i, "sleep") and _state.get_member(i).get("is_alive", false):
-			var who: String = _state.get_member(i).get("character_data", {}).get("name", "???")
-			_manager.message.emit(WAKE_NOTICE % who)
+	for line: String in wake_lines(_state, asleep):
+		_manager.message.emit(line)
+
+
+## The party slots asleep right now, for wake_lines after a hit lands.
+static func sleeping_slots(state: Node) -> Array[int]:
+	var out: Array[int] = []
+	for i: int in range(4):
+		if state.has_status(i, "sleep"):
+			out.append(i)
+	return out
+
+
+## The "[Character] woke up!" line for each member of [param before] (from
+## sleeping_slots) that a hit has since woken and left standing.
+static func wake_lines(state: Node, before: Array[int]) -> Array[String]:
+	var out: Array[String] = []
+	for i: int in before:
+		var m: Dictionary = state.get_member(i)
+		if not state.has_status(i, "sleep") and m.get("is_alive", false):
+			out.append(StatusEffects.wake_notice(m.get("character_data", {}).get("name", "???")))
+	return out
+
+
+## Announce [param enemy] waking (a hit cured its Sleep, as enemy.take_damage
+## does) with the same canonical line the party uses. Wired to each enemy's
+## status_removed by BattleManager and by _do_spawn.
+func announce_wakes(enemy: Node) -> void:
+	enemy.status_removed.connect(
+		func(status_name: String) -> void:
+			if status_name == "sleep" and enemy.is_alive:
+				_manager.message.emit(StatusEffects.wake_notice(enemy.get_display_name()))
+	)
 
 
 func _resolve_attack_or_ability(action: Dictionary, enemy: Node, idx: int) -> void:
@@ -199,6 +226,8 @@ func _resolve_attack_or_ability(action: Dictionary, enemy: Node, idx: int) -> vo
 		)
 		var status_name: String = action.get("status", "")
 		for i: int in range(4):
+			if not enemy.is_alive:  # a Riposte felled it: the rest of the AoE never lands
+				break
 			var m: Dictionary = _state.get_member(i)
 			if m.is_empty() or not m.get("is_alive", false):
 				continue

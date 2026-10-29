@@ -95,6 +95,8 @@ func _ready() -> void:
 		_on_enemy_died,
 		_on_enemy_status_applied
 	)
+	for e: Node in _enemies:
+		_enemy_turn.announce_wakes(e)
 	BattleSetup.apply_atb_config(_atb)
 	_atb.apply_formation(_formation_type)
 	if _formation_type == "back_attack":
@@ -285,16 +287,23 @@ func _on_party_member_died(slot: int) -> void:
 
 
 ## AoE-on-death hook (GAP-024). When an enemy with an aoe_on_death ability dies
-## — by player attack, spell, or DoT — it bursts against the whole party.
+## — by player attack, spell, or DoT — it bursts against the whole party. Edren's
+## share of a hit his stance met shows its own number, and every member the
+## burst woke is announced (#435).
 func _on_enemy_died(enemy: Node) -> void:
 	var ability: Dictionary = BattleActions.enemy_aoe_on_death_ability(enemy)
 	if ability.is_empty():
 		return
 	message.emit("%s bursts apart!" % enemy.get_display_name())
+	var asleep: Array[int] = BattleEnemyTurn.sleeping_slots(_state)
 	for r: Dictionary in BattleActions.execute_aoe_on_death(_state, enemy, ability):
-		damage_dealt.emit(
-			"party_%d" % int(r.get("slot", 0)), int(r.get("damage", 0)), r.get("type", "miss")
-		)
+		var dtype: String = r.get("type", "miss")
+		damage_dealt.emit("party_%d" % int(r.get("slot", 0)), int(r.get("damage", 0)), dtype)
+		var share: Dictionary = r.get("absorbed", {})
+		if not share.is_empty():
+			damage_dealt.emit("party_%d" % int(share["slot"]), int(share["damage"]), dtype)
+	for line: String in BattleEnemyTurn.wake_lines(_state, asleep):
+		message.emit(line)
 
 
 ## Recompute an enemy's ATB freeze/mods from its current statuses. Idempotent;
@@ -317,14 +326,6 @@ func resync_enemy_atb(idx: int) -> void:
 ## one resumes from that same value (combat-formulas.md § Status Effect ATB
 ## Interactions). Petrify additionally pins the gauge to 0 while it lasts, which
 ## is what makes recovery start fresh when it is cured (#279).
-##
-## Caveat: this implements only the gauge half of Sleep's party-side rule. That
-## rule is "until cured OR damaged", and battle_state.take_damage never consults
-## StatusEffects.wakes_on_damage — only enemy.gd does — so a slept member's only
-## exit is an explicit cure, and this freeze is what makes that visible. Latent
-## rather than live: no enemy ability in game/data/enemies/ inflicts Sleep or
-## Confusion on the party today. Tracked as #435; do not read this function
-## as evidence the wake-on-damage half exists.
 func _resync_party_atb(slot: int) -> void:
 	var m: Dictionary = _state.get_member(slot)
 	if m.is_empty() or not m.get("is_alive", false):
