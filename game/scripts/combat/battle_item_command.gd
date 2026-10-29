@@ -28,6 +28,13 @@ func do_item(command: Dictionary) -> bool:
 	var target_slot: int = command.get("target", 0)
 	var effect: String = item.get("effect", "")
 	var target_type: String = item.get("target", "single_ally")
+	# A single-ally item the player turned on the enemy line (ui-design.md § 2.6).
+	if target_type == "single_ally" and command.get("target_enemy", false):
+		if not _use_on_enemy(item, command):
+			return false
+		if not str(item.get("id", "")).is_empty():
+			PartyState.consume_item(item.get("id", ""))
+		return true
 	# Pre-validate: single-target effects that require a living target
 	if target_type != "all_allies" and effect in LIVING_TARGET_EFFECTS:
 		var pre_tgt: Dictionary = state.get_member(target_slot)
@@ -166,6 +173,30 @@ func _fixed_damage(item: Dictionary, command: Dictionary) -> bool:
 	if not enemies[fd_idx].is_alive:
 		_battle.combatant_died.emit("enemy_%d" % fd_idx)
 		_battle.get_atb().remove_combatant("enemy_%d" % fd_idx)
+	return true
+
+
+## A single-ally item on an enemy. Only a revival item has an enemy-side rule:
+## it kills an Undead outright ("Revival items deal max damage (instant kill)",
+## bestiary/README.md § Undead), its HP going to 0. On anything else — a living
+## enemy has nothing to revive, and the design gives potions no enemy rule —
+## it is refused rather than spent. Returns whether the item was used.
+func _use_on_enemy(item: Dictionary, command: Dictionary) -> bool:
+	var enemies: Array[Node] = _battle.get_enemies()
+	var idx: int = BattleActions.resolve_enemy_target(command.get("target", 0), enemies)
+	if idx < 0:
+		_battle.message.emit("No target!")
+		return false
+	var enemy: Node = enemies[idx]
+	if item.get("effect", "") != "revive" or enemy.get_type() != "undead":
+		_battle.message.emit("No effect!")
+		return false
+	_battle.message.emit("Used %s!" % item.get("name", "Item"))
+	var hp: int = enemy.current_hp
+	enemy.take_damage(hp)
+	_battle.damage_dealt.emit("enemy_%d" % idx, hp, "physical")
+	_battle.combatant_died.emit("enemy_%d" % idx)
+	_battle.get_atb().remove_combatant("enemy_%d" % idx)
 	return true
 
 

@@ -341,3 +341,89 @@ func test_an_unsilenced_member_s_magic_command_is_open() -> void:
 	var m: Node = _make_menu()
 	m.show_commands({"character_id": CASTER_ID, "level": CASTER_LEVEL}, false, _member(0))
 	assert_true(m._commands[1].get("enabled", false), "no MP still opens the list")
+
+
+# --- A support action can be turned on the enemy line (#178a) ---
+# ui-design.md § 2.6: left/right cycles through enemies, up/down through party
+# members. Read as an axis per side: while a single-ally action is targeting the
+# party, left/right moves the cursor onto the enemy line, and up/down brings it
+# back. A heal spell or a revival item can then reach an enemy.
+
+
+## The command the menu submits when the player confirms, or {} if none.
+func _confirmed(m: Node) -> Dictionary:
+	watch_signals(m)
+	m._handle_target_input(_press("ui_accept"))
+	if get_signal_emit_count(m, "command_selected") == 0:
+		return {}
+	return get_signal_parameters(m, "command_selected")[0]
+
+
+func test_left_or_right_on_the_party_moves_a_heal_onto_the_enemy_line() -> void:
+	for action: String in ["ui_left", "ui_right"]:
+		var m: Node = _make_menu()
+		m.set_enemy_count(2)
+		_open_single_ally_target(m, 2)
+		watch_signals(m)
+
+		m._handle_target_input(_press(action))
+
+		assert_signal_emitted_with_parameters(m, "target_changed", [0, true])
+		var cmd: Dictionary = _confirmed(m)
+		assert_true(cmd.get("target_enemy", false), "%s aims the heal at an enemy" % action)
+		assert_eq(cmd.get("target", -1), 0, "at the first enemy")
+
+
+func test_once_on_the_enemy_line_left_and_right_cycle_the_enemies() -> void:
+	var m: Node = _make_menu()
+	m.set_enemy_count(3)
+	_open_single_ally_target(m, 2)
+	m._handle_target_input(_press("ui_right"))  # onto the enemy line
+
+	m._handle_target_input(_press("ui_right"))
+	m._handle_target_input(_press("ui_right"))
+
+	var cmd: Dictionary = _confirmed(m)
+	assert_true(cmd.get("target_enemy", false), "still on the enemy line")
+	assert_eq(cmd.get("target", -1), 2, "the third enemy is reachable, not capped at the party")
+
+
+func test_up_or_down_on_the_enemy_line_brings_a_heal_back_to_the_party() -> void:
+	var m: Node = _make_menu()
+	m.set_enemy_count(3)
+	_open_single_ally_target(m, 2)
+	m._handle_target_input(_press("ui_right"))
+	watch_signals(m)
+
+	m._handle_target_input(_press("ui_down"))
+
+	assert_signal_emitted_with_parameters(m, "target_changed", [0, false])
+	var cmd: Dictionary = _confirmed(m)
+	assert_false(cmd.get("target_enemy", true), "the heal goes to a party member again")
+	assert_eq(cmd.get("target", -1), 0, "the first member")
+
+
+func test_a_heal_confirmed_on_the_party_says_so() -> void:
+	# The command dict is reused across turns, so an earlier enemy choice must
+	# not linger on it.
+	var m: Node = _make_menu()
+	_open_single_ally_target(m, 2)
+	m._handle_target_input(_press("ui_down"))
+	var cmd: Dictionary = _confirmed(m)
+	assert_false(cmd.get("target_enemy", true), "an ally heal is marked as one")
+	assert_eq(cmd.get("target", -1), 1, "on the member chosen")
+
+
+func test_an_attack_cannot_be_turned_on_the_party() -> void:
+	var m: Node = _make_menu()
+	m.show_commands({"id": "cael", "level": 1}, false, {"current_mp": 99})
+	m.set_enemy_count(2)
+	_open_attack_target(m)
+	watch_signals(m)
+
+	m._handle_target_input(_press("ui_down"))
+
+	assert_signal_not_emitted(m, "target_changed", "up/down does nothing on an attack")
+	var cmd: Dictionary = _confirmed(m)
+	assert_eq(cmd.get("type", ""), "attack", "the attack is submitted as before")
+	assert_false(cmd.has("target_enemy"), "with no side to choose, nothing marks one")

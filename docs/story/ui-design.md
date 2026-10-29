@@ -299,6 +299,11 @@ Vertical list of battle commands:
   member stays targetable (revives and healing must reach them). If a
   slot with no row is somehow targeted anyway, the cursor hides rather
   than pointing at empty space.
+- A single-ally spell or item can be turned on an enemy: while it is
+  targeting the party, left/right moves the cursor onto the enemy line,
+  and up/down brings it back. This is how a heal reaches an Undead or
+  Pallor enemy (see [bestiary/README.md](bestiary/README.md) § Undead).
+  Attacks and enemy-targeted actions never cross to the party.
 - Multi-target spells: all valid targets highlighted simultaneously,
   cursor shows "All" text indicator.
 - Confirm executes; cancel returns to sub-menu or command panel.
