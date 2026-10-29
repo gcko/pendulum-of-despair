@@ -178,7 +178,7 @@ func test_ability_selector_back_falls_back_when_no_back_row() -> void:
 
 
 # --- Silence blocks casting (#246 slice 4) ---
-# magic.md § Status Effect Reference: Silence, "Cannot cast spells". Ruling
+# Silence: "Cannot cast spells" (magic.md § Status Effect Reference). Ruling
 # (2026-10-29): a Silenced enemy skips spells and takes the next action its AI
 # allows, falling back to a basic attack.
 
