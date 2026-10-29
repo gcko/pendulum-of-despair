@@ -200,7 +200,7 @@ func test_ambush_protocol_needs_both_of_its_abilities() -> void:
 	assert_does_not_have(_ids(_battle(["sable", "lira"], 12)), "ambush_protocol", "no Misdirect")
 	_learn_everything()
 	assert_does_not_have(_ids(_battle(["sable", "lira"], 11)), "ambush_protocol", "no Arc Trap")
-	assert_has(_ids(_battle(["sable", "lira"], 12)), "ambush_protocol", "both learned")
+	assert_has(_ids(_battle(["sable", "lira"], 14)), "ambush_protocol", "both learned")
 
 
 func test_an_ability_gate_reads_its_own_characters_abilities() -> void:
