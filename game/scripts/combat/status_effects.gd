@@ -5,7 +5,8 @@ extends RefCounted
 ## per-turn HP tick, canonical duration, and whether damage cures it. Every
 ## value traces to docs/story/magic.md and docs/story/combat-formulas.md.
 ##
-## Scope (Bundle 2b): player-cast offensive debuffs on enemies. Statuses whose
+## Scope: the ailments spells and enemies inflict (Bundle 2b), plus Haste, the
+## one positive status built so far (#246; is_positive). Ailments whose
 ## *behavioral* effect needs an unbuilt system are still inflictable here, but
 ## their effect is deferred (tracked on #246):
 ##   - blind (-50% enemy accuracy), confusion (auto-target) — need enemy-AI
@@ -19,7 +20,8 @@ extends RefCounted
 const UNTIL_CURED: int = -1
 
 ## status_name -> rule. Omitted keys fall back to defaults via the accessors
-## below: atb "none", atb_mult 1.0, tick_pct 0.0, wake_on_damage false.
+## below: atb "none", atb_mult 1.0, tick_pct 0.0, wake_on_damage false,
+## positive false.
 ## atb is "none" | "frozen" | "mod"; tick_pct is fraction of MAX HP lost at the
 ## end of the bearer's turn. Sources are cited per status.
 const RULES: Dictionary = {
@@ -71,8 +73,9 @@ const RULES: Dictionary = {
 	# Interactions; magic.md § Stillwatch). Its duration is SECONDS, not turns.
 	"stop": {"atb": "frozen", "duration": 3, "realtime": true},
 	# Haste (Quickstep): ATB fill x1.5 for 5 turns (combat-formulas.md
-	# § Fill Rate Modifiers + § Status Effect ATB Interactions). Party-side buff (#246).
-	"haste": {"atb": "mod", "atb_mult": 1.5, "duration": 5},
+	# § Fill Rate Modifiers + § Status Effect ATB Interactions). A positive
+	# status (magic.md § Status Effect Reference): a KO ends it, a cure-all keeps it.
+	"haste": {"atb": "mod", "atb_mult": 1.5, "duration": 5, "positive": true},
 }
 
 ## Player-facing adjective for an ACTION-DENIAL announcement ("paralysis" ->
@@ -132,7 +135,14 @@ static func removes_from_combat(status: String) -> bool:
 	return RULES.get(status, {}).get("removes_from_combat", false)
 
 
-## Whether the registry knows this status (and 2b can inflict it).
+## Whether this status is a buff rather than an ailment (magic.md § Status
+## Effect Reference, "Positive"): Haste. A KO ends it, and an item that clears
+## statuses leaves it alone.
+static func is_positive(status: String) -> bool:
+	return RULES.get(status, {}).get("positive", false)
+
+
+## Whether the registry knows this status, so a spell can land it.
 static func is_known(status: String) -> bool:
 	return RULES.has(status)
 
@@ -145,7 +155,7 @@ static func is_realtime(status: String) -> bool:
 	return RULES.get(status, {}).get("realtime", false)
 
 
-## ATB effect: "none", "frozen" (Sleep/Petrify/Stop), or "mod" (Slow/Despair).
+## ATB effect: "none", "frozen" (Sleep/Petrify/Stop), or "mod" (Slow/Despair/Haste).
 static func atb_effect(status: String) -> String:
 	return RULES.get(status, {}).get("atb", "none")
 

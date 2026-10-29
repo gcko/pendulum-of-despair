@@ -9,8 +9,11 @@ extends GutTest
 ##   - a Pallor takes the heal as damage too (combat-formulas.md § Tier 2:
 ##     Pallor Feedback, "Deals damage equal to heal amount").
 ## The damage is the heal the spell rolled — its own variance, its own 14,999
-## cap — with no Spirit-element bonus, and it counts as spell damage: threat for
-## the caster and Weave Gauge for the cast.
+## cap — with no element or type multiplier at all (not Spirit's 1.5x on
+## Undead, not the enemy's own Spirit weakness), and it counts as spell damage:
+## threat for the caster and Weave Gauge for the cast. Healing a normal enemy
+## earns no Weave Gauge, and a revival item is refused on a Pallor
+## (2026-10-29 rulings).
 ##
 ## Every cast boots battle.tscn and goes in through BattleUI.command_submitted,
 ## the seam the menu feeds, as test_battle_magic_command.gd does.
@@ -157,12 +160,44 @@ func test_a_heal_spell_on_a_normal_enemy_heals_it() -> void:
 	assert_has(markers, "enemy_0:heal:%d" % heal, "shown as a heal: %s" % str(markers))
 
 
+func test_healing_a_normal_enemy_earns_no_weave_gauge() -> void:
+	var battle: Node = _boot(["ley_vermin"])
+	_pin_hp(battle.get_enemies()[0], 5000, 100)
+	var state: Node = battle.get_battle_state()
+	state.add_member(2, {"character_id": "maren", "base_stats": {"hp": 100, "mp": 10}})
+	if not await _await_prompt(battle):
+		return
+
+	_cast_on_enemy(battle, _spell("spirit", "mend"))
+
+	assert_gt(battle.get_enemies()[0].current_hp, 100, "precondition: the vermin was healed")
+	assert_eq(int(state.get_member(2).get("wg", 0)), 0, "Maren banks nothing for it")
+
+
+func test_a_heal_lands_on_the_enemy_the_cursor_chose() -> void:
+	var battle: Node = _boot(["restless_dead", "restless_dead"])
+	var first: Node = battle.get_enemies()[0]
+	var second: Node = battle.get_enemies()[1]
+	_pin_hp(first, 5000, 5000)
+	_pin_hp(second, 5000, 5000)
+	var mend: Dictionary = _spell("spirit", "mend")
+	if not await _await_prompt(battle):
+		return
+	var heal: int = _rolled_heal(mend)
+
+	seed(HEAL_SEED)
+	_submit(battle, {"type": "magic", "spell": mend, "target": 1, "target_enemy": true})
+
+	assert_eq(first.current_hp, 5000, "the first Undead is untouched")
+	assert_eq(second.current_hp, 5000 - heal, "the second takes the heal")
+
+
 # ── An Undead takes the heal as damage ───────────────────────────────────
 
 
 func test_a_heal_spell_on_an_undead_deals_the_rolled_heal_as_damage() -> void:
-	# Mend is Spirit, and Spirit deals 1.5x to Undead — but not here: the damage
-	# is the heal amount itself.
+	# Mend is Spirit: Spirit deals 1.5x to Undead, and the Restless Dead is
+	# itself weak to Spirit. Neither applies — the damage is the heal amount.
 	var battle: Node = _boot(["restless_dead"])
 	var dead: Node = battle.get_enemies()[0]
 	_pin_hp(dead, 5000, 5000)
@@ -230,11 +265,13 @@ func test_a_heal_that_drops_an_undead_to_zero_kills_it() -> void:
 	watch_signals(battle)
 	if not await _await_prompt(battle):
 		return
+	battle.get_atb().set_gauge("enemy_0", 5000)
 
 	_cast_on_enemy(battle, _spell("spirit", "mend"))
 
 	assert_false(dead.is_alive, "the Undead falls")
 	assert_signal_emitted_with_parameters(battle, "combatant_died", ["enemy_0"])
+	assert_eq(battle.get_atb().get_gauge("enemy_0"), 0, "and leaves the ATB")
 	assert_signal_emitted(battle, "victory", "and its fall ends the battle")
 
 
@@ -269,6 +306,7 @@ func test_a_revival_item_on_an_undead_kills_it_outright() -> void:
 	watch_signals(battle)
 	if not await _await_prompt(battle):
 		return
+	battle.get_atb().set_gauge("enemy_0", 5000)
 
 	_submit(
 		battle, {"type": "item", "item": _item("phoenix_down"), "target": 0, "target_enemy": true}
@@ -277,6 +315,7 @@ func test_a_revival_item_on_an_undead_kills_it_outright() -> void:
 	assert_eq(dead.current_hp, 0, "its HP goes to 0")
 	assert_false(dead.is_alive, "the Undead falls")
 	assert_signal_emitted_with_parameters(battle, "combatant_died", ["enemy_0"])
+	assert_eq(battle.get_atb().get_gauge("enemy_0"), 0, "and leaves the ATB")
 	assert_signal_emitted(battle, "victory", "and its fall ends the battle")
 	assert_eq(_count("phoenix_down"), held - 1, "the Phoenix Down is spent")
 
@@ -296,6 +335,26 @@ func test_a_revival_item_on_a_living_normal_enemy_does_nothing() -> void:
 	)
 
 	assert_eq(vermin.current_hp, 100, "nothing to revive, so nothing happens")
+	assert_has(said, "No effect!", "and the player is told: %s" % str(said))
+	assert_eq(_count("phoenix_down"), held, "the Phoenix Down is kept")
+
+
+func test_a_revival_item_on_a_pallor_enemy_is_refused_and_kept() -> void:
+	# Only the Undead are slain by a revival item (2026-10-29 ruling).
+	var battle: Node = _boot(["pallor_vermin"], "act_iii")
+	var pallor: Node = battle.get_enemies()[0]
+	_pin_hp(pallor, 5000, 5000)
+	PartyState.add_item("phoenix_down", 1)
+	var held: int = _count("phoenix_down")
+	var said: Array[String] = _messages(battle)
+	if not await _await_prompt(battle):
+		return
+
+	_submit(
+		battle, {"type": "item", "item": _item("phoenix_down"), "target": 0, "target_enemy": true}
+	)
+
+	assert_eq(pallor.current_hp, 5000, "the Pallor is untouched")
 	assert_has(said, "No effect!", "and the player is told: %s" % str(said))
 	assert_eq(_count("phoenix_down"), held, "the Phoenix Down is kept")
 

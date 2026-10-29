@@ -7,10 +7,12 @@ extends GutTest
 ##
 ## The cast boots battle.tscn and goes in through BattleUI.command_submitted,
 ## the seam the menu feeds, so the announcement is the one the battle makes.
+##
+## Haste is a positive status: a KO ends it, as it ends a Rally or a Bulwark
+## stance (2026-10-29 ruling), and an item that clears statuses leaves it be.
 
 const BATTLE: PackedScene = preload("res://scenes/core/battle.tscn")
 const ATBSystem = preload("res://scripts/combat/atb_system.gd")
-const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 
 const PROMPT_TIMEOUT: float = 5.0
 const CASTER: int = 0
@@ -74,21 +76,36 @@ func _quickstep() -> Dictionary:
 	return {}
 
 
-## Cast Quickstep from the caster onto the target and return the battle.
+## Cast Quickstep from the caster onto [param target] in [param battle].
+func _cast(battle: Node, target: int = TARGET) -> bool:
+	if not await _await_prompt(battle):
+		return false
+	var ui: CanvasLayer = battle.get_node("BattleUI")
+	ui.command_submitted.emit({"type": "magic", "spell": _quickstep(), "target": target})
+	return true
+
+
+## Boot, cast Quickstep from the caster onto the target and return the battle.
 func _cast_quickstep(said: Array[String]) -> Node:
 	var battle: Node = _boot()
 	battle.message.connect(func(text: String) -> void: said.append(text))
-	if not await _await_prompt(battle):
+	if not await _cast(battle):
 		return null
-	var ui: CanvasLayer = battle.get_node("BattleUI")
-	ui.command_submitted.emit({"type": "magic", "spell": _quickstep(), "target": TARGET})
 	return battle
 
 
-func _haste_entry(state: Node) -> Dictionary:
-	for s: Dictionary in state.get_member(TARGET).get("active_statuses", []):
+func _haste_entry(state: Node, slot: int = TARGET) -> Dictionary:
+	for s: Dictionary in state.get_member(slot).get("active_statuses", []):
 		if s.get("name", "") == "haste":
 			return s
+	return {}
+
+
+func _item(item_id: String) -> Dictionary:
+	for entry: Variant in DataManager.load_items("consumables"):
+		if (entry as Dictionary).get("id", "") == item_id:
+			return entry
+	fail_test("consumables.json has no %s" % item_id)
 	return {}
 
 
@@ -114,20 +131,27 @@ func test_a_hastened_member_is_announced() -> void:
 	)
 
 
-func test_a_hastened_member_s_gauge_fills_half_again_as_fast() -> void:
-	var said: Array[String] = []
-	var battle: Node = await _cast_quickstep(said)
-	if battle == null:
+func test_a_hastened_member_s_live_gauge_fills_half_again_as_fast() -> void:
+	# Caster and target at the same SPD: the battle's own per-frame resync is
+	# what hands the target's gauge the Haste modifier.
+	var battle: Node = _boot()
+	var state: Node = battle.get_battle_state()
+	for slot: int in [CASTER, TARGET]:
+		state.get_member(slot)["effective_stats"]["spd"] = 100
+	if not await _cast(battle):
 		return
-	var statuses: Array = battle.get_battle_state().get_member(TARGET)["active_statuses"]
-	var mods: Array = StatusEffects.atb_state(statuses)["mods"]
-	assert_eq(mods, [1.5], "Haste is a x1.5 fill modifier")
 	var atb: Node = battle.get_atb()
-	assert_eq(
-		atb.calculate_fill_rate(100, 3, mods),
-		int(atb.calculate_fill_rate(100, 3, []) * 1.5),
-		"so the gauge fills at one and a half times the rate"
-	)
+	atb.set_atb_mode("active")
+	battle._process(0.0)  # one resync, no battle time
+	for slot: int in [CASTER, TARGET]:
+		atb.set_gauge("party_%d" % slot, 0)
+
+	atb.tick(1.0 / ATBSystem.TICKS_PER_SECOND)
+
+	var plain: int = atb.get_gauge("party_%d" % CASTER)
+	var hasted: int = atb.get_gauge("party_%d" % TARGET)
+	assert_gt(plain, 0, "precondition: one tick of battle time ran")
+	assert_almost_eq(float(hasted) / plain, 1.5, 0.01, "%d vs %d" % [hasted, plain])
 
 
 func test_haste_wears_off_after_five_of_the_target_s_turns() -> void:
@@ -141,3 +165,66 @@ func test_haste_wears_off_after_five_of_the_target_s_turns() -> void:
 	assert_true(state.has_status(TARGET, "haste"), "still Hastened after four turns")
 	state.tick_statuses(TARGET)
 	assert_false(state.has_status(TARGET, "haste"), "and gone after the fifth")
+
+
+func test_a_self_cast_quickstep_lasts_five_of_the_caster_s_own_turns() -> void:
+	# The cast is made during the caster's turn, and that turn's end must not
+	# spend one of the five (BattleRally.start, BattleBulwark follow the rule).
+	var battle: Node = _boot()
+	if not await _cast(battle, CASTER):
+		return
+	var state: Node = battle.get_battle_state()
+	for turn: int in range(4):
+		state.tick_statuses(CASTER)
+	assert_true(state.has_status(CASTER, "haste"), "still Hastened after four more turns")
+	state.tick_statuses(CASTER)
+	assert_false(state.has_status(CASTER, "haste"), "and gone after the fifth")
+
+
+func test_recasting_quickstep_refreshes_its_duration() -> void:
+	var battle: Node = _boot()
+	if not await _cast(battle):
+		return
+	var state: Node = battle.get_battle_state()
+	state.tick_statuses(TARGET)
+	state.tick_statuses(TARGET)
+	assert_eq(int(_haste_entry(state).get("remaining_turns", 0)), 3, "precondition: 3 left")
+
+	if not await _cast(battle):
+		return
+
+	assert_eq(int(_haste_entry(state).get("remaining_turns", 0)), 5, "back to the full 5 turns")
+
+
+func test_a_ko_ends_haste() -> void:
+	var said: Array[String] = []
+	var battle: Node = await _cast_quickstep(said)
+	if battle == null:
+		return
+	var state: Node = battle.get_battle_state()
+	assert_true(state.has_status(TARGET, "haste"), "precondition: Hastened")
+
+	state.take_damage(TARGET, 99999)
+
+	assert_false(state.get_member(TARGET)["is_alive"], "precondition: the target is KO'd")
+	assert_false(state.has_status(TARGET, "haste"), "and the KO ended its Haste")
+
+
+func test_an_item_that_clears_statuses_leaves_haste_alone() -> void:
+	# Starbloom Tea restores HP and clears statuses: the ailments, not a buff.
+	var said: Array[String] = []
+	var battle: Node = await _cast_quickstep(said)
+	if battle == null:
+		return
+	var state: Node = battle.get_battle_state()
+	state.apply_status(TARGET, "poison", "turns", -1)
+	PartyState.add_item("starbloom_tea", 1)
+	if not await _await_prompt(battle):
+		return
+
+	battle.get_node("BattleUI").command_submitted.emit(
+		{"type": "item", "item": _item("starbloom_tea"), "target": TARGET}
+	)
+
+	assert_false(state.has_status(TARGET, "poison"), "precondition: the tea cleared Poison")
+	assert_true(state.has_status(TARGET, "haste"), "but the target is still Hastened")

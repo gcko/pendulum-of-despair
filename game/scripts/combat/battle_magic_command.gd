@@ -34,8 +34,10 @@ func _init(battle: Node) -> void:
 
 
 ## Cast the spell in [param command]. Returns false when the cast never
-## happened — the caster is Silenced, no target, or not enough MP — so the
-## caller re-opens the menu. Nothing is spent unless the cast resolves.
+## happened — the caster is Silenced; the spell was turned on an enemy
+## ([code]target_enemy[/code]) but restores no HP; the ally is KO'd; no enemy is
+## left to target; or there is not enough MP — so the caller re-opens the menu.
+## Nothing is spent unless the cast resolves.
 func do_magic(actor_id: String, command: Dictionary) -> bool:
 	var state: Node = _battle.get_battle_state()
 	var slot: int = actor_id.replace("party_", "").to_int()
@@ -157,20 +159,28 @@ func _heal_allies(target_type: String, command: Dictionary, heal_amt: int) -> bo
 
 
 ## Land a buff spell's status on party slot [param slot] (Quickstep's Haste,
-## #246) for the spell's own duration, else the status's canonical one. The
-## battle announces it from BattleState.status_applied. Returns true: the
-## target was validated alive before any MP was spent.
+## #246) for the spell's own duration, else the status's canonical one, plus
+## one when the target's turn is open (a self-cast): that turn's end would
+## otherwise spend one, as BattleRally.start and BattleBulwark count it. A
+## recast replaces the old one, refreshing the duration. The battle announces
+## it from BattleState.status_applied. Returns true: the target was validated
+## alive before any MP was spent.
 func _status_on_ally(slot: int, status: String, duration: Variant) -> bool:
+	var state: Node = _battle.get_battle_state()
 	var turns: int = StatusEffects.resolve_duration(status, duration)
-	_battle.get_battle_state().apply_status(slot, status, "turns", float(turns))
+	if state.get_member(slot).get("turn_open", false):
+		turns += 1
+	state.apply_status(slot, status, "turns", float(turns))
 	return true
 
 
-## A heal spell landing on enemy [param idx]. A normal enemy is healed by
-## [param heal_amt]; an Undead or Pallor enemy takes it as damage instead — the
-## heal as rolled, with its own variance and 14,999 cap and no element or type
-## multiplier — and that damage counts as spell damage: threat for the caster,
-## and a kill handled like any other. Returns whether the enemy's HP moved.
+## A heal spell landing on enemy [param idx]. An Undead or Pallor enemy takes
+## [param heal_amt] as damage — the heal as rolled, with its own variance and
+## 14,999 cap, no hit roll and no element or type multiplier — and that damage
+## counts as spell damage: threat for the caster, Weave Gauge for the cast, and
+## a kill handled like any other. A normal enemy is healed by it. Returns
+## whether the cast earns Weave Gauge, which only heal damage does: healing an
+## enemy earns none (2026-10-29 ruling).
 func _heal_on_enemy(caster_slot: int, heal_amt: int, idx: int) -> bool:
 	var enemy: Node = _battle.get_enemies()[idx]
 	if enemy.get_type() in HEAL_REVERSING_TYPES:
@@ -182,7 +192,7 @@ func _heal_on_enemy(caster_slot: int, heal_amt: int, idx: int) -> bool:
 	var healed: int = enemy.current_hp - before
 	if healed > 0:
 		_battle.damage_dealt.emit("enemy_%d" % idx, healed, "heal")
-	return healed > 0
+	return false
 
 
 ## Book [param dmg] of spell damage already dealt to enemy [param idx]: the

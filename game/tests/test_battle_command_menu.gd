@@ -427,3 +427,47 @@ func test_an_attack_cannot_be_turned_on_the_party() -> void:
 	var cmd: Dictionary = _confirmed(m)
 	assert_eq(cmd.get("type", ""), "attack", "the attack is submitted as before")
 	assert_false(cmd.has("target_enemy"), "with no side to choose, nothing marks one")
+
+
+func test_a_single_ally_ability_cannot_be_turned_on_the_enemies() -> void:
+	# Ironwall shields an ally; only Magic and Item have an enemy-side rule.
+	var m: Node = _make_menu()
+	m.show_commands({"character_id": "edren", "level": 1}, false, _member(99))
+	m.set_enemy_count(2)
+	_open_ability_submenu(m)
+	var idx: int = _labels(m).find("Ironwall  0 AP")
+	assert_gt(idx, -1, "precondition: Ironwall is listed: %s" % str(_labels(m)))
+	assert_true(m._submenu_items[idx].get("enabled", false), "precondition: and selectable")
+	assert_eq(m._submenu_items[idx].get("target_type", ""), "single_ally", "precondition")
+	m._submenu_cursor = idx
+	m._confirm_submenu()
+	watch_signals(m)
+
+	m._handle_target_input(_press("ui_right"))
+
+	assert_signal_not_emitted(m, "target_changed", "left/right does not leave the party")
+	var cmd: Dictionary = _confirmed(m)
+	assert_eq(cmd.get("type", ""), "ability", "precondition: the ability was submitted")
+	assert_false(cmd.has("target_enemy"), "and nothing marks an enemy side")
+
+
+func test_an_enemy_targeted_spell_cannot_be_turned_on_the_party() -> void:
+	var m: Node = _make_menu()
+	m.set_enemy_count(2)
+	var items: Array[Dictionary] = [
+		{
+			"label": "Rime Shard",
+			"command": {"type": "magic"},
+			"target_type": "single_enemy",
+			"enabled": true,
+		}
+	]
+	m.set_submenu_items(items)
+	m._submenu_cursor = 0
+	m._confirm_submenu()
+	watch_signals(m)
+
+	m._handle_target_input(_press("ui_down"))
+
+	assert_signal_not_emitted(m, "target_changed", "up/down does nothing on an enemy spell")
+	assert_false(_confirmed(m).has("target_enemy"), "with no side to choose, nothing marks one")

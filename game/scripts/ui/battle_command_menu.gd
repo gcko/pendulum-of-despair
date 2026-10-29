@@ -21,6 +21,9 @@ const UNIQUE_COMMAND_NAMES: Dictionary = {
 	"maren": "Arcanum",
 }
 
+## Commands whose single-ally entries may be turned on an enemy (#178a).
+const SIDE_SWITCH_COMMANDS: Array[String] = ["magic", "item"]
+
 const COLOR_SELECTED: Color = Color("#ffff88")
 const COLOR_NORMAL: Color = Color("#ccddff")
 const COLOR_DISABLED: Color = Color("#666688")
@@ -33,9 +36,10 @@ var _submenu_cursor: int = 0
 var _is_boss: bool = false
 var _target_cursor: int = 0
 var _target_is_enemy: bool = true
-## Whether the action being targeted may cross to the other side: a single-ally
-## spell or item can be turned on the enemy line (a heal on an Undead, #178a).
-## Attacks and enemy-targeted actions stay on the enemies.
+## Whether the action being targeted may cross to the other side. Only a
+## single-ally spell or item can be turned on the enemy line (a heal on an
+## Undead, #178a): Magic and Item are the commands with an enemy-side rule.
+## Abilities, attacks and enemy-targeted actions stay on their own side.
 var _target_side_switchable: bool = false
 var _pending_command: Dictionary = {}
 ## Live range of the cursor in the mode currently being targeted. Derived from
@@ -286,7 +290,9 @@ func _confirm_submenu() -> void:
 		return
 	_pending_command = item.get("command", {})
 	var target_type: String = item.get("target_type", "single_enemy")
-	_target_side_switchable = target_type == "single_ally"
+	_target_side_switchable = (
+		target_type == "single_ally" and _pending_command.get("type", "") in SIDE_SWITCH_COMMANDS
+	)
 	match target_type:
 		"single_enemy":
 			_start_target_selection(true)

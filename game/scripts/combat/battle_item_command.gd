@@ -7,6 +7,7 @@ extends RefCounted
 ## and the command dispatch while each command owns its own resolution rules.
 
 const BattleActions = preload("res://scripts/combat/battle_actions.gd")
+const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 
 ## Effects that need a living single target before anything else happens.
 const LIVING_TARGET_EFFECTS: Array[String] = [
@@ -32,50 +33,48 @@ func do_item(command: Dictionary) -> bool:
 	if target_type == "single_ally" and command.get("target_enemy", false):
 		if not _use_on_enemy(item, command):
 			return false
-		if not str(item.get("id", "")).is_empty():
-			PartyState.consume_item(item.get("id", ""))
-		return true
-	# Pre-validate: single-target effects that require a living target
-	if target_type != "all_allies" and effect in LIVING_TARGET_EFFECTS:
-		var pre_tgt: Dictionary = state.get_member(target_slot)
-		if pre_tgt.is_empty() or not pre_tgt.get("is_alive", false):
-			_battle.message.emit("No effect!")
-			return false
-	match effect:
-		"restore_hp":
-			if not _restore_hp(item, target_type, target_slot):
+	else:
+		# Pre-validate: single-target effects that require a living target
+		if target_type != "all_allies" and effect in LIVING_TARGET_EFFECTS:
+			var pre_tgt: Dictionary = state.get_member(target_slot)
+			if pre_tgt.is_empty() or not pre_tgt.get("is_alive", false):
+				_battle.message.emit("No effect!")
 				return false
-		"revive":
-			if not _revive(item, target_slot):
+		match effect:
+			"restore_hp":
+				if not _restore_hp(item, target_type, target_slot):
+					return false
+			"revive":
+				if not _revive(item, target_slot):
+					return false
+			"restore_mp":
+				_battle.message.emit("Used %s!" % item.get("name", "Item"))
+				_restore_mp(item, target_slot)
+			"restore_hp_mp":
+				_battle.message.emit("Used %s!" % item.get("name", "Item"))
+				_restore_hp_mp(item, target_type, target_slot)
+			"fixed_damage":
+				if not _fixed_damage(item, command):
+					return false
+			"cure_status":
+				_battle.message.emit("Used %s!" % item.get("name", "Item"))
+				for sname: String in item.get("cures", []):
+					state.remove_status(target_slot, sname)
+			"buff_atk":
+				_battle.message.emit("Used %s!" % item.get("name", "Item"))
+				var raw_atk: Variant = item.get("value")
+				var atk_boost: int = int(raw_atk) if raw_atk != null else 10
+				state.set_buff(target_slot, "atk_mult", 1.0 + float(atk_boost) / 100.0)
+			"buff_mag":
+				_battle.message.emit("Used %s!" % item.get("name", "Item"))
+				var raw_mag: Variant = item.get("value")
+				var mag_boost: int = int(raw_mag) if raw_mag != null else 15
+				state.set_buff(target_slot, "mag_mult", 1.0 + float(mag_boost) / 100.0)
+			"flee":
+				return _flee_item(item)
+			_:
+				_battle.message.emit("No effect!")
 				return false
-		"restore_mp":
-			_battle.message.emit("Used %s!" % item.get("name", "Item"))
-			_restore_mp(item, target_slot)
-		"restore_hp_mp":
-			_battle.message.emit("Used %s!" % item.get("name", "Item"))
-			_restore_hp_mp(item, target_type, target_slot)
-		"fixed_damage":
-			if not _fixed_damage(item, command):
-				return false
-		"cure_status":
-			_battle.message.emit("Used %s!" % item.get("name", "Item"))
-			for sname: String in item.get("cures", []):
-				state.remove_status(target_slot, sname)
-		"buff_atk":
-			_battle.message.emit("Used %s!" % item.get("name", "Item"))
-			var raw_atk: Variant = item.get("value")
-			var atk_boost: int = int(raw_atk) if raw_atk != null else 10
-			state.set_buff(target_slot, "atk_mult", 1.0 + float(atk_boost) / 100.0)
-		"buff_mag":
-			_battle.message.emit("Used %s!" % item.get("name", "Item"))
-			var raw_mag: Variant = item.get("value")
-			var mag_boost: int = int(raw_mag) if raw_mag != null else 15
-			state.set_buff(target_slot, "mag_mult", 1.0 + float(mag_boost) / 100.0)
-		"flee":
-			return _flee_item(item)
-		_:
-			_battle.message.emit("No effect!")
-			return false
 	var item_id: String = item.get("id", "")
 	if not item_id.is_empty():
 		PartyState.consume_item(item_id)
@@ -233,11 +232,14 @@ func _hp_amount(item: Dictionary, target: Dictionary) -> int:
 	return int(raw_val) if raw_val != null else 0
 
 
-## Strip every status from a slot, walking backwards so removal cannot skip one.
+## Strip every ailment from a slot, walking backwards so removal cannot skip
+## one. Positive statuses (Haste) are buffs, not something to cure, and stay.
 func _clear_statuses(slot: int, member: Dictionary) -> void:
 	var statuses: Array = member.get("active_statuses", [])
 	for i: int in range(statuses.size() - 1, -1, -1):
-		_battle.get_battle_state().remove_status(slot, statuses[i].get("name", ""))
+		var status: String = statuses[i].get("name", "")
+		if not StatusEffects.is_positive(status):
+			_battle.get_battle_state().remove_status(slot, status)
 
 
 func _target_slots(target_type: String, single_slot: int) -> Array[int]:
