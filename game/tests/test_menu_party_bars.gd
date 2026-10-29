@@ -41,7 +41,11 @@ func test_menu_hp_bar_fill_and_low_color() -> void:
 	var fill: ColorRect = _row0_node("HPCluster/HPBarBg/HPBarFill")
 	assert_not_null(bg, "menu row should have an HP bar track")
 	assert_not_null(fill, "menu row should have an HP bar fill")
-	assert_almost_eq(fill.size.x, 0.2475 * bg.custom_minimum_size.x, 0.001, "99/400 fills 24.75%")
+	assert_eq(
+		fill.size.x,
+		floorf(0.2475 * bg.custom_minimum_size.x),
+		"99/400 fills 24.75%, floored to a whole pixel"
+	)
 	assert_eq(fill.color, StatBarHelpers.COLOR_HP_LOW, "below 25% is low, bar turns red")
 
 

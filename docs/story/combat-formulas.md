@@ -717,7 +717,7 @@ All intermediate values use real-number arithmetic. The final fill_rate is floor
 | Gauge max | 16,000 | Total gauge capacity |
 | Tick rate | 60/second | Fixed tick rate for gauge updates, independent of the rendered frame rate |
 
-**Time to fill:** `seconds = 16000 / fill_rate / 60`
+**Time to fill:** `ceil(16000 / fill_rate)` ticks, about `16000 / fill_rate / 60` seconds. The gauge moves only on whole ticks, so the true time is the tick count over 60, up to one tick (1/60 s) longer than that quotient: Maren Lv70 (fill rate 222) is ready after 73 ticks, 1.22s, where the quotient says 1.20s ([#492](https://github.com/gcko/pendulum-of-despair/issues/492)). Every seconds figure in the tables below is the tick count over 60, rounded half up to the precision it is printed at.
 
 ### Battle Speed Config
 
@@ -725,11 +725,11 @@ Player-configurable (1-6, default 3). Default matches FF6.
 
 | Setting | Factor | Maren Lv1 (SPD 8) | Sable Lv1 (SPD 18) |
 |---------|--------|-------------------|-------------------|
-| 1 (Fastest) | 6 | 1.3s | 1.0s |
-| 2 | 5 | 1.6s | 1.2s |
+| 1 (Fastest) | 6 | 1.4s | 1.1s |
+| 2 | 5 | 1.6s | 1.3s |
 | **3 (Default)** | **3** | **2.7s** | **2.1s** |
-| 4 | 2 | 4.0s | 3.1s |
-| 5 | 1.5 | 5.4s | 4.2s |
+| 4 | 2 | 4.1s | 3.1s |
+| 5 | 1.5 | 5.5s | 4.2s |
 | 6 (Slowest) | 1 | 8.1s | 6.2s |
 
 **These six factors are canon, and the engine was corrected to them
@@ -744,19 +744,19 @@ rather than superseding it. [difficulty-balance.md](difficulty-balance.md)
 interval of ~2.5s at level 1 and ~1.0s at level 70, which is what these factors
 produce and roughly four times what the retune produced. And this section is
 internally consistent under them: every seconds figure printed here and below is
-`16000 / floor((SPD + 25) x factor) / 60`, rounded to the precision that figure
-is printed at. The one argument on the other side was a code comment claiming
+`ceil(16000 / fill_rate) / 60` (whole ticks over 60, `fill_rate` as § Fill Rate Formula floors it), rounded half up
+to the precision that figure is printed at. The one argument on the other side was a code comment claiming
 FF6 parity for the retune, with no measurement behind it.
 
 `game/tests/test_atb_system.gd` now measures **both** columns of this table and
 every row of § ATB Pacing at Key Milestones below, by ticking a real gauge and
 counting ticks to ready. It checks each cell twice over: the gauge must reach
 ready on exactly the tick its fill rate implies, and the seconds printed here
-must be `16000 / rate / 60` rounded to the precision the cell is printed at. So
+must be the ticks the gauge actually took over 60, rounded half up to the precision the cell is printed at (#492). So
 the constants cannot drift from the table without the suite going red, and
 neither can the table drift from the constants — the Sable-at-speed-5 cell read
-4.1s until this guard was widened past the Maren column, which is the arithmetic
-you get by dropping the floor the fill-rate formula mandates. The 60 is
+4.1s until this guard was widened past the Maren column: the pre-#492 quotient with the
+fill-rate floor dropped (16000 / 64.5 / 60 = 4.13s); the floored rate 64 takes 250 ticks, 4.2s. The 60 is
 `ATBSystem.TICKS_PER_SECOND`, independent of `run/max_fps`. A single frame
 applies at most a quarter second (15 ticks) of battle time; the excess is dropped.
 
@@ -789,11 +789,11 @@ pressure without changing combat mechanics.
 |----------|-----|-----------|-------------|
 | Maren Lv1 | 8 | 99 | 2.7s |
 | Sable Lv1 | 18 | 129 | 2.1s |
-| Maren Lv70 | 49 | 222 | 1.20s |
-| Edren Lv70 | 65 | 270 | 0.99s |
+| Maren Lv70 | 49 | 222 | 1.22s |
+| Edren Lv70 | 65 | 270 | 1.00s |
 | Sable Lv70 | 128 | 459 | 0.58s |
-| Sable Lv70 + Haste | 128 | 688 | 0.39s |
-| Typical Lv70 enemy (SPD 60) | 60 | 255 | 1.0s |
+| Sable Lv70 + Haste | 128 | 688 | 0.40s |
+| Typical Lv70 enemy (SPD 60) | 60 | 255 | 1.1s |
 
 ### Fill Rate Modifiers (Status Effects)
 

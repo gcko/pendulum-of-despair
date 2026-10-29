@@ -26,278 +26,386 @@ script = ExtResource("1_panel")
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Row0" type="HBoxContainer" parent="Rows"]
+[node name="Row0" type="VBoxContainer" parent="Rows"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="HPLine" type="HBoxContainer" parent="Rows/Row0"]
 layout_mode = 2
 
-[node name="NameLabel" type="Label" parent="Rows/Row0"]
+[node name="NameLabel" type="Label" parent="Rows/Row0/HPLine"]
 vertical_alignment = 1
 layout_mode = 2
 custom_minimum_size = Vector2(140, 0)
 text = ""
 
-[node name="HPLabel" type="Label" parent="Rows/Row0"]
+[node name="HPLabel" type="Label" parent="Rows/Row0/HPLine"]
 vertical_alignment = 1
 layout_mode = 2
-custom_minimum_size = Vector2(110, 0)
-text = ""
+custom_minimum_size = Vector2(32, 0)
+text = "HP"
 
-[node name="HPBarBg" type="ColorRect" parent="Rows/Row0"]
+[node name="HPBarBg" type="ColorRect" parent="Rows/Row0/HPLine"]
 layout_mode = 2
 size_flags_vertical = 4
 custom_minimum_size = Vector2(120, 12)
 color = Color(0.133, 0, 0, 1)
 
-[node name="HPBarFill" type="ColorRect" parent="Rows/Row0/HPBarBg"]
+[node name="HPBarFill" type="ColorRect" parent="Rows/Row0/HPLine/HPBarBg"]
 offset_right = 0.0
 offset_bottom = 12.0
 color = Color(0.267, 0.8, 0.267, 1)
 
-[node name="MPLabel" type="Label" parent="Rows/Row0"]
+[node name="HPValue" type="Label" parent="Rows/Row0/HPLine"]
 vertical_alignment = 1
 layout_mode = 2
 custom_minimum_size = Vector2(110, 0)
 text = ""
 
-[node name="MPCluster" type="VBoxContainer" parent="Rows/Row0"]
+[node name="MPLine" type="HBoxContainer" parent="Rows/Row0"]
+layout_mode = 2
+
+[node name="NameSpacer" type="Control" parent="Rows/Row0/MPLine"]
+layout_mode = 2
+custom_minimum_size = Vector2(140, 0)
+
+[node name="MPLabel" type="Label" parent="Rows/Row0/MPLine"]
+vertical_alignment = 1
+layout_mode = 2
+custom_minimum_size = Vector2(32, 0)
+text = "MP"
+
+[node name="MPCluster" type="VBoxContainer" parent="Rows/Row0/MPLine"]
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_constants/separation = 2
 
-[node name="MPBarBg" type="ColorRect" parent="Rows/Row0/MPCluster"]
+[node name="MPBarBg" type="ColorRect" parent="Rows/Row0/MPLine/MPCluster"]
 layout_mode = 2
 custom_minimum_size = Vector2(120, 12)
 color = Color(0, 0.067, 0.133, 1)
 
-[node name="MPBarFill" type="ColorRect" parent="Rows/Row0/MPCluster/MPBarBg"]
+[node name="MPBarFill" type="ColorRect" parent="Rows/Row0/MPLine/MPCluster/MPBarBg"]
 offset_right = 0.0
 offset_bottom = 12.0
 color = Color(0.267, 0.533, 1, 1)
 
-[node name="WeaveBarBg" type="ColorRect" parent="Rows/Row0/MPCluster"]
+[node name="WeaveBarBg" type="ColorRect" parent="Rows/Row0/MPLine/MPCluster"]
 visible = false
 layout_mode = 2
 custom_minimum_size = Vector2(120, 6)
 color = Color(0.133, 0.133, 0.133, 1)
 
-[node name="WeaveBarFill" type="ColorRect" parent="Rows/Row0/MPCluster/WeaveBarBg"]
+[node name="WeaveBarFill" type="ColorRect" parent="Rows/Row0/MPLine/MPCluster/WeaveBarBg"]
 offset_right = 0.0
 offset_bottom = 6.0
 color = Color(0.667, 0.267, 1, 1)
 
-[node name="ATBBarBg" type="ColorRect" parent="Rows/Row0"]
+[node name="MPValue" type="Label" parent="Rows/Row0/MPLine"]
+vertical_alignment = 1
+layout_mode = 2
+custom_minimum_size = Vector2(110, 0)
+text = ""
+
+[node name="ATBSpacer" type="Control" parent="Rows/Row0/MPLine"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ATBBarBg" type="ColorRect" parent="Rows/Row0/MPLine"]
 layout_mode = 2
 size_flags_vertical = 4
 custom_minimum_size = Vector2(80, 16)
 color = Color(0.133, 0.133, 0.133, 1)
 
-[node name="ATBBarFill" type="ColorRect" parent="Rows/Row0/ATBBarBg"]
+[node name="ATBBarFill" type="ColorRect" parent="Rows/Row0/MPLine/ATBBarBg"]
 offset_right = 0.0
 offset_bottom = 16.0
 color = Color(1, 0.8, 0, 1)
 
-[node name="Row1" type="HBoxContainer" parent="Rows"]
+[node name="Row1" type="VBoxContainer" parent="Rows"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="HPLine" type="HBoxContainer" parent="Rows/Row1"]
 layout_mode = 2
 
-[node name="NameLabel" type="Label" parent="Rows/Row1"]
+[node name="NameLabel" type="Label" parent="Rows/Row1/HPLine"]
 vertical_alignment = 1
 layout_mode = 2
 custom_minimum_size = Vector2(140, 0)
 text = ""
 
-[node name="HPLabel" type="Label" parent="Rows/Row1"]
+[node name="HPLabel" type="Label" parent="Rows/Row1/HPLine"]
 vertical_alignment = 1
 layout_mode = 2
-custom_minimum_size = Vector2(110, 0)
-text = ""
+custom_minimum_size = Vector2(32, 0)
+text = "HP"
 
-[node name="HPBarBg" type="ColorRect" parent="Rows/Row1"]
+[node name="HPBarBg" type="ColorRect" parent="Rows/Row1/HPLine"]
 layout_mode = 2
 size_flags_vertical = 4
 custom_minimum_size = Vector2(120, 12)
 color = Color(0.133, 0, 0, 1)
 
-[node name="HPBarFill" type="ColorRect" parent="Rows/Row1/HPBarBg"]
+[node name="HPBarFill" type="ColorRect" parent="Rows/Row1/HPLine/HPBarBg"]
 offset_right = 0.0
 offset_bottom = 12.0
 color = Color(0.267, 0.8, 0.267, 1)
 
-[node name="MPLabel" type="Label" parent="Rows/Row1"]
+[node name="HPValue" type="Label" parent="Rows/Row1/HPLine"]
 vertical_alignment = 1
 layout_mode = 2
 custom_minimum_size = Vector2(110, 0)
 text = ""
 
-[node name="MPCluster" type="VBoxContainer" parent="Rows/Row1"]
+[node name="MPLine" type="HBoxContainer" parent="Rows/Row1"]
+layout_mode = 2
+
+[node name="NameSpacer" type="Control" parent="Rows/Row1/MPLine"]
+layout_mode = 2
+custom_minimum_size = Vector2(140, 0)
+
+[node name="MPLabel" type="Label" parent="Rows/Row1/MPLine"]
+vertical_alignment = 1
+layout_mode = 2
+custom_minimum_size = Vector2(32, 0)
+text = "MP"
+
+[node name="MPCluster" type="VBoxContainer" parent="Rows/Row1/MPLine"]
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_constants/separation = 2
 
-[node name="MPBarBg" type="ColorRect" parent="Rows/Row1/MPCluster"]
+[node name="MPBarBg" type="ColorRect" parent="Rows/Row1/MPLine/MPCluster"]
 layout_mode = 2
 custom_minimum_size = Vector2(120, 12)
 color = Color(0, 0.067, 0.133, 1)
 
-[node name="MPBarFill" type="ColorRect" parent="Rows/Row1/MPCluster/MPBarBg"]
+[node name="MPBarFill" type="ColorRect" parent="Rows/Row1/MPLine/MPCluster/MPBarBg"]
 offset_right = 0.0
 offset_bottom = 12.0
 color = Color(0.267, 0.533, 1, 1)
 
-[node name="WeaveBarBg" type="ColorRect" parent="Rows/Row1/MPCluster"]
+[node name="WeaveBarBg" type="ColorRect" parent="Rows/Row1/MPLine/MPCluster"]
 visible = false
 layout_mode = 2
 custom_minimum_size = Vector2(120, 6)
 color = Color(0.133, 0.133, 0.133, 1)
 
-[node name="WeaveBarFill" type="ColorRect" parent="Rows/Row1/MPCluster/WeaveBarBg"]
+[node name="WeaveBarFill" type="ColorRect" parent="Rows/Row1/MPLine/MPCluster/WeaveBarBg"]
 offset_right = 0.0
 offset_bottom = 6.0
 color = Color(0.667, 0.267, 1, 1)
 
-[node name="ATBBarBg" type="ColorRect" parent="Rows/Row1"]
+[node name="MPValue" type="Label" parent="Rows/Row1/MPLine"]
+vertical_alignment = 1
+layout_mode = 2
+custom_minimum_size = Vector2(110, 0)
+text = ""
+
+[node name="ATBSpacer" type="Control" parent="Rows/Row1/MPLine"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ATBBarBg" type="ColorRect" parent="Rows/Row1/MPLine"]
 layout_mode = 2
 size_flags_vertical = 4
 custom_minimum_size = Vector2(80, 16)
 color = Color(0.133, 0.133, 0.133, 1)
 
-[node name="ATBBarFill" type="ColorRect" parent="Rows/Row1/ATBBarBg"]
+[node name="ATBBarFill" type="ColorRect" parent="Rows/Row1/MPLine/ATBBarBg"]
 offset_right = 0.0
 offset_bottom = 16.0
 color = Color(1, 0.8, 0, 1)
 
-[node name="Row2" type="HBoxContainer" parent="Rows"]
+[node name="Row2" type="VBoxContainer" parent="Rows"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="HPLine" type="HBoxContainer" parent="Rows/Row2"]
 layout_mode = 2
 
-[node name="NameLabel" type="Label" parent="Rows/Row2"]
+[node name="NameLabel" type="Label" parent="Rows/Row2/HPLine"]
 vertical_alignment = 1
 layout_mode = 2
 custom_minimum_size = Vector2(140, 0)
 text = ""
 
-[node name="HPLabel" type="Label" parent="Rows/Row2"]
+[node name="HPLabel" type="Label" parent="Rows/Row2/HPLine"]
 vertical_alignment = 1
 layout_mode = 2
-custom_minimum_size = Vector2(110, 0)
-text = ""
+custom_minimum_size = Vector2(32, 0)
+text = "HP"
 
-[node name="HPBarBg" type="ColorRect" parent="Rows/Row2"]
+[node name="HPBarBg" type="ColorRect" parent="Rows/Row2/HPLine"]
 layout_mode = 2
 size_flags_vertical = 4
 custom_minimum_size = Vector2(120, 12)
 color = Color(0.133, 0, 0, 1)
 
-[node name="HPBarFill" type="ColorRect" parent="Rows/Row2/HPBarBg"]
+[node name="HPBarFill" type="ColorRect" parent="Rows/Row2/HPLine/HPBarBg"]
 offset_right = 0.0
 offset_bottom = 12.0
 color = Color(0.267, 0.8, 0.267, 1)
 
-[node name="MPLabel" type="Label" parent="Rows/Row2"]
+[node name="HPValue" type="Label" parent="Rows/Row2/HPLine"]
 vertical_alignment = 1
 layout_mode = 2
 custom_minimum_size = Vector2(110, 0)
 text = ""
 
-[node name="MPCluster" type="VBoxContainer" parent="Rows/Row2"]
+[node name="MPLine" type="HBoxContainer" parent="Rows/Row2"]
+layout_mode = 2
+
+[node name="NameSpacer" type="Control" parent="Rows/Row2/MPLine"]
+layout_mode = 2
+custom_minimum_size = Vector2(140, 0)
+
+[node name="MPLabel" type="Label" parent="Rows/Row2/MPLine"]
+vertical_alignment = 1
+layout_mode = 2
+custom_minimum_size = Vector2(32, 0)
+text = "MP"
+
+[node name="MPCluster" type="VBoxContainer" parent="Rows/Row2/MPLine"]
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_constants/separation = 2
 
-[node name="MPBarBg" type="ColorRect" parent="Rows/Row2/MPCluster"]
+[node name="MPBarBg" type="ColorRect" parent="Rows/Row2/MPLine/MPCluster"]
 layout_mode = 2
 custom_minimum_size = Vector2(120, 12)
 color = Color(0, 0.067, 0.133, 1)
 
-[node name="MPBarFill" type="ColorRect" parent="Rows/Row2/MPCluster/MPBarBg"]
+[node name="MPBarFill" type="ColorRect" parent="Rows/Row2/MPLine/MPCluster/MPBarBg"]
 offset_right = 0.0
 offset_bottom = 12.0
 color = Color(0.267, 0.533, 1, 1)
 
-[node name="WeaveBarBg" type="ColorRect" parent="Rows/Row2/MPCluster"]
+[node name="WeaveBarBg" type="ColorRect" parent="Rows/Row2/MPLine/MPCluster"]
 visible = false
 layout_mode = 2
 custom_minimum_size = Vector2(120, 6)
 color = Color(0.133, 0.133, 0.133, 1)
 
-[node name="WeaveBarFill" type="ColorRect" parent="Rows/Row2/MPCluster/WeaveBarBg"]
+[node name="WeaveBarFill" type="ColorRect" parent="Rows/Row2/MPLine/MPCluster/WeaveBarBg"]
 offset_right = 0.0
 offset_bottom = 6.0
 color = Color(0.667, 0.267, 1, 1)
 
-[node name="ATBBarBg" type="ColorRect" parent="Rows/Row2"]
+[node name="MPValue" type="Label" parent="Rows/Row2/MPLine"]
+vertical_alignment = 1
+layout_mode = 2
+custom_minimum_size = Vector2(110, 0)
+text = ""
+
+[node name="ATBSpacer" type="Control" parent="Rows/Row2/MPLine"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ATBBarBg" type="ColorRect" parent="Rows/Row2/MPLine"]
 layout_mode = 2
 size_flags_vertical = 4
 custom_minimum_size = Vector2(80, 16)
 color = Color(0.133, 0.133, 0.133, 1)
 
-[node name="ATBBarFill" type="ColorRect" parent="Rows/Row2/ATBBarBg"]
+[node name="ATBBarFill" type="ColorRect" parent="Rows/Row2/MPLine/ATBBarBg"]
 offset_right = 0.0
 offset_bottom = 16.0
 color = Color(1, 0.8, 0, 1)
 
-[node name="Row3" type="HBoxContainer" parent="Rows"]
+[node name="Row3" type="VBoxContainer" parent="Rows"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="HPLine" type="HBoxContainer" parent="Rows/Row3"]
 layout_mode = 2
 
-[node name="NameLabel" type="Label" parent="Rows/Row3"]
+[node name="NameLabel" type="Label" parent="Rows/Row3/HPLine"]
 vertical_alignment = 1
 layout_mode = 2
 custom_minimum_size = Vector2(140, 0)
 text = ""
 
-[node name="HPLabel" type="Label" parent="Rows/Row3"]
+[node name="HPLabel" type="Label" parent="Rows/Row3/HPLine"]
 vertical_alignment = 1
 layout_mode = 2
-custom_minimum_size = Vector2(110, 0)
-text = ""
+custom_minimum_size = Vector2(32, 0)
+text = "HP"
 
-[node name="HPBarBg" type="ColorRect" parent="Rows/Row3"]
+[node name="HPBarBg" type="ColorRect" parent="Rows/Row3/HPLine"]
 layout_mode = 2
 size_flags_vertical = 4
 custom_minimum_size = Vector2(120, 12)
 color = Color(0.133, 0, 0, 1)
 
-[node name="HPBarFill" type="ColorRect" parent="Rows/Row3/HPBarBg"]
+[node name="HPBarFill" type="ColorRect" parent="Rows/Row3/HPLine/HPBarBg"]
 offset_right = 0.0
 offset_bottom = 12.0
 color = Color(0.267, 0.8, 0.267, 1)
 
-[node name="MPLabel" type="Label" parent="Rows/Row3"]
+[node name="HPValue" type="Label" parent="Rows/Row3/HPLine"]
 vertical_alignment = 1
 layout_mode = 2
 custom_minimum_size = Vector2(110, 0)
 text = ""
 
-[node name="MPCluster" type="VBoxContainer" parent="Rows/Row3"]
+[node name="MPLine" type="HBoxContainer" parent="Rows/Row3"]
+layout_mode = 2
+
+[node name="NameSpacer" type="Control" parent="Rows/Row3/MPLine"]
+layout_mode = 2
+custom_minimum_size = Vector2(140, 0)
+
+[node name="MPLabel" type="Label" parent="Rows/Row3/MPLine"]
+vertical_alignment = 1
+layout_mode = 2
+custom_minimum_size = Vector2(32, 0)
+text = "MP"
+
+[node name="MPCluster" type="VBoxContainer" parent="Rows/Row3/MPLine"]
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_constants/separation = 2
 
-[node name="MPBarBg" type="ColorRect" parent="Rows/Row3/MPCluster"]
+[node name="MPBarBg" type="ColorRect" parent="Rows/Row3/MPLine/MPCluster"]
 layout_mode = 2
 custom_minimum_size = Vector2(120, 12)
 color = Color(0, 0.067, 0.133, 1)
 
-[node name="MPBarFill" type="ColorRect" parent="Rows/Row3/MPCluster/MPBarBg"]
+[node name="MPBarFill" type="ColorRect" parent="Rows/Row3/MPLine/MPCluster/MPBarBg"]
 offset_right = 0.0
 offset_bottom = 12.0
 color = Color(0.267, 0.533, 1, 1)
 
-[node name="WeaveBarBg" type="ColorRect" parent="Rows/Row3/MPCluster"]
+[node name="WeaveBarBg" type="ColorRect" parent="Rows/Row3/MPLine/MPCluster"]
 visible = false
 layout_mode = 2
 custom_minimum_size = Vector2(120, 6)
 color = Color(0.133, 0.133, 0.133, 1)
 
-[node name="WeaveBarFill" type="ColorRect" parent="Rows/Row3/MPCluster/WeaveBarBg"]
+[node name="WeaveBarFill" type="ColorRect" parent="Rows/Row3/MPLine/MPCluster/WeaveBarBg"]
 offset_right = 0.0
 offset_bottom = 6.0
 color = Color(0.667, 0.267, 1, 1)
 
-[node name="ATBBarBg" type="ColorRect" parent="Rows/Row3"]
+[node name="MPValue" type="Label" parent="Rows/Row3/MPLine"]
+vertical_alignment = 1
+layout_mode = 2
+custom_minimum_size = Vector2(110, 0)
+text = ""
+
+[node name="ATBSpacer" type="Control" parent="Rows/Row3/MPLine"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ATBBarBg" type="ColorRect" parent="Rows/Row3/MPLine"]
 layout_mode = 2
 size_flags_vertical = 4
 custom_minimum_size = Vector2(80, 16)
 color = Color(0.133, 0.133, 0.133, 1)
 
-[node name="ATBBarFill" type="ColorRect" parent="Rows/Row3/ATBBarBg"]
+[node name="ATBBarFill" type="ColorRect" parent="Rows/Row3/MPLine/ATBBarBg"]
 offset_right = 0.0
 offset_bottom = 16.0
 color = Color(1, 0.8, 0, 1)

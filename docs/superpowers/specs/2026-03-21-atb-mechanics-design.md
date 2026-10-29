@@ -137,6 +137,8 @@ fill_rate is floored to an integer (matching the rounding convention
 from combat-formulas.md). Each tick, the gauge increases by exactly
 fill_rate (integer addition).
 
+> **Superseded by [#492](https://github.com/gcko/pendulum-of-despair/issues/492):** a gauge is ready after `ceil(16000 / fill_rate)` ticks, so the seconds here are up to one tick short; canon is `docs/story/combat-formulas.md` § Fill Rate Formula.
+
 **Time-to-fill formula:** `seconds = gauge_max / fill_rate / tick_rate`
 = `16000 / fill_rate / 60`
 

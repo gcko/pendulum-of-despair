@@ -224,8 +224,8 @@ Each row contains:
 4. **MP** — label (blue) + solid pixel bar + numeric value
 5. **ATB gauge** — small horizontal bar at far right of the row.
    Gold fill (`#ffcc00`) on dark background. Fills left to right.
-   When full: 2-frame flash alternating gold and white to signal
-   "ready to act." See [combat-formulas.md](combat-formulas.md) §
+   When full: alternates gold and white, each held 15 frames (250 ms),
+   to signal ready to act. See [combat-formulas.md](combat-formulas.md) §
    ATB Gauge System for fill rate formula and status interactions.
 
 **Damage and healing numbers on party rows.** A party-side number is
@@ -1232,8 +1232,8 @@ only renders for characters that have one.
 ### Deferred Items Resolved
 
 - **ATB visual representation** (from Gap 2.2): Horizontal bar, gold
-  fill, inline with each character's party panel row, 2-frame flash
-  when full.
+  fill, inline with each character's party panel row; when full it
+  alternates gold and white, each held 15 frames (250 ms).
 - **Dialogue box specs** (for Gap 3.3): Full-width bottom-anchored,
   3-line, typewriter effect, no portraits.
 
