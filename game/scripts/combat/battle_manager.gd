@@ -62,6 +62,7 @@ func _ready() -> void:
 	_ui.results_dismissed.connect(func() -> void: exit_battle("victory"))
 	_ui.submenu_state_changed.connect(func(o: bool) -> void: _atb.set_submenu_open(o))
 	_state.member_died.connect(_on_party_member_died)
+	_state.member_revived.connect(_on_party_member_revived)
 	_state.status_applied.connect(_on_party_status_applied)
 	var data: Dictionary = GameManager.transition_data
 	if data.is_empty():
@@ -147,7 +148,7 @@ func _process(delta: float) -> void:
 		if id.begins_with("party_") and _awaiting_input_for == "":
 			var slot: int = id.replace("party_", "").to_int()
 			var blocked_by: String = _incapacitating_status(slot)
-			# Sleep/Petrify freeze the gauge, and a gauge-frozen member takes
+			# Stop/Sleep/Petrify freeze the gauge, and a gauge-frozen member takes
 			# no turn at all (combat-formulas.md § Status Effect ATB
 			# Interactions): no announcement, no tick, and above all no reset
 			# — the skip never writes to the gauge, so whatever the status is
@@ -299,6 +300,12 @@ func _on_party_member_died(slot: int) -> void:
 	if _awaiting_input_for == "party_%d" % slot:
 		_awaiting_input_for = ""
 		_atb.set_command_menu_open(false)
+
+
+## A revived member rejoins the ATB, which their fall removed them from, with an
+## empty gauge (the design docs give a revive no head start).
+func _on_party_member_revived(slot: int) -> void:
+	_atb.add_combatant("party_%d" % slot, _state.get_effective_stat(slot, "spd"), false)
 
 
 ## AoE-on-death hook (GAP-024). When an enemy with an aoe_on_death ability dies

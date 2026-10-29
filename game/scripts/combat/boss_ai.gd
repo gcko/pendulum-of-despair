@@ -24,8 +24,9 @@ static func select_action(
 	var data: Dictionary = enemy.enemy_data.get("boss_ai", {})
 	var moves: Dictionary = data.get("moves", {})
 	var ai: Dictionary = enemy.ai_state
-	# Silence ("Cannot cast spells") takes every spell move off the table, a
-	# charged one included; the script's next allowed rule runs instead.
+	# Silence ("Cannot cast spells") takes every spell move off the table and the
+	# script's next allowed rule runs instead. A spell already charging still
+	# lands: Act I telegraphs are not interruptible (reading of 2026-10-29).
 	var silenced: bool = enemy.has_status("silence")
 
 	# A telegraphed move charged last turn — resolve it now (the resolve turn).
@@ -35,9 +36,8 @@ static func select_action(
 	var charging: String = ai.get("charging", "")
 	if not charging.is_empty():
 		ai["charging"] = ""
-		if not (silenced and is_spell_move(moves.get(charging, {}))):
-			ai["last_move"] = charging
-			return _build_action(moves.get(charging, {}), charging, state)
+		ai["last_move"] = charging
+		return _build_action(moves.get(charging, {}), charging, state)
 
 	var phase: Dictionary = _current_phase(enemy, data)
 	var msg: String = _enter_phase(ai, phase)
@@ -92,15 +92,17 @@ static func select_action(
 	return _with_message(_build_action(move, move_id, state), msg)
 
 
-## Whether a boss move definition is a spell (BattleAI.is_spell), which
-## Silence blocks.
+## Whether a boss move definition is a spell, which Silence blocks: any move
+## whose `atk_type` is "magic" (damage, status, healing or drain), or a legacy
+## party-wide elemental move with no atk_type, which resolves as magic.
 static func is_spell_move(move: Dictionary) -> bool:
-	if str(move.get("type", "ability")) != "ability":
-		return false  # heal / spawn / skip are not casts
-	return BattleAI.is_spell(
-		str(move.get("atk_type", "attack")),
-		str(move.get("target", "single")),
-		str(move.get("element", ""))
+	if move.has("atk_type"):
+		return str(move["atk_type"]) == "magic"
+	return (
+		str(move.get("type", "ability")) == "ability"
+		and BattleAI.resolves_as_magic(
+			"", str(move.get("target", "single")), str(move.get("element", ""))
+		)
 	)
 
 
@@ -171,7 +173,7 @@ static func _condition_met(
 				if not _any_in_row(state, str(when[key])):
 					return false
 			"adds_below":
-				if _count_adds(enemies, enemy) >= int(when[key]):
+				if count_adds(enemies, enemy) >= int(when[key]):
 					return false
 			"once":
 				if bool(ai.get(when[key], false)):
@@ -251,11 +253,13 @@ static func _any_in_row(state: Node, row: String) -> bool:
 	return false
 
 
-## Living adds = living enemies other than the boss itself (its summoned minions).
-static func _count_adds(enemies: Array, boss: Node) -> int:
+## Living adds = living enemies other than the boss itself (its summoned
+## minions), not counting one removed from combat: a petrified add is gone for
+## summon caps (ruling of 2026-10-29), though it keeps its battlefield slot.
+static func count_adds(enemies: Array, boss: Node) -> int:
 	var count: int = 0
 	for e: Node in enemies:
-		if e != boss and e.is_alive:
+		if e != boss and e.is_alive and not e.is_removed_from_combat():
 			count += 1
 	return count
 

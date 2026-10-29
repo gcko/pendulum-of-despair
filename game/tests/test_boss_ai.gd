@@ -234,7 +234,7 @@ func test_adds_below_blocks_summon_at_cap() -> void:
 
 
 ## Wire a real BattleEnemyTurn driver with a fake manager (no scene boot).
-## Returns {driver, state}.
+## Returns {driver, state, manager}.
 func _harness() -> Dictionary:
 	var mgr: Node2D = _FakeManager.new()
 	add_child_autofree(mgr)
@@ -244,7 +244,7 @@ func _harness() -> Dictionary:
 	var area: Node2D = Node2D.new()
 	add_child_autofree(area)
 	var driver: BattleEnemyTurn = BattleEnemyTurn.new(mgr, state, atb, area)
-	return {"driver": driver, "state": state}
+	return {"driver": driver, "state": state, "manager": mgr}
 
 
 func _total_hp(state: Node) -> int:
@@ -314,15 +314,35 @@ func test_a_silenced_drake_skips_flame_breath_for_its_next_rule() -> void:
 	assert_eq(drake.ai_state.get("charging", ""), "", "no spell is being charged")
 
 
-func test_silence_breaks_a_charged_spell() -> void:
+func test_a_spell_charged_before_silence_still_resolves() -> void:
+	# Reading (2026-10-29): Act I telegraphs are not interruptible
+	# (enemy-ability-conventions.md § 3.3), so Silence does not break a charge.
 	var drake: Enemy = _boss("ember_drake")
 	var state: Node = _party()
 	BossAI.select_action(drake, 0, state, [drake])
 	assert_eq(drake.ai_state.get("charging", ""), "flame_breath", "precondition: charging")
 	drake.apply_status("silence", 4)
 	var a: Dictionary = BossAI.select_action(drake, 1, state, [drake])
-	assert_ne(a.get("id", ""), "flame_breath", "the charged spell never resolves")
-	assert_eq(a.get("id", ""), "tail_swipe", "the next rule its script allows")
+	assert_eq(a.get("id", ""), "flame_breath", "the charged breath lands")
+	var after: Dictionary = BossAI.select_action(drake, 3, state, [drake])  # every_n 3
+	assert_eq(after.get("id", ""), "tail_swipe", "but Silence keeps it from charging another")
+
+
+func test_every_magic_move_is_a_spell() -> void:
+	assert_true(
+		BossAI.is_spell_move({"type": "ability", "atk_type": "magic", "status": "sleep"}),
+		"a status spell"
+	)
+	assert_true(BossAI.is_spell_move({"type": "heal", "atk_type": "magic"}), "a healing spell")
+	assert_true(
+		BossAI.is_spell_move({"type": "ability", "target": "all", "element": "flame"}),
+		"a legacy elemental AoE with no atk_type"
+	)
+	assert_false(BossAI.is_spell_move({"type": "heal", "value": 300}), "Reconstruct")
+	assert_false(
+		BossAI.is_spell_move({"type": "ability", "atk_type": "physical", "target": "all"}),
+		"a physical sweep"
+	)
 
 
 func test_a_silenced_boss_with_only_spells_left_attacks() -> void:
@@ -342,7 +362,7 @@ func test_integration_a_silenced_sentinel_slams_instead_of_frost_wave() -> void:
 	var h: Dictionary = _harness()
 	var driver: BattleEnemyTurn = h["driver"]
 	var messages: Array[String] = []
-	driver._manager.message.connect(func(t: String) -> void: messages.append(t))
+	(h["manager"] as _FakeManager).message.connect(func(t: String) -> void: messages.append(t))
 	boss.apply_status("silence", 4)
 	driver.execute("enemy_0", [boss], true, 3)  # every_n 3 -> frost_wave
 	for m: String in messages:
@@ -356,3 +376,36 @@ func test_a_hit_clamped_at_the_boundary_starts_the_next_phase() -> void:
 	assert_true(vg.is_alive, "the overkill is discarded")
 	BossAI.select_action(vg, 1, _party(), [vg])
 	assert_eq(vg.ai_state.get("phase", ""), "phase_2", "the boundary itself is phase_2")
+
+
+# --- A petrified add is gone from the count (#246 review) ---
+# Ruling (2026-10-29): a petrified add counts as gone for summon caps and
+# "adds below" checks, though it still holds its place on the field.
+
+
+func test_a_petrified_add_does_not_count_toward_the_summon_cap() -> void:
+	var fm: Enemy = _boss("corrupted_fenmother")
+	var stone: Enemy = _boss("corrupted_spawn")
+	var add: Enemy = _boss("corrupted_spawn")
+	stone.apply_status("petrify", -1)
+	var h: Dictionary = _harness()
+	var driver: BattleEnemyTurn = h["driver"]
+	fm.current_hp = int(fm.enemy_data.get("hp", 1) * 0.4)  # phase_2
+	var enemies: Array[Node] = [fm, stone, add]
+	driver.execute("enemy_0", enemies, true, 3)  # turn%3==0 -> summon while adds < 2
+	var fighting: int = 0
+	for e: Node in enemies:
+		if e != fm and e.is_alive and not e.is_removed_from_combat():
+			fighting += 1
+	assert_eq(fighting, 2, "the statue is not an add: one more is summoned")
+	assert_true(enemies.has(stone), "the statue keeps its place")
+
+
+func test_an_odd_max_hp_clamp_reads_as_the_next_phase() -> void:
+	var vg: Enemy = _boss("vein_guardian")
+	vg.enemy_data = vg.enemy_data.duplicate(true)
+	vg.enemy_data["hp"] = 6001
+	vg.current_hp = 6001
+	vg.take_damage(99999)
+	BossAI.select_action(vg, 1, _party(), [vg])
+	assert_eq(vg.ai_state.get("phase", ""), "phase_2", "3000 of 6001 is below half")

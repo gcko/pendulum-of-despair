@@ -7,14 +7,13 @@ extends RefCounted
 ##
 ## Scope (Bundle 2b): player-cast offensive debuffs on enemies. Statuses whose
 ## *behavioral* effect needs an unbuilt system are still inflictable here, but
-## their effect is deferred (tracked on #159):
+## their effect is deferred (tracked on #246):
 ##   - blind (-50% enemy accuracy), confusion (auto-target) — need enemy-AI
 ##     hooks (GAP-009).
-## Silence blocks casting on both sides: BattleMagicCommand for the party, and
-## BattleAI / BossAI for enemies, which skip spell moves (#246).
 ##   - despair's -20% damage-dealt needs an attacker-status param in DamageCalc.
-## Stop is the one status counted in real-time seconds rather than turns
-## (#246): see is_realtime().
+## Silence blocks casting on both sides: BattleMagicCommand for the party, and
+## BattleAI / BossAI for enemies, which skip spell moves (#246). Stop is the one
+## status counted in real-time seconds rather than turns: see is_realtime().
 
 ## Sentinel duration: status persists until cured (no per-turn countdown).
 const UNTIL_CURED: int = -1
@@ -40,10 +39,15 @@ const RULES: Dictionary = {
 	# It also takes the bearer off the field (#246): untargetable, and no longer
 	# standing between the party and victory (see removes_from_combat).
 	"petrify":
+	{
+		"atb": "frozen",
+		"gauge_zero": true,
+		"duration": UNTIL_CURED,
+		"removes_from_combat": true,
+	},
 	# Paralysis: cannot act for 3 turns, does NOT wake on damage (#248; differs
 	# from Sleep which wakes). Modeled as "incapacitates" (the gauge keeps filling
 	# so the turn-based countdown advances on each skipped would-be turn — unlike
-	{"atb": "frozen", "gauge_zero": true, "duration": UNTIL_CURED, "removes_from_combat": true},
 	# "frozen", which holds the gauge and has no clock).
 	"paralysis": {"incapacitates": true, "duration": 3, "wake_on_damage": false},
 	# Slow: ATB fill x0.5 for 5 turns (combat-formulas.md
@@ -143,7 +147,7 @@ static func atb_effect(status: String) -> String:
 
 
 ## Whether the bearer cannot take a turn — Paralysis (explicit) or the
-## gauge-frozen action-denial statuses (Sleep/Petrify). The battle layer denies
+## gauge-frozen action-denial statuses (Sleep/Petrify/Stop). The battle layer denies
 ## the turn either way, but only Paralysis consumes one (announce, tick, reset);
 ## a gauge-frozen bearer is passed over untouched so the frozen value survives.
 static func is_incapacitating(status: String) -> bool:
@@ -160,7 +164,7 @@ static func zeroes_gauge(status: String) -> bool:
 
 
 ## The status denying this combatant its turn, or "" when it can act. A
-## gauge-frozen status (Sleep/Petrify) outranks Paralysis whenever a combatant
+## gauge-frozen status (Sleep/Petrify/Stop) outranks Paralysis whenever a combatant
 ## carries both: a frozen bearer must be passed over untouched, and answering
 ## "paralysis" would spend the very gauge value the freeze exists to protect.
 ## The order the statuses were applied in must not decide it (#300).

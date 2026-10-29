@@ -75,6 +75,10 @@ var active_buffs: Array[Dictionary] = []
 ## turns_in_mode, mode, reconstructed}). Empty for non-AI-driven enemies.
 var ai_state: Dictionary = {}
 
+## Phase-boundary HP lines this boss has already fallen to; overkill is only
+## discarded at a boundary the first time it is crossed (EnemyRecord).
+var crossed_lines: Array[int] = []
+
 ## Whether the enemy is still alive. Defaults false until initialize().
 var is_alive: bool = false
 
@@ -92,6 +96,7 @@ func initialize(p_enemy_id: String, p_act: String) -> void:
 	active_statuses.clear()
 	active_buffs.clear()
 	ai_state.clear()
+	crossed_lines.clear()
 	set_meta("untargetable", false)  # boss dive-mode meta must not survive a re-init
 	is_alive = false
 
@@ -300,36 +305,22 @@ func has_status(status_name: String) -> bool:
 ## [param wakes] — whether this hit can cure wake-on-damage statuses (Sleep,
 ## Confusion). Direct attacks pass true; damage-over-time ticks pass false so a
 ## poisoned enemy's own tick does not wake it.
-## A boss with boss_ai phases never drops past its next phase boundary in one
-## hit (see _overkill_floor); every damage path funnels through here.
+## A boss never drops past a phase boundary it has not crossed yet in one hit
+## (EnemyRecord.overkill_floor); every damage path funnels through here.
 func take_damage(amount: int, wakes: bool = true) -> void:
 	if not is_alive:
 		return
 	var clamped: int = maxi(0, amount)
-	current_hp = maxi(_overkill_floor(), current_hp - clamped)
+	current_hp = maxi(
+		EnemyRecord.overkill_floor(enemy_data, current_hp, crossed_lines), current_hp - clamped
+	)
+	EnemyRecord.mark_crossed(enemy_data, current_hp, crossed_lines)
 	damage_taken.emit(clamped)
 	if clamped > 0 and wakes:
 		_cure_wake_on_damage_statuses()
 	if current_hp <= 0:
 		is_alive = false
 		died.emit()
-
-
-## The HP one hit cannot carry this enemy below: its next boss_ai phase
-## boundary, floor(hp_above x max HP), or 0 for an enemy without one. Overkill
-## is discarded at phase boundaries (bestiary/README.md § Boss), at every
-## boundary, and the next hit lands in full (ruling of 2026-10-29, #178). A
-## boundary is "next" while HP is above it, which is when BossAI still reads the
-## higher phase.
-func _overkill_floor() -> int:
-	var max_hp: int = enemy_data.get("hp", 0)
-	var boss_ai: Dictionary = enemy_data.get("boss_ai", {})
-	var floor_hp: int = 0
-	for phase: Dictionary in boss_ai.get("phases", []):
-		var line: int = floori(float(phase.get("hp_above", 0.0)) * max_hp)
-		if line < current_hp and line > floor_hp:
-			floor_hp = line
-	return floor_hp
 
 
 ## Remove statuses cured by taking damage (Sleep, Confusion). Emits

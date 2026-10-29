@@ -216,11 +216,17 @@ func test_a_silenced_caster_with_only_spells_attacks_instead() -> void:
 	assert_gt(cast_rolls, 0, "the unsilenced caster does cast")
 
 
-func test_what_counts_as_a_spell_is_what_resolves_as_magic() -> void:
-	assert_true(BattleAI.is_spell("magic", "single", ""), "a magic ability")
-	assert_true(BattleAI.is_spell("attack", "all", "flame"), "an elemental AoE resolves on MAG")
-	assert_false(
-		BattleAI.is_spell("attack", "single", "flame"), "a single elemental hit is physical"
-	)
-	assert_false(BattleAI.is_spell("buff", "self", ""), "a buff")
-	assert_false(BattleAI.is_spell("attack", "all", ""), "a physical AoE")
+func test_what_resolves_on_the_magic_formula() -> void:
+	assert_true(BattleAI.resolves_as_magic("magic", "single", ""), "a magic ability")
+	assert_true(BattleAI.resolves_as_magic("attack", "all", "flame"), "an elemental AoE")
+	assert_false(BattleAI.resolves_as_magic("attack", "single", "flame"), "a single elemental hit")
+	assert_false(BattleAI.resolves_as_magic("buff", "self", ""), "a buff")
+	assert_false(BattleAI.resolves_as_magic("attack", "all", ""), "a physical AoE")
+
+
+func test_a_status_spell_is_a_spell_too() -> void:
+	# Reading (2026-10-29): Silence blocks every magic move, status, healing and
+	# MP-drain spells included, not only damage.
+	var hex: Dictionary = {"id": "hex", "type": "magic", "status": "sleep", "status_rate": 50}
+	for a: Dictionary in _rolls([hex, BITE], true):
+		assert_ne(a.get("id", ""), "hex", "no status spell while Silenced")

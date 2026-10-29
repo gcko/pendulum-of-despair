@@ -1,8 +1,8 @@
 extends RefCounted
-## Pure lookups over an enemy's data record: its mixed-format element lists
-## and its steal and drop rolls. Static and stateless; Enemy forwards here
-## (split out of enemy.gd under the script size budget,
-## technical-architecture.md § 1.2a).
+## Pure lookups over an enemy's data record: its mixed-format element lists,
+## its steal and drop rolls, and its phase boundaries for overkill. Static and
+## stateless; Enemy forwards here (split out of enemy.gd under the script size
+## budget, technical-architecture.md § 1.2a).
 
 
 ## Check if an element appears in an array that may contain plain strings
@@ -75,3 +75,39 @@ static func roll_drop(enemy_data: Dictionary) -> Dictionary:
 		"item_id": drop_data.get("item_id", "") if success else "",
 		"success": success,
 	}
+
+
+## A boss's phase boundaries as HP lines, floor(threshold x max HP), for every
+## boss_ai phase hp_above and every legacy phase_hp_thresholds entry above 0.
+static func phase_lines(enemy_data: Dictionary) -> Array[int]:
+	var max_hp: int = enemy_data.get("hp", 0)
+	var ratios: Array = enemy_data.get("phase_hp_thresholds", []).duplicate()
+	for phase: Dictionary in enemy_data.get("boss_ai", {}).get("phases", []):
+		ratios.append(phase.get("hp_above", 0.0))
+	var lines: Array[int] = []
+	for r: Variant in ratios:
+		var line: int = floori(float(r) * max_hp)
+		if line > 0:
+			lines.append(line)
+	return lines
+
+
+## The HP one hit cannot carry a boss at [param hp] below: the highest boundary
+## under it that is not in [param crossed], or 0. Overkill is discarded at phase
+## boundaries (bestiary/README.md § Boss), at every boundary but only the first
+## time it is crossed (rulings of 2026-10-29, #178). A boundary is under HP while
+## BossAI still reads the higher phase, so a clamped boss reads the next one.
+static func overkill_floor(enemy_data: Dictionary, hp: int, crossed: Array[int]) -> int:
+	var floor_hp: int = 0
+	for line: int in phase_lines(enemy_data):
+		if line < hp and line > floor_hp and not line in crossed:
+			floor_hp = line
+	return floor_hp
+
+
+## Record every boundary at or above [param hp] in [param crossed], so a heal
+## back over it does not make it clamp again.
+static func mark_crossed(enemy_data: Dictionary, hp: int, crossed: Array[int]) -> void:
+	for line: int in phase_lines(enemy_data):
+		if hp <= line and not line in crossed:
+			crossed.append(line)

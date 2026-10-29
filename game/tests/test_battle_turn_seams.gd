@@ -350,7 +350,8 @@ func test_poison_ignores_the_flame_multiplier() -> void:
 
 # --- Pallor regenerate on Despair (#178b) ---
 # bestiary/README.md § Pallor: "Regenerates 2% max HP per turn while any party
-# member has Despair status". It lands at the end of the Pallor enemy's turn.
+# member has Despair status". Reading: it lands at the end of the Pallor
+# enemy's own turn.
 
 
 func _pallor_turn(despair_on: int, kind: String = "pallor") -> int:
@@ -388,3 +389,57 @@ func test_an_enemy_inflicted_stop_wears_off_in_seconds_not_turns() -> void:
 		assert_false(a.state.has_status(1, "stop"), "gone once 3 s of battle time ran")
 		return
 	fail_test("Stop never landed on Cael")
+
+
+func test_a_fallen_member_s_despair_feeds_no_regen() -> void:
+	# Ruling (2026-10-29): only living members' Despair counts.
+	var a: Arena = _waiting_enemy({"type": "pallor"})
+	a.state.apply_status(1, "despair", "turns", 4)
+	a.state.take_damage(1, 999999)
+	a.driver.execute("enemy_0", [a.enemy] as Array[Node], false, 0)
+	assert_eq(a.enemy.current_hp, 500, "Cael is down; his Despair feeds nothing")
+
+
+# --- Heal numbers show the HP actually gained (#246 review) ---
+
+
+func _heal_numbers(a: Arena) -> Array[int]:
+	var out: Array[int] = []
+	for ev: Array in a.events:
+		if ev[0] == "enemy_0":
+			out.append(int(ev[1]))
+	return out
+
+
+func test_pallor_regen_shows_only_the_hp_it_restored() -> void:
+	var a: Arena = _waiting_enemy({"type": "pallor"})
+	a.state.apply_status(1, "despair", "turns", 4)
+	a.enemy.current_hp = 995
+	a.driver.execute("enemy_0", [a.enemy] as Array[Node], false, 0)
+	assert_eq(_heal_numbers(a), [5] as Array[int], "5 HP to full, so a 5")
+	a.events.clear()
+	a.driver.execute("enemy_0", [a.enemy] as Array[Node], false, 1)
+	assert_eq(_heal_numbers(a), [] as Array[int], "at full HP there is no number")
+
+
+func test_an_absorbed_burn_shows_only_the_hp_it_restored() -> void:
+	var a: Arena = _waiting_enemy({"absorb": ["flame"]})
+	a.enemy.current_hp = 990
+	a.enemy.apply_status("burn", 3)
+	a.driver.execute("enemy_0", [a.enemy] as Array[Node], false, 0)
+	assert_eq(_heal_numbers(a), [10] as Array[int], "10 HP to full, so a 10")
+
+
+# --- An enemy's Paralysis costs it its turn (#246 review) ---
+# combat-formulas.md § Status Effect ATB Interactions: a paralyzed combatant's
+# turn is auto-skipped, announced, and its statuses tick.
+
+
+func test_a_paralyzed_enemy_loses_its_turns_and_says_so() -> void:
+	var a: Arena = _arena(30000)
+	a.enemy.apply_status("paralysis", 3)
+	for t: int in range(3):
+		a.driver.execute("enemy_0", [a.enemy] as Array[Node], false, t)
+	assert_eq(a.events, [], "no blow landed in three paralyzed turns")
+	assert_has(a.messages, "Brute is paralyzed and can't move!", "announced")
+	assert_false(a.enemy.has_status("paralysis"), "the three skipped turns spent it")

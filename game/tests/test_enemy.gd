@@ -377,3 +377,36 @@ func test_a_boss_with_one_phase_takes_every_hit_in_full() -> void:
 	drake.initialize("ember_drake", "act_i")  # a single phase, hp_above 0
 	drake.take_damage(99999)
 	assert_false(drake.is_alive, "no boundary to stop at")
+
+
+func test_a_boundary_clamps_only_the_first_time_it_is_crossed() -> void:
+	# Ruling (2026-10-29): once a heal (Reconstruct) lifts it back over a
+	# boundary it has already crossed, the next hit lands in full.
+	var guardian: Enemy = _create_enemy()
+	guardian.initialize("vein_guardian", "act_i")
+	guardian.take_damage(5000)
+	assert_eq(guardian.current_hp, 3000, "first crossing: clamped")
+	guardian.heal(300)
+	guardian.take_damage(1000)
+	assert_eq(guardian.current_hp, 2300, "second crossing: in full")
+
+
+func test_an_odd_max_hp_boundary_rounds_down() -> void:
+	var guardian: Enemy = _create_enemy()
+	guardian.initialize("vein_guardian", "act_i")
+	guardian.enemy_data = guardian.enemy_data.duplicate(true)
+	guardian.enemy_data["hp"] = 6001
+	guardian.current_hp = 6001
+	guardian.take_damage(99999)
+	assert_eq(guardian.current_hp, 3000, "floor(0.5 x 6001)")
+
+
+func test_a_legacy_threshold_boss_clamps_too() -> void:
+	# bestiary/README.md § Boss: "every boundary", phase_hp_thresholds included.
+	var warden: Enemy = _create_enemy()
+	warden.initialize("the_undying_warden", "act_ii")  # 8000 HP, threshold 0.5
+	warden.take_damage(99999)
+	assert_eq(warden.current_hp, 4000, "stopped at its 50% threshold")
+	warden.heal(500)
+	warden.take_damage(99999)
+	assert_false(warden.is_alive, "crossed once already: the next hit lands in full")

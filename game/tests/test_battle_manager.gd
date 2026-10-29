@@ -6,13 +6,35 @@ const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
 const ATBSystem = preload("res://scripts/combat/atb_system.gd")
 const AbilityCommand = preload("res://scripts/combat/battle_ability_command.gd")
 const BattleActions = preload("res://scripts/combat/battle_actions.gd")
+const BattleState = preload("res://scripts/combat/battle_state.gd")
 const BATTLE: PackedScene = preload("res://scenes/core/battle.tscn")
+const ENEMY_SCENE: PackedScene = preload("res://scenes/entities/enemy.tscn")
 
 ## New-game party: Edren in slot 0, Cael in slot 1.
 const EDREN := 0
 const CAEL := 1
 
 var _booted: Node = null
+
+
+## The slice of the battle the Flee command reaches: its party, its enemies,
+## and where an escape ends up.
+class FleeBattle:
+	extends Node
+	signal message(text: String)
+	signal flee_result(success: bool)
+	var state: Node
+	var enemies: Array[Node] = []
+	var escapes: int = 0
+
+	func get_battle_state() -> Node:
+		return state
+
+	func get_enemies() -> Array[Node]:
+		return enemies
+
+	func exit_battle(_result: String) -> void:
+		escapes += 1
 
 
 func before_each() -> void:
@@ -302,8 +324,8 @@ func test_a_stopped_enemy_s_gauge_holds_and_resumes_after_three_seconds() -> voi
 	var battle: Node = _boot()
 	var atb: Node = battle.get_atb()
 	var vermin: Node = battle.get_enemies()[0]
-	for i: int in range(2):
-		atb.set_frozen("party_%d" % i, true)  # keep the party out of the way
+	for i: int in range(2):  # keep the party out of the way
+		battle.get_battle_state().apply_status(i, "sleep", "turns", -1)
 	atb.set_gauge("enemy_0", 100)
 	vermin.apply_status("stop", 3)
 	for _i: int in range(170):  # 2.83 s of battle time, one tick a frame
@@ -363,3 +385,85 @@ func test_a_petrified_enemy_cannot_be_targeted_and_the_battle_goes_on() -> void:
 		2 * int(enemies[0].enemy_data["exp"]),
 		"the statue's XP is paid alongside the kill's"
 	)
+
+
+func test_a_petrified_enemy_s_drop_is_rolled_at_victory() -> void:
+	var battle: Node = _boot()
+	var vermin: Node = battle.get_enemies()[0]
+	vermin.enemy_data = vermin.enemy_data.duplicate(true)
+	vermin.enemy_data["drop"] = {"item_id": "sharp_fang", "rate": 100}
+	watch_signals(battle)
+	vermin.apply_status("petrify", -1)
+	battle._process(0.0)
+	var drops: Array = get_signal_parameters(battle, "victory")[0]["drops"]
+	assert_eq(drops, [{"item_id": "sharp_fang"}], "the statue's 100% drop is paid")
+
+
+func test_a_lone_diving_boss_is_not_a_victory() -> void:
+	# Untargetable is not removed: the Fenmother under water is still fighting.
+	var battle: Node = _boot(["corrupted_fenmother"])
+	battle.get_enemies()[0].set_meta("untargetable", true)
+	watch_signals(battle)
+	battle._process(0.0)
+	assert_signal_not_emitted(battle, "victory", "it will resurface")
+
+
+func test_enemy_stop_counts_battle_seconds_not_frame_time() -> void:
+	# combat-formulas.md § Status Effect ATB Interactions: in Wait mode the Stop
+	# countdown pauses while a sub-menu is open.
+	var battle: Node = _boot()
+	var atb: Node = battle.get_atb()
+	var vermin: Node = battle.get_enemies()[0]
+	vermin.apply_status("stop", 3)
+	atb.set_atb_mode("wait")
+	atb.set_submenu_open(true)
+	battle._process(5.0)
+	assert_true(vermin.has_status("stop"), "paused battle time does not run Stop down")
+
+
+# --- A revived member fights on (#246 review) ---
+
+
+func test_a_member_revived_mid_battle_takes_turns_again() -> void:
+	var battle: Node = _boot()
+	var state: Node = battle.get_battle_state()
+	var atb: Node = battle.get_atb()
+	state.take_damage(CAEL, 99999)
+	assert_false(state.get_member(CAEL)["is_alive"], "precondition: Cael fell")
+	state.heal(CAEL, 50, true)
+	battle._process(1.0 / ATBSystem.TICKS_PER_SECOND)
+	assert_gt(atb.get_gauge("party_1"), 0, "his gauge fills again, from empty")
+	watch_signals(battle)
+	_give_turn(battle, CAEL)
+	assert_signal_emitted(battle, "turn_ready", "and it comes round to him")
+	assert_eq(get_signal_parameters(battle, "turn_ready")[0], "party_1", "his turn")
+
+
+# --- Flee reads the enemies still in the fight (#246 review) ---
+
+
+func _escapes(petrify_the_fast_one: bool) -> int:
+	var fake: FleeBattle = FleeBattle.new()
+	add_child_autofree(fake)
+	fake.state = BattleState.new()
+	add_child_autofree(fake.state)
+	fake.state.add_member(0, {"character_id": "t", "base_stats": {"hp": 100, "spd": 20}})
+	for spd: int in [999, 0]:
+		var e: Enemy = ENEMY_SCENE.instantiate()
+		add_child_autofree(e)
+		e.enemy_data = {"name": "E", "hp": 10, "spd": spd, "type": "beast"}
+		e.current_hp = 10
+		e.is_alive = true
+		fake.enemies.append(e)
+	if petrify_the_fast_one:
+		fake.enemies[0].apply_status("petrify", -1)
+	var actions: BattlePlayerActions = BattlePlayerActions.new(fake)
+	for s: int in range(1, 61):
+		seed(s)
+		actions.do_flee()
+	return fake.escapes
+
+
+func test_flee_ignores_a_petrified_enemy_s_speed() -> void:
+	assert_lt(_escapes(false), 15, "a SPD 999 enemy in the fight pins the chance near 10%")
+	assert_gt(_escapes(true), 45, "petrified, it no longer counts: about 90%")

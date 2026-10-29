@@ -60,12 +60,13 @@ func do_defend(actor_id: String) -> void:
 	_battle.message.emit("%s defends!" % nm)
 
 
-## Roll to escape against the average speed of the enemies still standing.
+## Roll to escape against the average speed of the enemies still in the fight:
+## alive, and not removed from combat (a petrified one does not give chase).
 func do_flee() -> void:
 	var state: Node = _battle.get_battle_state()
 	var alive_enemies: Array[Node] = []
 	for e: Node in _battle.get_enemies():
-		if e.is_alive:
+		if e.is_alive and not e.is_removed_from_combat():
 			alive_enemies.append(e)
 	var enemy_spd_sum: float = alive_enemies.reduce(
 		func(acc: float, e: Node) -> float: return acc + e.get_stats().get("spd", 10), 0.0

@@ -7,8 +7,9 @@ const BattleState = preload("res://scripts/combat/battle_state.gd")
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 const ENEMY_SCENE: PackedScene = preload("res://scenes/entities/enemy.tscn")
 
-# Statuses intentionally declared in spell data but deferred in Bundle 2b.
-const DEFERRED_STATUSES: Array[String] = ["stop"]
+# Statuses declared in spell data but not yet in the registry. None remain:
+# Stop, the last one, joined it in #246.
+const DEFERRED_STATUSES: Array[String] = []
 
 
 func after_each() -> void:
@@ -71,7 +72,7 @@ func test_immune_enemy_auto_no_effect() -> void:
 
 
 func test_unknown_status_is_no_effect() -> void:
-	# Stop is deferred (not in the registry) -> graceful no-op.
+	# A status the registry does not know -> graceful no-op.
 	var state: Node = _make_state(80)
 	var enemy: Enemy = _make_enemy("ley_vermin")
 	var r: Dictionary = BattleActions.apply_status_to_enemy(state, 0, 100, "nonsense", null, enemy)

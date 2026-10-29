@@ -7,21 +7,18 @@ extends RefCounted
 ## boss_ai.gd (GAP-009).
 
 
-## Whether an enemy move is a spell — one that resolves on the MAG formula, which
-## is what Silence ("Cannot cast spells", magic.md § Status Effect Reference)
-## blocks. [param atk_type] is the move's resolution type (an ability's `type`, a
-## boss move's `atk_type`). This mirrors BattleEnemyTurn's routing: atk_type
-## "magic", or a party-wide move that carries an element (the legacy boss AoE
-## shape, routed to magic by element alone).
-static func is_spell(atk_type: String, target: String, element: String) -> bool:
+## Whether an enemy move resolves on the MAG formula: atk_type "magic", or a
+## party-wide move that carries an element (the legacy boss AoE shape, routed to
+## magic by element alone). BattleEnemyTurn routes every offensive move by this.
+static func resolves_as_magic(atk_type: String, target: String, element: String) -> bool:
 	return atk_type == "magic" or (target == "all" and not element.is_empty())
 
 
-## Whether the ability dict [param ab] (enemy data schema) is a spell.
+## Whether the ability dict [param ab] (enemy data schema) is a spell, which
+## Silence ("Cannot cast spells", magic.md § Status Effect Reference) blocks:
+## any ability whose `type` is "magic", damage, status, healing or drain alike.
 static func is_spell_ability(ab: Dictionary) -> bool:
-	return is_spell(
-		str(ab.get("type", "attack")), str(ab.get("target", "single")), str(ab.get("element", ""))
-	)
+	return str(ab.get("type", "attack")) == "magic"
 
 
 ## Select an action for a regular enemy.
