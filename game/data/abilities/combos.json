@@ -17,7 +17,16 @@
 				"forbids_flags": [
 					"cael_betrayal_complete"
 				],
-				"requires_abilities": []
+				"requires_abilities": [
+					{
+						"character": "edren",
+						"ability": "ironwall"
+					},
+					{
+						"character": "cael",
+						"ability": "press_forward"
+					}
+				]
 			},
 			"effect": "Edren enters Ironwall stance on Cael, and Cael activates Press Forward on Edren simultaneously. Both buffs last 4 turns instead of 3.",
 			"availability": "Acts I-II only (lost after Cael's betrayal)",
@@ -39,6 +48,10 @@
 				"requires_flags": [],
 				"forbids_flags": [],
 				"requires_abilities": [
+					{
+						"character": "edren",
+						"ability": "shatter_guard"
+					},
 					{
 						"character": "sable",
 						"ability": "misdirect"
@@ -94,6 +107,10 @@
 					{
 						"character": "torren",
 						"ability": "ember_wing"
+					},
+					{
+						"character": "lira",
+						"ability": "shock_coil"
 					}
 				]
 			},
