@@ -310,3 +310,34 @@ func test_an_unsilenced_cael_s_rally_command_is_open() -> void:
 	var m: Node = _make_menu()
 	m.show_commands({"character_id": "cael", "level": 5}, false, _member(0))
 	assert_true(m._commands[2].get("enabled", false), "no MP still opens the list, as Magic does")
+
+
+# --- Magic is unavailable while the member is Silenced (#246 slice 8) ---
+
+
+func _silenced(mp: int) -> Dictionary:
+	return {"current_mp": mp, "is_alive": true, "active_statuses": [{"name": "silence"}]}
+
+
+func test_a_silenced_member_s_magic_command_is_grayed_out() -> void:
+	# Silence: "Cannot cast spells" (magic.md § Status Effect Reference).
+	var m: Node = _make_menu()
+	m.show_commands({"character_id": CASTER_ID, "level": CASTER_LEVEL}, false, _silenced(99))
+	assert_false(m._commands[1].get("enabled", true), "Magic grays out under Silence")
+	watch_signals(m)
+	_open_magic_submenu(m)
+	assert_signal_not_emitted(m, "submenu_opened", "a grayed command does not open")
+
+
+func test_a_silenced_member_s_spells_are_grayed_in_the_submenu() -> void:
+	var data: Dictionary = {"character_id": CASTER_ID, "level": CASTER_LEVEL}
+	var spells: Array[Dictionary] = SubmenuItems.magic(data, _silenced(99))
+	assert_gt(spells.size(), 0, "precondition: the caster knows spells")
+	for item: Dictionary in spells:
+		assert_false(item.get("enabled", true), "%s unavailable under Silence" % item.get("label"))
+
+
+func test_an_unsilenced_member_s_magic_command_is_open() -> void:
+	var m: Node = _make_menu()
+	m.show_commands({"character_id": CASTER_ID, "level": CASTER_LEVEL}, false, _member(0))
+	assert_true(m._commands[1].get("enabled", false), "no MP still opens the list")

@@ -254,7 +254,7 @@ Vertical list of battle commands:
 6. Flee
 
 - Pixel-art hand cursor (2-frame idle animation) next to selected command.
-- Selected command in yellow `#ffff88`, others in pale blue `#ccddff`.
+- Selected command in yellow `#ffff88`, others in pale blue `#ccddff`. Magic is grayed out (`#666688`) and not selectable while the character is Silenced (see § 2.7).
 - The third slot shows the active character's unique command:
   Edren → Bulwark, Cael → Rally, Lira → Forgewright,
   Torren → Spiritcall, Sable → Tricks, Maren → Arcanum.
@@ -309,8 +309,8 @@ When a command is selected, a sub-menu window overlays the left side
 of the battle screen (over the party panel).
 
 **Magic sub-menu:**
-- Two-column spell list: spell name (left) + MP cost (right).
-- Spells the character can't afford: grayed out (`#666688`), not selectable.
+- Two-column spell list: spell name (left) + MP cost (right). The cost is the one this character pays: a cross-trained spell shows its learner's cost, the base MP × `mp_penalty` rounded up (see [magic.md](magic.md) § Derived Rules), and that is what the cast charges.
+- Spells the character can't afford, and every spell while the character is Silenced: grayed out (`#666688`), not selectable. Silence also grays out the Magic command itself, since a Silenced target cannot cast spells (see [magic.md](magic.md) § Status Effect Reference).
 - Description line at top of window: effect text + inline status icons.
 - Hand cursor. Cancel returns to command panel.
 
@@ -627,7 +627,7 @@ main area.
   status icons.
 - **Character info:** 32×32 portrait, name, LV, HP/MP with bars + numbers.
 - **Spell grid (main):** Two-column scrollable list. Spell name (left) +
-  MP cost (right). Unlearned spells not shown. Field-unusable spells
+  MP cost (right), the cost this character pays and is charged: a cross-trained spell shows base MP × `mp_penalty`, rounded up. Unlearned spells not shown. Field-unusable spells
   (offensive) grayed out.
 - **Field use flow:** Select healing/support spell → character select →
   confirm → animation + sound → MP deducted → return to list.

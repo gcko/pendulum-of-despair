@@ -328,6 +328,7 @@
 			"learned_by": [
 				{
 					"character": "maren",
+					"level": 45,
 					"event": "ancient_ruins_convergence_text"
 				}
 			]

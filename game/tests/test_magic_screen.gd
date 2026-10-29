@@ -3,10 +3,24 @@ extends GutTest
 
 const SpellHelpers = preload("res://scripts/ui/spell_helpers.gd")
 
+## The three shipped spells magic.md gates on a level and a story event
+## (magic.md § Spell Index by Character: "Lv 45 + Ancient Ruins text",
+## "Lv 32 + Act III spirit communion", "Lv 40 + Pallor trial").
+const DUAL_GATED: Dictionary = {
+	"ley_ruin": {"tradition": "ley_line", "character": "maren", "level": 45},
+	"ancestors_fury": {"tradition": "spirit", "character": "torren", "level": 32},
+	"requiem_of_thorns": {"tradition": "spirit", "character": "torren", "level": 40},
+}
+
 
 func before_each() -> void:
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
 	PartyState.initialize_new_game()
+
+
+func after_each() -> void:
+	TestHelpers.reset_game_state()
 
 
 # --- Spell resolution ---
@@ -92,6 +106,65 @@ func test_spells_sorted_by_tier_then_cost() -> void:
 					% [a.get("name", ""), ta, b.get("name", ""), tb]
 				)
 			)
+
+
+# --- An entry naming a level and an event needs both. Ancestor's Fury is
+# learned at "Lv 32, after Act III spirit communion scene" (magic.md
+# § Spirit Spells). ---
+
+
+func _dual_gated() -> Dictionary:
+	return {
+		"id": "dual_fixture",
+		"learned_by": [{"character": "torren", "level": 32, "event": "act_iii_spirit_communion"}],
+	}
+
+
+func test_a_dual_gated_spell_is_not_known_below_its_level_after_the_event() -> void:
+	EventFlags.set_flag("act_iii_spirit_communion", true)
+	assert_false(SpellHelpers.knows_spell(_dual_gated(), "torren", 31), "Lv 31 is short of 32")
+
+
+func test_a_dual_gated_spell_is_not_known_at_its_level_before_the_event() -> void:
+	assert_false(SpellHelpers.knows_spell(_dual_gated(), "torren", 32), "the scene has not played")
+
+
+func test_a_dual_gated_spell_is_known_once_both_are_met() -> void:
+	EventFlags.set_flag("act_iii_spirit_communion", true)
+	assert_true(SpellHelpers.knows_spell(_dual_gated(), "torren", 32), "Lv 32 and the scene")
+
+
+func _shipped_entry(spell_id: String) -> Dictionary:
+	var want: Dictionary = DUAL_GATED[spell_id]
+	for spell: Variant in DataManager.load_spells(want["tradition"]):
+		if (spell as Dictionary).get("id", "") != spell_id:
+			continue
+		for entry: Variant in (spell as Dictionary).get("learned_by", []):
+			if (entry as Dictionary).get("character", "") == want["character"]:
+				return entry
+	fail_test("%s has no learned_by entry for %s" % [spell_id, want["character"]])
+	return {}
+
+
+func test_the_shipped_dual_gated_spells_carry_their_level_and_their_event() -> void:
+	for spell_id: String in DUAL_GATED:
+		var entry: Dictionary = _shipped_entry(spell_id)
+		assert_eq(
+			entry.get("level"), DUAL_GATED[spell_id]["level"], "%s: magic.md level" % spell_id
+		)
+		assert_ne(String(entry.get("event", "")), "", "%s: and its story event" % spell_id)
+
+
+func test_ancestors_fury_waits_for_lv_32_after_the_spirit_communion() -> void:
+	EventFlags.set_flag(String(_shipped_entry("ancestors_fury")["event"]), true)
+	var at_31: Array = SpellHelpers.get_known_spells("torren", 31).map(
+		func(s: Dictionary) -> String: return s["id"]
+	)
+	var at_32: Array = SpellHelpers.get_known_spells("torren", 32).map(
+		func(s: Dictionary) -> String: return s["id"]
+	)
+	assert_does_not_have(at_31, "ancestors_fury", "the communion alone does not teach it at Lv 31")
+	assert_has(at_32, "ancestors_fury", "Lv 32 does")
 
 
 # --- Field cast tests ---

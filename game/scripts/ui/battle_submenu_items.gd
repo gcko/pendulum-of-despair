@@ -12,25 +12,29 @@ const SpellHelpers := preload("res://scripts/ui/spell_helpers.gd")
 const InvHelpers := preload("res://scripts/util/inventory_helpers.gd")
 const AbilityHelpers := preload("res://scripts/ui/ability_helpers.gd")
 const AbilityCommand := preload("res://scripts/combat/battle_ability_command.gd")
+const MagicCommand := preload("res://scripts/combat/battle_magic_command.gd")
 
 
 ## The character's known spells (GAP-001), each routing a
 ## {"type": "magic", "spell": <spell_dict>} command; spells the character
-## cannot afford are disabled. Mirrors menu_magic's data access.
+## cannot afford, and every spell while a status blocks casting, are disabled.
+## The cost shown and checked is the one the cast charges
+## (SpellHelpers.get_mp_cost). Mirrors menu_magic's data access.
 static func magic(character_data: Dictionary, member: Dictionary) -> Array[Dictionary]:
 	var items: Array[Dictionary] = []
+	var can_cast: bool = magic_command_enabled(member)
 	for spell_v: Variant in SpellHelpers.get_known_spells(
 		_id(character_data), _level(character_data)
 	):
 		if not spell_v is Dictionary:
 			continue
 		var spell: Dictionary = spell_v
-		var cost: int = int(spell.get("mp_cost", 0))
+		var cost: int = SpellHelpers.get_mp_cost(spell, _id(character_data))
 		var entry: Dictionary = {
 			"label": "%s  %d MP" % [spell.get("name", "Spell"), cost],
 			"command": {"type": "magic", "spell": spell},
 			"target_type": spell.get("target", "single_enemy"),
-			"enabled": int(member.get("current_mp", 0)) >= cost,
+			"enabled": can_cast and int(member.get("current_mp", 0)) >= cost,
 		}
 		items.append(entry)
 	return items
@@ -80,6 +84,13 @@ static func known_abilities(character_data: Dictionary) -> Array:
 	return AbilityHelpers.get_known_abilities(_id(character_data), _level(character_data)).filter(
 		func(a: Dictionary) -> bool: return a.get("cost_type", "") != "none"
 	)
+
+
+## Whether the Magic command itself is selectable. It grays out while a status
+## blocks casting — Silence (magic.md § Status Effect Reference) — and the
+## battle refuses the cast on the same rule (BattleMagicCommand.can_cast).
+static func magic_command_enabled(member: Dictionary) -> bool:
+	return MagicCommand.can_cast(member)
 
 
 ## Whether the unique command itself is selectable. It grays out when a status

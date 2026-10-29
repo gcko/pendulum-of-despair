@@ -8,12 +8,17 @@ extends RefCounted
 
 const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
 const BattleActions = preload("res://scripts/combat/battle_actions.gd")
+const SpellHelpers = preload("res://scripts/ui/spell_helpers.gd")
 
 ## Weave Gauge earned by the caster for a spell that landed, and the share
 ## Maren banks when somebody else casts
 ## (abilities.md § Resource Cost Invariants > 'Weave Gauge derivation').
 const CASTER_WEAVE_GAIN: int = 5
 const MAREN_WEAVE_GAIN: int = 10
+
+## Statuses under which a party member cannot cast: Silence, "Cannot cast
+## spells" (magic.md § Status Effect Reference).
+const CAST_BLOCKING_STATUSES: Array[String] = ["silence"]
 
 var _battle: Node
 
@@ -23,12 +28,13 @@ func _init(battle: Node) -> void:
 
 
 ## Cast the spell in [param command]. Returns false when the cast never
-## happened — no target, or not enough MP — so the caller re-opens the menu.
+## happened — the caster is Silenced, no target, or not enough MP — so the
+## caller re-opens the menu. Nothing is spent unless the cast resolves.
 func do_magic(actor_id: String, command: Dictionary) -> bool:
 	var state: Node = _battle.get_battle_state()
 	var slot: int = actor_id.replace("party_", "").to_int()
 	var member: Dictionary = state.get_member(slot)
-	if member.is_empty():
+	if member.is_empty() or not can_cast(member):
 		return false
 	var spell: Dictionary = command.get("spell", {})
 	var target_type: String = spell.get("target", "single_enemy")
@@ -46,7 +52,8 @@ func do_magic(actor_id: String, command: Dictionary) -> bool:
 		if resolved_enemy_target < 0:
 			_battle.message.emit("No target!")
 			return false
-	if not state.spend_mp(slot, spell.get("mp_cost", 0)):
+	var cost: int = SpellHelpers.get_mp_cost(spell, member.get("character_id", ""))
+	if not state.spend_mp(slot, cost):
 		_battle.message.emit("Not enough MP!")
 		return false
 	var caster_name: String = member.get("character_data", {}).get("name", "???")
@@ -191,3 +198,12 @@ func _status_on_enemy(caster_slot: int, spell: Dictionary, idx: int) -> bool:
 		_:
 			_battle.damage_dealt.emit("enemy_%d" % idx, 0, "miss")
 	return false
+
+
+## Whether [param member] (a BattleState record) can cast at all: no status
+## that blocks casting. The battle Magic menu grays out on the same answer.
+static func can_cast(member: Dictionary) -> bool:
+	for s: Dictionary in member.get("active_statuses", []):
+		if s.get("name", "") in CAST_BLOCKING_STATUSES:
+			return false
+	return true

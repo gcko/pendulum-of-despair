@@ -8,7 +8,7 @@ extends RefCounted
 ## Scope (Bundle 2b): player-cast offensive debuffs on enemies. Statuses whose
 ## *behavioral* effect needs an unbuilt system are still inflictable here, but
 ## their effect is deferred (tracked on #159):
-##   - silence (blocks enemy casting), blind (-50% enemy accuracy),
+##   - silence (blocks casting; the party side is BattleMagicCommand), blind (-50% enemy accuracy),
 ##     confusion (auto-target) — need enemy-AI hooks (GAP-009).
 ##   - despair's -20% damage-dealt needs an attacker-status param in DamageCalc.
 ##   - stop (3 realtime sec on an enemy) needs enemy realtime ticking — omitted
