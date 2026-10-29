@@ -507,6 +507,14 @@ Rulings of 2026-10-29 (#246) for how a status changes what an enemy does:
   script, or another non-spell ability for a regular enemy. With nothing else
   allowed it makes a basic attack. A spell a boss was charging when Silence
   landed never resolves.
+- **Petrify removes an enemy from combat.** A petrified enemy cannot be
+  targeted, and the battle is won once every enemy is dead or petrified. A
+  petrified enemy pays its full rewards at victory: XP, gold and its drop roll.
+  Cured, it is targetable again and its gauge starts from 0.
+- **Burn is fire.** An enemy's Burn tick (5% max HP) is scaled by
+  its Flame multiplier (§ Elemental Damage Modifiers): a weakness or resistance
+  scales it, Flame immunity means the tick deals nothing, and Flame absorption
+  heals the enemy by the tick instead.
 
 ---
 

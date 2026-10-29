@@ -37,10 +37,13 @@ const RULES: Dictionary = {
 	# "Petrify resets to 0. Most severe status — recovery starts fresh."). The
 	# gauge_zero flag is what separates it from Sleep: Sleep keeps the value it
 	# froze at, Petrify keeps nothing, so a cure starts from an empty gauge.
-	"petrify": {"atb": "frozen", "gauge_zero": true, "duration": UNTIL_CURED},
+	# It also takes the bearer off the field (#246): untargetable, and no longer
+	# standing between the party and victory (see removes_from_combat).
+	"petrify":
 	# Paralysis: cannot act for 3 turns, does NOT wake on damage (#248; differs
 	# from Sleep which wakes). Modeled as "incapacitates" (the gauge keeps filling
 	# so the turn-based countdown advances on each skipped would-be turn — unlike
+	{"atb": "frozen", "gauge_zero": true, "duration": UNTIL_CURED, "removes_from_combat": true},
 	# "frozen", which holds the gauge and has no clock).
 	"paralysis": {"incapacitates": true, "duration": 3, "wake_on_damage": false},
 	# Slow: ATB fill x0.5 for 5 turns (combat-formulas.md
@@ -112,6 +115,13 @@ const WAKE_NOTICE: String = "%s woke up!"
 ## The "Edren woke up!" line for [param bearer_name].
 static func wake_notice(bearer_name: String) -> String:
 	return WAKE_NOTICE % bearer_name
+
+
+## Whether this status takes its bearer out of the fight (Petrify, "removed
+## from combat", magic.md § Status Effect Reference): it cannot be targeted, and
+## a field of enemies that are all dead or removed is a won battle.
+static func removes_from_combat(status: String) -> bool:
+	return RULES.get(status, {}).get("removes_from_combat", false)
 
 
 ## Whether the registry knows this status (and 2b can inflict it).

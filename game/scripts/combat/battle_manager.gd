@@ -383,7 +383,10 @@ func _on_enemy_status_applied(status_name: String, _duration: int, enemy: Node) 
 func _check_end_conditions() -> void:
 	if _battle_resolved:
 		return
-	if _enemies.all(func(e: Node) -> bool: return not e.is_alive):
+	# Petrify removes an enemy from combat, so a field of the dead and the
+	# petrified is won; the loop below pays every enemy's rewards in full,
+	# statues included (ruling of 2026-10-29, #246).
+	if _enemies.all(func(e: Node) -> bool: return not e.is_alive or e.is_removed_from_combat()):
 		_battle_resolved = true
 		_awaiting_input_for = ""
 		_earned_drops = []

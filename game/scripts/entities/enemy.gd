@@ -251,6 +251,8 @@ func apply_status(status_name: String, duration: int) -> bool:
 	else:
 		entry["remaining_turns"] = duration
 	active_statuses.append(entry)
+	if StatusEffects.removes_from_combat(status_name):
+		set_meta("untargetable", true)  # the gate every target picker already reads
 	status_applied.emit(status_name, duration)
 	return true
 
@@ -260,7 +262,18 @@ func remove_status(status_name: String) -> void:
 	for i: int in range(active_statuses.size() - 1, -1, -1):
 		if active_statuses[i].get("name", "") == status_name:
 			active_statuses.remove_at(i)
+			if StatusEffects.removes_from_combat(status_name):
+				set_meta("untargetable", false)
 			status_removed.emit(status_name)
+
+
+## Whether a status (Petrify) has taken this enemy out of the fight: it still
+## lives, but the battle is won without it.
+func is_removed_from_combat() -> bool:
+	for s: Dictionary in active_statuses:
+		if StatusEffects.removes_from_combat(s.get("name", "")):
+			return true
+	return false
 
 
 ## Tick all status durations down by 1. Removes expired statuses.

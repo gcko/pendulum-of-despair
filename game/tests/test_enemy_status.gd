@@ -95,3 +95,14 @@ func test_seconds_do_not_count_down_a_turn_based_status() -> void:
 	assert_true(enemy.apply_status("slow", 1))
 	enemy.tick_realtime_statuses(60.0)
 	assert_true(enemy.has_status("slow"), "a minute of battle time is not a turn")
+
+
+# --- Petrify takes an enemy off the field (#246 slice 6) ---
+
+
+func test_a_petrified_enemy_is_untargetable_until_cured() -> void:
+	var enemy: Enemy = _create_enemy()
+	assert_true(enemy.apply_status("petrify", UNTIL_CURED))
+	assert_true(enemy.get_meta("untargetable", false), "a statue cannot be targeted")
+	enemy.remove_status("petrify")
+	assert_false(enemy.get_meta("untargetable", false), "cured, it can be again")

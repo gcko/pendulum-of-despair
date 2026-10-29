@@ -94,6 +94,9 @@ func _apply_action(action: Dictionary, enemy: Node, enemies: Array[Node], idx: i
 
 ## End-of-turn status processing for an enemy: apply HP ticks (Poison/Burn)
 ## then decrement durations. Poison/Burn = floor(max_hp * tick_pct), min 1.
+## Burn is fire: it scales by the enemy's Flame multiplier, so a weakness or
+## resistance scales it, immunity voids it and absorption heals (ruling of
+## 2026-10-29, #246).
 func _tick_enemy_statuses(enemy: Node, idx: int) -> void:
 	var max_hp: int = enemy.enemy_data.get("hp", 0)
 	var eid: String = "enemy_%d" % idx
@@ -102,6 +105,15 @@ func _tick_enemy_statuses(enemy: Node, idx: int) -> void:
 		var pct: float = StatusEffects.tick_pct(sname)
 		if pct > 0.0 and enemy.is_alive:
 			var dmg: int = maxi(1, int(max_hp * pct))
+			if sname == "burn":
+				var mult: float = enemy.get_element_multiplier("flame")
+				if mult < 0.0:
+					enemy.heal(int(dmg * -mult))
+					_manager.damage_dealt.emit(eid, int(dmg * -mult), "heal")
+					continue
+				if mult == 0.0:
+					continue  # immune to fire: the burn does nothing
+				dmg = maxi(1, int(dmg * mult))
 			enemy.take_damage(dmg, false)  # DoT must not wake Sleep/Confusion
 			_manager.damage_dealt.emit(eid, dmg, "burn" if sname == "burn" else "poison")
 			# A DoT kill must clean up like any other kill, or the dead enemy's

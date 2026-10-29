@@ -5,6 +5,7 @@ extends GutTest
 const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
 const ATBSystem = preload("res://scripts/combat/atb_system.gd")
 const AbilityCommand = preload("res://scripts/combat/battle_ability_command.gd")
+const BattleActions = preload("res://scripts/combat/battle_actions.gd")
 const BATTLE: PackedScene = preload("res://scenes/core/battle.tscn")
 
 ## New-game party: Edren in slot 0, Cael in slot 1.
@@ -152,15 +153,16 @@ func test_status_high_mag_vs_low_mdef() -> void:
 # --- The Ability command (GAP-002, #158 slice a) ---
 
 
-## Boot a real battle against one Ley Vermin, driven frame by frame by hand.
-func _boot() -> Node:
+## Boot a real battle (one Ley Vermin unless [param encounter] says otherwise),
+## driven frame by frame by hand.
+func _boot(encounter: Array = ["ley_vermin"]) -> Node:
 	PartyState.initialize_new_game()
 	GameManager.transition_data = {
 		"return_map_id": "test_overworld",
 		"return_position": Vector2.ZERO,
 		"is_boss": false,
 		"formation_type": "normal",
-		"encounter_group": ["ley_vermin"],
+		"encounter_group": encounter,
 		"enemy_act": "act_i",
 	}
 	var battle: Node = BATTLE.instantiate()
@@ -326,3 +328,38 @@ func test_a_stopped_enemy_with_a_full_gauge_takes_no_turn() -> void:
 	battle._process(0.0)
 	assert_eq(atb.get_gauge("enemy_0"), ATBSystem.GAUGE_MAX, "the full gauge is kept")
 	assert_signal_not_emitted(battle, "damage_dealt", "the vermin did not act")
+
+
+# --- Petrify removes an enemy from combat (#246 slice 6) ---
+# magic.md § Status Effect Reference > 'Petrify': removed from combat. Ruling
+# (2026-10-29): a petrified enemy pays full rewards at victory.
+
+
+func test_petrifying_the_last_enemy_wins_the_battle_with_full_rewards() -> void:
+	var battle: Node = _boot()
+	var vermin: Node = battle.get_enemies()[0]
+	watch_signals(battle)
+	vermin.apply_status("petrify", -1)
+	battle._process(0.0)
+	assert_signal_emitted(battle, "victory", "a petrified field is a won field")
+	var rewards: Dictionary = get_signal_parameters(battle, "victory")[0]
+	assert_eq(rewards["xp"], int(vermin.enemy_data["exp"]), "full XP for the statue")
+	assert_eq(rewards["gold"], int(vermin.enemy_data["gold"]), "full gold for the statue")
+
+
+func test_a_petrified_enemy_cannot_be_targeted_and_the_battle_goes_on() -> void:
+	var battle: Node = _boot(["ley_vermin", "ley_vermin"])
+	var enemies: Array[Node] = battle.get_enemies()
+	watch_signals(battle)
+	enemies[0].apply_status("petrify", -1)
+	battle._process(0.0)
+	assert_signal_not_emitted(battle, "victory", "one enemy still stands")
+	assert_eq(BattleActions.resolve_enemy_target(0, enemies), 1, "the cursor skips the statue")
+	enemies[1].take_damage(9999)
+	battle._process(0.0)
+	assert_signal_emitted(battle, "victory", "the last one fell")
+	assert_eq(
+		get_signal_parameters(battle, "victory")[0]["xp"],
+		2 * int(enemies[0].enemy_data["exp"]),
+		"the statue's XP is paid alongside the kill's"
+	)

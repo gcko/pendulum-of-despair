@@ -303,3 +303,45 @@ func test_a_silenced_regular_enemy_never_casts() -> void:
 					cast_free += 1
 	assert_gt(cast_free, 0, "unsilenced, it casts")
 	assert_eq(cast_silenced, 0, "Silenced, it never does")
+
+
+# --- Burn scales by the enemy's Flame multiplier (#246 slice 6) ---
+# Ruling (2026-10-29): Burn's 5% max HP tick (magic.md § Status Effect
+# Reference > 'Burn') scales by get_element_multiplier("flame"): weakness and
+# resistance scale it, immunity deals nothing, absorption heals.
+
+
+## An enemy whose every turn is a pass, so a turn's only effect is its end-of-
+## turn status tick: 1000 max HP, at 500, with [param profile] merged in.
+func _waiting_enemy(profile: Dictionary) -> Arena:
+	var a: Arena = _arena(1000)
+	a.enemy.enemy_data.merge(profile, true)
+	a.enemy.enemy_data["boss_ai"] = {
+		"phases":
+		[{"name": "p", "hp_above": 0.0, "rules": [{"when": {"default": true}, "move": "wait"}]}],
+		"moves": {"wait": {"type": "skip"}},
+	}
+	a.enemy.current_hp = 500
+	return a
+
+
+func _burn_turn(profile: Dictionary) -> int:
+	var a: Arena = _waiting_enemy(profile)
+	a.enemy.apply_status("burn", 3)
+	a.driver.execute("enemy_0", [a.enemy] as Array[Node], false, 0)
+	return a.enemy.current_hp - 500
+
+
+func test_burn_scales_by_the_flame_multiplier() -> void:
+	assert_eq(_burn_turn({}), -50, "neutral: 5% of 1000")
+	assert_eq(_burn_turn({"weaknesses": ["flame"]}), -75, "weak: x1.5")
+	assert_eq(_burn_turn({"resistances": ["flame"]}), -37, "resists: x0.75, floored")
+	assert_eq(_burn_turn({"immunities": ["flame"]}), 0, "immune: nothing")
+	assert_eq(_burn_turn({"absorb": ["flame"]}), 50, "absorbs: healed instead")
+
+
+func test_poison_ignores_the_flame_multiplier() -> void:
+	var a: Arena = _waiting_enemy({"weaknesses": ["flame"]})
+	a.enemy.apply_status("poison", -1)
+	a.driver.execute("enemy_0", [a.enemy] as Array[Node], false, 0)
+	assert_eq(a.enemy.current_hp, 420, "8% of 1000, unscaled")
