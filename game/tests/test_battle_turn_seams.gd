@@ -278,3 +278,28 @@ func test_an_enemy_woken_by_a_hit_is_announced() -> void:
 	assert_true(serpent.has_status("sleep"), "precondition: the serpent sleeps")
 	serpent.take_damage(1)
 	assert_has(messages, StatusEffects.wake_notice(serpent.get_display_name()), "announced")
+
+
+# --- A Silenced enemy casts nothing (#246 slice 4) ---
+
+
+func test_a_silenced_regular_enemy_never_casts() -> void:
+	var cast_free: int = 0
+	var cast_silenced: int = 0
+	for silenced: bool in [false, true]:
+		for s: int in range(1, 40):
+			var a: Arena = _arena(30000)
+			a.enemy.enemy_data["abilities"] = [
+				{"id": "surge", "type": "magic", "target": "all", "spell_power": 10}
+			]
+			if silenced:
+				a.enemy.apply_status("silence", 4)
+			seed(s)
+			a.driver.execute("enemy_0", [a.enemy] as Array[Node], false, 0)
+			if a.messages.has("Brute uses surge!"):
+				if silenced:
+					cast_silenced += 1
+				else:
+					cast_free += 1
+	assert_gt(cast_free, 0, "unsilenced, it casts")
+	assert_eq(cast_silenced, 0, "Silenced, it never does")

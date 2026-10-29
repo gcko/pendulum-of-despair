@@ -496,6 +496,18 @@ Defined per-boss in the bestiary (Gap 1.3). Standard patterns:
 | Pallor bosses | Poison (undead-adjacent) | Despair (thematic irony) |
 | Final boss | Everything except Despair | Despair only (you cannot escape Despair) |
 
+### Statuses on Enemies
+
+Rulings of 2026-10-29 (#246) for how a status changes what an enemy does:
+
+- **Silence blocks enemy spells.** A spell is any enemy move that resolves on
+  the Magic Damage formula: an ability or boss move whose type is `magic`, or a
+  party-wide move that carries an element. A Silenced enemy skips spells and
+  takes the next action its AI allows: the next matching rule of a boss
+  script, or another non-spell ability for a regular enemy. With nothing else
+  allowed it makes a basic attack. A spell a boss was charging when Silence
+  landed never resolves.
+
 ---
 
 ## Combat Resolution Order

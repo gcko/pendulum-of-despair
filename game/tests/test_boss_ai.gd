@@ -298,3 +298,53 @@ func test_integration_vein_guardian_reconstruct_heals() -> void:
 	var before: int = boss.current_hp
 	driver.execute("enemy_0", [boss], true, 1)
 	assert_gt(boss.current_hp, before, "entering phase_2 triggers a one-time Reconstruct heal")
+
+
+# --- Silence blocks a boss's spells (#246 slice 4) ---
+# Ruling (2026-10-29): a Silenced boss skips spell rules and takes the next
+# rule its script allows, falling back to a basic attack.
+
+
+func test_a_silenced_drake_skips_flame_breath_for_its_next_rule() -> void:
+	var drake: Enemy = _boss("ember_drake")
+	drake.apply_status("silence", 4)
+	var a: Dictionary = BossAI.select_action(drake, 0, _party(), [drake])  # every_n 3
+	assert_eq(a.get("type", ""), "ability", "not a charge turn")
+	assert_eq(a.get("id", ""), "tail_swipe", "the default rule, with no back row to pounce")
+	assert_eq(drake.ai_state.get("charging", ""), "", "no spell is being charged")
+
+
+func test_silence_breaks_a_charged_spell() -> void:
+	var drake: Enemy = _boss("ember_drake")
+	var state: Node = _party()
+	BossAI.select_action(drake, 0, state, [drake])
+	assert_eq(drake.ai_state.get("charging", ""), "flame_breath", "precondition: charging")
+	drake.apply_status("silence", 4)
+	var a: Dictionary = BossAI.select_action(drake, 1, state, [drake])
+	assert_ne(a.get("id", ""), "flame_breath", "the charged spell never resolves")
+	assert_eq(a.get("id", ""), "tail_swipe", "the next rule its script allows")
+
+
+func test_a_silenced_boss_with_only_spells_left_attacks() -> void:
+	var caster: Enemy = _boss("ember_drake")
+	caster.enemy_data = caster.enemy_data.duplicate(true)
+	caster.enemy_data["boss_ai"]["phases"][0]["rules"] = [
+		{"when": {"default": true}, "move": "flame_breath"}
+	]
+	caster.apply_status("silence", 4)
+	var a: Dictionary = BossAI.select_action(caster, 1, _party(), [caster])
+	assert_eq(a.get("type", ""), "attack", "a basic attack")
+	assert_gte(int(a.get("target_slot", -1)), 0, "at a living member")
+
+
+func test_integration_a_silenced_sentinel_slams_instead_of_frost_wave() -> void:
+	var boss: Enemy = _boss("drowned_sentinel")
+	var h: Dictionary = _harness()
+	var driver: BattleEnemyTurn = h["driver"]
+	var messages: Array[String] = []
+	driver._manager.message.connect(func(t: String) -> void: messages.append(t))
+	boss.apply_status("silence", 4)
+	driver.execute("enemy_0", [boss], true, 3)  # every_n 3 -> frost_wave
+	for m: String in messages:
+		assert_false(m.contains("frost_wave"), "no Frost Wave while Silenced: %s" % m)
+	assert_eq(boss.ai_state.get("last_move", ""), "stone_slam", "the default rule instead")

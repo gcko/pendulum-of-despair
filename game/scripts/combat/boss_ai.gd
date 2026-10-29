@@ -24,6 +24,9 @@ static func select_action(
 	var data: Dictionary = enemy.enemy_data.get("boss_ai", {})
 	var moves: Dictionary = data.get("moves", {})
 	var ai: Dictionary = enemy.ai_state
+	# Silence ("Cannot cast spells") takes every spell move off the table, a
+	# charged one included; the script's next allowed rule runs instead.
+	var silenced: bool = enemy.has_status("silence")
 
 	# A telegraphed move charged last turn — resolve it now (the resolve turn).
 	# NOTE: telegraphed moves are only supported in NON-modal phases (no Act-I boss
@@ -32,8 +35,9 @@ static func select_action(
 	var charging: String = ai.get("charging", "")
 	if not charging.is_empty():
 		ai["charging"] = ""
-		ai["last_move"] = charging
-		return _build_action(moves.get(charging, {}), charging, state)
+		if not (silenced and is_spell_move(moves.get(charging, {}))):
+			ai["last_move"] = charging
+			return _build_action(moves.get(charging, {}), charging, state)
 
 	var phase: Dictionary = _current_phase(enemy, data)
 	var msg: String = _enter_phase(ai, phase)
@@ -53,6 +57,10 @@ static func select_action(
 	else:
 		rules = phase.get("rules", [])
 
+	if silenced:
+		rules = rules.filter(
+			func(r: Dictionary) -> bool: return not is_spell_move(moves.get(r.get("move", ""), {}))
+		)
 	var move_id: String = _first_matching_move(rules, turn_counter, ai, state, enemies, enemy)
 
 	# Advance the surface/dive mode cycle after acting.
@@ -62,6 +70,12 @@ static func select_action(
 			ai["mode"] = mode_def.get("next", ai.get("mode", ""))
 			ai["turns_in_mode"] = 0
 
+	if move_id.is_empty() and silenced:  # only spells were left: a basic attack
+		ai["last_move"] = "attack"
+		var hit: Dictionary = {
+			"type": "attack", "target_slot": BattleAI.pick_alive_target(state), "ability_id": ""
+		}
+		return _with_message(hit, msg)
 	if move_id.is_empty():
 		ai["last_move"] = "defend"
 		return _with_message({"type": "defend", "target_slot": -1, "ability_id": ""}, msg)
@@ -76,6 +90,18 @@ static func select_action(
 
 	ai["last_move"] = move_id
 	return _with_message(_build_action(move, move_id, state), msg)
+
+
+## Whether a boss move definition is a spell (BattleAI.is_spell), which
+## Silence blocks.
+static func is_spell_move(move: Dictionary) -> bool:
+	if str(move.get("type", "ability")) != "ability":
+		return false  # heal / spawn / skip are not casts
+	return BattleAI.is_spell(
+		str(move.get("atk_type", "attack")),
+		str(move.get("target", "single")),
+		str(move.get("element", ""))
+	)
 
 
 ## The first phase (ordered high-HP -> low-HP) whose hp_above the ratio exceeds.

@@ -60,7 +60,7 @@ func _select_action(
 ) -> Dictionary:
 	if BossAI.has_script(enemy.enemy_data):
 		return BossAI.select_action(enemy, turn_counter, _state, enemies)
-	return BattleAI.select_action(enemy.enemy_data, pm, pr)
+	return BattleAI.select_action(enemy.enemy_data, pm, pr, enemy.has_status("silence"))
 
 
 func _apply_action(action: Dictionary, enemy: Node, enemies: Array[Node], idx: int) -> void:
@@ -255,7 +255,7 @@ func _resolve_attack_or_ability(action: Dictionary, enemy: Node, idx: int) -> vo
 		# Magic abilities (atk_type "magic") use the MAG formula; everything else
 		# (basic attacks, physical abilities, legacy boss abilities) is physical.
 		# A plain attack is execute_enemy_physical_ability(mult 1.0, hits 1).
-		if action.get("atk_type", "attack") == "magic":
+		if BattleAI.is_spell(str(action.get("atk_type", "attack")), "single", elem):
 			result = BattleActions.execute_enemy_magic(
 				_state, enemy, tgt, elem, int(action.get("power", 0))
 			)
@@ -311,14 +311,15 @@ func _emit_hit(slot: int, result: Dictionary, idx: int) -> void:
 			_atb.remove_combatant(eid)
 
 
-## Resolve one offensive AoE hit against a party slot. Magic when atk_type is
-## "magic" OR the action carries an element (the latter preserves legacy boss
+## Resolve one offensive AoE hit against a party slot. Magic when it is a spell
+## (BattleAI.is_spell, the same rule Silence blocks): atk_type "magic" OR the
+## action carries an element (the latter preserves legacy boss
 ## AoEs — ember_pulse/frost_wave — which route by element with no atk_type);
 ## otherwise physical, with ability_mult + multi-hit support. The single-target
 ## branch deliberately keeps its atk_type-only routing so legacy water_jet stays
 ## physical (boss AI is GAP-009 scope).
 func _resolve_offensive(action: Dictionary, enemy: Node, slot: int, elem: String) -> Dictionary:
-	if action.get("atk_type", "") == "magic" or not elem.is_empty():
+	if BattleAI.is_spell(str(action.get("atk_type", "")), "all", elem):
 		return BattleActions.execute_enemy_magic(
 			_state, enemy, slot, elem, int(action.get("power", 0))
 		)

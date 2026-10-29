@@ -8,8 +8,10 @@ extends RefCounted
 ## Scope (Bundle 2b): player-cast offensive debuffs on enemies. Statuses whose
 ## *behavioral* effect needs an unbuilt system are still inflictable here, but
 ## their effect is deferred (tracked on #159):
-##   - silence (blocks casting; the party side is BattleMagicCommand), blind (-50% enemy accuracy),
-##     confusion (auto-target) — need enemy-AI hooks (GAP-009).
+##   - blind (-50% enemy accuracy), confusion (auto-target) — need enemy-AI
+##     hooks (GAP-009).
+## Silence blocks casting on both sides: BattleMagicCommand for the party, and
+## BattleAI / BossAI for enemies, which skip spell moves (#246).
 ##   - despair's -20% damage-dealt needs an attacker-status param in DamageCalc.
 ## Stop is the one status counted in real-time seconds rather than turns
 ## (#246): see is_realtime().
@@ -49,7 +51,7 @@ const RULES: Dictionary = {
 	# -20% damage-dealt half is deferred (needs an attacker-status param).
 	"despair": {"atb": "mod", "atb_mult": 0.75, "duration": 4},
 	# Silence: cannot cast, 4 turns (magic.md § Status Effect Reference > 'Silence').
-	# Effect deferred.
+	# Enforced by the caster's side, not here (see the scope note above).
 	"silence": {"duration": 4},
 	# Confusion: 3 turns or until damaged (magic.md § Status Effect Reference > 'Confusion').
 	# Auto-target deferred.
