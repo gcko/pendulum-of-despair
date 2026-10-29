@@ -152,6 +152,7 @@
 			"learned_by": [
 				{
 					"character": "torren",
+					"level": 32,
 					"event": "act_iii_spirit_communion"
 				}
 			]
@@ -192,6 +193,7 @@
 			"learned_by": [
 				{
 					"character": "torren",
+					"level": 40,
 					"event": "pallor_trial"
 				}
 			]
