@@ -174,7 +174,8 @@ rather than turned off.
 ### Pallor
 
 - **Inherent traits:** Regenerates 2% max HP per turn while any party
-  member has Despair status
+  member has Despair status. The heal lands at the end of the Pallor enemy's
+  own turn.
 - **Default immunities:** Despair, Death
 - **Interactions:**
   - Spirit element deals 1.25x (additional type multiplier, stacks with weakness)
@@ -197,6 +198,11 @@ rather than turned off.
 - **Interactions:**
   - Phase transition immunity: cannot be killed during phase-change
     animations. Overkill damage is discarded at phase boundaries.
+    Ruling of 2026-10-29: this holds at every boundary. One hit cannot carry
+    a boss's HP below its next phase threshold: HP stops at
+    `floor(threshold x max HP)`, the excess is lost, and the next hit lands in
+    full. A boss with a single phase has no boundary and takes every hit in
+    full.
 
 ### Stacking Rule
 

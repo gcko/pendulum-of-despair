@@ -345,3 +345,22 @@ func test_poison_ignores_the_flame_multiplier() -> void:
 	a.enemy.apply_status("poison", -1)
 	a.driver.execute("enemy_0", [a.enemy] as Array[Node], false, 0)
 	assert_eq(a.enemy.current_hp, 420, "8% of 1000, unscaled")
+
+
+# --- Pallor regenerate on Despair (#178b) ---
+# bestiary/README.md § Pallor: "Regenerates 2% max HP per turn while any party
+# member has Despair status". It lands at the end of the Pallor enemy's turn.
+
+
+func _pallor_turn(despair_on: int, kind: String = "pallor") -> int:
+	var a: Arena = _waiting_enemy({"type": kind})
+	if despair_on >= 0:
+		a.state.apply_status(despair_on, "despair", "turns", 4)
+	a.driver.execute("enemy_0", [a.enemy] as Array[Node], false, 0)
+	return a.enemy.current_hp - 500
+
+
+func test_a_pallor_enemy_regenerates_while_the_party_despairs() -> void:
+	assert_eq(_pallor_turn(1), 20, "2% of 1000 while Cael despairs")
+	assert_eq(_pallor_turn(-1), 0, "no Despair, no regen")
+	assert_eq(_pallor_turn(1, "beast"), 0, "only the Pallor feed on it")

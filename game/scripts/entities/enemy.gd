@@ -300,17 +300,36 @@ func has_status(status_name: String) -> bool:
 ## [param wakes] — whether this hit can cure wake-on-damage statuses (Sleep,
 ## Confusion). Direct attacks pass true; damage-over-time ticks pass false so a
 ## poisoned enemy's own tick does not wake it.
+## A boss with boss_ai phases never drops past its next phase boundary in one
+## hit (see _overkill_floor); every damage path funnels through here.
 func take_damage(amount: int, wakes: bool = true) -> void:
 	if not is_alive:
 		return
 	var clamped: int = maxi(0, amount)
-	current_hp = maxi(0, current_hp - clamped)
+	current_hp = maxi(_overkill_floor(), current_hp - clamped)
 	damage_taken.emit(clamped)
 	if clamped > 0 and wakes:
 		_cure_wake_on_damage_statuses()
 	if current_hp <= 0:
 		is_alive = false
 		died.emit()
+
+
+## The HP one hit cannot carry this enemy below: its next boss_ai phase
+## boundary, floor(hp_above x max HP), or 0 for an enemy without one. Overkill
+## is discarded at phase boundaries (bestiary/README.md § Boss), at every
+## boundary, and the next hit lands in full (ruling of 2026-10-29, #178). A
+## boundary is "next" while HP is above it, which is when BossAI still reads the
+## higher phase.
+func _overkill_floor() -> int:
+	var max_hp: int = enemy_data.get("hp", 0)
+	var boss_ai: Dictionary = enemy_data.get("boss_ai", {})
+	var floor_hp: int = 0
+	for phase: Dictionary in boss_ai.get("phases", []):
+		var line: int = floori(float(phase.get("hp_above", 0.0)) * max_hp)
+		if line < current_hp and line > floor_hp:
+			floor_hp = line
+	return floor_hp
 
 
 ## Remove statuses cured by taking damage (Sleep, Confusion). Emits

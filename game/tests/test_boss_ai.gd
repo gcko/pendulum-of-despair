@@ -348,3 +348,11 @@ func test_integration_a_silenced_sentinel_slams_instead_of_frost_wave() -> void:
 	for m: String in messages:
 		assert_false(m.contains("frost_wave"), "no Frost Wave while Silenced: %s" % m)
 	assert_eq(boss.ai_state.get("last_move", ""), "stone_slam", "the default rule instead")
+
+
+func test_a_hit_clamped_at_the_boundary_starts_the_next_phase() -> void:
+	var vg: Enemy = _boss("vein_guardian")
+	vg.take_damage(999999)
+	assert_true(vg.is_alive, "the overkill is discarded")
+	BossAI.select_action(vg, 1, _party(), [vg])
+	assert_eq(vg.ai_state.get("phase", ""), "phase_2", "the boundary itself is phase_2")

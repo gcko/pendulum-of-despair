@@ -10,6 +10,10 @@ const BattleActions = preload("res://scripts/combat/battle_actions.gd")
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 const ENEMY_SCENE: PackedScene = preload("res://scenes/entities/enemy.tscn")
 
+## A Pallor enemy's regen per turn while any party member has Despair, as a
+## fraction of its max HP (bestiary/README.md § Pallor).
+const PALLOR_REGEN_PCT: float = 0.02
+
 ## References injected by BattleManager
 var _manager: Node2D
 var _state: Node
@@ -96,7 +100,7 @@ func _apply_action(action: Dictionary, enemy: Node, enemies: Array[Node], idx: i
 ## then decrement durations. Poison/Burn = floor(max_hp * tick_pct), min 1.
 ## Burn is fire: it scales by the enemy's Flame multiplier, so a weakness or
 ## resistance scales it, immunity voids it and absorption heals (ruling of
-## 2026-10-29, #246).
+## 2026-10-29, #246). A Pallor enemy then regenerates while the party despairs.
 func _tick_enemy_statuses(enemy: Node, idx: int) -> void:
 	var max_hp: int = enemy.enemy_data.get("hp", 0)
 	var eid: String = "enemy_%d" % idx
@@ -121,8 +125,21 @@ func _tick_enemy_statuses(enemy: Node, idx: int) -> void:
 			if not enemy.is_alive:
 				_manager.combatant_died.emit(eid)
 				_atb.remove_combatant(eid)
+	if enemy.is_alive and enemy.get_type() == "pallor" and _party_despairs():
+		var regen: int = int(max_hp * PALLOR_REGEN_PCT)
+		if regen > 0:
+			enemy.heal(regen)
+			_manager.damage_dealt.emit(eid, regen, "heal")
 	enemy.tick_statuses()
 	enemy.tick_buffs()
+
+
+## Whether any party member has Despair, which feeds a Pallor enemy's regen.
+func _party_despairs() -> bool:
+	for i: int in range(4):
+		if _state.has_status(i, "despair"):
+			return true
+	return false
 
 
 ## Resolve a self-targeted ability (GAP-024): apply its stat buff. scope "pack"
