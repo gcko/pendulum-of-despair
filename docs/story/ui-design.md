@@ -1232,8 +1232,8 @@ only renders for characters that have one.
 ### Deferred Items Resolved
 
 - **ATB visual representation** (from Gap 2.2): Horizontal bar, gold
-  fill, inline with each character's party panel row, 2-frame flash
-  when full.
+  fill, inline with each character's party panel row; when full it
+  alternates gold and white, each held 15 frames (250 ms).
 - **Dialogue box specs** (for Gap 3.3): Full-width bottom-anchored,
   3-line, typewriter effect, no portraits.
 

@@ -34,8 +34,13 @@ const FIGURE_SPACE: String = "\u2007"
 static func fill_width(current: int, max_value: int, bar_width: float) -> float:
 	if max_value <= 0:
 		return 0.0
-	# Floored so a fill always ends on a whole pixel (no sub-pixel edge).
-	return floorf(clampf(float(current) / float(max_value), 0.0, 1.0) * bar_width)
+	if current <= 0:
+		return 0.0
+	# Floored so a fill always ends on a whole pixel (no sub-pixel edge), but
+	# never below 1 px while the value is above 0: a member with 1 HP left must
+	# not read as KO'd.
+	var width: float = floorf(clampf(float(current) / float(max_value), 0.0, 1.0) * bar_width)
+	return maxf(width, minf(1.0, bar_width))
 
 
 ## HP fill color: low-HP red below 25% of max, using the shipped

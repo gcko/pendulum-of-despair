@@ -410,6 +410,14 @@ func test_fill_width_lands_on_whole_pixels() -> void:
 	assert_eq(atb_fill.size.x, floorf(atb_fill.size.x), "ATB fill ends on a whole pixel")
 
 
+func test_a_living_member_never_shows_an_empty_bar() -> void:
+	assert_eq(StatBarHelpers.fill_width(1, 800, 120.0), 1.0, "1/800 floors to 0, shown as 1 px")
+	assert_eq(StatBarHelpers.fill_width(0, 800, 120.0), 0.0, "0 stays an empty bar")
+	_panel.update_party([_member(1, 800)], {"party_0": 0})
+	var hp_fill: ColorRect = _row_node(0, "HPLine/HPBarBg/HPBarFill")
+	assert_eq(hp_fill.size.x, 1.0, "1 HP left still draws a pixel of bar")
+
+
 func test_stat_pair_pads_both_numbers_to_three_digits() -> void:
 	var fs: String = StatBarHelpers.FIGURE_SPACE
 	assert_eq(StatBarHelpers.format_stat_pair(680, 800), "680/800")
