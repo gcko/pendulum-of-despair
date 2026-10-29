@@ -94,6 +94,8 @@ increases by exactly fill_rate.
 | Gauge max | 16,000 | Total gauge capacity |
 | Tick rate | 60/second | Fixed frame rate for gauge updates |
 
+> **Superseded by [#492](https://github.com/gcko/pendulum-of-despair/issues/492):** a gauge is ready after `ceil(16000 / fill_rate)` ticks, so the seconds here are up to one tick short; canon is `docs/story/combat-formulas.md` § Fill Rate Formula.
+
 **Time to fill:** `seconds = 16000 / fill_rate / 60`
 
 ### Battle Speed Config

@@ -39,7 +39,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(140, 0)
 text = ""
 
-[node name="HPPrefix" type="Label" parent="Rows/Row0/HPLine"]
+[node name="HPLabel" type="Label" parent="Rows/Row0/HPLine"]
 vertical_alignment = 1
 layout_mode = 2
 custom_minimum_size = Vector2(32, 0)
@@ -56,8 +56,7 @@ offset_right = 0.0
 offset_bottom = 12.0
 color = Color(0.267, 0.8, 0.267, 1)
 
-[node name="HPLabel" type="Label" parent="Rows/Row0/HPLine"]
-horizontal_alignment = 2
+[node name="HPValue" type="Label" parent="Rows/Row0/HPLine"]
 vertical_alignment = 1
 layout_mode = 2
 custom_minimum_size = Vector2(110, 0)
@@ -70,7 +69,7 @@ layout_mode = 2
 layout_mode = 2
 custom_minimum_size = Vector2(140, 0)
 
-[node name="MPPrefix" type="Label" parent="Rows/Row0/MPLine"]
+[node name="MPLabel" type="Label" parent="Rows/Row0/MPLine"]
 vertical_alignment = 1
 layout_mode = 2
 custom_minimum_size = Vector2(32, 0)
@@ -102,8 +101,7 @@ offset_right = 0.0
 offset_bottom = 6.0
 color = Color(0.667, 0.267, 1, 1)
 
-[node name="MPLabel" type="Label" parent="Rows/Row0/MPLine"]
-horizontal_alignment = 2
+[node name="MPValue" type="Label" parent="Rows/Row0/MPLine"]
 vertical_alignment = 1
 layout_mode = 2
 custom_minimum_size = Vector2(110, 0)
@@ -137,7 +135,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(140, 0)
 text = ""
 
-[node name="HPPrefix" type="Label" parent="Rows/Row1/HPLine"]
+[node name="HPLabel" type="Label" parent="Rows/Row1/HPLine"]
 vertical_alignment = 1
 layout_mode = 2
 custom_minimum_size = Vector2(32, 0)
@@ -154,8 +152,7 @@ offset_right = 0.0
 offset_bottom = 12.0
 color = Color(0.267, 0.8, 0.267, 1)
 
-[node name="HPLabel" type="Label" parent="Rows/Row1/HPLine"]
-horizontal_alignment = 2
+[node name="HPValue" type="Label" parent="Rows/Row1/HPLine"]
 vertical_alignment = 1
 layout_mode = 2
 custom_minimum_size = Vector2(110, 0)
@@ -168,7 +165,7 @@ layout_mode = 2
 layout_mode = 2
 custom_minimum_size = Vector2(140, 0)
 
-[node name="MPPrefix" type="Label" parent="Rows/Row1/MPLine"]
+[node name="MPLabel" type="Label" parent="Rows/Row1/MPLine"]
 vertical_alignment = 1
 layout_mode = 2
 custom_minimum_size = Vector2(32, 0)
@@ -200,8 +197,7 @@ offset_right = 0.0
 offset_bottom = 6.0
 color = Color(0.667, 0.267, 1, 1)
 
-[node name="MPLabel" type="Label" parent="Rows/Row1/MPLine"]
-horizontal_alignment = 2
+[node name="MPValue" type="Label" parent="Rows/Row1/MPLine"]
 vertical_alignment = 1
 layout_mode = 2
 custom_minimum_size = Vector2(110, 0)
@@ -235,7 +231,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(140, 0)
 text = ""
 
-[node name="HPPrefix" type="Label" parent="Rows/Row2/HPLine"]
+[node name="HPLabel" type="Label" parent="Rows/Row2/HPLine"]
 vertical_alignment = 1
 layout_mode = 2
 custom_minimum_size = Vector2(32, 0)
@@ -252,8 +248,7 @@ offset_right = 0.0
 offset_bottom = 12.0
 color = Color(0.267, 0.8, 0.267, 1)
 
-[node name="HPLabel" type="Label" parent="Rows/Row2/HPLine"]
-horizontal_alignment = 2
+[node name="HPValue" type="Label" parent="Rows/Row2/HPLine"]
 vertical_alignment = 1
 layout_mode = 2
 custom_minimum_size = Vector2(110, 0)
@@ -266,7 +261,7 @@ layout_mode = 2
 layout_mode = 2
 custom_minimum_size = Vector2(140, 0)
 
-[node name="MPPrefix" type="Label" parent="Rows/Row2/MPLine"]
+[node name="MPLabel" type="Label" parent="Rows/Row2/MPLine"]
 vertical_alignment = 1
 layout_mode = 2
 custom_minimum_size = Vector2(32, 0)
@@ -298,8 +293,7 @@ offset_right = 0.0
 offset_bottom = 6.0
 color = Color(0.667, 0.267, 1, 1)
 
-[node name="MPLabel" type="Label" parent="Rows/Row2/MPLine"]
-horizontal_alignment = 2
+[node name="MPValue" type="Label" parent="Rows/Row2/MPLine"]
 vertical_alignment = 1
 layout_mode = 2
 custom_minimum_size = Vector2(110, 0)
@@ -333,7 +327,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(140, 0)
 text = ""
 
-[node name="HPPrefix" type="Label" parent="Rows/Row3/HPLine"]
+[node name="HPLabel" type="Label" parent="Rows/Row3/HPLine"]
 vertical_alignment = 1
 layout_mode = 2
 custom_minimum_size = Vector2(32, 0)
@@ -350,8 +344,7 @@ offset_right = 0.0
 offset_bottom = 12.0
 color = Color(0.267, 0.8, 0.267, 1)
 
-[node name="HPLabel" type="Label" parent="Rows/Row3/HPLine"]
-horizontal_alignment = 2
+[node name="HPValue" type="Label" parent="Rows/Row3/HPLine"]
 vertical_alignment = 1
 layout_mode = 2
 custom_minimum_size = Vector2(110, 0)
@@ -364,7 +357,7 @@ layout_mode = 2
 layout_mode = 2
 custom_minimum_size = Vector2(140, 0)
 
-[node name="MPPrefix" type="Label" parent="Rows/Row3/MPLine"]
+[node name="MPLabel" type="Label" parent="Rows/Row3/MPLine"]
 vertical_alignment = 1
 layout_mode = 2
 custom_minimum_size = Vector2(32, 0)
@@ -396,8 +389,7 @@ offset_right = 0.0
 offset_bottom = 6.0
 color = Color(0.667, 0.267, 1, 1)
 
-[node name="MPLabel" type="Label" parent="Rows/Row3/MPLine"]
-horizontal_alignment = 2
+[node name="MPValue" type="Label" parent="Rows/Row3/MPLine"]
 vertical_alignment = 1
 layout_mode = 2
 custom_minimum_size = Vector2(110, 0)

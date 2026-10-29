@@ -744,8 +744,8 @@ rather than superseding it. [difficulty-balance.md](difficulty-balance.md)
 interval of ~2.5s at level 1 and ~1.0s at level 70, which is what these factors
 produce and roughly four times what the retune produced. And this section is
 internally consistent under them: every seconds figure printed here and below is
-`ceil(16000 / floor((SPD + 25) x factor)) / 60` — whole ticks over 60 — rounded half up to the precision that figure
-is printed at. The one argument on the other side was a code comment claiming
+`ceil(16000 / fill_rate) / 60` (whole ticks over 60, `fill_rate` as § Fill Rate Formula floors it), rounded half up
+to the precision that figure is printed at. The one argument on the other side was a code comment claiming
 FF6 parity for the retune, with no measurement behind it.
 
 `game/tests/test_atb_system.gd` now measures **both** columns of this table and
@@ -755,8 +755,8 @@ ready on exactly the tick its fill rate implies, and the seconds printed here
 must be the ticks the gauge actually took over 60, rounded half up to the precision the cell is printed at (#492). So
 the constants cannot drift from the table without the suite going red, and
 neither can the table drift from the constants — the Sable-at-speed-5 cell read
-4.1s until this guard was widened past the Maren column, which is the arithmetic
-you get by dropping the floor the fill-rate formula mandates. The 60 is
+4.1s until this guard was widened past the Maren column: the pre-#492 quotient with the
+fill-rate floor dropped (16000 / 64.5 / 60 = 4.13s); the floored rate 64 takes 250 ticks, 4.2s. The 60 is
 `ATBSystem.TICKS_PER_SECOND`, independent of `run/max_fps`. A single frame
 applies at most a quarter second (15 ticks) of battle time; the excess is dropped.
 

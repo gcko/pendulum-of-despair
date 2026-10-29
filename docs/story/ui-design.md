@@ -224,8 +224,8 @@ Each row contains:
 4. **MP** — label (blue) + solid pixel bar + numeric value
 5. **ATB gauge** — small horizontal bar at far right of the row.
    Gold fill (`#ffcc00`) on dark background. Fills left to right.
-   When full: 2-frame flash alternating gold and white to signal
-   "ready to act." See [combat-formulas.md](combat-formulas.md) §
+   When full: alternates gold and white, each held 15 frames (250 ms),
+   to signal ready to act. See [combat-formulas.md](combat-formulas.md) §
    ATB Gauge System for fill rate formula and status interactions.
 
 **Damage and healing numbers on party rows.** A party-side number is
