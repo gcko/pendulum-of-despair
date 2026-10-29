@@ -7,9 +7,10 @@ extends GutTest
 ## past the 600-line ceiling (technical-architecture.md 1.2a), so the split was
 ## made before that happened rather than after.
 ##
-## combos.json (12 entries) is outside these assertions entirely: its `cost` is a
-## free-text per-character split ("Edren: 7 MP, Cael: 7 MP") with no `cost_value`
-## field to check it against.
+## combos.json (12 entries) is priced per character: `mp_costs` is what the engine
+## reads, and both it and the free-text `cost` ("Edren: 7 MP, Cael: 7 MP") are
+## checked against the Combo List's "Total MP" column (abilities.md § 2 Combo
+## Abilities), where each split must also add up to its total.
 ##
 ## Assertions map to docs/story/abilities.md:
 ##   § Bulwark / Forgewright / Arcanum resource blocks — AP/AC/WG caps
@@ -198,3 +199,86 @@ func test_cost_string_matches_cost_value_and_cooldown() -> void:
 			)
 		checked += 1
 	assert_gt(checked, 0, "no ability cost strings were checked")
+
+
+# ── combo MP split (abilities.md § 2 Combo Abilities) ───────────────────
+
+
+## The Combo List rows, keyed by combo name: the two characters in the order the
+## doc names them, the stated total and the two shares of "14 MP (7/7)".
+func _combo_doc_rows() -> Dictionary:
+	var repo_root: String = ProjectSettings.globalize_path("res://").trim_suffix("/").get_base_dir()
+	var doc: String = FileAccess.get_file_as_string(repo_root + "/docs/story/abilities.md")
+	var mp_re: RegEx = RegEx.new()
+	mp_re.compile("^(\\d+) MP \\((\\d+)/(\\d+)\\)$")
+	var rows: Dictionary = {}
+	var in_list: bool = false
+	for line: String in doc.split("\n"):
+		if line.begins_with("###"):
+			in_list = line == "### Combo List"
+			continue
+		if not in_list or not line.begins_with("| ") or "**" not in line:
+			continue
+		var cells: PackedStringArray = line.split("|")
+		var m: RegExMatch = mp_re.search(cells[4].strip_edges())
+		if m == null:
+			fail_test("Combo List row has an unreadable Total MP: %s" % cells[4])
+			continue
+		var pair: PackedStringArray = cells[3].strip_edges().to_lower().split(" + ")
+		rows[cells[2].strip_edges().trim_prefix("**").trim_suffix("**")] = {
+			"characters": [pair[0], pair[1]],
+			"total": int(m.get_string(1)),
+			"shares": [int(m.get_string(2)), int(m.get_string(3))],
+		}
+	return rows
+
+
+func test_every_combo_mp_split_matches_the_combo_list() -> void:
+	var rows: Dictionary = _combo_doc_rows()
+	var combos: Array = DataManager.load_combos()
+	assert_eq(rows.size(), 12, "abilities.md lists 12 combos")
+	assert_eq(combos.size(), rows.size(), "combos.json has one entry per Combo List row")
+	for raw: Variant in combos:
+		var combo: Dictionary = raw as Dictionary
+		var combo_name: String = String(combo.get("name", "?"))
+		if not rows.has(combo_name):
+			fail_test("%s is not in the Combo List" % combo_name)
+			continue
+		var row: Dictionary = rows[combo_name]
+		var shares: Array = row["shares"]
+		assert_eq(shares[0] + shares[1], row["total"], "%s: the doc's split adds up" % combo_name)
+		assert_eq(
+			combo.get("characters", []), row["characters"], "%s: same two characters" % combo_name
+		)
+		var mp_costs: Dictionary = combo.get("mp_costs", {})
+		assert_eq(mp_costs.size(), 2, "%s: one MP share per character" % combo_name)
+		for i: int in range(2):
+			var cid: String = row["characters"][i]
+			assert_eq(
+				int(mp_costs.get(cid, -1)),
+				shares[i],
+				"%s: %s pays the doc's share" % [combo_name, cid]
+			)
+
+
+func test_every_combo_cost_string_matches_its_mp_costs() -> void:
+	var share_re: RegEx = RegEx.new()
+	assert_eq(share_re.compile("(\\w+): (\\d+) MP"), OK, "share regex must compile")
+	var checked: int = 0
+	for raw: Variant in DataManager.load_combos():
+		var combo: Dictionary = raw as Dictionary
+		var cost_text: String = String(combo.get("cost", ""))
+		var stated: Dictionary = {}
+		for m: RegExMatch in share_re.search_all(cost_text):
+			stated[m.get_string(1).to_lower()] = int(m.get_string(2))
+		var mp_costs: Dictionary = {}
+		var raw_costs: Dictionary = combo.get("mp_costs", {})
+		for cid: String in raw_costs:
+			mp_costs[cid] = int(raw_costs[cid])
+		assert_eq(
+			stated,
+			mp_costs,
+			"%s: cost '%s' disagrees with mp_costs" % [combo.get("id", "?"), cost_text]
+		)
+		checked += 1
+	assert_gt(checked, 0, "no combo cost strings were checked")

@@ -161,6 +161,18 @@ func load_abilities(character_id: String) -> Array:
 	return []
 
 
+## Load the dual-tech combos (abilities.md § 2). Returns the "combos" array, or
+## empty if the file is missing.
+func load_combos() -> Array:
+	var path: String = "res://data/abilities/combos.json"
+	if not FileAccess.file_exists(path):
+		return []
+	var data: Variant = load_json(path)
+	if data is Dictionary and data.has("combos"):
+		return data["combos"]
+	return []
+
+
 ## Load spell data for a tradition. Returns empty array if file missing.
 func load_spells(tradition: String) -> Array:
 	var path: String = "res://data/spells/%s.json" % tradition
