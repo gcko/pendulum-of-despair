@@ -76,11 +76,22 @@ func test_story_gated_excluded_without_flag() -> void:
 ## unlocks only once BOTH the level and the story trigger are met
 ## (abilities.md § Character Unique Commands > 'Unlock conditions').
 func test_a_story_ability_with_a_minimum_level_needs_both() -> void:
-	# Misdirect: [S], minimum level 14, Interlude: Sable's journey.
-	assert_does_not_have(_known_ids("sable", 14), "misdirect", "level met, story not")
-	EventFlags.set_flag("interlude_sable_journey", true)
-	assert_does_not_have(_known_ids("sable", 13), "misdirect", "story met, one level short")
-	assert_has(_known_ids("sable", 14), "misdirect", "both met")
+	# [character, ability, minimum level, story flag]: Misdirect (Interlude:
+	# Sable's journey) and Thornveil Barrier (Act III scene with Torren).
+	for row: Array in [
+		["sable", "misdirect", 14, "interlude_sable_journey"],
+		["lira", "thornveil_barrier", 14, "act_iii_cross_train_torren"],
+	]:
+		var cid: String = row[0]
+		var ability_id: String = row[1]
+		var level: int = row[2]
+		EventFlags.clear_all()
+		assert_does_not_have(_known_ids(cid, level), ability_id, "%s: level, no story" % ability_id)
+		EventFlags.set_flag(row[3], true)
+		assert_does_not_have(
+			_known_ids(cid, level - 1), ability_id, "%s: story, 1 short" % ability_id
+		)
+		assert_has(_known_ids(cid, level), ability_id, "%s: both met" % ability_id)
 
 
 func test_a_story_ability_with_no_level_needs_only_its_story() -> void:
