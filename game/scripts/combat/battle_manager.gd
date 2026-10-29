@@ -134,6 +134,9 @@ func _process(delta: float) -> void:
 	var elapsed: float = _atb.tick(delta)
 	for i: int in range(4):
 		_state.tick_realtime_statuses(i, elapsed)
+	for e: Node in _enemies:
+		if e.is_alive:
+			e.tick_realtime_statuses(elapsed)
 	_check_end_conditions()
 	if _battle_resolved:
 		return
@@ -172,6 +175,10 @@ func _process(delta: float) -> void:
 			break
 		# Fix: skip enemy processing while a party member is awaiting input
 		elif id.begins_with("enemy_") and not enemy_acted and _awaiting_input_for == "":
+			# A gauge-frozen enemy (Stop/Sleep/Petrify) is passed over like a
+			# frozen member: no turn, and its full gauge is kept.
+			if _enemy_frozen(id):
+				continue
 			_turn_counter = _enemy_turn.execute(id, _enemies, _is_boss, _turn_counter)
 			_atb.reset_gauge(id)
 			_check_end_conditions()
@@ -243,6 +250,14 @@ func _targetable_enemy_count() -> int:
 		. filter(func(e: Node) -> bool: return e.is_alive and not e.get_meta("untargetable", false))
 		. size()
 	)
+
+
+## Whether the enemy behind [param id] holds a gauge-freezing status.
+func _enemy_frozen(id: String) -> bool:
+	var idx: int = id.replace("enemy_", "").to_int()
+	if idx < 0 or idx >= _enemies.size():
+		return false
+	return StatusEffects.atb_state(_enemies[idx].active_statuses)["frozen"]
 
 
 ## Name of the status stopping this member from acting — Paralysis, Sleep or

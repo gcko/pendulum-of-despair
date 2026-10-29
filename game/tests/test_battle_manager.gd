@@ -261,3 +261,68 @@ func test_real_time_statuses_run_on_the_seconds_the_gauges_advanced() -> void:
 	atb.set_gauge("party_0", ATBSystem.GAUGE_MAX - 1)  # fills on the first tick
 	battle._process(0.5)
 	assert_true(state.has_status(CAEL, "stop"), "one tick of battle time is not 0.1 s")
+
+
+# --- Stop on enemies (#246 slice 1) ---
+
+
+func _spell(tradition: String, spell_id: String) -> Dictionary:
+	for s: Variant in DataManager.load_spells(tradition):
+		if (s as Dictionary).get("id", "") == spell_id:
+			return s
+	fail_test("%s has no spell '%s'" % [tradition, spell_id])
+	return {}
+
+
+func test_stillwatch_stops_an_enemy_and_says_so() -> void:
+	# magic.md § Stillwatch: 55% to inflict Stop, "frozen for 3 seconds".
+	var stillwatch: Dictionary = _spell("ley_line", "stillwatch")
+	for s: int in range(1, 40):
+		var battle: Node = _boot()
+		var vermin: Node = battle.get_enemies()[0]
+		battle.get_battle_state().get_member(CAEL)["current_mp"] = 99
+		var messages: Array[String] = []
+		battle.message.connect(func(t: String) -> void: messages.append(t))
+		seed(s)
+		_give_turn(battle, CAEL)
+		_submit(battle, {"type": "magic", "spell": stillwatch, "target": 0})
+		if vermin.has_status("stop"):
+			assert_does_not_have(messages, "No effect!", "Stop is a real status now")
+			assert_has(messages, "%s is Stopped!" % vermin.get_display_name(), "announced")
+			return
+		_booted.set("_battle_active", false)
+		_booted.free()
+		_booted = null
+	fail_test("Stillwatch never landed")
+
+
+func test_a_stopped_enemy_s_gauge_holds_and_resumes_after_three_seconds() -> void:
+	var battle: Node = _boot()
+	var atb: Node = battle.get_atb()
+	var vermin: Node = battle.get_enemies()[0]
+	for i: int in range(2):
+		atb.set_frozen("party_%d" % i, true)  # keep the party out of the way
+	atb.set_gauge("enemy_0", 100)
+	vermin.apply_status("stop", 3)
+	for _i: int in range(170):  # 2.83 s of battle time, one tick a frame
+		battle._process(1.0 / ATBSystem.TICKS_PER_SECOND)
+	assert_eq(atb.get_gauge("enemy_0"), 100, "frozen at the value Stop found it at")
+	assert_true(vermin.has_status("stop"), "under 3 s: still Stopped")
+	for _i: int in range(20):
+		battle._process(1.0 / ATBSystem.TICKS_PER_SECOND)
+	assert_false(vermin.has_status("stop"), "3 s of battle time wore it off")
+	assert_gt(atb.get_gauge("enemy_0"), 100, "the gauge resumed from where it froze")
+
+
+func test_a_stopped_enemy_with_a_full_gauge_takes_no_turn() -> void:
+	# combat-formulas.md § Status Effect ATB Interactions: a gauge-frozen
+	# combatant takes no turn at all, and its full gauge is never spent.
+	var battle: Node = _boot()
+	var atb: Node = battle.get_atb()
+	var vermin: Node = battle.get_enemies()[0]
+	atb.set_gauge("enemy_0", ATBSystem.GAUGE_MAX)
+	vermin.apply_status("stop", 3)
+	watch_signals(battle)
+	battle._process(0.0)
+	assert_eq(atb.get_gauge("enemy_0"), ATBSystem.GAUGE_MAX, "the full gauge is kept")
+	assert_signal_not_emitted(battle, "damage_dealt", "the vermin did not act")

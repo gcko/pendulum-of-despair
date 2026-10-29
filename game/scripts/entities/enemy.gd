@@ -61,7 +61,8 @@ var current_hp: int = 0
 ## Runtime mutable MP.
 var current_mp: int = 0
 
-## Active status effects: [{name: String, remaining_turns: int}].
+## Active status effects: [{name: String, remaining_turns: int}], or
+## [{name, remaining_seconds: float}] for a realtime status (Stop).
 var active_statuses: Array[Dictionary] = []
 
 ## Active stat buffs (GAP-024): [{stat: String, mult: float, remaining_turns: int}].
@@ -237,12 +238,19 @@ func is_immune_to_status(status: String) -> bool:
 
 
 ## Apply a status effect. Returns true if applied, false if immune.
+## [param duration] is turns, or seconds for a realtime status (Stop), which
+## tick_realtime_statuses counts down instead of tick_statuses.
 func apply_status(status_name: String, duration: int) -> bool:
 	if is_immune_to_status(status_name):
 		return false
 	# Remove existing instance of same status before reapplying.
 	remove_status(status_name)
-	active_statuses.append({"name": status_name, "remaining_turns": duration})
+	var entry: Dictionary = {"name": status_name}
+	if StatusEffects.is_realtime(status_name):
+		entry["remaining_seconds"] = float(duration)
+	else:
+		entry["remaining_turns"] = duration
+	active_statuses.append(entry)
 	status_applied.emit(status_name, duration)
 	return true
 
@@ -259,13 +267,29 @@ func remove_status(status_name: String) -> void:
 ## Call at END of turn so duration=1 means "lasts 1 full turn."
 ## Calling at turn start would make duration=1 expire immediately (0 turns).
 ## A negative remaining_turns means "until cured" (Poison/Sleep/Petrify) and
-## is never decremented (StatusEffects.UNTIL_CURED).
+## is never decremented (StatusEffects.UNTIL_CURED). Realtime statuses (Stop)
+## are not turn-based and are left to tick_realtime_statuses.
 func tick_statuses() -> void:
 	for i: int in range(active_statuses.size() - 1, -1, -1):
+		if not active_statuses[i].has("remaining_turns"):
+			continue
 		if active_statuses[i].get("remaining_turns", 0) < 0:
 			continue
 		active_statuses[i]["remaining_turns"] -= 1
 		if active_statuses[i]["remaining_turns"] <= 0:
+			var expired_name: String = active_statuses[i].get("name", "")
+			active_statuses.remove_at(i)
+			status_removed.emit(expired_name)
+
+
+## Count realtime statuses (Stop) down by [param delta] battle seconds, the
+## same seconds ATBSystem.tick() returns for the party; remove expired ones.
+func tick_realtime_statuses(delta: float) -> void:
+	for i: int in range(active_statuses.size() - 1, -1, -1):
+		if not active_statuses[i].has("remaining_seconds"):
+			continue
+		active_statuses[i]["remaining_seconds"] -= delta
+		if active_statuses[i]["remaining_seconds"] <= 0.0:
 			var expired_name: String = active_statuses[i].get("name", "")
 			active_statuses.remove_at(i)
 			status_removed.emit(expired_name)

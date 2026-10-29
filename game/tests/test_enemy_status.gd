@@ -66,3 +66,32 @@ func test_dot_damage_does_not_cure_confusion() -> void:
 	assert_true(
 		enemy.has_status("confusion"), "a poisoned+confused enemy's own tick keeps Confusion"
 	)
+
+
+# --- Stop runs in real-time seconds (#246 slice 1) ---
+
+
+func test_stop_wears_off_after_three_seconds_of_battle_time() -> void:
+	var enemy: Enemy = _create_enemy()
+	assert_true(enemy.apply_status("stop", 3), "a beast can be Stopped")
+	enemy.tick_realtime_statuses(2.9)
+	assert_true(enemy.has_status("stop"), "2.9 s is not 3")
+	watch_signals(enemy)
+	enemy.tick_realtime_statuses(0.2)
+	assert_false(enemy.has_status("stop"), "gone once 3 s have run")
+	assert_signal_emitted_with_parameters(enemy, "status_removed", ["stop"])
+
+
+func test_stop_is_not_counted_down_by_turns() -> void:
+	var enemy: Enemy = _create_enemy()
+	assert_true(enemy.apply_status("stop", 3))
+	for _i: int in range(5):
+		enemy.tick_statuses()
+	assert_true(enemy.has_status("stop"), "turn ends do not wear Stop away")
+
+
+func test_seconds_do_not_count_down_a_turn_based_status() -> void:
+	var enemy: Enemy = _create_enemy()
+	assert_true(enemy.apply_status("slow", 1))
+	enemy.tick_realtime_statuses(60.0)
+	assert_true(enemy.has_status("slow"), "a minute of battle time is not a turn")

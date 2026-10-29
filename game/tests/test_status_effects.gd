@@ -7,12 +7,22 @@ const SE := preload("res://scripts/combat/status_effects.gd")
 
 func test_known_statuses() -> void:
 	for s: String in [
-		"poison", "sleep", "petrify", "slow", "despair", "silence", "confusion", "blind"
+		"poison", "sleep", "petrify", "slow", "despair", "silence", "confusion", "blind", "stop"
 	]:
 		assert_true(SE.is_known(s), "%s should be a known status" % s)
 	assert_false(SE.is_known("nonexistent_status"), "unknown status rejected")
-	# Stop is deliberately deferred (realtime on enemies not supported in 2b).
-	assert_false(SE.is_known("stop"), "stop is deferred in Bundle 2b")
+
+
+## Stop: "Frozen at current value", "3 real-time seconds", "Not turn-based"
+## (combat-formulas.md § Status Effect ATB Interactions). It freezes the gauge
+## like Sleep, keeps the value it froze at, and counts down in seconds.
+func test_stop_freezes_the_gauge_for_three_real_time_seconds() -> void:
+	assert_eq(SE.atb_effect("stop"), "frozen", "Stop freezes the gauge")
+	assert_false(SE.zeroes_gauge("stop"), "Stop keeps the value it froze at")
+	assert_eq(SE.default_duration("stop"), 3, "3 seconds")
+	assert_true(SE.is_realtime("stop"), "counted in seconds, not turns")
+	assert_false(SE.is_realtime("slow"), "Slow counts turns")
+	assert_false(SE.is_realtime("sleep"), "Sleep lasts until cured")
 
 
 func test_atb_frozen_statuses() -> void:

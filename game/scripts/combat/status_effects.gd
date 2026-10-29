@@ -11,8 +11,8 @@ extends RefCounted
 ##   - silence (blocks casting; the party side is BattleMagicCommand), blind (-50% enemy accuracy),
 ##     confusion (auto-target) — need enemy-AI hooks (GAP-009).
 ##   - despair's -20% damage-dealt needs an attacker-status param in DamageCalc.
-##   - stop (3 realtime sec on an enemy) needs enemy realtime ticking — omitted
-##     from the registry here, so a Stop spell is a graceful no-op for now.
+## Stop is the one status counted in real-time seconds rather than turns
+## (#246): see is_realtime().
 
 ## Sentinel duration: status persists until cured (no per-turn countdown).
 const UNTIL_CURED: int = -1
@@ -57,6 +57,10 @@ const RULES: Dictionary = {
 	# Blind: -50% physical accuracy, 4 turns (magic.md § Status Effect Reference > 'Blind').
 	# Effect deferred.
 	"blind": {"duration": 4},
+	# Stop: gauge "Frozen at current value", cannot act, "3 real-time seconds"
+	# counted only while battle time runs (combat-formulas.md § Status Effect ATB
+	# Interactions; magic.md § Stillwatch). Its duration is SECONDS, not turns.
+	"stop": {"atb": "frozen", "duration": 3, "realtime": true},
 }
 
 ## Player-facing adjective for an ACTION-DENIAL announcement ("paralysis" ->
@@ -94,6 +98,7 @@ const APPLICATION_NOTICES: Dictionary = {
 	"silence": "%s is Silenced!",
 	"confusion": "%s is Confused!",
 	"blind": "%s is Blinded!",
+	"stop": "%s is Stopped!",
 }
 
 ## The line for a combatant a hit has woken, "[Character] woke up!" from
@@ -112,7 +117,15 @@ static func is_known(status: String) -> bool:
 	return RULES.has(status)
 
 
-## ATB effect: "none", "frozen" (Sleep/Petrify), or "mod" (Slow/Despair).
+## Whether this status's duration is real-time seconds (Stop) rather than turns.
+## A realtime status is counted down by the battle seconds the ATB gauges
+## advanced, never by a turn ending (combat-formulas.md § Status Effect ATB
+## Interactions: "Not turn-based; pauses in Wait mode").
+static func is_realtime(status: String) -> bool:
+	return RULES.get(status, {}).get("realtime", false)
+
+
+## ATB effect: "none", "frozen" (Sleep/Petrify/Stop), or "mod" (Slow/Despair).
 static func atb_effect(status: String) -> String:
 	return RULES.get(status, {}).get("atb", "none")
 
@@ -181,7 +194,8 @@ static func display_adjective(status: String) -> String:
 	return ADJECTIVES.get(status, status)
 
 
-## Canonical turns for a status (UNTIL_CURED for persistent ones).
+## Canonical turns for a status (UNTIL_CURED for persistent ones), or seconds
+## for a realtime one (Stop).
 static func default_duration(status: String) -> int:
 	return int(RULES.get(status, {}).get("duration", UNTIL_CURED))
 
