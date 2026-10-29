@@ -7,12 +7,13 @@ extends RefCounted
 ##
 ## Scope (Bundle 2b): player-cast offensive debuffs on enemies. Statuses whose
 ## *behavioral* effect needs an unbuilt system are still inflictable here, but
-## their effect is deferred (tracked on #159):
-##   - silence (blocks casting; the party side is BattleMagicCommand), blind (-50% enemy accuracy),
-##     confusion (auto-target) — need enemy-AI hooks (GAP-009).
+## their effect is deferred (tracked on #246):
+##   - blind (-50% enemy accuracy), confusion (auto-target) — need enemy-AI
+##     hooks (GAP-009).
 ##   - despair's -20% damage-dealt needs an attacker-status param in DamageCalc.
-##   - stop (3 realtime sec on an enemy) needs enemy realtime ticking — omitted
-##     from the registry here, so a Stop spell is a graceful no-op for now.
+## Silence blocks casting on both sides: BattleMagicCommand for the party, and
+## BattleAI / BossAI for enemies, which skip spell moves (#246). Stop is the one
+## status counted in real-time seconds rather than turns: see is_realtime().
 
 ## Sentinel duration: status persists until cured (no per-turn countdown).
 const UNTIL_CURED: int = -1
@@ -35,7 +36,15 @@ const RULES: Dictionary = {
 	# "Petrify resets to 0. Most severe status — recovery starts fresh."). The
 	# gauge_zero flag is what separates it from Sleep: Sleep keeps the value it
 	# froze at, Petrify keeps nothing, so a cure starts from an empty gauge.
-	"petrify": {"atb": "frozen", "gauge_zero": true, "duration": UNTIL_CURED},
+	# It also takes the bearer off the field (#246): untargetable, and no longer
+	# standing between the party and victory (see removes_from_combat).
+	"petrify":
+	{
+		"atb": "frozen",
+		"gauge_zero": true,
+		"duration": UNTIL_CURED,
+		"removes_from_combat": true,
+	},
 	# Paralysis: cannot act for 3 turns, does NOT wake on damage (#248; differs
 	# from Sleep which wakes). Modeled as "incapacitates" (the gauge keeps filling
 	# so the turn-based countdown advances on each skipped would-be turn — unlike
@@ -49,7 +58,7 @@ const RULES: Dictionary = {
 	# -20% damage-dealt half is deferred (needs an attacker-status param).
 	"despair": {"atb": "mod", "atb_mult": 0.75, "duration": 4},
 	# Silence: cannot cast, 4 turns (magic.md § Status Effect Reference > 'Silence').
-	# Effect deferred.
+	# Enforced by the caster's side, not here (see the scope note above).
 	"silence": {"duration": 4},
 	# Confusion: 3 turns or until damaged (magic.md § Status Effect Reference > 'Confusion').
 	# Auto-target deferred.
@@ -57,6 +66,10 @@ const RULES: Dictionary = {
 	# Blind: -50% physical accuracy, 4 turns (magic.md § Status Effect Reference > 'Blind').
 	# Effect deferred.
 	"blind": {"duration": 4},
+	# Stop: gauge "Frozen at current value", cannot act, "3 real-time seconds"
+	# counted only while battle time runs (combat-formulas.md § Status Effect ATB
+	# Interactions; magic.md § Stillwatch). Its duration is SECONDS, not turns.
+	"stop": {"atb": "frozen", "duration": 3, "realtime": true},
 }
 
 ## Player-facing adjective for an ACTION-DENIAL announcement ("paralysis" ->
@@ -94,6 +107,7 @@ const APPLICATION_NOTICES: Dictionary = {
 	"silence": "%s is Silenced!",
 	"confusion": "%s is Confused!",
 	"blind": "%s is Blinded!",
+	"stop": "%s is Stopped!",
 }
 
 ## The line for a combatant a hit has woken, "[Character] woke up!" from
@@ -107,18 +121,33 @@ static func wake_notice(bearer_name: String) -> String:
 	return WAKE_NOTICE % bearer_name
 
 
+## Whether this status takes its bearer out of the fight (Petrify, "removed
+## from combat", magic.md § Status Effect Reference): it cannot be targeted, and
+## a field of enemies that are all dead or removed is a won battle.
+static func removes_from_combat(status: String) -> bool:
+	return RULES.get(status, {}).get("removes_from_combat", false)
+
+
 ## Whether the registry knows this status (and 2b can inflict it).
 static func is_known(status: String) -> bool:
 	return RULES.has(status)
 
 
-## ATB effect: "none", "frozen" (Sleep/Petrify), or "mod" (Slow/Despair).
+## Whether this status's duration is real-time seconds (Stop) rather than turns.
+## A realtime status is counted down by the battle seconds the ATB gauges
+## advanced, never by a turn ending (combat-formulas.md § Status Effect ATB
+## Interactions: "Not turn-based; pauses in Wait mode").
+static func is_realtime(status: String) -> bool:
+	return RULES.get(status, {}).get("realtime", false)
+
+
+## ATB effect: "none", "frozen" (Sleep/Petrify/Stop), or "mod" (Slow/Despair).
 static func atb_effect(status: String) -> String:
 	return RULES.get(status, {}).get("atb", "none")
 
 
 ## Whether the bearer cannot take a turn — Paralysis (explicit) or the
-## gauge-frozen action-denial statuses (Sleep/Petrify). The battle layer denies
+## gauge-frozen action-denial statuses (Sleep/Petrify/Stop). The battle layer denies
 ## the turn either way, but only Paralysis consumes one (announce, tick, reset);
 ## a gauge-frozen bearer is passed over untouched so the frozen value survives.
 static func is_incapacitating(status: String) -> bool:
@@ -135,7 +164,7 @@ static func zeroes_gauge(status: String) -> bool:
 
 
 ## The status denying this combatant its turn, or "" when it can act. A
-## gauge-frozen status (Sleep/Petrify) outranks Paralysis whenever a combatant
+## gauge-frozen status (Sleep/Petrify/Stop) outranks Paralysis whenever a combatant
 ## carries both: a frozen bearer must be passed over untouched, and answering
 ## "paralysis" would spend the very gauge value the freeze exists to protect.
 ## The order the statuses were applied in must not decide it (#300).
@@ -181,7 +210,8 @@ static func display_adjective(status: String) -> String:
 	return ADJECTIVES.get(status, status)
 
 
-## Canonical turns for a status (UNTIL_CURED for persistent ones).
+## Canonical turns for a status (UNTIL_CURED for persistent ones), or seconds
+## for a realtime one (Stop).
 static func default_duration(status: String) -> int:
 	return int(RULES.get(status, {}).get("duration", UNTIL_CURED))
 

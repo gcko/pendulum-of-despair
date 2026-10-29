@@ -259,7 +259,7 @@ spells).
 **AI Script:**
 
 ```
-=== Phase 1 (18,000--9,000 HP) ===
+=== Phase 1 (18,000--9,001 HP) ===
 
 Mode: Surface
   Priority:
@@ -278,7 +278,7 @@ Mode: Diving
 
 Transition: At boss.hp_percent <= 50 → enter Phase 2
 
-=== Phase 2 (below 9,000 HP) ===
+=== Phase 2 (9,000 HP and below) ===
 
 Mode: Surface (Desperate)
   Priority:

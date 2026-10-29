@@ -100,7 +100,8 @@ static func execute_enemy_status(
 	if not DamageCalc.roll_status(base_rate, caster_mag, target_mdef, target_spd):
 		return {"hit": false, "inflicted": false, "type": "resisted", "status": status_name}
 	var duration: int = StatusEffects.resolve_duration(status_name, explicit_duration)
-	state.apply_status(target_slot, status_name, "turns", float(duration))
+	var kind: String = "realtime" if StatusEffects.is_realtime(status_name) else "turns"  # Stop
+	state.apply_status(target_slot, status_name, kind, float(duration))
 	return {"hit": true, "inflicted": true, "type": "status", "status": status_name}
 
 

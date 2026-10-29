@@ -33,6 +33,7 @@ const ENEMY_CRIT_RATE: float = 0.05
 const ACT_TABLES: Array[String] = ["act_i", "act_ii", "act_iii", "interlude", "optional"]
 
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
+const EnemyRecord = preload("res://scripts/entities/enemy_record.gd")
 
 ## Type-based default status immunities (per bestiary/README.md).
 const TYPE_IMMUNITIES: Dictionary = {
@@ -61,7 +62,8 @@ var current_hp: int = 0
 ## Runtime mutable MP.
 var current_mp: int = 0
 
-## Active status effects: [{name: String, remaining_turns: int}].
+## Active status effects: [{name: String, remaining_turns: int}], or
+## [{name, remaining_seconds: float}] for a realtime status (Stop).
 var active_statuses: Array[Dictionary] = []
 
 ## Active stat buffs (GAP-024): [{stat: String, mult: float, remaining_turns: int}].
@@ -72,6 +74,10 @@ var active_buffs: Array[Dictionary] = []
 ## and writes per-enemy scratch here (e.g. {phase, last_move, charging,
 ## turns_in_mode, mode, reconstructed}). Empty for non-AI-driven enemies.
 var ai_state: Dictionary = {}
+
+## Phase-boundary HP lines this boss has already fallen to; overkill is only
+## discarded at a boundary the first time it is crossed (EnemyRecord).
+var crossed_lines: Array[int] = []
 
 ## Whether the enemy is still alive. Defaults false until initialize().
 var is_alive: bool = false
@@ -90,6 +96,7 @@ func initialize(p_enemy_id: String, p_act: String) -> void:
 	active_statuses.clear()
 	active_buffs.clear()
 	ai_state.clear()
+	crossed_lines.clear()
 	set_meta("untargetable", false)  # boss dive-mode meta must not survive a re-init
 	is_alive = false
 
@@ -162,49 +169,24 @@ func get_display_name() -> String:
 	return enemy_data.get("name", enemy_id)
 
 
-## Check if an element appears in an array that may contain plain strings
-## or objects with {"element": "...", "multiplier": ...}.
-static func _element_in_list(element: String, list: Array) -> bool:
-	for entry: Variant in list:
-		if entry is String and entry == element:
-			return true
-		if entry is Dictionary and (entry as Dictionary).get("element", "") == element:
-			return true
-	return false
-
-
-## Get the custom multiplier for an element from a mixed-format array.
-## Returns the object multiplier if found, otherwise -1.0 (not in list).
-## Uses -1.0 as sentinel because legitimate multipliers are >= 0.0.
-static func _get_list_multiplier(element: String, list: Array, default_mult: float) -> float:
-	for entry: Variant in list:
-		if entry is String and entry == element:
-			return default_mult
-		if entry is Dictionary:
-			var d: Dictionary = entry as Dictionary
-			if d.get("element", "") == element:
-				return d.get("multiplier", default_mult)
-	return -1.0  # not in list
-
-
 ## Check if the enemy is weak to an element.
 func is_weak_to(element: String) -> bool:
-	return _element_in_list(element, enemy_data.get("weaknesses", []))
+	return EnemyRecord.element_in_list(element, enemy_data.get("weaknesses", []))
 
 
 ## Check if the enemy is resistant to an element.
 func is_resistant_to(element: String) -> bool:
-	return _element_in_list(element, enemy_data.get("resistances", []))
+	return EnemyRecord.element_in_list(element, enemy_data.get("resistances", []))
 
 
 ## Check if the enemy is immune to an element.
 func is_immune_to(element: String) -> bool:
-	return _element_in_list(element, enemy_data.get("immunities", []))
+	return EnemyRecord.element_in_list(element, enemy_data.get("immunities", []))
 
 
 ## Check if the enemy absorbs an element.
 func absorbs(element: String) -> bool:
-	return _element_in_list(element, enemy_data.get("absorb", []))
+	return EnemyRecord.element_in_list(element, enemy_data.get("absorb", []))
 
 
 ## Get the damage multiplier for an element.
@@ -216,10 +198,14 @@ func get_element_multiplier(element: String) -> float:
 		return -1.0
 	if is_immune_to(element):
 		return 0.0
-	var resist_mult: float = _get_list_multiplier(element, enemy_data.get("resistances", []), 0.75)
+	var resist_mult: float = EnemyRecord.list_multiplier(
+		element, enemy_data.get("resistances", []), 0.75
+	)
 	if resist_mult >= 0.0:
 		return resist_mult
-	var weak_mult: float = _get_list_multiplier(element, enemy_data.get("weaknesses", []), 1.5)
+	var weak_mult: float = EnemyRecord.list_multiplier(
+		element, enemy_data.get("weaknesses", []), 1.5
+	)
 	if weak_mult >= 0.0:
 		return weak_mult
 	return 1.0
@@ -237,12 +223,21 @@ func is_immune_to_status(status: String) -> bool:
 
 
 ## Apply a status effect. Returns true if applied, false if immune.
+## [param duration] is turns, or seconds for a realtime status (Stop), which
+## tick_realtime_statuses counts down instead of tick_statuses.
 func apply_status(status_name: String, duration: int) -> bool:
 	if is_immune_to_status(status_name):
 		return false
 	# Remove existing instance of same status before reapplying.
 	remove_status(status_name)
-	active_statuses.append({"name": status_name, "remaining_turns": duration})
+	var entry: Dictionary = {"name": status_name}
+	if StatusEffects.is_realtime(status_name):
+		entry["remaining_seconds"] = float(duration)
+	else:
+		entry["remaining_turns"] = duration
+	active_statuses.append(entry)
+	if StatusEffects.removes_from_combat(status_name):
+		set_meta("untargetable", true)  # the gate every target picker already reads
 	status_applied.emit(status_name, duration)
 	return true
 
@@ -252,20 +247,47 @@ func remove_status(status_name: String) -> void:
 	for i: int in range(active_statuses.size() - 1, -1, -1):
 		if active_statuses[i].get("name", "") == status_name:
 			active_statuses.remove_at(i)
+			if StatusEffects.removes_from_combat(status_name):
+				set_meta("untargetable", false)
 			status_removed.emit(status_name)
+
+
+## Whether a status (Petrify) has taken this enemy out of the fight: it still
+## lives, but the battle is won without it.
+func is_removed_from_combat() -> bool:
+	for s: Dictionary in active_statuses:
+		if StatusEffects.removes_from_combat(s.get("name", "")):
+			return true
+	return false
 
 
 ## Tick all status durations down by 1. Removes expired statuses.
 ## Call at END of turn so duration=1 means "lasts 1 full turn."
 ## Calling at turn start would make duration=1 expire immediately (0 turns).
 ## A negative remaining_turns means "until cured" (Poison/Sleep/Petrify) and
-## is never decremented (StatusEffects.UNTIL_CURED).
+## is never decremented (StatusEffects.UNTIL_CURED). Realtime statuses (Stop)
+## are not turn-based and are left to tick_realtime_statuses.
 func tick_statuses() -> void:
 	for i: int in range(active_statuses.size() - 1, -1, -1):
+		if not active_statuses[i].has("remaining_turns"):
+			continue
 		if active_statuses[i].get("remaining_turns", 0) < 0:
 			continue
 		active_statuses[i]["remaining_turns"] -= 1
 		if active_statuses[i]["remaining_turns"] <= 0:
+			var expired_name: String = active_statuses[i].get("name", "")
+			active_statuses.remove_at(i)
+			status_removed.emit(expired_name)
+
+
+## Count realtime statuses (Stop) down by [param delta] battle seconds, the
+## same seconds ATBSystem.tick() returns for the party; remove expired ones.
+func tick_realtime_statuses(delta: float) -> void:
+	for i: int in range(active_statuses.size() - 1, -1, -1):
+		if not active_statuses[i].has("remaining_seconds"):
+			continue
+		active_statuses[i]["remaining_seconds"] -= delta
+		if active_statuses[i]["remaining_seconds"] <= 0.0:
 			var expired_name: String = active_statuses[i].get("name", "")
 			active_statuses.remove_at(i)
 			status_removed.emit(expired_name)
@@ -283,11 +305,16 @@ func has_status(status_name: String) -> bool:
 ## [param wakes] — whether this hit can cure wake-on-damage statuses (Sleep,
 ## Confusion). Direct attacks pass true; damage-over-time ticks pass false so a
 ## poisoned enemy's own tick does not wake it.
+## A boss never drops past a phase boundary it has not crossed yet in one hit
+## (EnemyRecord.overkill_floor); every damage path funnels through here.
 func take_damage(amount: int, wakes: bool = true) -> void:
 	if not is_alive:
 		return
 	var clamped: int = maxi(0, amount)
-	current_hp = maxi(0, current_hp - clamped)
+	current_hp = maxi(
+		EnemyRecord.overkill_floor(enemy_data, current_hp, crossed_lines), current_hp - clamped
+	)
+	EnemyRecord.mark_crossed(enemy_data, current_hp, crossed_lines)
 	damage_taken.emit(clamped)
 	if clamped > 0 and wakes:
 		_cure_wake_on_damage_statuses()
@@ -320,51 +347,14 @@ func heal(amount: int) -> void:
 		healed.emit(actual_heal)
 
 
-## Roll for a steal attempt. Returns {item_id: String, success: bool}.
-##
-## Three steal shapes are canon (2026-04-02-enemy-data-json-design.md
-## § Steal Mapping Rules): the two-tier object, a whole-record `null` (Rule 3),
-## and a `null` tier (Rule 4). Dictionary.get() returns the STORED value when
-## the key exists, so a JSON null arrives as Nil rather than the default and
-## reading it into a typed Dictionary local aborts the function. Widen through
-## Variant; every non-dictionary means "carries nothing here".
+## Roll for a steal attempt (EnemyRecord.roll_steal). Returns {item_id, success}.
 func roll_steal(tier: String) -> Dictionary:
-	var raw_steal: Variant = enemy_data.get("steal")
-	if not raw_steal is Dictionary:
-		return {"item_id": "", "success": false}
-	var steal_data: Dictionary = raw_steal
-	var raw_tier: Variant = steal_data.get(tier)
-	if not raw_tier is Dictionary:
-		return {"item_id": "", "success": false}
-	var tier_data: Dictionary = raw_tier
-	if tier_data.is_empty():
-		return {"item_id": "", "success": false}
-	var rate: int = tier_data.get("rate", 0)
-	var raw_id: Variant = tier_data.get("item_id", "")
-	var item_id: String = raw_id as String if raw_id is String else ""
-	var success: bool = randi() % 100 < rate and not item_id.is_empty()
-	return {
-		"item_id": item_id if success else "",
-		"success": success,
-	}
+	return EnemyRecord.roll_steal(enemy_data, tier)
 
 
-## Roll for a drop on death. Returns {item_id: String, success: bool}.
-## `"drop": null` is canon for the 6 enemies that leave nothing behind — same
-## Nil-through-get() trap as roll_steal() above.
+## Roll for a drop on death (EnemyRecord.roll_drop). Returns {item_id, success}.
 func roll_drop() -> Dictionary:
-	var raw_drop: Variant = enemy_data.get("drop")
-	if not raw_drop is Dictionary:
-		return {"item_id": "", "success": false}
-	var drop_data: Dictionary = raw_drop
-	if drop_data.is_empty():
-		return {"item_id": "", "success": false}
-	var rate: int = drop_data.get("rate", 0)
-	var success: bool = randi() % 100 < rate
-	return {
-		"item_id": drop_data.get("item_id", "") if success else "",
-		"success": success,
-	}
+	return EnemyRecord.roll_drop(enemy_data)
 
 
 ## Find this enemy's data entry, preferring [param preferred_act]'s

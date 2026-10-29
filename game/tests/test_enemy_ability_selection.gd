@@ -8,6 +8,11 @@ extends GutTest
 ## resolution (#374).
 
 const BattleAI = preload("res://scripts/combat/battle_ai.gd")
+const SPELL: Dictionary = {"id": "spark", "type": "magic", "element": "storm", "spell_power": 10}
+const BITE: Dictionary = {"id": "bite", "type": "attack", "ability_mult": 1.5}
+const HOWL: Dictionary = {
+	"id": "howl", "type": "buff", "target": "self", "buff": {"stat": "atk", "mult": 1.2}
+}
 
 
 func after_each() -> void:
@@ -170,3 +175,58 @@ func test_ability_selector_back_falls_back_when_no_back_row() -> void:
 				int(a.get("target_slot", -1)) in [0, 1], "back fallback picks a living front slot"
 			)
 			break
+
+
+# --- Silence blocks casting (#246 slice 4) ---
+# Silence: "Cannot cast spells" (magic.md § Status Effect Reference). Ruling
+# (2026-10-29): a Silenced enemy skips spells and takes the next action its AI
+# allows, falling back to a basic attack.
+
+
+func _rolls(kit: Array, silenced: bool) -> Array[Dictionary]:
+	var pm: Array = [{"is_alive": true, "row": "front"}, null, null, null]
+	var pr: Array = ["front", "front", "front", "front"]
+	var out: Array[Dictionary] = []
+	for s: int in range(1, 200):
+		seed(s)
+		out.append(BattleAI.select_action({"abilities": kit}, pm, pr, silenced))
+	return out
+
+
+func test_a_silenced_enemy_picks_another_ability_instead_of_a_spell() -> void:
+	var picked: Array[String] = []
+	for a: Dictionary in _rolls([SPELL, BITE, HOWL], true):
+		if a.get("type", "") == "ability":
+			picked.append(a.get("id", ""))
+	assert_false("spark" in picked, "no spell while Silenced")
+	assert_true("bite" in picked, "a physical ability is still allowed")
+	assert_true("howl" in picked, "a buff is not a spell")
+
+
+func test_a_silenced_caster_with_only_spells_attacks_instead() -> void:
+	var free: Array[Dictionary] = _rolls([SPELL], false)
+	var silenced: Array[Dictionary] = _rolls([SPELL], true)
+	var cast_rolls: int = 0
+	for i: int in range(free.size()):
+		if free[i].get("type", "") == "ability":
+			cast_rolls += 1
+			assert_eq(
+				silenced[i].get("type", ""), "attack", "the spell roll becomes a basic attack"
+			)
+	assert_gt(cast_rolls, 0, "the unsilenced caster does cast")
+
+
+func test_what_resolves_on_the_magic_formula() -> void:
+	assert_true(BattleAI.resolves_as_magic("magic", "single", ""), "a magic ability")
+	assert_true(BattleAI.resolves_as_magic("attack", "all", "flame"), "an elemental AoE")
+	assert_false(BattleAI.resolves_as_magic("attack", "single", "flame"), "a single elemental hit")
+	assert_false(BattleAI.resolves_as_magic("buff", "self", ""), "a buff")
+	assert_false(BattleAI.resolves_as_magic("attack", "all", ""), "a physical AoE")
+
+
+func test_a_status_spell_is_a_spell_too() -> void:
+	# Reading (2026-10-29): Silence blocks every magic move, status, healing and
+	# MP-drain spells included, not only damage.
+	var hex: Dictionary = {"id": "hex", "type": "magic", "status": "sleep", "status_rate": 50}
+	for a: Dictionary in _rolls([hex, BITE], true):
+		assert_ne(a.get("id", ""), "hex", "no status spell while Silenced")

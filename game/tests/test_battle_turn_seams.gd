@@ -6,6 +6,7 @@ extends GutTest
 ## Notifications), from a death burst too; and Edren's share of a death burst
 ## shows its own damage number.
 
+const BattleActions = preload("res://scripts/combat/battle_actions.gd")
 const BattleState = preload("res://scripts/combat/battle_state.gd")
 const Bulwark = preload("res://scripts/combat/battle_bulwark.gd")
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
@@ -278,3 +279,167 @@ func test_an_enemy_woken_by_a_hit_is_announced() -> void:
 	assert_true(serpent.has_status("sleep"), "precondition: the serpent sleeps")
 	serpent.take_damage(1)
 	assert_has(messages, StatusEffects.wake_notice(serpent.get_display_name()), "announced")
+
+
+# --- A Silenced enemy casts nothing (#246 slice 4) ---
+
+
+func test_a_silenced_regular_enemy_never_casts() -> void:
+	var cast_free: int = 0
+	var cast_silenced: int = 0
+	for silenced: bool in [false, true]:
+		for s: int in range(1, 40):
+			var a: Arena = _arena(30000)
+			a.enemy.enemy_data["abilities"] = [
+				{"id": "surge", "type": "magic", "target": "all", "spell_power": 10}
+			]
+			if silenced:
+				a.enemy.apply_status("silence", 4)
+			seed(s)
+			a.driver.execute("enemy_0", [a.enemy] as Array[Node], false, 0)
+			if a.messages.has("Brute uses surge!"):
+				if silenced:
+					cast_silenced += 1
+				else:
+					cast_free += 1
+	assert_gt(cast_free, 0, "unsilenced, it casts")
+	assert_eq(cast_silenced, 0, "Silenced, it never does")
+
+
+# --- Burn scales by the enemy's Flame multiplier (#246 slice 6) ---
+# Ruling (2026-10-29): Burn's 5% max HP tick (magic.md § Status Effect
+# Reference > 'Burn') scales by get_element_multiplier("flame"): weakness and
+# resistance scale it, immunity deals nothing, absorption heals.
+
+
+## An enemy whose every turn is a pass, so a turn's only effect is its end-of-
+## turn status tick: 1000 max HP, at 500, with [param profile] merged in.
+func _waiting_enemy(profile: Dictionary) -> Arena:
+	var a: Arena = _arena(1000)
+	a.enemy.enemy_data.merge(profile, true)
+	a.enemy.enemy_data["boss_ai"] = {
+		"phases":
+		[{"name": "p", "hp_above": 0.0, "rules": [{"when": {"default": true}, "move": "wait"}]}],
+		"moves": {"wait": {"type": "skip"}},
+	}
+	a.enemy.current_hp = 500
+	return a
+
+
+func _burn_turn(profile: Dictionary) -> int:
+	var a: Arena = _waiting_enemy(profile)
+	a.enemy.apply_status("burn", 3)
+	a.driver.execute("enemy_0", [a.enemy] as Array[Node], false, 0)
+	return a.enemy.current_hp - 500
+
+
+func test_burn_scales_by_the_flame_multiplier() -> void:
+	assert_eq(_burn_turn({}), -50, "neutral: 5% of 1000")
+	assert_eq(_burn_turn({"weaknesses": ["flame"]}), -75, "weak: x1.5")
+	assert_eq(_burn_turn({"resistances": ["flame"]}), -37, "resists: x0.75, floored")
+	assert_eq(_burn_turn({"immunities": ["flame"]}), 0, "immune: nothing")
+	assert_eq(_burn_turn({"absorb": ["flame"]}), 50, "absorbs: healed instead")
+
+
+func test_poison_ignores_the_flame_multiplier() -> void:
+	var a: Arena = _waiting_enemy({"weaknesses": ["flame"]})
+	a.enemy.apply_status("poison", -1)
+	a.driver.execute("enemy_0", [a.enemy] as Array[Node], false, 0)
+	assert_eq(a.enemy.current_hp, 420, "8% of 1000, unscaled")
+
+
+# --- Pallor regenerate on Despair (#178b) ---
+# bestiary/README.md § Pallor: "Regenerates 2% max HP per turn while any party
+# member has Despair status". Reading: it lands at the end of the Pallor
+# enemy's own turn.
+
+
+func _pallor_turn(despair_on: int, kind: String = "pallor") -> int:
+	var a: Arena = _waiting_enemy({"type": kind})
+	if despair_on >= 0:
+		a.state.apply_status(despair_on, "despair", "turns", 4)
+	a.driver.execute("enemy_0", [a.enemy] as Array[Node], false, 0)
+	return a.enemy.current_hp - 500
+
+
+func test_a_pallor_enemy_regenerates_while_the_party_despairs() -> void:
+	assert_eq(_pallor_turn(1), 20, "2% of 1000 while Cael despairs")
+	assert_eq(_pallor_turn(-1), 0, "no Despair, no regen")
+	assert_eq(_pallor_turn(1, "beast"), 0, "only the Pallor feed on it")
+
+
+# --- An enemy's Stop on the party runs in seconds (#246 slice 1) ---
+
+
+func test_an_enemy_inflicted_stop_wears_off_in_seconds_not_turns() -> void:
+	for s: int in range(1, 60):
+		var a: Arena = _arena(30000)
+		seed(s)
+		var r: Dictionary = BattleActions.execute_enemy_status(
+			a.state, a.enemy, 1, 100, "stop", null
+		)
+		if not r.get("inflicted", false):
+			continue
+		for _i: int in range(5):
+			a.state.tick_statuses(1)
+		assert_true(a.state.has_status(1, "stop"), "turn ends do not wear Stop away")
+		a.state.tick_realtime_statuses(1, 2.9)
+		assert_true(a.state.has_status(1, "stop"), "2.9 s is not 3")
+		a.state.tick_realtime_statuses(1, 0.2)
+		assert_false(a.state.has_status(1, "stop"), "gone once 3 s of battle time ran")
+		return
+	fail_test("Stop never landed on Cael")
+
+
+func test_a_fallen_member_s_despair_feeds_no_regen() -> void:
+	# Ruling (2026-10-29): only living members' Despair counts.
+	var a: Arena = _waiting_enemy({"type": "pallor"})
+	a.state.apply_status(1, "despair", "turns", 4)
+	a.state.take_damage(1, 999999)
+	a.driver.execute("enemy_0", [a.enemy] as Array[Node], false, 0)
+	assert_eq(a.enemy.current_hp, 500, "Cael is down; his Despair feeds nothing")
+
+
+# --- Heal numbers show the HP actually gained (#246 review) ---
+
+
+func _heal_numbers(a: Arena) -> Array[int]:
+	var out: Array[int] = []
+	for ev: Array in a.events:
+		if ev[0] == "enemy_0":
+			out.append(int(ev[1]))
+	return out
+
+
+func test_pallor_regen_shows_only_the_hp_it_restored() -> void:
+	var a: Arena = _waiting_enemy({"type": "pallor"})
+	a.state.apply_status(1, "despair", "turns", 4)
+	a.enemy.current_hp = 995
+	a.driver.execute("enemy_0", [a.enemy] as Array[Node], false, 0)
+	assert_eq(_heal_numbers(a), [5] as Array[int], "5 HP to full, so a 5")
+	a.events.clear()
+	a.driver.execute("enemy_0", [a.enemy] as Array[Node], false, 1)
+	assert_eq(_heal_numbers(a), [] as Array[int], "at full HP there is no number")
+
+
+func test_an_absorbed_burn_shows_only_the_hp_it_restored() -> void:
+	var a: Arena = _waiting_enemy({"absorb": ["flame"]})
+	a.enemy.current_hp = 990
+	a.enemy.apply_status("burn", 3)
+	a.driver.execute("enemy_0", [a.enemy] as Array[Node], false, 0)
+	assert_eq(_heal_numbers(a), [10] as Array[int], "10 HP to full, so a 10")
+
+
+# --- An enemy's Paralysis costs it its turn (#246 review) ---
+# combat-formulas.md § Status Effect ATB Interactions: a paralyzed combatant's
+# turn is auto-skipped, announced, and its statuses tick.
+
+
+func test_a_paralyzed_enemy_loses_its_turns_and_says_so() -> void:
+	var a: Arena = _arena(30000)
+	a.enemy.apply_status("paralysis", 3)
+	for t: int in range(3):
+		a.driver.execute("enemy_0", [a.enemy] as Array[Node], false, t)
+	assert_eq(a.events, [], "no blow landed in three paralyzed turns")
+	assert_has(a.messages, "Brute is paralyzed and can't move!", "announced")
+	assert_false(a.enemy.has_status("paralysis"), "the three skipped turns spent it")

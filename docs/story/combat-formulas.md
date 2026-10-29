@@ -496,6 +496,38 @@ Defined per-boss in the bestiary (Gap 1.3). Standard patterns:
 | Pallor bosses | Poison (undead-adjacent) | Despair (thematic irony) |
 | Final boss | Everything except Despair | Despair only (you cannot escape Despair) |
 
+### Statuses on Enemies
+
+How a status changes what an enemy does (#246, #178). Each point is marked as
+a user ruling of 2026-10-29 or as a reading of the canon above.
+
+- **Silence blocks enemy spells** (ruling). A spell is an ability whose `type`
+  is `magic`, or a boss move whose `atk_type` is `magic`: damage, status,
+  healing and MP-drain spells alike (reading, from magic.md's catalog). A
+  legacy boss move with no `atk_type` that hits the whole party with an element
+  resolves as magic and counts too. A Silenced enemy skips spells and takes the
+  next action its AI allows: the next matching rule of a boss script, or
+  another non-spell ability for a regular enemy. With nothing else allowed it
+  makes a basic attack. A spell a boss was already charging when Silence
+  landed still resolves, since Act I telegraphs are not interruptible
+  (reading, [enemy-ability-conventions.md](bestiary/enemy-ability-conventions.md)).
+- **Petrify removes an enemy from combat** (ruling). A petrified enemy cannot be
+  targeted, and the battle is won once every enemy is dead or petrified. A
+  petrified enemy pays its full rewards at victory: XP, gold and its drop roll.
+  A petrified add counts as gone for a boss's summon cap and "adds below"
+  checks, but still holds its place on the field. It does not count toward
+  the enemies' average SPD when the party flees. Cured, it is targetable again
+  and its gauge starts from 0. An untargetable enemy that is not petrified,
+  such as a diving boss, is still in the fight.
+- **Burn is fire** (ruling). An enemy's Burn tick (5% max HP) is scaled by its
+  Flame multiplier (§ Elemental Damage Modifiers): a weakness or resistance
+  scales it, Flame immunity means the tick deals nothing, and Flame absorption
+  heals the enemy by the tick instead. Neither an immune nor an absorbed tick
+  gets its own notice (reading: the docs name none).
+- **Pallor regeneration** (bestiary/README.md § Pallor). The 2% max HP heal
+  lands at the end of the Pallor enemy's own turn (reading), and only a living
+  party member's Despair feeds it (ruling).
+
 ---
 
 ## Combat Resolution Order
@@ -831,6 +863,7 @@ Stacking example: Haste + Despair = 1.5 × 0.75 = 1.125 (net +12.5%).
 - **Berserk is a tradeoff.** Faster (+25%) and stronger (+50% basic attack) but uncontrollable. Almost a buff on physical fighters.
 - **A paralyzed member's turn is auto-skipped.** Paralysis fills the gauge but denies the action, so when a paralyzed member's gauge fills the battle resolves that turn without a command prompt: it announces the skip by name (the "[Character] is paralyzed and can't move!" line in [battle-dialogue.md](script/battle-dialogue.md) § Status Effect Notifications), ticks that member's turn-based statuses (so the duration counts down and any Poison/Burn damage lands), resets the gauge, and immediately re-checks the battle's end conditions — a DoT tick that kills the last standing member ends the battle on that turn, not on the next one. The skip consumes the turn slot exactly as a real action does, so no other combatant resolves alongside it; the announcement then holds the message window for its guaranteed readable minimum, which is what keeps the *next* frame's enemy action from replacing it unread (see [ui-design.md](ui-design.md) § 2.5).
 - **A gauge-frozen member takes no turn at all.** Stop, Sleep and Petrify all freeze the gauge, and the battle passes a frozen member over in silence: no announcement, no status tick, and — the point of the rule — no gauge reset, so a gauge that was already full when the status landed is never spent. The skip never writes to the gauge, so whatever each status is holding survives it: Sleep and Stop keep the value they froze at and resume from it (see "Frozen gauge retains value" above), while Petrify is held at 0 and recovery starts fresh on cure (see "Petrify resets to 0" above). Other combatants act normally around them. Only Paralysis, whose gauge keeps filling, has a turn to consume; the auto-skip above is specific to it.
+- **Enemies follow the same two rules** (reading, #246). A gauge-frozen enemy (Stop, Sleep, Petrify) is passed over with its gauge untouched, and a paralyzed enemy's turn is auto-skipped with the same announcement and status tick.
 
 ### Turn Order Resolution
 

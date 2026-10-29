@@ -7,12 +7,29 @@ extends RefCounted
 ## boss_ai.gd (GAP-009).
 
 
+## Whether an enemy move resolves on the MAG formula: atk_type "magic", or a
+## party-wide move that carries an element (the legacy boss AoE shape, routed to
+## magic by element alone). BattleEnemyTurn routes every offensive move by this.
+static func resolves_as_magic(atk_type: String, target: String, element: String) -> bool:
+	return atk_type == "magic" or (target == "all" and not element.is_empty())
+
+
+## Whether the ability dict [param ab] (enemy data schema) is a spell, which
+## Silence ("Cannot cast spells", magic.md § Status Effect Reference) blocks:
+## any ability whose `type` is "magic", damage, status, healing or drain alike.
+static func is_spell_ability(ab: Dictionary) -> bool:
+	return str(ab.get("type", "attack")) == "magic"
+
+
 ## Select an action for a regular enemy.
 ## Returns: {type: "attack"|"ability"|"defend", target_slot: int, ability_id: String}
 ## @param party_members Array[Dictionary] — party member data dicts (may be null for empty slots).
 ## @param party_rows Array[String] — "front" or "back" per slot.
+## @param silenced — the enemy is Silenced: spells are off the table, so the
+## ability roll picks among its other abilities, and an enemy whose only
+## abilities are spells makes a basic attack instead (ruling of 2026-10-29).
 static func select_action(
-	enemy_data: Dictionary, party_members: Array, party_rows: Array
+	enemy_data: Dictionary, party_members: Array, party_rows: Array, silenced: bool = false
 ) -> Dictionary:
 	var living: Array[int] = []
 	for i: int in range(party_members.size()):
@@ -37,9 +54,18 @@ static func select_action(
 		var abilities: Array = enemy_data.get("abilities", []).filter(
 			func(a: Dictionary) -> bool: return not a.get("aoe_on_death", false)
 		)
-		if not abilities.is_empty():
-			var ab: Dictionary = abilities[randi() % abilities.size()]
+		var castable: Array = abilities
+		if silenced:
+			castable = abilities.filter(func(a: Dictionary) -> bool: return not is_spell_ability(a))
+		if not castable.is_empty():
+			var ab: Dictionary = castable[randi() % castable.size()]
 			return _build_ability_action(ab, living, party_rows)
+		if not abilities.is_empty():  # Silenced, with only spells: a basic attack
+			return {
+				"type": "attack",
+				"target_slot": _pick_physical_target(living, party_rows),
+				"ability_id": ""
+			}
 
 	# 10% defend / do nothing
 	return {"type": "defend", "target_slot": -1, "ability_id": ""}

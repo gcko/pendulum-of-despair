@@ -10,6 +10,10 @@ const BattleActions = preload("res://scripts/combat/battle_actions.gd")
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 const ENEMY_SCENE: PackedScene = preload("res://scenes/entities/enemy.tscn")
 
+## A Pallor enemy's regen per turn while any party member has Despair, as a
+## fraction of its max HP (bestiary/README.md § Pallor).
+const PALLOR_REGEN_PCT: float = 0.02
+
 ## References injected by BattleManager
 var _manager: Node2D
 var _state: Node
@@ -40,6 +44,16 @@ func execute(enemy_id: String, enemies: Array[Node], is_boss: bool, turn_counter
 	var enemy: Node = enemies[idx]
 	if not enemy.is_alive:
 		return turn_counter
+	var blocked_by: String = StatusEffects.blocking_status(enemy.active_statuses)
+	if blocked_by != "":
+		# Paralysis auto-skips the turn, out loud, and its statuses tick
+		# (combat-formulas.md § Status Effect ATB Interactions). A gauge-frozen
+		# enemy (Stop/Sleep/Petrify) is passed over before it gets here.
+		if StatusEffects.atb_effect(blocked_by) != "frozen":
+			var adj: String = StatusEffects.display_adjective(blocked_by)
+			_manager.message.emit("%s is %s and can't move!" % [enemy.get_display_name(), adj])
+			_tick_enemy_statuses(enemy, idx)
+		return turn_counter
 	var pm: Array = range(4).map(func(i: int) -> Dictionary: return _state.get_member(i))
 	var pr: Array = pm.map(
 		func(m: Dictionary) -> String:
@@ -60,7 +74,7 @@ func _select_action(
 ) -> Dictionary:
 	if BossAI.has_script(enemy.enemy_data):
 		return BossAI.select_action(enemy, turn_counter, _state, enemies)
-	return BattleAI.select_action(enemy.enemy_data, pm, pr)
+	return BattleAI.select_action(enemy.enemy_data, pm, pr, enemy.has_status("silence"))
 
 
 func _apply_action(action: Dictionary, enemy: Node, enemies: Array[Node], idx: int) -> void:
@@ -94,6 +108,9 @@ func _apply_action(action: Dictionary, enemy: Node, enemies: Array[Node], idx: i
 
 ## End-of-turn status processing for an enemy: apply HP ticks (Poison/Burn)
 ## then decrement durations. Poison/Burn = floor(max_hp * tick_pct), min 1.
+## Burn is fire: it scales by the enemy's Flame multiplier, so a weakness or
+## resistance scales it, immunity voids it and absorption heals (ruling of
+## 2026-10-29, #246). A Pallor enemy then regenerates while the party despairs.
 func _tick_enemy_statuses(enemy: Node, idx: int) -> void:
 	var max_hp: int = enemy.enemy_data.get("hp", 0)
 	var eid: String = "enemy_%d" % idx
@@ -102,6 +119,14 @@ func _tick_enemy_statuses(enemy: Node, idx: int) -> void:
 		var pct: float = StatusEffects.tick_pct(sname)
 		if pct > 0.0 and enemy.is_alive:
 			var dmg: int = maxi(1, int(max_hp * pct))
+			if sname == "burn":
+				var mult: float = enemy.get_element_multiplier("flame")
+				if mult < 0.0:
+					_heal_enemy(enemy, eid, int(dmg * -mult))
+					continue
+				if mult == 0.0:
+					continue  # immune to fire: the burn does nothing
+				dmg = maxi(1, int(dmg * mult))
 			enemy.take_damage(dmg, false)  # DoT must not wake Sleep/Confusion
 			_manager.damage_dealt.emit(eid, dmg, "burn" if sname == "burn" else "poison")
 			# A DoT kill must clean up like any other kill, or the dead enemy's
@@ -109,8 +134,28 @@ func _tick_enemy_statuses(enemy: Node, idx: int) -> void:
 			if not enemy.is_alive:
 				_manager.combatant_died.emit(eid)
 				_atb.remove_combatant(eid)
+	if enemy.is_alive and enemy.get_type() == "pallor" and _party_despairs():
+		_heal_enemy(enemy, eid, int(max_hp * PALLOR_REGEN_PCT))
 	enemy.tick_statuses()
 	enemy.tick_buffs()
+
+
+## Heal [param enemy] by up to [param amount], showing the HP it actually
+## gained, and nothing when it gained none (already at full).
+func _heal_enemy(enemy: Node, eid: String, amount: int) -> void:
+	var before: int = enemy.current_hp
+	enemy.heal(amount)
+	if enemy.current_hp > before:
+		_manager.damage_dealt.emit(eid, enemy.current_hp - before, "heal")
+
+
+## Whether a living party member has Despair, which feeds a Pallor enemy's
+## regen (a fallen member's does not: ruling of 2026-10-29).
+func _party_despairs() -> bool:
+	for i: int in range(4):
+		if _state.get_member(i).get("is_alive", false) and _state.has_status(i, "despair"):
+			return true
+	return false
 
 
 ## Resolve a self-targeted ability (GAP-024): apply its stat buff. scope "pack"
@@ -142,10 +187,7 @@ func _do_spawn(action: Dictionary, enemy: Node, enemies: Array[Node], idx: int) 
 	# Enforce the move's add cap (bosses.md "max N active"): spawn at most
 	# cap - current living adds, so a "< cap" trigger can never overshoot.
 	var cap: int = int(action.get("cap", 99))
-	var living_adds: int = 0
-	for e: Node in enemies:
-		if e != enemy and e.is_alive:
-			living_adds += 1
+	var living_adds: int = BossAI.count_adds(enemies, enemy)  # a petrified add is not one
 	var slots: int = maxi(0, cap - living_adds)
 	var act: String = enemy.enemy_act if not enemy.enemy_act.is_empty() else "act_i"
 	var spawned: int = 0
@@ -255,7 +297,7 @@ func _resolve_attack_or_ability(action: Dictionary, enemy: Node, idx: int) -> vo
 		# Magic abilities (atk_type "magic") use the MAG formula; everything else
 		# (basic attacks, physical abilities, legacy boss abilities) is physical.
 		# A plain attack is execute_enemy_physical_ability(mult 1.0, hits 1).
-		if action.get("atk_type", "attack") == "magic":
+		if BattleAI.resolves_as_magic(str(action.get("atk_type", "attack")), "single", elem):
 			result = BattleActions.execute_enemy_magic(
 				_state, enemy, tgt, elem, int(action.get("power", 0))
 			)
@@ -311,14 +353,12 @@ func _emit_hit(slot: int, result: Dictionary, idx: int) -> void:
 			_atb.remove_combatant(eid)
 
 
-## Resolve one offensive AoE hit against a party slot. Magic when atk_type is
-## "magic" OR the action carries an element (the latter preserves legacy boss
-## AoEs — ember_pulse/frost_wave — which route by element with no atk_type);
-## otherwise physical, with ability_mult + multi-hit support. The single-target
-## branch deliberately keeps its atk_type-only routing so legacy water_jet stays
-## physical (boss AI is GAP-009 scope).
+## Resolve one offensive AoE hit against a party slot. Magic when
+## BattleAI.resolves_as_magic says so: atk_type "magic" OR the action carries an
+## element (the legacy boss AoE shape, which routes by element with no
+## atk_type); otherwise physical, with ability_mult + multi-hit support.
 func _resolve_offensive(action: Dictionary, enemy: Node, slot: int, elem: String) -> Dictionary:
-	if action.get("atk_type", "") == "magic" or not elem.is_empty():
+	if BattleAI.resolves_as_magic(str(action.get("atk_type", "")), "all", elem):
 		return BattleActions.execute_enemy_magic(
 			_state, enemy, slot, elem, int(action.get("power", 0))
 		)

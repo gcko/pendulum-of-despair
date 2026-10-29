@@ -312,7 +312,7 @@ func test_petrify_holds_an_enemy_gauge_at_zero_until_it_is_cured() -> void:
 	# gauge as "Frozen (0)" for both sides, so a petrified enemy banks no
 	# progress toward a turn however long it stands there, and a cured one
 	# starts over rather than acting the instant the stone breaks.
-	var battle: Node = _boot(["ley_vermin"])
+	var battle: Node = _boot(["ley_vermin", "ley_vermin"])
 	battle.set_process(false)
 	var atb: Node = battle.get_atb()
 	var enemy: Node = battle.get_enemies()[0]

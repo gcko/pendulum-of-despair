@@ -62,6 +62,7 @@ func _ready() -> void:
 	_ui.results_dismissed.connect(func() -> void: exit_battle("victory"))
 	_ui.submenu_state_changed.connect(func(o: bool) -> void: _atb.set_submenu_open(o))
 	_state.member_died.connect(_on_party_member_died)
+	_state.member_revived.connect(_on_party_member_revived)
 	_state.status_applied.connect(_on_party_status_applied)
 	var data: Dictionary = GameManager.transition_data
 	if data.is_empty():
@@ -134,6 +135,9 @@ func _process(delta: float) -> void:
 	var elapsed: float = _atb.tick(delta)
 	for i: int in range(4):
 		_state.tick_realtime_statuses(i, elapsed)
+	for e: Node in _enemies:
+		if e.is_alive:
+			e.tick_realtime_statuses(elapsed)
 	_check_end_conditions()
 	if _battle_resolved:
 		return
@@ -144,7 +148,7 @@ func _process(delta: float) -> void:
 		if id.begins_with("party_") and _awaiting_input_for == "":
 			var slot: int = id.replace("party_", "").to_int()
 			var blocked_by: String = _incapacitating_status(slot)
-			# Sleep/Petrify freeze the gauge, and a gauge-frozen member takes
+			# Stop/Sleep/Petrify freeze the gauge, and a gauge-frozen member takes
 			# no turn at all (combat-formulas.md § Status Effect ATB
 			# Interactions): no announcement, no tick, and above all no reset
 			# — the skip never writes to the gauge, so whatever the status is
@@ -172,6 +176,10 @@ func _process(delta: float) -> void:
 			break
 		# Fix: skip enemy processing while a party member is awaiting input
 		elif id.begins_with("enemy_") and not enemy_acted and _awaiting_input_for == "":
+			# A gauge-frozen enemy (Stop/Sleep/Petrify) is passed over like a
+			# frozen member: no turn, and its full gauge is kept.
+			if _enemy_frozen(id):
+				continue
 			_turn_counter = _enemy_turn.execute(id, _enemies, _is_boss, _turn_counter)
 			_atb.reset_gauge(id)
 			_check_end_conditions()
@@ -245,6 +253,14 @@ func _targetable_enemy_count() -> int:
 	)
 
 
+## Whether the enemy behind [param id] holds a gauge-freezing status.
+func _enemy_frozen(id: String) -> bool:
+	var idx: int = id.replace("enemy_", "").to_int()
+	if idx < 0 or idx >= _enemies.size():
+		return false
+	return StatusEffects.atb_state(_enemies[idx].active_statuses)["frozen"]
+
+
 ## Name of the status stopping this member from acting — Paralysis, Sleep or
 ## Petrify — or "" when it can act (#248). The name matters: the caller treats a
 ## gauge-freezing status differently from Paralysis, and the announcement reads
@@ -284,6 +300,12 @@ func _on_party_member_died(slot: int) -> void:
 	if _awaiting_input_for == "party_%d" % slot:
 		_awaiting_input_for = ""
 		_atb.set_command_menu_open(false)
+
+
+## A revived member rejoins the ATB, which their fall removed them from, with an
+## empty gauge (the design docs give a revive no head start).
+func _on_party_member_revived(slot: int) -> void:
+	_atb.add_combatant("party_%d" % slot, _state.get_effective_stat(slot, "spd"), false)
 
 
 ## AoE-on-death hook (GAP-024). When an enemy with an aoe_on_death ability dies
@@ -368,7 +390,10 @@ func _on_enemy_status_applied(status_name: String, _duration: int, enemy: Node) 
 func _check_end_conditions() -> void:
 	if _battle_resolved:
 		return
-	if _enemies.all(func(e: Node) -> bool: return not e.is_alive):
+	# Petrify removes an enemy from combat, so a field of the dead and the
+	# petrified is won; the loop below pays every enemy's rewards in full,
+	# statues included (ruling of 2026-10-29, #246).
+	if _enemies.all(func(e: Node) -> bool: return not e.is_alive or e.is_removed_from_combat()):
 		_battle_resolved = true
 		_awaiting_input_for = ""
 		_earned_drops = []
