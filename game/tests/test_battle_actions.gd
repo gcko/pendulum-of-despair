@@ -121,3 +121,43 @@ func test_every_status_spell_has_a_status_field() -> void:
 					StatusEffects.is_known(st) or st in DEFERRED_STATUSES,
 					"status spell %s declares unknown status '%s'" % [sid, st]
 				)
+
+
+# --- Enemy physical attacks: a miss reads as a miss (#500) ---
+
+
+## The battle UI prints "Miss" for a "miss" result and the damage figure for
+## every other type, so an attack that lands nothing must report "miss" or the
+## party row shows a 0 popup. SPD 1 against SPD 255 lands roughly one hit in
+## seven, so across these seeds some two-hit attacks miss twice and some land.
+func test_an_enemy_attack_that_misses_every_hit_reports_a_miss() -> void:
+	var whiffs: int = 0
+	var landings: int = 0
+	for s: int in range(40):
+		seed(s)
+		var state: Node = BattleState.new()
+		add_child_autofree(state)
+		state.add_member(
+			0,
+			{
+				"character_id": "tester",
+				"base_stats": {"def": 5, "spd": 255},
+				"max_hp": 99999,
+				"current_hp": 99999
+			}
+		)
+		var enemy: Enemy = ENEMY_SCENE.instantiate()
+		add_child_autofree(enemy)
+		enemy.enemy_data = {"atk": 40, "spd": 1, "type": "humanoid", "hp": 100}
+		enemy.current_hp = 100
+		enemy.is_alive = true
+		var r: Dictionary = BattleActions.execute_enemy_physical_ability(state, enemy, 0, 1.0, 2)
+		if int(r.get("hits_landed", -1)) == 0:
+			whiffs += 1
+			assert_eq(r.get("type", ""), "miss", "seed %d: no hit landed, so it is a Miss" % s)
+			assert_eq(int(r.get("damage", -1)), 0, "seed %d: a miss deals nothing" % s)
+		else:
+			landings += 1
+			assert_has(["physical", "critical"], r.get("type", ""), "seed %d: a hit landed" % s)
+	assert_gt(whiffs, 0, "some seed must miss with both hits, or the miss rule went unchecked")
+	assert_gt(landings, 0, "some seed must land a hit, or the hit rule went unchecked")
