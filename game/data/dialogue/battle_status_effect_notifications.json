@@ -209,6 +209,17 @@
       "animations": null,
       "choice": null,
       "sfx": null
+    },
+    {
+      "id": "battle_status_effect_notifications_020",
+      "speaker": "",
+      "lines": [
+        "[Character] is Hastened!"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
     }
   ]
 }

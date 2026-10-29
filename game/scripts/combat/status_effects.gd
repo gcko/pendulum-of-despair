@@ -70,6 +70,9 @@ const RULES: Dictionary = {
 	# counted only while battle time runs (combat-formulas.md § Status Effect ATB
 	# Interactions; magic.md § Stillwatch). Its duration is SECONDS, not turns.
 	"stop": {"atb": "frozen", "duration": 3, "realtime": true},
+	# Haste (Quickstep): ATB fill x1.5 for 5 turns (combat-formulas.md
+	# § Fill Rate Modifiers + § Status Effect ATB Interactions). Party-side buff (#246).
+	"haste": {"atb": "mod", "atb_mult": 1.5, "duration": 5},
 }
 
 ## Player-facing adjective for an ACTION-DENIAL announcement ("paralysis" ->
@@ -108,6 +111,7 @@ const APPLICATION_NOTICES: Dictionary = {
 	"confusion": "%s is Confused!",
 	"blind": "%s is Blinded!",
 	"stop": "%s is Stopped!",
+	"haste": "%s is Hastened!",
 }
 
 ## The line for a combatant a hit has woken, "[Character] woke up!" from

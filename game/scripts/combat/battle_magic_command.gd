@@ -9,6 +9,7 @@ extends RefCounted
 const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
 const BattleActions = preload("res://scripts/combat/battle_actions.gd")
 const SpellHelpers = preload("res://scripts/ui/spell_helpers.gd")
+const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 
 ## Weave Gauge earned by the caster for a spell that landed, and the share
 ## Maren banks when somebody else casts
@@ -100,6 +101,10 @@ func _resolve(
 		return _for_each_targetable_enemy(
 			func(i: int) -> bool: return _magic_on_enemy(slot, mag, power, element, rider, i)
 		)
+	if spell.get("category", "") == "buff" and target_type == "single_ally":
+		var buff_status: String = str(spell.get("status", ""))
+		if StatusEffects.is_known(buff_status):
+			return _status_on_ally(command.get("target", 0), buff_status, spell.get("duration"))
 	if target_type in ["single_ally", "all_allies"]:
 		return _heal_allies(target_type, command, DamageCalc.calculate_healing(mag, power))
 	return false
@@ -136,6 +141,16 @@ func _heal_allies(target_type: String, command: Dictionary, heal_amt: int) -> bo
 				_battle.damage_dealt.emit("party_%d" % i, healed_amt, "heal")
 				had_effect = true
 	return had_effect
+
+
+## Land a buff spell's status on party slot [param slot] (Quickstep's Haste,
+## #246) for the spell's own duration, else the status's canonical one. The
+## battle announces it from BattleState.status_applied. Returns true: the
+## target was validated alive before any MP was spent.
+func _status_on_ally(slot: int, status: String, duration: Variant) -> bool:
+	var turns: int = StatusEffects.resolve_duration(status, duration)
+	_battle.get_battle_state().apply_status(slot, status, "turns", float(turns))
+	return true
 
 
 ## Resolve a damage spell against one enemy, then roll its status [param rider]

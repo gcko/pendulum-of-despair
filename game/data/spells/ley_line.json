@@ -610,7 +610,8 @@
 					"character": "cael",
 					"level": 14
 				}
-			]
+			],
+			"status": "haste"
 		},
 		{
 			"id": "leymirror",
