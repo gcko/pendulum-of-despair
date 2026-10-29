@@ -121,7 +121,7 @@ func test_enemy_status_unknown_is_no_effect() -> void:
 	# 'stop' is deferred (not in the registry) -> graceful no-op, never inflicted.
 	var state: Node = _make_party(0, 0)
 	var enemy: Enemy = _make_enemy("marsh_serpent")
-	var r: Dictionary = BattleActions.execute_enemy_status(state, enemy, 0, 100, "stop", null)
+	var r: Dictionary = BattleActions.execute_enemy_status(state, enemy, 0, 100, "nonsense", null)
 	assert_eq(r.get("type", ""), "no_effect")
 	assert_false(state.has_status(0, "stop"))
 

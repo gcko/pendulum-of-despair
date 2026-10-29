@@ -6,6 +6,7 @@ extends GutTest
 ## Notifications), from a death burst too; and Edren's share of a death burst
 ## shows its own damage number.
 
+const BattleActions = preload("res://scripts/combat/battle_actions.gd")
 const BattleState = preload("res://scripts/combat/battle_state.gd")
 const Bulwark = preload("res://scripts/combat/battle_bulwark.gd")
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
@@ -364,3 +365,26 @@ func test_a_pallor_enemy_regenerates_while_the_party_despairs() -> void:
 	assert_eq(_pallor_turn(1), 20, "2% of 1000 while Cael despairs")
 	assert_eq(_pallor_turn(-1), 0, "no Despair, no regen")
 	assert_eq(_pallor_turn(1, "beast"), 0, "only the Pallor feed on it")
+
+
+# --- An enemy's Stop on the party runs in seconds (#246 slice 1) ---
+
+
+func test_an_enemy_inflicted_stop_wears_off_in_seconds_not_turns() -> void:
+	for s: int in range(1, 60):
+		var a: Arena = _arena(30000)
+		seed(s)
+		var r: Dictionary = BattleActions.execute_enemy_status(
+			a.state, a.enemy, 1, 100, "stop", null
+		)
+		if not r.get("inflicted", false):
+			continue
+		for _i: int in range(5):
+			a.state.tick_statuses(1)
+		assert_true(a.state.has_status(1, "stop"), "turn ends do not wear Stop away")
+		a.state.tick_realtime_statuses(1, 2.9)
+		assert_true(a.state.has_status(1, "stop"), "2.9 s is not 3")
+		a.state.tick_realtime_statuses(1, 0.2)
+		assert_false(a.state.has_status(1, "stop"), "gone once 3 s of battle time ran")
+		return
+	fail_test("Stop never landed on Cael")
