@@ -161,13 +161,53 @@ func _do_spawn(action: Dictionary, enemy: Node, enemies: Array[Node], idx: int) 
 		_atb.add_combatant(eid, new_enemy.get_stats().get("spd", 10), true)
 		new_enemy.died.connect(_manager._on_enemy_died.bind(new_enemy))
 		new_enemy.status_applied.connect(_manager._on_enemy_status_applied.bind(new_enemy))
+		announce_wakes(new_enemy)
 		spawned += 1
 	if spawned > 0:
 		_manager.message.emit("Corrupted Spawns emerge from the depths!")
 	_tick_enemy_statuses(enemy, idx)
 
 
-func _do_attack_or_ability(action: Dictionary, enemy: Node, _idx: int) -> void:
+func _do_attack_or_ability(action: Dictionary, enemy: Node, idx: int) -> void:
+	var asleep: Array[int] = sleeping_slots(_state)
+	_resolve_attack_or_ability(action, enemy, idx)
+	# A hit cures Sleep (#435); say so for each member this action woke.
+	for line: String in wake_lines(_state, asleep):
+		_manager.message.emit(line)
+
+
+## The party slots asleep right now, for wake_lines after a hit lands.
+static func sleeping_slots(state: Node) -> Array[int]:
+	var out: Array[int] = []
+	for i: int in range(4):
+		if state.has_status(i, "sleep"):
+			out.append(i)
+	return out
+
+
+## The "[Character] woke up!" line for each member of [param before] (from
+## sleeping_slots) that a hit has since woken and left standing.
+static func wake_lines(state: Node, before: Array[int]) -> Array[String]:
+	var out: Array[String] = []
+	for i: int in before:
+		var m: Dictionary = state.get_member(i)
+		if not state.has_status(i, "sleep") and m.get("is_alive", false):
+			out.append(StatusEffects.wake_notice(m.get("character_data", {}).get("name", "???")))
+	return out
+
+
+## Announce [param enemy] waking (a hit cured its Sleep, as enemy.take_damage
+## does) with the same canonical line the party uses. Wired to each enemy's
+## status_removed by BattleManager and by _do_spawn.
+func announce_wakes(enemy: Node) -> void:
+	enemy.status_removed.connect(
+		func(status_name: String) -> void:
+			if status_name == "sleep" and enemy.is_alive:
+				_manager.message.emit(StatusEffects.wake_notice(enemy.get_display_name()))
+	)
+
+
+func _resolve_attack_or_ability(action: Dictionary, enemy: Node, idx: int) -> void:
 	var atype: String = action.get("type", "")
 	var elem: String = action.get("element", "")
 	if action.get("target", "") == "all":
@@ -186,19 +226,13 @@ func _do_attack_or_ability(action: Dictionary, enemy: Node, _idx: int) -> void:
 		)
 		var status_name: String = action.get("status", "")
 		for i: int in range(4):
+			if not enemy.is_alive:  # a Riposte felled it: the rest of the AoE never lands
+				break
 			var m: Dictionary = _state.get_member(i)
 			if m.is_empty() or not m.get("is_alive", false):
 				continue
 			var result: Dictionary = _resolve_offensive(action, enemy, i, elem)
-			(
-				_manager
-				. damage_dealt
-				. emit(
-					"party_%d" % i,
-					result.get("damage", 0),
-					result.get("type", "miss"),
-				)
-			)
+			_emit_hit(i, result, idx)
 			if not status_name.is_empty() and result.get("hit", false):
 				(
 					BattleActions
@@ -236,9 +270,7 @@ func _do_attack_or_ability(action: Dictionary, enemy: Node, _idx: int) -> void:
 					int(action.get("hits", 1)),
 				)
 			)
-		_manager.damage_dealt.emit(
-			"party_%d" % tgt, result.get("damage", 0), result.get("type", "miss")
-		)
+		_emit_hit(tgt, result, idx)
 		# Offensive status infliction on a landed hit (GAP-024, Venom Spit -> Poison).
 		var status_name: String = action.get("status", "")
 		if not status_name.is_empty() and result.get("hit", false):
@@ -256,6 +288,27 @@ func _do_attack_or_ability(action: Dictionary, enemy: Node, _idx: int) -> void:
 	# Gain Weave Gauge for Maren AFTER action resolves (not before target validation)
 	if atype == "ability":
 		_state.gain_weave_gauge_for_maren(15)
+
+
+## Show the damage [param result] dealt to [param slot], the share Edren
+## absorbed from it under a Bulwark stance on Edren's own slot, and any Riposte
+## he answered with on the attacker, enemy [param idx] — whose fall it reports.
+func _emit_hit(slot: int, result: Dictionary, idx: int) -> void:
+	_manager.damage_dealt.emit(
+		"party_%d" % slot, result.get("damage", 0), result.get("type", "miss")
+	)
+	var absorbed: Dictionary = result.get("absorbed", {})
+	if not absorbed.is_empty():
+		_manager.damage_dealt.emit(
+			"party_%d" % int(absorbed["slot"]), int(absorbed["damage"]), result.get("type", "miss")
+		)
+	var eid: String = "enemy_%d" % idx
+	for counter: Dictionary in result.get("ripostes", []):
+		_state.add_threat(int(counter["slot"]), int(counter.get("damage", 0)))  # GAP-009
+		_manager.damage_dealt.emit(eid, int(counter.get("damage", 0)), counter.get("type", "miss"))
+		if counter.get("killed", false):
+			_manager.combatant_died.emit(eid)
+			_atb.remove_combatant(eid)
 
 
 ## Resolve one offensive AoE hit against a party slot. Magic when atk_type is

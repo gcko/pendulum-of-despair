@@ -7,6 +7,7 @@ extends RefCounted
 
 const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
 const BattleActions = preload("res://scripts/combat/battle_actions.gd")
+const Bulwark = preload("res://scripts/combat/battle_bulwark.gd")
 
 ## Damage multiplier a defending member takes until their next action.
 const DEFEND_DAMAGE_MULT: float = 0.5
@@ -18,8 +19,11 @@ func _init(battle: Node) -> void:
 	_battle = battle
 
 
-## Swing at the chosen enemy. Returns false when the target is gone, so the
-## caller re-opens the command menu instead of consuming the turn.
+## Swing at the chosen enemy — twice under Edren's Oathkeeper, each swing a
+## plain basic attack with its own rolls (abilities.md § Edren — Bulwark), the
+## second only if the first left the target standing. Returns false when the
+## target is gone, so the caller re-opens the command menu instead of consuming
+## the turn.
 func do_attack(actor_id: String, command: Dictionary) -> bool:
 	var state: Node = _battle.get_battle_state()
 	var enemies: Array[Node] = _battle.get_enemies()
@@ -30,16 +34,19 @@ func do_attack(actor_id: String, command: Dictionary) -> bool:
 		return false
 	var member: Dictionary = state.get_member(slot)
 	_battle.message.emit("%s attacks!" % member.get("character_data", {}).get("name", "???"))
-	var result: Dictionary = BattleActions.execute_party_attack(
-		state, slot, enemies[target_idx], target_idx
-	)
-	state.add_threat(slot, int(result.get("damage", 0)))  # GAP-009 highest-threat
-	_battle.damage_dealt.emit(
-		"enemy_%d" % target_idx, result.get("damage", 0), result.get("type", "miss")
-	)
-	if result.get("killed", false):
-		_battle.combatant_died.emit("enemy_%d" % target_idx)
-		_battle.get_atb().remove_combatant("enemy_%d" % target_idx)
+	for _swing: int in range(Bulwark.attack_hits(member)):
+		if not enemies[target_idx].is_alive:
+			break
+		var result: Dictionary = BattleActions.execute_party_attack(
+			state, slot, enemies[target_idx], target_idx
+		)
+		state.add_threat(slot, int(result.get("damage", 0)))  # GAP-009 highest-threat
+		_battle.damage_dealt.emit(
+			"enemy_%d" % target_idx, result.get("damage", 0), result.get("type", "miss")
+		)
+		if result.get("killed", false):
+			_battle.combatant_died.emit("enemy_%d" % target_idx)
+			_battle.get_atb().remove_combatant("enemy_%d" % target_idx)
 	return true
 
 

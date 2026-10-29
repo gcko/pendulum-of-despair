@@ -176,9 +176,9 @@ final_damage = clamp(floor(damage_after_element × reduction_product), 1, 14999)
 > Edren takes `damage × absorption%`. For the `reduction_product`
 > calculation, absorption sources reduce the target's incoming damage
 > identically to flat reduction. The difference is that Edren receives
-> the absorbed portion as damage to himself (subject to his own DEF
-> and any reduction on him). Oathkeeper (+50% absorption on Bulwark
-> stances) increases Ironwall to 75% and Rampart to 45%.
+> the absorbed portion as damage to himself, as the examples below give
+> it: `damage × absorption%`, which his DEF does not reduce. Oathkeeper
+> (+50% absorption on Bulwark stances) increases Ironwall to 75% and Rampart to 45%.
 
 ### Stacking Examples
 
@@ -384,10 +384,10 @@ Edren wins on raw output; Sable's advantage is speed (highest SPD) and crit rate
 
 These abilities use their own formulas, not the standard physical or magic formula:
 
-- **Shatter Guard:** Damage = total absorbed damage since stance began, capped at 2× Edren's max HP. See [abilities.md](abilities.md).
+- **Shatter Guard:** Fixed damage = the total Edren absorbed since he last entered a stance, with no hit roll, variance, DEF or Spirit halving; at least one basic attack against each enemy (the physical formula at `ability_mult` 1.0), at most 2× his max HP and the 14,999 cap. See [abilities.md](abilities.md) § Edren — Bulwark.
 - **Annulment:** Damage = (MAG × 2) + (effects_removed × 15), as magic damage. 100 WG cost.
 - **Greyveil:** Non-elemental magic damage that ignores MDEF. Spell power 28 (Duskbreaker 56 at Favor 3) — derived in [abilities.md](abilities.md) § Damage Magnitudes. It is on this list because forcing `target.MDEF` to 0 changes a term of the magic formula; supplying a different spell power to the unchanged formula does not (see Ambush Protocol below).
-- **Shattered Vanguard** (combo): Shatter Guard's absorbed-damage total × 1.5, after Misdirect funnels the enemy group into Edren. **Whether Shatter Guard's 2× max-HP cap applies before or after the ×1.5 is undecided** — before yields a 3× max-HP ceiling, after keeps 2× — and no document states it. It is left open here rather than settled, because it is a balance decision worth a 50% swing in the combo's ceiling and belongs to the pass that implements Shatter Guard in the battle layer.
+- **Shattered Vanguard** (combo): Shatter Guard's absorbed-damage total × 1.5, after Misdirect funnels the enemy group into Edren. **Whether Shatter Guard's 2× max-HP cap applies before or after the ×1.5 is undecided** — before yields a 3× max-HP ceiling, after keeps 2× — and no document states it. It is left open here rather than settled, because it is a balance decision worth a 50% swing in the combo's ceiling, and it is tracked with the combos on [#176](https://github.com/gcko/pendulum-of-despair/issues/176).
 
 Ambush Protocol is *not* on this list: `Arc Trap × 2` resolves to spell power 60 through the standard magic formula with no term altered, so it needs no formula of its own. The `caster.mag` that formula reads is **Lira's** — the trap is hers, and Sable supplies the guaranteed trigger and the lost enemy turn rather than a damage term ([abilities.md](abilities.md) § Damage Magnitudes, rule 5; [#360](https://github.com/gcko/pendulum-of-despair/issues/360)). See § Physical Ability Multiplier Tiers, "What this table does not cover".
 
