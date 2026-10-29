@@ -22,7 +22,11 @@ battle_manager routes 'ability' to _do_attack (basic attack). The ability submen
 
 ### Slice 158a (Ability submenu, dispatcher, Cael's Rally)
 
-The Ability command now opens a sub-menu of the acting character's known abilities (passives excluded) with their cost, graying out what cannot be paid or is not built yet. `BattleAbilityCommand` is the dispatcher: it checks an ability can be issued, pays its cost by `cost_type`, and hands it to the resolver for its `command`. Cael's Rally and, since slice 158b, Edren's Bulwark have resolvers, and the `mp` and `ap` cost types are paid; Forgewright, Tricks, Spiritcall and Arcanum (slices 158c-f) are listed disabled and refused. Hold the Line, Press Forward, Second Wind and Unbreakable are built to abilities.md § Cael — Rally: every living ally gets the full turns and counts them on its own turns, one Rally is active at a time, and it ends when Cael faints or is Silenced or put to Sleep. A Rally cannot be issued while Cael is Silenced. `BattleRally` holds those in-force rules behind `BattleState`'s ability hooks, which slices b-f extend. Vanguard Strike is a standalone command rather than a Rally and is not built yet. Slice 158b builds every Bulwark ability to abilities.md § Edren — Bulwark, with `BattleBulwark` behind the same hooks: Ironwall and Rampart redirect their share of a hit to Edren, he earns AP for absorbed hits (one more for a heavy one) and loses 1 on a quiet turn, and Riposte, Aegis Veil, Shatter Guard, Steadfast Resolve and Oathkeeper spend it.
+The Ability command now opens a sub-menu of the acting character's known abilities (passives excluded) with their cost, graying out what cannot be paid or is not built yet. `BattleAbilityCommand` is the dispatcher: it checks an ability can be issued, pays its cost by `cost_type`, and hands it to the resolver for its `command`. Cael's Rally and, since slice 158b, Edren's Bulwark have resolvers, and the `mp` and `ap` cost types are paid; Forgewright, Tricks, Spiritcall and Arcanum (slices 158c-f) are listed disabled and refused. Hold the Line, Press Forward, Second Wind and Unbreakable are built to abilities.md § Cael — Rally: every living ally gets the full turns and counts them on its own turns, one Rally is active at a time, and it ends when Cael faints or is Silenced or put to Sleep. A Rally cannot be issued while Cael is Silenced. `BattleRally` holds those in-force rules behind `BattleState`'s ability hooks, which slices b-f extend. Vanguard Strike is a standalone command rather than a Rally and is not built yet.
+
+### Slice 158b (Edren's Bulwark)
+
+Every Bulwark ability is built to abilities.md § Edren — Bulwark, including the rulings paragraph recorded there from #158, with `BattleBulwark` behind the same ability hooks. Ironwall and Rampart redirect their share of an enemy hit to Edren, and a hit on Edren himself in a stance counts as absorbed. He earns AP for each absorbed hit, one more for a heavy one, and loses 1 on a turn that follows no damage. Riposte (armed), Aegis Veil, Shatter Guard, Steadfast Resolve and Oathkeeper spend that AP, and the `ap` cost type is paid. Oathkeeper's second Attack swing is in `BattlePlayerActions.do_attack`.
 
 ## Desired state (per design)
 
@@ -36,7 +40,7 @@ Build per-command executor modules reading/writing battle_state resource fields,
 
 - [ ] Each character's command opens its sub-ability list, not a basic attack
 - [ ] Per-character resource (AP/AC/WG/Favor/cooldown) is tracked and spent
-- [ ] Edren stance + Riposte and Cael Rally buffs function as a first vertical slice
+- [x] Edren stance + Riposte and Cael Rally buffs function as a first vertical slice
 - [ ] Tests cover at least one ability per command system
 
 ## Design references
@@ -47,8 +51,9 @@ Build per-command executor modules reading/writing battle_state resource fields,
 
 - game/scripts/combat/battle_ability_command.gd — `do_ability()` (the dispatcher: availability, `pay()` by cost_type, one resolver per command)
 - game/scripts/combat/battle_rally.gd — `start()` (Cael's Rally while in force: duration, replacement and end conditions, via BattleState's ability hooks)
+- game/scripts/combat/battle_bulwark.gd — `guard_for()` (Edren's Bulwark: stances, absorption, AP, Riposte, Shatter Guard and Oathkeeper, via BattleState's ability hooks and the enemy-hit seam in BattleActions)
 - game/scripts/ui/battle_submenu_items.gd — `abilities()` (the Ability sub-menu's entries)
-- game/scripts/combat/battle_state.gd — `begin_turn()` (the per-turn hook fan-out; ap/ac/favor/stolen_goods/active_stance still unused until slices b-f)
+- game/scripts/combat/battle_state.gd — `begin_turn()` (the per-turn hook fan-out; ac/favor/stolen_goods still unused until slices c-f)
 
 
 ## Verification (fresh-eyes adversarial pass)

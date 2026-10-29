@@ -10,7 +10,8 @@ signal member_died(slot: int)
 signal member_revived(slot: int)
 signal status_applied(slot: int, status_name: String)
 signal status_removed(slot: int, status_name: String)
-## A member's unique-command state changed (a Rally landed on or left them).
+## A member's unique-command state changed: a Rally, or Bulwark's stance, AP or
+## effects, landed on or left them.
 signal ability_state_changed(slot: int)
 
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")

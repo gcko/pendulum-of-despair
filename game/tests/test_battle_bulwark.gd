@@ -291,14 +291,15 @@ func test_rampart_does_not_guard_the_front_row() -> void:
 
 
 func test_rampart_does_not_redirect_edren_s_own_hits_to_himself() -> void:
+	# A direct hit on Edren in a stance counts as absorbed (ruling 1 on #158,
+	# test_battle_bulwark_rulings.gd), but none of it moves anywhere.
 	_state.get_member(EDREN)["row"] = "back"
 	var s: int = _landing_seed(EDREN, "physical")
 	var full: int = _unguarded(EDREN, "physical", s)
 	_use("rampart")
 	var r: Dictionary = _strike(EDREN, "physical", s)
 	assert_eq(r["damage"], full, "Edren takes his own hit in full")
-	assert_false(r.has("absorbed"), "nothing was absorbed")
-	assert_eq(_ap(), 0, "and absorbing nothing earns nothing")
+	assert_false(r.has("absorbed"), "no share was split off")
 
 
 func test_absorption_is_taken_before_the_ally_s_own_reductions() -> void:
@@ -331,10 +332,12 @@ func test_each_absorbed_hit_earns_one_ap() -> void:
 
 func test_every_hit_of_a_multi_hit_attack_is_absorbed_on_its_own() -> void:
 	_use("ironwall", LIRA)
+	var hp: int = _hp(EDREN)
 	seed(4)
 	var r: Dictionary = BattleActions.execute_enemy_physical_ability(_state, _enemy, LIRA, 1.0, 3)
+	assert_gt(int(r["hits_landed"]), 1, "several hits landed")
 	assert_eq(_ap(), int(r["hits_landed"]), "one AP for each hit that landed")
-	assert_gt(int(r["absorbed"]["damage"]), 0, "the shares add up in the result")
+	assert_eq(int(r["absorbed"]["damage"]), hp - _hp(EDREN), "the shares sum to what he took")
 
 
 func test_ap_never_rises_past_ten() -> void:

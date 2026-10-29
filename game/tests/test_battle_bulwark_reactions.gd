@@ -298,7 +298,9 @@ func test_shatter_guard_needs_a_stance_and_costs_nothing_without_one() -> void:
 
 
 func test_shatter_guard_deals_the_absorbed_total_to_every_enemy_and_ends_the_stance() -> void:
-	# Fixed damage: neither DEF nor a Spirit's physical halving touches it.
+	# Fixed damage: neither DEF nor a Spirit's physical halving touches it. DEF
+	# 999 also puts the basic-attack floor at 1, below the total.
+	_enemy = _make_enemy({"def": 999})
 	var spirit: Enemy = _make_enemy({"type": "spirit", "def": 999})
 	_battle.enemies = [_enemy, spirit] as Array[Node]
 	var s: int = _landing_seed(LIRA)
@@ -306,7 +308,7 @@ func test_shatter_guard_deals_the_absorbed_total_to_every_enemy_and_ends_the_sta
 	var total: int = 0
 	for _i: int in range(2):
 		total += int(_strike(LIRA, s)["absorbed"]["damage"])
-	assert_gt(total, EDREN_ATK, "the total is above the ATK minimum")
+	assert_gt(total, 1, "the total is above the floor")
 	_set_ap(5)
 	var before: Array[int] = [_enemy.current_hp, spirit.current_hp]
 	assert_true(_use("shatter_guard"), "resolves")
@@ -315,14 +317,6 @@ func test_shatter_guard_deals_the_absorbed_total_to_every_enemy_and_ends_the_sta
 	assert_eq(_state.get_member(EDREN)["active_stance"], "", "the stance is broken")
 	assert_eq(_ap(), 0, "5 AP spent")
 	assert_eq(_hits.filter(func(h: Array) -> bool: return h[1] == total).size(), 2, "two numbers")
-
-
-func test_shatter_guard_deals_edren_s_attack_when_nothing_was_absorbed() -> void:
-	_use("rampart")
-	_set_ap(5)
-	var hp: int = _enemy.current_hp
-	_use("shatter_guard")
-	assert_eq(hp - _enemy.current_hp, EDREN_ATK, "minimum: Edren's Attack x 1")
 
 
 func test_shatter_guard_is_capped_at_twice_edren_s_max_hp() -> void:
@@ -339,13 +333,15 @@ func test_shatter_guard_is_capped_at_twice_edren_s_max_hp() -> void:
 
 func test_re_raising_a_stance_resets_the_absorbed_total() -> void:
 	var s: int = _landing_seed(LIRA)
+	var tough: Enemy = _make_enemy({"def": 999})  # basic-attack floor of 1
+	_battle.enemies = [tough] as Array[Node]
 	_use("ironwall", LIRA)
 	_strike(LIRA, s)
 	_use("ironwall", LIRA)
 	_set_ap(5)
-	var hp: int = _enemy.current_hp
+	var hp: int = tough.current_hp
 	_use("shatter_guard")
-	assert_eq(hp - _enemy.current_hp, EDREN_ATK, "the earlier absorb no longer counts")
+	assert_eq(hp - tough.current_hp, 1, "the earlier absorb no longer counts: the floor")
 
 
 # --- Oathkeeper: stronger stances, automatic Riposte, a second Attack ---

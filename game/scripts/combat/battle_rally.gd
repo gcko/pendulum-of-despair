@@ -4,7 +4,7 @@ extends RefCounted
 ## how long it lasts, what it does to a stat, and what ends it. Pure static
 ## rules over BattleState's member records, reached through BattleState's
 ## ability-hook fan-out (on_damage, on_fainted, on_status, on_turn_begin,
-## on_turn_end) rather than by name from each seam.
+## on_turn_end, stat_pct) rather than by name from each seam.
 ##
 ## Design law: abilities.md § Cael — Rally. "Rally commands cost MP and last a
 ## set number of turns. Only one Rally can be active at a time (issuing a new

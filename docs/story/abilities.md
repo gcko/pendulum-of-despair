@@ -34,9 +34,9 @@ Each party member has one unique command in their battle menu alongside Fight, M
 |---------|---------|---------|--------|
 | **Ironwall** | Level 1 | 0 | Stance. Edren guards a single ally, absorbing 50% of physical damage dealt to them. AP generated per the standard hit-based rule above. |
 | **Rampart** | Level 10 | 0 | Stance. Edren guards the entire back row, absorbing 30% of all damage dealt to back-row allies. Lower absorption rate but wider coverage. |
-| **Riposte** | Level 6 | 2 AP | Reaction. When Edren absorbs an attack in any stance, he counters with a physical strike dealing 1.5x normal damage. Can trigger once per enemy turn. |
+| **Riposte** | Level 6 | 2 AP | Reaction, armed as a command: Edren spends his turn and 2 AP to arm it, and his stance stays up. The next time he absorbs an attack in any stance before his next turn, he counters the attacker once with a physical strike dealing 1.5x normal damage. Grants 1 AP on hit. |
 | **Aegis Veil** | Level 15 | 3 AP | Edren channels ley-line energy into a magical barrier on one ally, reducing magic damage by 40% for 3 turns. |
-| **Shatter Guard** | Level 22 | 5 AP | Edren breaks his stance explosively, dealing physical damage to all enemies equal to total damage absorbed since entering the stance (capped at 2x his max HP). Minimum damage: Edren's Attack x 1 (even if no damage was absorbed). Ends the current stance. |
+| **Shatter Guard** | Level 22 | 5 AP | Edren breaks his stance explosively, dealing fixed physical damage to all enemies equal to total damage absorbed since he last entered a stance (capped at 2x his max HP). Minimum damage: one basic attack against each enemy (even if no damage was absorbed). Needs an active stance, and ends it. |
 | **Steadfast Resolve** | Story: `trial_edren_complete` (Pallor Wastes trial) | 6 AP | Edren steels the party's resolve. Immediately cleanses all Despair and Silence from every ally, then grants +20% DEF and +20% MDEF to all allies for 3 turns. The cleanse fires before the buff — a Despaired ally is freed, then shielded. |
 | **Oathkeeper** | Story: Act IV (picks up Cael's sword) | 8 AP | Edren dual-wields his own sword and Cael's blade. For 3 turns, all Bulwark stances gain +50% absorption AND Riposte triggers automatically on every absorbed hit. While active, Edren's attack commands hit twice. |
 
@@ -53,6 +53,41 @@ Riposte counters Oathkeeper fires automatically are 1.5x as they always are; the
 carries the two numbers as `attack_hits` and `attack_ability_mult`, and
 `game/tests/test_ability_magnitudes.gd` holds a turn of Oathkeeper to exactly
 twice a basic attack.
+
+**Bulwark rulings ([#158](https://github.com/gcko/pendulum-of-despair/issues/158)).**
+What the table leaves open was settled on #158, and the battle layer is built to
+these readings.
+
+- *Heavy hit.* The +1 bonus AP measures the whole incoming hit, before the
+  absorb split, against 10% of Edren's max HP.
+- *Direct hits.* A hit on Edren himself while he holds any stance counts as
+  absorbed. It still lands on him in full, but it earns AP (heavy-hit bonus
+  included), adds to Shatter Guard's total and can trigger a counter.
+- *His share.* Of a hit on a guarded ally Edren takes `damage x absorption%`,
+  and his DEF does not reduce it, as the worked examples in
+  [combat-formulas.md](combat-formulas.md) § Damage Reduction Sources show.
+- *Riposte* is a command he arms for 2 AP, paid on arming, and his stance stays
+  up. It counters the attacker of the next hit he absorbs, magic under Rampart
+  included, once, and lapses when his next turn begins. A landed counter grants
+  1 AP on top of the absorbed hit's. It can be armed with no stance up, though
+  only an absorbed hit fires it, and it cannot be armed while Oathkeeper lasts.
+- *Shatter Guard* needs an active stance and ends it. Its total resets whenever
+  he enters a stance, the same one included. The total lands as fixed damage:
+  no hit roll, no variance, no DEF, no Spirit halving. Its floor is one basic
+  attack against each enemy, the physical formula at `ability_mult` 1.0 (the
+  reading § Damage Magnitudes gives Wild Card), with that enemy's DEF, a
+  Spirit's halving and the variance roll but no hit roll or crit. Its ceiling is
+  2x his max HP and the 14,999 damage cap.
+- *Oathkeeper* keeps his stance up through the turn he takes it, as arming
+  Riposte does; Attack and every other command still drop the stance when the
+  turn ends. While it lasts, every absorbed hit counters its attacker with no
+  arming, no AP and no per-turn limit.
+- *Incapacitated.* While Edren is Paralyzed, Asleep, Stopped or Petrified,
+  neither Riposte nor Oathkeeper counters, but his stance still absorbs and an
+  armed Riposte waits. A Sleep that his absorbed share cures no longer blocks
+  the counter. Petrify also ends the stance.
+- *KO.* A KO clears all Bulwark state: Riposte disarmed, Oathkeeper ended, Aegis
+  Veil and Steadfast Resolve on him ended, AP to 0, the stance dropped.
 
 **Synergies:**
 - Edren + Torren: Torren's healing spirits can restore HP Edren loses while absorbing, creating a sustain loop.

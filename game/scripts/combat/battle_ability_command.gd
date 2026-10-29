@@ -14,6 +14,9 @@ extends RefCounted
 ## The in-force rules live in BattleRally and BattleBulwark, reached through
 ## BattleState's ability hooks.
 
+const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
+const ModifierAggregator = preload("res://scripts/combat/modifier_aggregator.gd")
+
 ## Rally magnitudes, from abilities.md § Cael — Rally and the matching
 ## `effect` text in game/data/abilities/cael.json. stat_pct is the +% to each
 ## stat; regen_pct is % of max HP restored at the start of each of the ally's
@@ -36,8 +39,9 @@ func _init(battle: Node) -> void:
 
 
 ## Issue the ability in [param command]. Returns false when it never happened —
-## not this character's, not built, blocked by a status, or not enough to pay —
-## so the caller re-opens the menu. Nothing is spent unless it resolves.
+## not this character's, not built, not available now (a status, or Bulwark's
+## own state), no valid target, or not enough to pay — so the caller re-opens
+## the menu. Nothing is spent unless it resolves.
 func do_ability(actor_id: String, command: Dictionary) -> bool:
 	var state: Node = _battle.get_battle_state()
 	var slot: int = actor_id.replace("party_", "").to_int()
@@ -58,18 +62,6 @@ func do_ability(actor_id: String, command: Dictionary) -> bool:
 	)
 	_resolver(ability).call(slot, ability, command)
 	return true
-
-
-## Whether a single-ally ability has a living ally at command["target"]. Ironwall
-## also needs that ally to be someone other than Edren: guarding himself would
-## redirect his damage to himself (BattleBulwark.guard_for).
-static func _target_ok(state: Node, slot: int, ability: Dictionary, command: Dictionary) -> bool:
-	if ability.get("target", "") != "single_ally":
-		return true
-	var target: int = int(command.get("target", -1))
-	if not state.get_member(target).get("is_alive", false):
-		return false
-	return not (ability.get("id", "") == "ironwall" and target == slot)
 
 
 ## The resolver for [param ability]'s command, or an invalid Callable when that
@@ -109,20 +101,48 @@ func _resolve_bulwark(slot: int, ability: Dictionary, command: Dictionary) -> vo
 			BattleBulwark.oathkeeper(state, slot)
 
 
-## Shatter Guard lands [param dmg] on every enemy as fixed damage: no hit roll,
-## no variance, no DEF, no Spirit halving (the ruling on #158).
-func _shatter_guard(slot: int, dmg: int) -> void:
+## Shatter Guard lands the [param shattered] total on every targetable enemy as
+## fixed damage — no hit roll, no variance, no DEF, no Spirit halving — but never
+## less than one basic attack against that enemy (_shatter_damage;
+## abilities.md § Edren — Bulwark, rulings).
+func _shatter_guard(slot: int, shattered: Dictionary) -> void:
 	var enemies: Array[Node] = _battle.get_enemies()
 	for i: int in range(enemies.size()):
 		var enemy: Node = enemies[i]
 		if not enemy.is_alive or enemy.get_meta("untargetable", false):
 			continue
+		var dmg: int = _shatter_damage(slot, enemy, shattered)
 		enemy.take_damage(dmg)
 		_battle.get_battle_state().add_threat(slot, dmg)  # GAP-009 highest-threat
 		_battle.damage_dealt.emit("enemy_%d" % i, dmg, "physical")
 		if not enemy.is_alive:
 			_battle.combatant_died.emit("enemy_%d" % i)
 			_battle.get_atb().remove_combatant("enemy_%d" % i)
+
+
+## Shatter Guard's fixed damage on [param enemy] from Edren at [param slot]: the
+## [param shattered] total (BattleBulwark.shatter), raised to one basic attack
+## against this enemy (the physical formula at ability_mult 1.0, with its DEF, a
+## Spirit's halving and the variance roll but no hit roll or crit), then capped
+## at the shattered cap and the damage cap.
+func _shatter_damage(slot: int, enemy: Node, shattered: Dictionary) -> int:
+	var state: Node = _battle.get_battle_state()
+	var floor_dmg: int = DamageCalc.calculate_physical(
+		state.get_effective_stat(slot, "atk"),
+		float(BattleBulwark.SHATTER_GUARD["floor_ability_mult"]),
+		int(enemy.get_stats().get("def", 0)),
+		false,
+		1.0,
+		state.get_member(slot).get("row", "front"),
+		"front",
+		false,
+		[],
+		false,
+		1.0,
+		ModifierAggregator.physical_pre_def_mult(enemy.get_type())
+	)
+	var dmg: int = maxi(floor_dmg, int(shattered["total"]))
+	return mini(BattleBulwark.DAMAGE_CAP, mini(int(shattered["cap"]), dmg))
 
 
 ## Whether [param ability] can be issued at all in this build: its command has
@@ -145,13 +165,16 @@ static func is_rally(ability: Dictionary) -> bool:
 ## Whether [param member] could issue [param ability] now, cost aside: it is
 ## built and no status blocks it. A Rally is unavailable while Cael is
 ## Silenced, since Silence would end it at once (abilities.md § Cael — Rally).
-## Shatter Guard breaks a stance, so it needs one.
+## Shatter Guard breaks a stance, so it needs one; Riposte is automatic under
+## Oathkeeper, so it cannot be armed then.
 static func is_available(member: Dictionary, ability: Dictionary) -> bool:
 	if not is_built(ability):
 		return false
 	if is_rally(ability) and not BattleRally.caster_can_sustain(member):
 		return false
 	if ability.get("id", "") == "shatter_guard" and not BattleBulwark.in_stance(member):
+		return false
+	if ability.get("id", "") == "riposte" and BattleBulwark.oathkeeper_on(member):
 		return false
 	return true
 
@@ -181,3 +204,16 @@ static func pay(state: Node, slot: int, ability: Dictionary) -> bool:
 		"ap":
 			return BattleBulwark.spend_ap(state, slot, int(ability.get("cost_value", 0)))
 	return false
+
+
+## Whether a single-ally ability has a living ally at command["target"]. Ironwall
+## also needs that ally to be someone other than Edren: a hit on him already
+## counts as absorbed while he holds any stance (BattleBulwark.guard_for), so
+## guarding himself would add nothing.
+static func _target_ok(state: Node, slot: int, ability: Dictionary, command: Dictionary) -> bool:
+	if ability.get("target", "") != "single_ally":
+		return true
+	var target: int = int(command.get("target", -1))
+	if not state.get_member(target).get("is_alive", false):
+		return false
+	return not (ability.get("id", "") == "ironwall" and target == slot)

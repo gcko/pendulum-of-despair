@@ -116,7 +116,8 @@ static func enemy_aoe_on_death_ability(enemy: Node) -> Dictionary:
 ## Fire an aoe_on_death ability against the whole living party when its bearer
 ## dies. Resolves through execute_enemy_magic (non-elemental by default; element
 ## is cosmetic until party resistances exist). Returns per-slot
-## [{slot, damage, type}] so the battle layer can emit damage signals.
+## [{slot, damage, type}], plus Edren's "absorbed" share where a stance took
+## one, so the battle layer can emit damage signals.
 static func execute_aoe_on_death(state: Node, enemy: Node, ability: Dictionary) -> Array:
 	var results: Array = []
 	var element: String = ability.get("element", "")
@@ -126,7 +127,12 @@ static func execute_aoe_on_death(state: Node, enemy: Node, ability: Dictionary) 
 		if m.is_empty() or not m.get("is_alive", false):
 			continue
 		var r: Dictionary = execute_enemy_magic(state, enemy, i, element, power)
-		results.append({"slot": i, "damage": r.get("damage", 0), "type": r.get("type", "miss")})
+		var entry: Dictionary = {
+			"slot": i, "damage": r.get("damage", 0), "type": r.get("type", "miss")
+		}
+		if r.has("absorbed"):
+			entry["absorbed"] = r["absorbed"]
+		results.append(entry)
 	return results
 
 
@@ -261,16 +267,18 @@ static func execute_enemy_magic(
 
 
 ## Land [param enemy]'s hit of [param dmg] on [param slot]. Unguarded,
-## [param dmg] already carries the member's reductions. Under a Bulwark stance it
-## is the hit before them, and BattleBulwark.split divides it: the member takes
-## the rest, Edren absorbs his share, reported as "absorbed": {slot, damage}.
-## If he then counters (Riposte), the counter is in "ripostes": [{slot, hit,
-## damage, type, killed}], and a landed counter earns him 1 AP.
+## [param dmg] already carries the member's reductions. Met by a Bulwark stance
+## (BattleBulwark.guard_for) it is the hit before them, and BattleBulwark.split
+## divides it: the member takes the rest, Edren absorbs his share, reported as
+## "absorbed": {slot, damage}. A hit on Edren himself in a stance counts as
+## absorbed but splits nothing off. If he then counters (Riposte), the counter
+## is in "ripostes": [{slot, hit, damage, type, killed}], and a landed counter
+## earns him 1 AP.
 static func _land_on_party(
 	state: Node,
 	slot: int,
 	dmg: int,
-	reduction: Array,
+	reduction: Array[float],
 	guard: Dictionary,
 	dtype: String,
 	enemy: Node
@@ -279,15 +287,15 @@ static func _land_on_party(
 		dmg = state.take_damage(slot, dmg)  # after Unbreakable, as applied
 		return {"hit": true, "damage": dmg, "type": dtype}
 	var shares: Dictionary = Bulwark.split(dmg, reduction, guard)
-	var landed: int = state.take_damage(slot, int(shares["damage"]))
 	var edren: int = int(guard["slot"])
-	var taken: int = Bulwark.absorb(state, guard, int(shares["absorbed"]), dmg)
-	var out: Dictionary = {
-		"hit": true,
-		"damage": landed,
-		"type": dtype,
-		"absorbed": {"slot": edren, "damage": taken},
-	}
+	var out: Dictionary = {"hit": true, "type": dtype}
+	if edren == slot:  # a direct hit: counted before it lands, as a share is
+		Bulwark.count_absorbed(state, edren, int(shares["damage"]), dmg)
+		out["damage"] = state.take_damage(slot, int(shares["damage"]))
+	else:
+		out["damage"] = state.take_damage(slot, int(shares["damage"]))
+		var taken: int = Bulwark.absorb(state, guard, int(shares["absorbed"]), dmg)
+		out["absorbed"] = {"slot": edren, "damage": taken}
 	if enemy.is_alive and Bulwark.take_riposte(state, edren):
 		var counter: Dictionary = execute_party_attack(
 			state, edren, enemy, -1, Bulwark.RIPOSTE_ABILITY_MULT
@@ -349,7 +357,9 @@ static func execute_enemy_attack(
 
 ## Resolve a possibly multi-hit enemy physical ability against one member.
 ## Each hit rolls its own hit/evasion/crit (per enemy-ability-conventions.md
-## §2.7). Returns the aggregate {hit, damage, type, hits_landed}. No Act I
+## §2.7), and the flurry stops once a Riposte fells the attacker. Returns the
+## aggregate {hit, damage, type, hits_landed}, with "absorbed" (Edren's shares
+## summed) and "ripostes" (every counter) when a Bulwark stance met it. No Act I
 ## production enemy sets hits > 1 (first is the Act II Cave Vermin); the engine
 ## supports it and this path is test-covered.
 static func execute_enemy_physical_ability(
