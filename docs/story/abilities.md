@@ -338,6 +338,26 @@ The following combos become **permanently unavailable** after Cael's betrayal at
 
 This is intentional. The mechanical loss mirrors the narrative loss. The player should feel Cael's absence in combat, not just in cutscenes. **Cael's Echo** (Edren + Lira) is the replacement — born from grief, but no less powerful.
 
+### Combo Availability
+
+The Combo menu lists a combo when all three of these hold. The rulings are recorded on [#176](https://github.com/gcko/pendulum-of-despair/issues/176).
+
+1. **Both characters can be commanded.** Both are in the battle party, alive, with full ATB gauges. A status that stops a character acting (Sleep, Paralysis, Petrify) keeps them out of a combo, and so do Confusion and Berserk, under which they cannot be commanded at all. Silence keeps a character out only when their share is something Silence already stops: a spell, or Cael's Rally (Silence ends a Rally, see § Cael — Rally). Any other share, such as a Bulwark stance, a Trick, a Spiritcall, a Forgewright device or an Arcanum weave, is not stopped by Silence. Whether Silence should stop spell-like abilities as well is still open.
+2. **Each partner knows what the combo draws on.** A combo whose availability reads "after X learns Y" waits until X knows Y, and each partner must also know the sub-ability the Combo List names for them. "Knows" is the ordinary rule in § Character Unique Commands > 'Unlock conditions': an [S] ability with a minimum level needs both that level and its story trigger. The abilities each combo requires are:
+   - Shield Oath: Edren's Ironwall and Cael's Press Forward.
+   - Shattered Vanguard: Edren's Shatter Guard and Sable's Misdirect.
+   - Forged Rampart: Lira's Bulkhead.
+   - Thornfire: Torren's Ember Wing and Lira's Shock Coil.
+   - Spiritward: Torren's Stoneheart.
+   - Ambush Protocol: Sable's Misdirect and Lira's Arc Trap.
+   - Twilight Raid: Torren's Greyveil.
+   - Cael's Echo: Edren's Oathkeeper.
+
+   Weave Theft, Ley Torrent, Promise of Dawn and Arcane Convergence name no ability, so they require none. Neither does Spiritward's "Bulwark stance" or Cael's Echo's "overcharges", which name no particular ability.
+3. **The story has not closed it.** Shield Oath and Promise of Dawn close once Cael's betrayal is complete (`cael_betrayal_complete`). Cael's Echo opens only after it, with Edren knowing Oathkeeper.
+
+MP does not remove a combo from the list. A combo one partner cannot pay for is listed but cannot be chosen, the way Magic lists a spell its caster cannot afford.
+
 ---
 
 ## 3. Magic System Framework
@@ -771,6 +791,14 @@ with the alternative it rejects:
    `caster` / `scaling_stat` fields in `game/data/abilities/combos.json` — a
    `power` with no caster beside it is now a test failure, not a reader's
    problem.
+
+Two more `combos.json` fields carry no magnitude. `mp_costs` is each
+character's MP share, keyed by character id, and `test_ability_balance.gd`
+checks it against the Combo List's Total MP column. `story_gate` holds the
+gates of § Combo Availability: `requires_flags` and `forbids_flags` (story
+flags that must be set or unset) and `requires_abilities` (`{character,
+ability}` pairs). `test_battle_combos.gd` checks it against each combo's own
+text.
 
 #### Resolved values
 
