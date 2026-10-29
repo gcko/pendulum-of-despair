@@ -33,6 +33,7 @@ const ENEMY_CRIT_RATE: float = 0.05
 const ACT_TABLES: Array[String] = ["act_i", "act_ii", "act_iii", "interlude", "optional"]
 
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
+const EnemyRecord = preload("res://scripts/entities/enemy_record.gd")
 
 ## Type-based default status immunities (per bestiary/README.md).
 const TYPE_IMMUNITIES: Dictionary = {
@@ -163,49 +164,24 @@ func get_display_name() -> String:
 	return enemy_data.get("name", enemy_id)
 
 
-## Check if an element appears in an array that may contain plain strings
-## or objects with {"element": "...", "multiplier": ...}.
-static func _element_in_list(element: String, list: Array) -> bool:
-	for entry: Variant in list:
-		if entry is String and entry == element:
-			return true
-		if entry is Dictionary and (entry as Dictionary).get("element", "") == element:
-			return true
-	return false
-
-
-## Get the custom multiplier for an element from a mixed-format array.
-## Returns the object multiplier if found, otherwise -1.0 (not in list).
-## Uses -1.0 as sentinel because legitimate multipliers are >= 0.0.
-static func _get_list_multiplier(element: String, list: Array, default_mult: float) -> float:
-	for entry: Variant in list:
-		if entry is String and entry == element:
-			return default_mult
-		if entry is Dictionary:
-			var d: Dictionary = entry as Dictionary
-			if d.get("element", "") == element:
-				return d.get("multiplier", default_mult)
-	return -1.0  # not in list
-
-
 ## Check if the enemy is weak to an element.
 func is_weak_to(element: String) -> bool:
-	return _element_in_list(element, enemy_data.get("weaknesses", []))
+	return EnemyRecord.element_in_list(element, enemy_data.get("weaknesses", []))
 
 
 ## Check if the enemy is resistant to an element.
 func is_resistant_to(element: String) -> bool:
-	return _element_in_list(element, enemy_data.get("resistances", []))
+	return EnemyRecord.element_in_list(element, enemy_data.get("resistances", []))
 
 
 ## Check if the enemy is immune to an element.
 func is_immune_to(element: String) -> bool:
-	return _element_in_list(element, enemy_data.get("immunities", []))
+	return EnemyRecord.element_in_list(element, enemy_data.get("immunities", []))
 
 
 ## Check if the enemy absorbs an element.
 func absorbs(element: String) -> bool:
-	return _element_in_list(element, enemy_data.get("absorb", []))
+	return EnemyRecord.element_in_list(element, enemy_data.get("absorb", []))
 
 
 ## Get the damage multiplier for an element.
@@ -217,10 +193,14 @@ func get_element_multiplier(element: String) -> float:
 		return -1.0
 	if is_immune_to(element):
 		return 0.0
-	var resist_mult: float = _get_list_multiplier(element, enemy_data.get("resistances", []), 0.75)
+	var resist_mult: float = EnemyRecord.list_multiplier(
+		element, enemy_data.get("resistances", []), 0.75
+	)
 	if resist_mult >= 0.0:
 		return resist_mult
-	var weak_mult: float = _get_list_multiplier(element, enemy_data.get("weaknesses", []), 1.5)
+	var weak_mult: float = EnemyRecord.list_multiplier(
+		element, enemy_data.get("weaknesses", []), 1.5
+	)
 	if weak_mult >= 0.0:
 		return weak_mult
 	return 1.0
@@ -357,51 +337,14 @@ func heal(amount: int) -> void:
 		healed.emit(actual_heal)
 
 
-## Roll for a steal attempt. Returns {item_id: String, success: bool}.
-##
-## Three steal shapes are canon (2026-04-02-enemy-data-json-design.md
-## § Steal Mapping Rules): the two-tier object, a whole-record `null` (Rule 3),
-## and a `null` tier (Rule 4). Dictionary.get() returns the STORED value when
-## the key exists, so a JSON null arrives as Nil rather than the default and
-## reading it into a typed Dictionary local aborts the function. Widen through
-## Variant; every non-dictionary means "carries nothing here".
+## Roll for a steal attempt (EnemyRecord.roll_steal). Returns {item_id, success}.
 func roll_steal(tier: String) -> Dictionary:
-	var raw_steal: Variant = enemy_data.get("steal")
-	if not raw_steal is Dictionary:
-		return {"item_id": "", "success": false}
-	var steal_data: Dictionary = raw_steal
-	var raw_tier: Variant = steal_data.get(tier)
-	if not raw_tier is Dictionary:
-		return {"item_id": "", "success": false}
-	var tier_data: Dictionary = raw_tier
-	if tier_data.is_empty():
-		return {"item_id": "", "success": false}
-	var rate: int = tier_data.get("rate", 0)
-	var raw_id: Variant = tier_data.get("item_id", "")
-	var item_id: String = raw_id as String if raw_id is String else ""
-	var success: bool = randi() % 100 < rate and not item_id.is_empty()
-	return {
-		"item_id": item_id if success else "",
-		"success": success,
-	}
+	return EnemyRecord.roll_steal(enemy_data, tier)
 
 
-## Roll for a drop on death. Returns {item_id: String, success: bool}.
-## `"drop": null` is canon for the 6 enemies that leave nothing behind — same
-## Nil-through-get() trap as roll_steal() above.
+## Roll for a drop on death (EnemyRecord.roll_drop). Returns {item_id, success}.
 func roll_drop() -> Dictionary:
-	var raw_drop: Variant = enemy_data.get("drop")
-	if not raw_drop is Dictionary:
-		return {"item_id": "", "success": false}
-	var drop_data: Dictionary = raw_drop
-	if drop_data.is_empty():
-		return {"item_id": "", "success": false}
-	var rate: int = drop_data.get("rate", 0)
-	var success: bool = randi() % 100 < rate
-	return {
-		"item_id": drop_data.get("item_id", "") if success else "",
-		"success": success,
-	}
+	return EnemyRecord.roll_drop(enemy_data)
 
 
 ## Find this enemy's data entry, preferring [param preferred_act]'s
