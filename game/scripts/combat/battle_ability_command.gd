@@ -115,7 +115,7 @@ func _resolve_forgewright(slot: int, ability: Dictionary, command: Dictionary) -
 		"salvage":
 			BattleForgewright.salvage(state, slot)
 		_:
-			BattleForgewright.deploy(state, slot, ability, target, _battle)
+			BattleForgewright.deploy(state, slot, ability, target)
 
 
 ## Shatter Guard lands the [param shattered] total on every targetable enemy as

@@ -205,8 +205,8 @@ func has_status(slot: int, status_name: String) -> bool:
 ## Tick turn-based statuses at END of a combatant's turn. Applies Poison/Burn
 ## HP ticks first, then decrements durations. UNTIL_CURED (negative) durations
 ## persist — they are cured by remove_status, never by countdown. Closes the turn
-## for the ability hooks. Returns DoT events [{slot, dmg, type}] for feedback
-## (mirrors the enemy-side tick's damage_dealt emission).
+## for the ability hooks. Returns its events [{slot, dmg, type}] for feedback —
+## DoT ticks, then the hooks' turn-end events (mirrors the enemy-side tick).
 func tick_statuses(slot: int) -> Array:
 	var m: Dictionary = get_member(slot)
 	if m.is_empty():
@@ -214,7 +214,9 @@ func tick_statuses(slot: int) -> Array:
 	var dot_events: Array = _apply_dot(slot, m)
 	m["turn_open"] = false
 	for hook: Variant in ABILITY_HOOKS:
-		hook.on_turn_end(self, slot)
+		var ended: Variant = hook.on_turn_end(self, slot)  # Mending Engine's heal
+		if ended is Array:
+			dot_events.append_array(ended)
 	for i: int in range(m["active_statuses"].size() - 1, -1, -1):
 		var s: Dictionary = m["active_statuses"][i]
 		if s.get("duration_type", "") != "turns":
@@ -282,14 +284,13 @@ func get_effective_stat(slot: int, stat_name: String) -> int:
 
 ## Set a buff multiplier.
 func set_buff(slot: int, buff_key: String, value: float) -> void:
-	var m: Dictionary = get_member(slot)
-	if m.is_empty():
-		return
-	m[buff_key] = value
+	if not get_member(slot).is_empty():
+		get_member(slot)[buff_key] = value
 
 
 ## Start of a member's turn, once until tick_statuses closes it (a canceled menu
-## re-prompts). Returns the hooks' events [{slot, dmg, type}], e.g. Second Wind.
+## re-prompts). Returns the hooks' events: [{slot, dmg, type}] (Second Wind's
+## regen) and Shock Coil's strike requests (BattleForgewright.on_turn_begin).
 func begin_turn(slot: int) -> Array:
 	var m: Dictionary = get_member(slot)
 	if m.is_empty() or not m["is_alive"] or m["turn_open"]:
@@ -335,10 +336,8 @@ func get_highest_threat_slot() -> int:
 
 ## Set defending flag.
 func set_defending(slot: int, defending: bool) -> void:
-	var m: Dictionary = get_member(slot)
-	if m.is_empty():
-		return
-	m["is_defending"] = defending
+	if not get_member(slot).is_empty():
+		get_member(slot)["is_defending"] = defending
 
 
 ## Check if all party members are dead.

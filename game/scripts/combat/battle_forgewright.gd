@@ -3,7 +3,8 @@ extends RefCounted
 ## Lira's Forgewright (GAP-002, #158 slice c): devices she deploys for Arcanite
 ## Charges (AC), what they do while they stand, and Overcharge. Pure static
 ## rules over BattleState's member records, reached through BattleState's
-## ability-hook fan-out (on_turn_begin, on_turn_end and the neutral rest); from
+## ability-hook fan-out (on_turn_begin's strike requests, which the battle
+## answers with shock, on_turn_end's heal events, and the neutral rest); from
 ## BattleActions where a hit resolves (reductions, thorns, spring_trap,
 ## take_overcharge, land_strike); and from BattleAbilityCommand, which issues
 ## the abilities and pays their AC.
@@ -70,16 +71,14 @@ const BUILT: Array[String] = [
 
 
 ## Deploy [param ability]'s device from Lira at [param slot], aimed at ally
-## [param target] where it has one. [param battle] is where its effects are
-## shown. A third device on the field destroys the oldest; a [param fused] one
-## (a combo's) neither counts nor is destroyed, and records no AC cost, since a
-## combo pays MP instead.
+## [param target] where it has one. A third device on the field destroys the
+## oldest; a [param fused] one (a combo's) neither counts nor is destroyed, and
+## records no AC cost, since a combo pays MP instead.
 static func deploy(
-	state: Node, slot: int, ability: Dictionary, target: int, battle: Node, fused: bool = false
+	state: Node, slot: int, ability: Dictionary, target: int, fused: bool = false
 ) -> void:
 	var m: Dictionary = state.get_member(slot)
 	var rec: Dictionary = _record(m)
-	rec["battle"] = battle
 	var list: Array = rec.get("devices", [])
 	var field: Array = list.filter(func(d: Dictionary) -> bool: return not d["fused"])
 	if not fused and field.size() >= DEVICE_LIMIT:
@@ -236,33 +235,35 @@ static func land_strike(enemy: Node, dmg: int, dtype: String, charge: Dictionary
 # ---------- BattleState ability hooks ----------
 
 
-## Start of Lira's turn: each Shock Coil standing since an earlier turn strikes
-## a random living enemy, until a strike's consequences (a death burst) fell her.
+## Start of Lira's turn: each Shock Coil standing since an earlier turn asks to
+## strike, as a request {slot, shock_coil: power} on begin_turn's events. The
+## battle, which holds the enemies, answers each with shock.
 static func on_turn_begin(state: Node, slot: int) -> Array:
-	var m: Dictionary = state.get_member(slot)
-	for d: Dictionary in devices(m).duplicate():
-		if not m.get("is_alive", false):
-			break
+	var out: Array = []
+	for d: Dictionary in devices(state.get_member(slot)):
 		if d["id"] == "shock_coil" and not d["fresh"]:
-			_shock(state, slot, d)
-	return []
+			out.append({"slot": slot, "shock_coil": int(d["power"])})
+	return out
 
 
 ## End of Lira's turn: each device past its deploying turn acts — Mending
 ## Engine heals — and counts one of its turns down, leaving when none remain.
-static func on_turn_end(state: Node, slot: int) -> void:
+## Returns the heals as tick_statuses events [{slot, dmg, type: "heal"}].
+static func on_turn_end(state: Node, slot: int) -> Array:
 	var list: Array = devices(state.get_member(slot))
+	var events: Array = []
 	for d: Dictionary in list.duplicate():
 		if d["fresh"]:
 			d["fresh"] = false
 			continue
 		if d["id"] == "mending_engine":
-			_mend(state, slot)
+			events.append_array(_mend(state))
 		if int(d["turns_left"]) > 0:
 			d["turns_left"] = int(d["turns_left"]) - 1
 			if d["turns_left"] == 0:
 				_remove(list, d)
 				state.ability_state_changed.emit(slot)
+	return events
 
 
 static func on_damage(_state: Node, _slot: int, amount: int) -> int:
@@ -291,35 +292,38 @@ static func stat_pct(_m: Dictionary, _stat: String) -> int:
 # ---------- Internals ----------
 
 
-## Shock Coil [param d] strikes one living, targetable enemy at random.
-static func _shock(state: Node, slot: int, d: Dictionary) -> void:
-	var battle: Node = _record(state.get_member(slot)).get("battle", null)
-	if battle == null:
-		return
-	var enemies: Array[Node] = battle.get_enemies()
+## A Shock Coil of Lira's at [param slot] strikes one living, targetable enemy
+## of [param enemies] at random, a Storm spell at [param power], and earns her
+## threat for what it dealt. Answers on_turn_begin's request. Returns
+## {target: "enemy_N", damage, type, killed}, or {} when Lira has fallen (an
+## earlier strike's death burst can fell her mid-volley) or nobody is left.
+static func shock(state: Node, slot: int, power: int, enemies: Array[Node]) -> Dictionary:
+	if not state.get_member(slot).get("is_alive", false):
+		return {}
 	var living: Array[int] = []
 	for i: int in range(enemies.size()):
 		if enemies[i].is_alive and not enemies[i].get_meta("untargetable", false):
 			living.append(i)
 	if living.is_empty():
-		return
+		return {}
 	var idx: int = living[0] if living.size() == 1 else living[randi() % living.size()]
 	var r: Dictionary = _magic(
-		state, slot, enemies[idx], idx, int(d["power"]), DEVICES["shock_coil"]["element"]
+		state, slot, enemies[idx], idx, power, DEVICES["shock_coil"]["element"]
 	)
-	var eid: String = "enemy_%d" % idx
 	if r.get("type", "") == "magic":
 		state.add_threat(slot, int(r["damage"]))  # GAP-009 highest-threat
-	battle.damage_dealt.emit(eid, int(r.get("damage", 0)), r.get("type", "miss"))
-	if r.get("killed", false):
-		battle.combatant_died.emit(eid)
-		if battle.get_atb() != null:
-			battle.get_atb().remove_combatant(eid)
+	return {
+		"target": "enemy_%d" % idx,
+		"damage": int(r.get("damage", 0)),
+		"type": r.get("type", "miss"),
+		"killed": r.get("killed", false),
+	}
 
 
 ## Mending Engine heals the most injured living ally — the lowest share of max
-## HP, the lower slot on a tie — for 15% of that ally's max HP.
-static func _mend(state: Node, slot: int) -> void:
+## HP, the lower slot on a tie — for 15% of that ally's max HP. Returns the heal
+## as [{slot, dmg, type: "heal"}], or [] when nobody gained HP.
+static func _mend(state: Node) -> Array:
 	var best: int = -1
 	var best_share: float = 1.0
 	for i: int in range(4):
@@ -331,12 +335,10 @@ static func _mend(state: Node, slot: int) -> void:
 			best = i
 			best_share = share
 	if best < 0:
-		return
+		return []
 	var pct: int = int(DEVICES["mending_engine"]["heal_pct"])
 	var healed: int = state.heal(best, int(state.get_member(best)["max_hp"]) * pct / 100)
-	var battle: Node = _record(state.get_member(slot)).get("battle", null)
-	if healed > 0 and battle != null:
-		battle.damage_dealt.emit("party_%d" % best, healed, "heal")
+	return [{"slot": best, "dmg": healed, "type": "heal"}] if healed > 0 else []
 
 
 ## A device's spell from Lira at [param slot]: her Magic at [param power] in

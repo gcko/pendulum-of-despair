@@ -49,6 +49,7 @@ var _battle: FakeBattle
 var _state: Node
 var _cmd: RefCounted
 var _hits: Array = []
+var _kills: Array[String] = []
 
 
 func before_each() -> void:
@@ -65,6 +66,7 @@ func before_each() -> void:
 	_battle.atb = preload("res://scripts/combat/atb_system.gd").new()
 	add_child_autofree(_battle.atb)
 	_hits = []
+	_kills = []
 	_battle.damage_dealt.connect(
 		func(t: String, n: int, k: String) -> void: _hits.append([t, n, k])
 	)
@@ -147,8 +149,28 @@ func _device_ids() -> Array[String]:
 
 ## One full turn of Lira's: its start, then its end.
 func _lira_turn() -> void:
-	_state.begin_turn(LIRA)
-	_state.tick_statuses(LIRA)
+	_run(_state.begin_turn(LIRA))
+	_run(_state.tick_statuses(LIRA))
+
+
+## Answer a turn's events as the battle does: a Shock Coil's strike request is
+## resolved by Forgewright.shock, and every strike or heal is recorded in _hits
+## as [target, amount, type] and every kill in _kills. (BattleManager's own
+## handling of them is test_battle_device_seams.gd.)
+func _run(events: Array) -> void:
+	for ev: Dictionary in events:
+		if not ev.has("shock_coil"):
+			_hits.append(["party_%d" % int(ev["slot"]), int(ev["dmg"]), ev["type"]])
+			continue
+		var enemies: Array[Node] = _battle.enemies
+		var hit: Dictionary = Forgewright.shock(
+			_state, int(ev["slot"]), int(ev["shock_coil"]), enemies
+		)
+		if hit.is_empty():
+			continue
+		_hits.append([hit["target"], hit["damage"], hit["type"]])
+		if hit["killed"]:
+			_kills.append(hit["target"])
 
 
 ## Damage events [amount, type] that landed on enemy [param idx].
@@ -284,7 +306,7 @@ func test_overcharge_is_instant_and_takes_no_device_slot() -> void:
 func test_a_device_fused_by_a_combo_does_not_count_toward_the_limit() -> void:
 	_use("shock_coil")
 	_use("bulkhead", EDREN)
-	Forgewright.deploy(_state, LIRA, _ability("bulkhead"), CAEL, _battle, true)
+	Forgewright.deploy(_state, LIRA, _ability("bulkhead"), CAEL, true)
 	assert_eq(Forgewright.devices(_state.get_member(LIRA)).size(), 3, "all three stand")
 	_use("arc_trap")
 	assert_eq(
@@ -317,7 +339,7 @@ func test_with_two_devices_up_salvage_takes_the_older() -> void:
 
 func test_salvaging_a_combo_fused_device_refunds_nothing() -> void:
 	# A combo pays MP for its device, so taking it down returns no AC.
-	Forgewright.deploy(_state, LIRA, _ability("mending_engine"), CAEL, _battle, true)
+	Forgewright.deploy(_state, LIRA, _ability("mending_engine"), CAEL, true)
 	_state.get_member(LIRA)["ac"] = 5
 	assert_true(_use("salvage"), "salvaged")
 	assert_eq(_device_ids(), [] as Array[String])
@@ -342,14 +364,14 @@ func test_salvage_never_refunds_past_the_pool_maximum() -> void:
 
 func test_shock_coil_strikes_at_the_start_of_each_of_lira_s_next_three_turns() -> void:
 	seed(12345)
-	_state.begin_turn(LIRA)
+	_run(_state.begin_turn(LIRA))
 	_use("shock_coil")
-	_state.tick_statuses(LIRA)  # the deploying turn ends: no tick yet
+	_run(_state.tick_statuses(LIRA))  # the deploying turn ends: no tick yet
 	assert_eq(_enemy_hits(0).size(), 0, "nothing on the turn it is deployed")
 	for turn: int in range(3):
-		_state.begin_turn(LIRA)
+		_run(_state.begin_turn(LIRA))
 		assert_eq(_enemy_hits(0).size(), turn + 1, "a tick as turn %d begins" % (turn + 1))
-		_state.tick_statuses(LIRA)
+		_run(_state.tick_statuses(LIRA))
 	assert_eq(_device_ids(), [] as Array[String], "spent after the third")
 	_lira_turn()
 	assert_eq(_enemy_hits(0).size(), 3, "three ticks in all")
@@ -357,8 +379,8 @@ func test_shock_coil_strikes_at_the_start_of_each_of_lira_s_next_three_turns() -
 
 func test_shock_coil_does_not_fire_on_an_ally_s_turn() -> void:
 	_use("shock_coil")
-	_state.begin_turn(EDREN)
-	_state.tick_statuses(EDREN)
+	_run(_state.begin_turn(EDREN))
+	_run(_state.tick_statuses(EDREN))
 	assert_eq(_enemy_hits(0).size(), 0)
 	assert_eq(_device_ids(), ["shock_coil"] as Array[String], "an ally's turn spends none")
 
@@ -374,7 +396,7 @@ func test_shock_coil_hits_as_a_storm_spell_of_power_10_from_lira_s_magic() -> vo
 	assert_true(expected.get("hit", false), "precondition: this seed lands")
 	_use("shock_coil")
 	seed(777)
-	_state.begin_turn(LIRA)
+	_run(_state.begin_turn(LIRA))
 	assert_eq(_enemy_hits(0), [["enemy_0", expected["damage"], "magic"]], "one Storm tick")
 	assert_eq(_battle.enemies[0].current_hp, 30000 - int(expected["damage"]), "the enemy took it")
 
@@ -390,18 +412,16 @@ func test_shock_coil_picks_among_living_enemies_only() -> void:
 	assert_eq(_enemy_hits(1).size(), 3, "every tick on the living one")
 
 
-func test_a_shock_coil_kill_removes_the_enemy_from_battle() -> void:
+func test_a_shock_coil_kill_is_reported_once() -> void:
+	# The strike reports its kill; the battle cleans it up (removing it from the
+	# ATB and announcing it), which test_battle_device_seams.gd pins.
 	var dying: Enemy = _make_enemy({"hp": 1})
 	_battle.enemies = [dying] as Array[Node]
-	_battle.atb.add_combatant("enemy_0", 10, true)
-	var died: Array[String] = []
-	_battle.combatant_died.connect(func(id: String) -> void: died.append(id))
 	_use("shock_coil")
 	for _turn: int in range(3):
-		if dying.is_alive:
-			_lira_turn()
+		_lira_turn()
 	assert_false(dying.is_alive, "a tick landed")
-	assert_eq(died, ["enemy_0"] as Array[String], "its fall is reported once")
+	assert_eq(_kills, ["enemy_0"] as Array[String], "its fall is reported once")
 
 
 func test_shock_coils_stop_once_a_strike_s_aftermath_fells_lira() -> void:
@@ -415,7 +435,7 @@ func test_shock_coils_stop_once_a_strike_s_aftermath_fells_lira() -> void:
 		e.died.connect(func() -> void: _state.take_damage(LIRA, 99999))
 	_use("shock_coil")
 	_use("shock_coil")
-	_state.begin_turn(LIRA)
+	_run(_state.begin_turn(LIRA))
 	assert_false(_state.get_member(LIRA)["is_alive"], "precondition: a coil killed and Lira fell")
 	assert_eq(int(first.is_alive) + int(second.is_alive), 1, "one enemy still stands")
 	assert_eq(_hits.size(), 1, "one strike in all")
@@ -427,9 +447,9 @@ func test_shock_coils_stop_once_a_strike_s_aftermath_fells_lira() -> void:
 func test_mending_engine_heals_the_most_injured_ally_as_lira_s_next_four_turns_end() -> void:
 	_state.get_member(EDREN)["current_hp"] = 500
 	_state.get_member(MAREN)["current_hp"] = 400
-	_state.begin_turn(LIRA)
+	_run(_state.begin_turn(LIRA))
 	_use("mending_engine")
-	_state.tick_statuses(LIRA)
+	_run(_state.tick_statuses(LIRA))
 	assert_eq(_state.get_member(MAREN)["current_hp"], 400, "no heal on the deploying turn")
 	_lira_turn()
 	assert_eq(_state.get_member(MAREN)["current_hp"], 550, "15% of 1000 to the lowest")

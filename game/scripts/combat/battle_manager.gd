@@ -303,13 +303,29 @@ func _skip_incapacitated_turn(slot: int, id: String, status_name: String) -> voi
 
 
 ## Surface BattleState's turn events [{slot, dmg, type}] as floating numbers:
-## a turn's start (Second Wind's heal) and its end (Poison/Burn damage and
-## Regen heals alike, each event carrying its own type).
+## a turn's start (Second Wind's heal) and its end (Poison/Burn damage, Regen
+## and Mending Engine heals, each event carrying its own type). A Shock Coil's
+## request ({slot, shock_coil}) is answered here, where the enemies are.
 func _emit_party_events(events: Array) -> void:
 	for ev: Dictionary in events:
+		if ev.has("shock_coil"):
+			_shock_coil(int(ev["slot"]), int(ev["shock_coil"]))
+			continue
 		damage_dealt.emit(
 			"party_%d" % int(ev.get("slot", 0)), int(ev.get("dmg", 0)), ev.get("type", "poison")
 		)
+
+
+## Lira's Shock Coil at [param slot] strikes for [param power]: show the hit,
+## and clean up the kill it makes as any kill is cleaned up.
+func _shock_coil(slot: int, power: int) -> void:
+	var hit: Dictionary = BattleForgewright.shock(_state, slot, power, _enemies)
+	if hit.is_empty():
+		return
+	damage_dealt.emit(hit["target"], int(hit["damage"]), hit["type"])
+	if hit["killed"]:
+		combatant_died.emit(hit["target"])
+		_atb.remove_combatant(hit["target"])
 
 
 func _on_party_member_died(slot: int) -> void:
