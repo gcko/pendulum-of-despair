@@ -382,17 +382,18 @@ func test_vanguard_strike_is_not_a_rally_and_cannot_replace_one() -> void:
 	assert_eq(_active().get("id", ""), "hold_the_line", "the running Rally is untouched")
 
 
-func test_an_unbuilt_command_is_refused_without_cost() -> void:
-	# Forgewright is #158 slice c; the menu disables it, and do_ability agrees.
-	var bulkhead: Dictionary = {}
+func test_an_unbuilt_ability_is_refused_without_cost() -> void:
+	# Arcanite Colossus waits for a later #158 slice; the menu disables it, and
+	# do_ability agrees.
+	var colossus: Dictionary = {}
 	for a: Variant in DataManager.load_abilities("lira"):
-		if (a as Dictionary).get("id", "") == "bulkhead":
-			bulkhead = a
-	assert_false(bulkhead.is_empty(), "lira.json has Bulkhead")
+		if (a as Dictionary).get("id", "") == "arcanite_colossus":
+			colossus = a
+	assert_false(colossus.is_empty(), "lira.json has Arcanite Colossus")
 	_state.get_member(LIRA)["ac"] = 12
 	assert_false(
-		_cmd.do_ability("party_%d" % LIRA, {"type": "ability", "ability": bulkhead, "target": 0}),
-		"Lira's Bulkhead is not built yet"
+		_cmd.do_ability("party_%d" % LIRA, {"type": "ability", "ability": colossus}),
+		"Lira's Arcanite Colossus is not built yet"
 	)
 	assert_eq(_state.get_member(LIRA)["ac"], 12, "nothing spent")
 
@@ -400,13 +401,15 @@ func test_an_unbuilt_command_is_refused_without_cost() -> void:
 # --- Costs are keyed on the data's cost_type ---
 
 
-func test_only_mp_and_ap_costs_can_be_paid_after_158b() -> void:
+func test_only_mp_ap_and_ac_costs_can_be_paid_after_158c() -> void:
 	var member: Dictionary = {"current_mp": 10, "ap": 10, "ac": 12, "wg": 100}
 	assert_true(AbilityCommand.can_pay(member, {"cost_type": "mp", "cost_value": 10}), "mp")
 	assert_false(AbilityCommand.can_pay(member, {"cost_type": "mp", "cost_value": 11}), "short")
 	assert_true(AbilityCommand.can_pay(member, {"cost_type": "ap", "cost_value": 10}), "ap")
 	assert_false(AbilityCommand.can_pay(member, {"cost_type": "ap", "cost_value": 11}), "ap short")
-	for ctype: String in ["ac", "wg", "mp_cd", "none"]:
+	assert_true(AbilityCommand.can_pay(member, {"cost_type": "ac", "cost_value": 12}), "ac")
+	assert_false(AbilityCommand.can_pay(member, {"cost_type": "ac", "cost_value": 13}), "ac short")
+	for ctype: String in ["wg", "mp_cd", "none"]:
 		assert_false(
 			AbilityCommand.can_pay(member, {"cost_type": ctype, "cost_value": 0}),
 			"%s is not payable until its slice lands" % ctype

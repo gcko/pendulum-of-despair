@@ -10,19 +10,20 @@ signal member_died(slot: int)
 signal member_revived(slot: int)
 signal status_applied(slot: int, status_name: String)
 signal status_removed(slot: int, status_name: String)
-## A member's unique-command state changed: a Rally, or Bulwark's stance, AP or
-## effects, landed on or left them.
+## A member's unique-command state changed: a Rally, Bulwark's stance, AP or
+## effects, or Forgewright's devices or AC, landed on or left them.
 signal ability_state_changed(slot: int)
 
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 const Helpers = preload("res://scripts/util/inventory_helpers.gd")
 const Rally = preload("res://scripts/combat/battle_rally.gd")
 const Bulwark = preload("res://scripts/combat/battle_bulwark.gd")
+const Forgewright = preload("res://scripts/combat/battle_forgewright.gd")
+const Buffs = preload("res://scripts/combat/battle_buffs.gd")
 
 ## Modules holding in-force unique-command state (#158), each answering on_damage,
-## on_fainted, on_status, on_turn_begin, on_turn_end and stat_pct, so no seam
-## names one.
-const ABILITY_HOOKS: Array = [Rally, Bulwark, preload("res://scripts/combat/battle_buffs.gd")]
+## on_fainted, on_status, on_turn_begin, on_turn_end and stat_pct (no seam names one).
+const ABILITY_HOOKS: Array = [Rally, Bulwark, Forgewright, Buffs]
 
 ## Party member data. Index = slot (0-3). Null entries = empty slots.
 var _members: Array = [null, null, null, null]
@@ -59,8 +60,7 @@ func add_member(slot: int, char_data: Dictionary) -> void:
 		"active_statuses": [] as Array[Dictionary],
 		"is_alive": current_hp > 0,
 		"is_defending": false,
-		# Cumulative damage this member has dealt to enemies — drives boss
-		# highest-threat targeting (GAP-009).
+		# Damage dealt to enemies, for boss highest-threat targeting (GAP-009).
 		"threat_dealt": 0,
 		# Buffs
 		"atk_mult": 1.0,
@@ -71,7 +71,7 @@ func add_member(slot: int, char_data: Dictionary) -> void:
 		"damage_taken_mult": 1.0,
 		# Ability resources
 		"ap": 0,
-		"ac": 12,
+		"ac": PartyState.arcanite_charges,
 		"wg": 0,
 		"favor": {},
 		"stolen_goods": [] as Array[String],

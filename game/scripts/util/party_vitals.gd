@@ -6,8 +6,9 @@ extends RefCounted
 ## Extracted from party_state.gd (GAP-087). PartyState keeps the public API and
 ## forwards here.
 
-## AC every member is restored to by a full rest (economy.md § Inns).
-const FULL_REST_AC: int = 12
+## The most Arcanite Charges Lira's pool holds, and what a full rest restores
+## (abilities.md § Lira — Forgewright, "Max 12 AC"; economy.md § Inns).
+const AC_MAX: int = 12
 
 var _party: Node
 
@@ -23,8 +24,8 @@ func rest_at_inn() -> void:
 			continue
 		member["current_hp"] = member.get("max_hp", 1)
 		member["current_mp"] = member.get("max_mp", 0)
-		member["current_ac"] = FULL_REST_AC
 		member["status_effects"] = []
+	_party.arcanite_charges = AC_MAX
 
 
 ## Deduct MP from a party member. Returns false if insufficient.
@@ -63,8 +64,11 @@ func revive_active_at_fraction(fraction: float) -> void:
 
 
 ## Apply rest item effects: restore HP/MP by percentage, optionally
-## clear status. Applies to ALL party members (active + reserve).
+## clear status. Applies to ALL party members (active + reserve). The same
+## percentage of Lira's AC pool comes back (save-system.md § 4: Sleeping Bag
+## 25%, Tent 50%, Pavilion 100%).
 func rest_party(restore_pct: float, clears_status: bool) -> void:
+	restore_ac(int(AC_MAX * restore_pct))
 	for m: Dictionary in _party.members:
 		if m.is_empty():
 			continue
@@ -80,3 +84,8 @@ func rest_party(restore_pct: float, clears_status: bool) -> void:
 		)
 		if clears_status:
 			m["status_effects"] = []
+
+
+## Return [param amount] AC to Lira's pool, up to AC_MAX.
+func restore_ac(amount: int) -> void:
+	_party.arcanite_charges = clampi(_party.arcanite_charges + maxi(0, amount), 0, AC_MAX)

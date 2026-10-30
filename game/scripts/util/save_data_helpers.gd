@@ -56,7 +56,8 @@ static func location_display_name(world: Dictionary) -> String:
 
 ## Build the save data template with stub sections for systems not yet implemented.
 ## `world_state` carries the caller-owned world block (location, position, gold,
-## event flags); everything else in `world` is filled in here.
+## event flags); everything else in `world` is filled in here. [param ac] is
+## Lira's Arcanite Charge pool; the rest of the crafting block is still a stub.
 static func build_save_dict(
 	party: Array,
 	form: Dictionary,
@@ -65,7 +66,8 @@ static func build_save_dict(
 	world_state: Dictionary,
 	play_time: int = 0,
 	lc: Dictionary = {},
-	ps: Dictionary = {}
+	ps: Dictionary = {},
+	ac: int = PartyVitals.AC_MAX
 ) -> Dictionary:
 	var world: Dictionary = {
 		"event_flags": world_state.get("event_flags", {}),
@@ -86,7 +88,7 @@ static func build_save_dict(
 		"owned_equipment": equips.duplicate(true),
 		"crafting":
 		{
-			"arcanite_charges": 12,
+			"arcanite_charges": ac,
 			"device_loadout": [null, null, null, null, null],
 			"discovered_synergies": [],
 			"unlocked_recipes": [],
