@@ -147,14 +147,18 @@ not re-litigate it. Legitimate reasons look like:
 - **A loop plus the seam its collaborators reach it through.** `battle_manager.gd` is the
   post-extraction residue of a 724-line original: every command the player can pick was
   moved out to `BattlePlayerActions` (attack/defend/flee), `BattleMagicCommand`,
-  `BattleItemCommand` and `BattleAbilityCommand` (with `BattleRally`), and battle-start
-  assembly to `BattleSetup`. What is left is one per-frame ATB loop — `_process` threads
+  `BattleItemCommand`, `BattleAbilityCommand` (with `BattleRally`) and `BattleComboCommand`,
+  battle-start assembly to `BattleSetup`, and the status-notice handlers to
+  `BattleStatusNotices`. What is left is one per-frame ATB loop — `_process` threads
   `_awaiting_input_for`, `_turn_counter` and `_battle_resolved` through its party/enemy
   branches, so splitting it yields two halves that must hand the same three fields back and
-  forth — plus the `get_battle_state` / `get_enemies` / `get_atb` / `is_boss_battle`
-  accessor block those five modules work through. It sits just over the aim, not near the
-  maximum, and the next command module adds to the extracted side rather than to this file.
-  The reason is stated in its header comment.
+  forth — plus the seam those modules work through: the `get_battle_state` / `get_enemies` /
+  `get_atb` / `is_boss_battle` accessors, `resync_enemy_atb`, and `emit_party_events`, which
+  surfaces a turn's start and end events and is public so `BattleComboCommand` can open a
+  combo partner's turn. Closing a turn stays here because it moves `_turn_counter`, and the
+  Defend lapse inside `_on_ui_command` is pinned there by `test_battle_regressions.gd`. The
+  file sits in the band, not at the maximum, and the next command module adds to the
+  extracted side rather than to this file. The reason is stated in its header comment.
 
 What is **not** a reason: "it grew". A file over 400 with no stated justification is debt,
 and the next change to it should pay some down.

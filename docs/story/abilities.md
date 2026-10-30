@@ -407,14 +407,27 @@ MP does not remove a combo from the list. A combo one partner cannot pay for is 
 
 ### Calling a Combo
 
-These readings were posted on [#176](https://github.com/gcko/pendulum-of-despair/issues/176) for slice 176b, where the text above is silent.
+Two sets of readings for slice 176b are posted on [#176](https://github.com/gcko/pendulum-of-despair/issues/176), covering what the text above leaves open. The orchestrator posted the first set. The builder posted the second, and the orchestrator accepted it.
 
-1. **The menu is the actor's.** Combo sits after the unique command in the battle command list ([ui-design.md](ui-design.md) § 2.4). Its menu lists only the combos that include the character whose turn it is and a partner who is ready by the rules above. With none to list, the Combo command is grayed.
-2. **Grayed, not hidden.** A listed combo is grayed when a partner cannot pay their share, or when its usage condition is unmet. The conditions are Shattered Vanguard's "stance with stored damage", Spiritward's Bulwark stance, Arcane Convergence's deployed devices and Ambush Protocol's stolen Forgewright component. A combo whose effect is not built yet is grayed too. No document says which items are Forgewright components, so Ambush Protocol's condition is never met yet.
-3. **It uses both turns.** The combo is the turn of both characters. The partner's start-of-turn effects run as the combo is called, and Second Wind's regen lands then. Afterward both turns close: both ATB gauges reset, and each character's end-of-turn ticks (Poison, Burn, status countdowns) run once, as on a turn of their own. A combo is checked again when it is chosen, so a partner Confused, Silenced or KO'd since the menu opened stops it and nothing is spent.
-4. **MP is split** per the Combo List's shares (`mp_costs` in `combos.json`). The combo is refused, spending nothing, if either character is short.
-5. **Ley Torrent.** The blast goes through the magic formula ([combat-formulas.md](combat-formulas.md) § Magic Damage Resolution) with the two partners' MAG added together at spell power 16. The formula's base is MAG × power / 4, so this is the Combo List's (Maren's Magic + Torren's Magic) × 4. The target's MDEF is taken as 0, and the standard hit roll and variance apply. Each partner's Despair cuts it, because both of them deal the blow: one partner in Despair takes 20% off, and both take 0.8 × 0.8 (36% off). The hit roll uses Maren's SPD, since she channels the blast, and the threat is hers. Maren gains 30 WG in place of the normal cast gain (not 30 + 5, and Torren's share earns her no +10). Like the cast gain it replaces, the 30 needs the blast to land on at least one enemy.
-6. **What is built.** Slice 176b builds Ley Torrent. The other ten combos land in 176c, each with the sub-ability slice of [#158](https://github.com/gcko/pendulum-of-despair/issues/158) it draws on. Cael's Echo also waits on its gate, because nothing in the game sets `cael_betrayal_complete` yet.
+**Orchestrator readings:**
+
+1. **Menu contents.** The Combo menu lists only the combos that include the character whose turn it is and a partner who is ready by the rules above.
+2. **Unmet conditions.** A combo whose usage condition is unmet is listed grayed, the same as one a partner cannot pay for. The conditions are Shattered Vanguard's "stance with stored damage", Spiritward's Bulwark stance, Arcane Convergence's deployed devices and Ambush Protocol's stolen Forgewright component.
+3. **Both turns.** A combo uses both characters' turns. Both ATB gauges reset, and each character's start-of-turn effects and end-of-turn ticks run once, as on a turn of their own.
+4. **MP** is split per the Combo List's shares (`mp_costs` in `combos.json`).
+5. **Ley Torrent.** Damage is (Maren's Magic + Torren's Magic) × 4 through the magic formula ([combat-formulas.md](combat-formulas.md) § Magic Damage Resolution), with Magic Defense ignored and the standard hit roll and variance. Maren gains 30 WG in place of the normal cast gain.
+6. **Cael's Echo** stays unbuilt, because nothing in the game sets `cael_betrayal_complete` yet. The other ten combos land in 176c, each with the sub-ability slice of [#158](https://github.com/gcko/pendulum-of-despair/issues/158) it draws on.
+7. **Placement.** Combo sits after the unique command in the battle command list ([ui-design.md](ui-design.md) § 2.4). It is grayed when no combo is listed for that character.
+
+**Builder readings:**
+
+1. **Despair.** Each partner's Despair cuts Ley Torrent, because both of them deal the blow. One partner in Despair gives ×0.8, and both give 0.8 × 0.8 = ×0.64.
+2. **Hit roll and threat.** Both are Maren's, since she channels the blast.
+3. **Weave Gauge.** The 30 WG lands only if the blast hits at least one enemy, the same as the cast gain it replaces. It is 30 in all: Maren's own +5 and Torren's +10 are not added.
+4. **Unbuilt combos** are listed grayed until their 176c slice lands.
+5. **Re-check on choice.** A combo is checked again when it is chosen. A partner who is Confused, KO'd, short of MP, or Silenced on a share Silence stops since the menu opened makes it fail, and nothing is spent.
+
+**How the build applies them.** Ley Torrent adds the two partners' MAG and runs them at spell power 16. The formula's base is MAG × power / 4, so the result is the combined MAG × 4, with the target's MDEF taken as 0. The partner's turn starts as the combo is called, so Second Wind's regen lands then. The check runs again after that turn start, so if the turn start KOs the partner or ends the battle, the combo stops and nothing is spent. Each turn then closes: the gauge resets, the end-of-turn ticks run, and a Defend from an earlier turn lapses. The Combo list is rebuilt whenever a party gauge fills or empties while the menu is open, so a partner who becomes ready mid-menu joins it. No document says which items are Forgewright components, so Ambush Protocol's condition is never met yet.
 
 ---
 

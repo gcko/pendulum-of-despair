@@ -261,12 +261,16 @@ Vertical list of battle commands:
   Torren → Spiritcall, Sable → Tricks, Maren → Arcanum.
   See [abilities.md](abilities.md) for each command's sub-abilities.
 - Combo opens a sub-menu of the dual-tech combos this character can call
-  with a partner who is ready. Each entry reads "Ley Torrent (Torren)
-  10/8 MP": the combo, the partner, then the MP each pays, this
-  character's share first. An entry the partners cannot pay for, whose
-  usage condition is unmet, or that is not built yet is grayed out and not
-  selectable. Combo itself is grayed out when there is no entry to list.
-  See [abilities.md](abilities.md) § Calling a Combo.
+  with a partner who is ready. Each entry reads
+  `Ley Torrent (Torren)  10/8 MP`: the combo, the partner, two spaces as
+  in the Magic list, then the MP each pays, this character's share first.
+  An entry the partners cannot pay for, whose usage condition is unmet, or
+  that is not built yet is grayed out and not selectable. Combo itself is
+  grayed out when there is no entry to list. The list is rebuilt when a
+  partner becomes ready while the menu is open. See
+  [abilities.md](abilities.md) § Calling a Combo.
+- The cursor skips grayed-out entries, in the command list and in every
+  sub-menu, so it always rests on something the player can choose.
 
 ### 2.5 Battle Message Area
 
