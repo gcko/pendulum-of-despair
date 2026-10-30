@@ -140,8 +140,8 @@ rather than turned off.
 
 ### Undead
 
-- **Inherent traits:** Healing spells deal damage. Revival items deal
-  max damage (instant kill)
+- **Inherent traits:** Healing spells deal damage. Revival items and
+  revival spells deal max damage (instant kill)
 - **Default immunities:** Poison, Death
 - **Interactions:**
   - Spirit element deals 1.5x (stacks with weakness)
@@ -155,8 +155,14 @@ rather than turned off.
   earns Weave Gauge and kills like any spell. A revival item used on an
   Undead sets its HP to 0, an instant kill, and is used up. On any other
   enemy, Pallor included, a revival item is refused and kept. Healing a
-  normal enemy heals it and earns no Weave Gauge. Any other single-ally
-  spell or item aimed at an enemy is refused.
+  normal enemy heals it and earns no Weave Gauge.
+- **Revival spells on an enemy (2026-10-30 rulings):** a revival spell
+  (Spirit Recall, Second Dawn) cast on an Undead sets its HP to 0, an
+  instant kill that counts as spell damage, as a heal's damage does. On
+  any other enemy, Pallor included, it is refused before any MP is spent.
+  Kindle Breath cast on an enemy is refused until an enemy-side Regen
+  tick exists. Any other single-ally spell or item aimed at an enemy is
+  refused.
 
 ### Construct
 
