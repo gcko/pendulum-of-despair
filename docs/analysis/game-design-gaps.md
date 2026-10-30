@@ -806,7 +806,7 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | Dungeon Design | dungeons-world.md, dungeons-city.md | COMPLETE |
 | NPC Design | npcs.md | MOSTLY COMPLETE |
 | Magic System | magic.md | COMPLETE (numeric balance closed — see below) |
-| Ability System | abilities.md | COMPLETE (resource costs closed; all ten damage magnitudes closed, the last being Shiv's thrown-item branch — [#359](https://github.com/gcko/pendulum-of-despair/issues/359), see below. One non-magnitude decision is named open in abilities.md rather than settled: which held item supplies the element on Wild Card's 2- and 3-item branches — [#447](https://github.com/gcko/pendulum-of-despair/issues/447)) |
+| Ability System | abilities.md | COMPLETE (resource costs closed; all ten damage magnitudes closed, the last being Shiv's thrown-item branch — [#359](https://github.com/gcko/pendulum-of-despair/issues/359), see below. The one non-magnitude decision named open after that, which held item supplies the element on Wild Card's 2- and 3-item branches, is settled: the most recently stolen elemental item held, and non-elemental with none — [#447](https://github.com/gcko/pendulum-of-despair/issues/447)) |
 | Music Score | music.md | COMPLETE |
 | Visual Style | visual-style.md, building-palette.md | COMPLETE |
 | Dynamic World | dynamic-world.md | COMPLETE |
@@ -904,7 +904,8 @@ naming Void or the Pallor it manifests) and everything else throws
 non-elemental. Wild Card's item branches take the same mapping, which was always
 one decision covering both — though the mapping fixes the element *per item* and
 does not say which of several held items supplies it on Wild Card's 2- and
-3-item branches, which abilities.md leaves open rather than settled
+3-item branches. That is now settled in abilities.md: the most recently stolen
+elemental item held supplies it, and with none the strike is non-elemental
 ([#447](https://github.com/gcko/pendulum-of-despair/issues/447)).
 Second, the throw is read
 as **(a)**: it re-elements the existing Shiv hit and changes nothing else, so no

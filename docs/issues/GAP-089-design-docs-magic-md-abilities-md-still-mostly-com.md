@@ -47,10 +47,11 @@ Run a balance pass, then diff against the gap-1.5 JSON values.
   is a buff that adds an Attack-command hit, not a multiplier rung.
   Runtime execution of the party abilities is still open as issue #321,
   which is an implementation gap rather than a documentation one and
-  does not hold this criterion. Neither does #447: the mapping fixes the
-  element per item, and *which* held item supplies it on Wild Card's 2-
-  and 3-item branches is a balance decision abilities.md names open
-  rather than settles, not a magnitude.
+  does not hold this criterion. Neither did #447, which is now settled:
+  the mapping fixes the element per item, and abilities.md § Damage
+  Magnitudes has the most recently stolen elemental item held supply it
+  on Wild Card's 2- and 3-item branches, non-elemental with none. It was
+  a balance decision, not a magnitude.
 
 ## Design references
 

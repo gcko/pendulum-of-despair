@@ -2,7 +2,8 @@ class_name BattleDamageMods
 extends RefCounted
 ## What an attacker's own state does to the blows it deals: Despair's -20%
 ## damage dealt and Blind's -50% physical accuracy (#246 slice 3), and the
-## element of a party member's equipped weapon (#513).
+## element of a party member's equipped weapon (#513), and Smokescreen's cut to
+## an enemy's hit rate (#158 slice d).
 ##
 ## Rulings of 2026-10-30 (combat-formulas.md § Attacker Status Modifiers and
 ## § Physical Elemental Attacks): Despair cuts all damage its bearer deals —
@@ -46,12 +47,16 @@ static func cut_dealt(dmg: int, who: Variant) -> int:
 	return int(floor(dmg * dealt_mult(who)))
 
 
-## The multiplier on [param who]'s physical hit rate: 0.5 under Blind, else 1.0.
-## Pass it to DamageCalc.roll_hit for a physical attack only.
+## The multiplier on [param who]'s physical hit rate: 0.5 under Blind, times
+## Smokescreen's 0.7 on an enemy under it (BattleTricks.SMOKESCREEN, carried as
+## a debuff on the enemy's "accuracy"), else 1.0. Pass it to DamageCalc.roll_hit
+## for a physical attack only.
 static func accuracy_mult(who: Variant) -> float:
 	var mult: float = 1.0
 	for s: Dictionary in statuses_of(who):
 		mult *= StatusEffects.physical_accuracy_mult(String(s.get("name", "")))
+	if who is Object and is_instance_valid(who) and (who as Object).has_method("buff_mult"):
+		mult *= float((who as Object).call("buff_mult", BattleTricks.ACCURACY_STAT))
 	return mult
 
 
@@ -68,6 +73,19 @@ static func strike_mods(state: Node, slot: int, enemy: Node) -> Dictionary:
 		if not element.is_empty():
 			out["element_mod"] = enemy.get_element_multiplier(element)
 	out["mult"] = float(out.get("mult", 1.0)) * dealt_mult(member)
+	return out
+
+
+## The modifiers on a Trick's strike by [param member] at [param enemy] carrying
+## [param element] ("" for none), as strike_mods returns them: mult is the
+## striker's Despair; element_mod is there only when the strike is elemental.
+## A Trick's element is its thrown item's and never the weapon's, and it does
+## not spend an Overcharge (abilities.md § Damage Magnitudes > 'Shiv', built in
+## 158d).
+static func trick_mods(member: Dictionary, enemy: Node, element: String) -> Dictionary:
+	var out: Dictionary = {"mult": dealt_mult(member)}
+	if not element.is_empty():
+		out["element_mod"] = enemy.get_element_multiplier(element)
 	return out
 
 

@@ -448,8 +448,14 @@ Some weapons and abilities have elemental properties:
   element applies to every physical strike a party member makes on an enemy
   among those built so far: the Attack command, an auto-attack under Confusion
   or Berserk, and Riposte's counter, with weakness, resistance, immunity and
-  absorption all as below. Abilities that re-element their own hit (Shiv,
-  Wild Card, Sever Bond) settle theirs when they are built.
+  absorption all as below. Sable's Tricks do not carry it: Shiv and Wild
+  Card strike at their thrown item's element and at no other, so a bare Shiv,
+  a non-elemental throw and an item-less or non-elemental Wild Card are all
+  non-elemental, and neither spends an Overcharge. Wild Card's item branches
+  take the element of the most recently stolen elemental item held
+  ([#447](https://github.com/gcko/pendulum-of-despair/issues/447);
+  [abilities.md](abilities.md) § Damage Magnitudes). Sever Bond settles its
+  own when it is built.
   When Overcharge also applies, the more favorable of Storm and the weapon's
   element decides ([abilities.md](abilities.md) § Lira — Forgewright). A
   confused member's blow on an ally and Shatter Guard's fixed damage carry no
@@ -567,6 +573,12 @@ a user ruling of 2026-10-30 unless marked as a reading.
   § Status Effect Reference: "Physical accuracy -50%"). The rate from § Physical Attack Resolution step 1 is
   multiplied by 0.5 before the [20%, 99%] clamp and floored, so an even-SPD 90%
   becomes 45% (the floor is a reading). Spells keep their full hit rate.
+- **Smokescreen cuts an enemy's physical hit rate by 30%** ([abilities.md](abilities.md)
+  § Sable — Tricks: "Reduces all enemies' accuracy by 30% for 2 turns"). It
+  multiplies the step-1 rate by 0.7, with Blind's 0.5 when both apply (0.35),
+  before the clamp, and lasts two of each enemy's own turns. Like Blind it is
+  physical only; an enemy's spells keep their hit rate (orchestrator reading
+  on [#158](https://github.com/gcko/pendulum-of-despair/issues/158)).
 
 ---
 
@@ -574,7 +586,7 @@ a user ruling of 2026-10-30 unless marked as a reading.
 
 ### Physical Attack Resolution
 
-1. **Hit Rate% roll** — `90 + (attacker.SPD - target.SPD) / 4`, times the attacker's accuracy multiplier (Blind 0.5, else 1.0; § Attacker Status Modifiers), clamped to [20%, 99%]. Miss = 0 damage, stop.
+1. **Hit Rate% roll** — `90 + (attacker.SPD - target.SPD) / 4`, times the attacker's accuracy multiplier (Blind 0.5 and Smokescreen 0.7, multiplied together when both apply, else 1.0; § Attacker Status Modifiers), clamped to [20%, 99%]. Miss = 0 damage, stop.
 2. **Evasion% roll** — `target.SPD / 4`, cap 50%. Dodged = 0 damage, stop.
 3. **Calculate base damage** — `(ATK² × ability_mult) / 6 - target.DEF`
 4. **Floor check** — `max(1, base_damage)`

@@ -401,7 +401,7 @@ func test_an_unbuilt_ability_is_refused_without_cost() -> void:
 # --- Costs are keyed on the data's cost_type ---
 
 
-func test_only_mp_ap_and_ac_costs_can_be_paid_after_158c() -> void:
+func test_unbuilt_costs_cannot_be_paid() -> void:
 	var member: Dictionary = {"current_mp": 10, "ap": 10, "ac": 12, "wg": 100}
 	assert_true(AbilityCommand.can_pay(member, {"cost_type": "mp", "cost_value": 10}), "mp")
 	assert_false(AbilityCommand.can_pay(member, {"cost_type": "mp", "cost_value": 11}), "short")
@@ -409,7 +409,7 @@ func test_only_mp_ap_and_ac_costs_can_be_paid_after_158c() -> void:
 	assert_false(AbilityCommand.can_pay(member, {"cost_type": "ap", "cost_value": 11}), "ap short")
 	assert_true(AbilityCommand.can_pay(member, {"cost_type": "ac", "cost_value": 12}), "ac")
 	assert_false(AbilityCommand.can_pay(member, {"cost_type": "ac", "cost_value": 13}), "ac short")
-	for ctype: String in ["wg", "mp_cd", "none"]:
+	for ctype: String in ["wg", "none"]:
 		assert_false(
 			AbilityCommand.can_pay(member, {"cost_type": ctype, "cost_value": 0}),
 			"%s is not payable until its slice lands" % ctype
