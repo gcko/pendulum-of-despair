@@ -186,7 +186,9 @@ rather than turned off.
 - **Default immunities:** —
 - **Interactions:**
   - Steal loot table +1 tier (better items than other types)
-  - Can be Confused to attack allies (full friendly-fire)
+  - Can be Confused. Confusion's friendly fire is not Humanoid-only: a
+    confused unit of any type picks its target uniformly among every living
+    combatant except itself, allies included (2026-10-30 ruling)
 
 ### Pallor
 

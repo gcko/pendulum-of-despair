@@ -359,7 +359,11 @@ unstated. `game/tests/test_spell_balance.gd` asserts all of them against
     does not replace Ironhide; Ironhide replaces Bulwark Line.
   - `regen_pct` is Regen: that percent of max HP, at least 1, at the start of
     each of the bearer's turns for `duration` turns (Kindle Breath and
-    Rekindling: 5, for 4 turns).
+    Rekindling: 5, for 4 turns). Cael's Second Wind
+    ([abilities.md](abilities.md) § Cael — Rally) and a spell's Regen on one
+    ally are one regen effect: the stronger applies each turn and the two do
+    not stack, so Second Wind's 5% with Kindle Breath's 5% heals 5%, not 10%
+    (2026-10-30 ruling).
   - `revive_pct` revives a Fainted ally (target `fainted_ally`) at that
     percent of max HP: Spirit Recall 25, Second Dawn 75.
   - `mp_restore_pct` restores that percent of the target's max MP
