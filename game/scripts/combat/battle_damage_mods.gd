@@ -6,8 +6,8 @@ extends RefCounted
 ##
 ## Rulings of 2026-10-30 (combat-formulas.md § Attacker Status Modifiers and
 ## § Physical Elemental Attacks): Despair cuts all damage its bearer deals —
-## physical, magic, abilities, Shock Coil and Arc Trap ticks, counters — but no
-## healing. Blind halves the bearer's physical hit rate, before the 20-99 clamp;
+## physical, magic, abilities, Shock Coil's ticks and Arc Trap's blast,
+## counters — but no healing. Blind halves the bearer's physical hit rate, before the 20-99 clamp;
 ## spells keep theirs. Every physical strike through
 ## BattleActions.execute_party_attack (Attack, an auto-attack on an enemy,
 ## Riposte) carries the equipped weapon's element; when Overcharge also applies,

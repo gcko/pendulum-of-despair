@@ -227,12 +227,14 @@ func test_an_accuracy_mult_applies_before_the_99_cap() -> void:
 
 
 func test_an_accuracy_mult_cannot_sink_the_hit_rate_below_20() -> void:
+	# 90 + (0 - 400) / 4 = -10, halved to -5, clamped to 20%. Clamping first
+	# would give 20 halved, 10%: half the hits this asserts.
 	seed(200)
 	var hits: int = 0
-	for i: int in range(1000):
-		if DamageCalc.roll_hit(1, 255, 0.5):
+	for i: int in range(4000):
+		if DamageCalc.roll_hit(0, 400, 0.5):
 			hits += 1
-	assert_between(hits, 130, 270, "still ~20%")
+	assert_between(hits, 700, 900, "~20%, not ~10%")
 
 
 func test_evasion_rate_cap_50() -> void:

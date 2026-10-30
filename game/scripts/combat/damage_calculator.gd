@@ -84,7 +84,9 @@ static func calculate_physical(
 ## @param buff_mults Array[float] — multiplicative buff values.
 ## @param reduction_sources Array[float] — multiplicative reduction values.
 ## Returns: positive int for damage, 0 for immunity.
-## For absorb: returns positive int (healing amount for target).
+## For absorb: returns positive int (healing amount for target), after the
+## buff modifiers (combat-formulas.md step 5: Despair cuts the heal as it cuts the blow; ruling of
+## 2026-10-30) and variance, but no interaction modifier or reduction.
 static func calculate_magic(
 	mag: int,
 	spell_power: int,
@@ -101,15 +103,16 @@ static func calculate_magic(
 	raw *= element_mod
 	if element_mod == 0.0:
 		return 0
-	if element_mod < 0.0:
-		return mini(14999, int(absf(raw * roll_variance())))
 
-	# Step 3: Combat interaction modifiers
-	raw *= interaction_mult
+	# Step 3: Combat interaction modifiers (not on an absorbed spell)
+	if element_mod > 0.0:
+		raw *= interaction_mult
 
-	# Step 4: Buff modifiers (Resonance, Glintmark)
+	# Step 4: Buff modifiers (Resonance, Glintmark, Despair), absorbed or not
 	for mult: float in buff_mults:
 		raw *= mult
+	if element_mod < 0.0:
+		return mini(14999, int(absf(raw * roll_variance())))
 
 	# Step 5: Variance
 	var result: float = raw * roll_variance()

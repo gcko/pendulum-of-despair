@@ -31,7 +31,9 @@ const MAREN := 3
 ## even a halved hit rate lands it.
 const LANDING_SEED_MAX_ROLL := 45
 
-## Edren's Flame weapon (game/data/equipment/weapons.json).
+## A Flame weapon: Lira's forge_hammer (game/data/equipment/weapons.json).
+## The tests set it straight onto Edren's equipment; who may wear what is the
+## equip menu's rule, not the strike's, which reads only the weapon's element.
 const FLAME_WEAPON := "forge_hammer"
 
 
@@ -196,6 +198,64 @@ func test_a_flame_weapon_heals_a_flame_absorbing_enemy() -> void:
 	assert_eq(sponge.current_hp, 20000 + int(r["damage"]), "it drank the blow")
 
 
+func test_a_flame_weapon_deals_the_resisted_multiple_to_a_flame_resistant_enemy() -> void:
+	_arm_edren(FLAME_WEAPON)
+	var s: int = _landing_seed()
+	var plain: int = int(_attack(EDREN, _enemy, s)["damage"])
+	var resistant: Enemy = _make_enemy({"resistances": ["flame"]})
+	var r: Dictionary = _attack(EDREN, resistant, s)
+	assert_eq(r["type"], "physical")
+	assert_almost_eq(float(r["damage"]), plain * 0.75, 1.0, "x0.75 on %d" % plain)
+
+
+func test_riposte_carries_the_weapon_s_element() -> void:
+	_arm_edren(FLAME_WEAPON)
+	var weak: Enemy = _make_enemy({"weaknesses": ["flame"]})
+	var cmd: RefCounted = AbilityCommand.new(_battle)
+	assert_true(cmd.do_ability("party_0", _edren_ability("ironwall", LIRA)), "precondition")
+	for s: int in range(1, 80):
+		var plain: Dictionary = _riposte(cmd, _enemy, s)
+		if not plain.get("hit", false):
+			continue
+		var r: Dictionary = _riposte(cmd, weak, s)
+		assert_almost_eq(
+			float(r["damage"]), float(plain["damage"]) * 1.5, 2.0, "x1.5 on %d" % plain["damage"]
+		)
+		return
+	fail_test("no seed lands both the hit and its counter")
+
+
+## Arm Edren's Riposte, then let [param enemy] strike Lira, whom his Ironwall
+## guards, under [param rng_seed]. Returns his counter, or {} when none came.
+func _riposte(cmd: RefCounted, enemy: Enemy, rng_seed: int) -> Dictionary:
+	_heal_all()
+	_state.begin_turn(EDREN)
+	_state.get_member(EDREN)["ap"] = 2
+	assert_true(cmd.do_ability("party_0", _edren_ability("riposte", 0)), "Riposte is armed")
+	_state.tick_statuses(EDREN)
+	seed(rng_seed)
+	var ripostes: Array = BattleActions.execute_enemy_attack(_state, enemy, LIRA).get(
+		"ripostes", []
+	)
+	return ripostes[0] if not ripostes.is_empty() else {}
+
+
+func test_an_auto_attack_on_an_enemy_carries_the_weapon_s_element() -> void:
+	_arm_edren(FLAME_WEAPON)
+	_afflict(EDREN, "berserk")
+	var auto := BattleAutoAction.new(_battle, BattlePlayerActions.new(_battle))
+	var s: int = _landing_seed()
+	seed(s)
+	auto.act_for(EDREN)
+	var plain: int = 30000 - _enemy.current_hp
+	assert_gt(plain, 0, "precondition: the berserk blow lands")
+	var weak: Enemy = _make_enemy({"weaknesses": ["flame"]})
+	_battle.enemies = [weak] as Array[Node]
+	seed(s)
+	auto.act_for(EDREN)
+	assert_almost_eq(float(30000 - weak.current_hp), plain * 1.5, 2.0, "x1.5 on %d" % plain)
+
+
 func test_a_plain_weapon_strikes_a_flame_weak_enemy_unmodified() -> void:
 	var s: int = _landing_seed()
 	var plain: int = int(_attack(EDREN, _enemy, s)["damage"])
@@ -253,6 +313,36 @@ func test_a_despaired_lira_s_shock_coil_deals_four_fifths() -> void:
 	seed(s)
 	var r: Dictionary = Forgewright.shock(_state, LIRA, 10, _battle.enemies)
 	assert_almost_eq(float(r["damage"]), plain * 0.8, 1.0, "x0.8 on %d" % plain)
+
+
+func test_a_despaired_member_s_absorbed_attack_heals_four_fifths() -> void:
+	_arm_edren(FLAME_WEAPON)
+	var s: int = _landing_seed()
+	var sponge: Enemy = _make_enemy({"absorb": ["flame"]})
+	sponge.current_hp = 20000
+	var plain: int = int(_attack(EDREN, sponge, s)["damage"])
+	_afflict(EDREN, "despair")
+	var r: Dictionary = _attack(EDREN, sponge, s)
+	assert_eq(r["type"], "absorb")
+	assert_almost_eq(float(r["damage"]), plain * 0.8, 1.0, "x0.8 on %d" % plain)
+
+
+func test_a_despaired_member_s_absorbed_spell_heals_four_fifths() -> void:
+	var s: int = _landing_seed()
+	var sponge: Enemy = _make_enemy({"absorb": ["flame"]})
+	sponge.current_hp = 20000
+	seed(s)
+	var mag: int = _state.get_effective_stat(MAREN, "mag")
+	var plain: Dictionary = BattleActions.apply_magic_to_enemy(
+		_state, MAREN, mag, 20, "flame", sponge, 0
+	)
+	assert_eq(plain["type"], "absorb", "precondition: the enemy drinks Flame")
+	_afflict(MAREN, "despair")
+	seed(s)
+	var r: Dictionary = BattleActions.apply_magic_to_enemy(
+		_state, MAREN, mag, 20, "flame", sponge, 0
+	)
+	assert_almost_eq(float(r["damage"]), plain["damage"] * 0.8, 1.0, "x0.8 on %d" % plain["damage"])
 
 
 func test_a_despaired_member_s_heal_restores_in_full() -> void:

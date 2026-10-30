@@ -6,8 +6,8 @@ extends RefCounted
 ## ability-hook fan-out (on_turn_begin's strike requests, which the battle
 ## answers with shock, on_turn_end's heal events, and the neutral rest); from
 ## BattleActions where a hit resolves (reductions, thorns, spring_trap,
-## take_overcharge, land_strike); and from BattleAbilityCommand, which issues
-## the abilities and pays their AC.
+## land_strike, and take_overcharge through BattleDamageMods.strike_mods); and
+## from BattleAbilityCommand, which issues the abilities and pays their AC.
 ##
 ## Design law: abilities.md § Lira — Forgewright and § Damage Magnitudes;
 ## combat-formulas.md § Damage Reduction Sources (Bulkhead) and § Buff-Granted
@@ -221,8 +221,9 @@ static func take_overcharge(state: Node, slot: int, enemy: Node) -> Dictionary:
 
 
 ## Land a party strike of [param dmg] on [param enemy], as [param dtype] unless
-## Overcharge's element ([param charge], from take_overcharge) voids it or the
-## enemy absorbs it. Returns BattleActions' strike result.
+## the strike's element ([param charge], from BattleDamageMods.strike_mods: an
+## Overcharge's or the weapon's) voids it or the enemy absorbs it. Returns
+## BattleActions' strike result.
 static func land_strike(enemy: Node, dmg: int, dtype: String, charge: Dictionary) -> Dictionary:
 	var mod: float = float(charge.get("element_mod", 1.0))
 	if mod == 0.0:
