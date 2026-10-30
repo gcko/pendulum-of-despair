@@ -413,22 +413,3 @@ func test_a_stronger_spell_regen_applies_over_second_wind_without_stacking() -> 
 	spell["regen_pct"] = 10
 	var hp: int = await _regen_under_second_wind(spell)
 	assert_eq(hp, 200, "the spell's 10%, not 10% plus Second Wind's 5%")
-
-
-func test_kindle_breath_turned_on_an_enemy_is_refused_before_mp() -> void:
-	# The enemy-side Regen tick is not built (it lives in the enemy's turn), so
-	# the cast is refused rather than spent on a status that would never heal.
-	var battle: Node = _boot()
-	var state: Node = battle.get_battle_state()
-	var said: Array[String] = []
-	battle.message.connect(func(text: String) -> void: said.append(text))
-	if not await _await_prompt(battle):
-		return
-	state.get_member(CASTER)["current_mp"] = 50
-	var spell: Dictionary = _spell("spirit", "kindle_breath")
-	spell["mp_cost"] = 6
-	battle.get_node("BattleUI").command_submitted.emit(
-		{"type": "magic", "spell": spell, "target": 0, "target_enemy": true}
-	)
-	assert_eq(int(state.get_member(CASTER)["current_mp"]), 50, "no MP spent")
-	assert_has(said, "No effect!", "and the player is told: %s" % str(said))

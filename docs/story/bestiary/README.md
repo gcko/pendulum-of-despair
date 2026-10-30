@@ -160,9 +160,10 @@ rather than turned off.
   (Spirit Recall, Second Dawn) cast on an Undead sets its HP to 0, an
   instant kill that counts as spell damage, as a heal's damage does. On
   any other enemy, Pallor included, it is refused before any MP is spent.
-  Kindle Breath cast on an enemy is refused until an enemy-side Regen
-  tick exists. Any other single-ally spell or item aimed at an enemy is
-  refused.
+  Kindle Breath cast on an enemy ticks the way a heal lands there: each of
+  the enemy's turns heals a normal foe and damages an Undead or a Pallor,
+  for the spell's duration ([magic.md](../magic.md) § Derived Rules). Any
+  other single-ally spell or item aimed at an enemy is refused.
 
 ### Construct
 

@@ -132,7 +132,8 @@ func _apply_action(action: Dictionary, enemy: Node, enemies: Array[Node], idx: i
 ## then decrement durations. Poison/Burn = floor(max_hp * tick_pct), min 1.
 ## Burn is fire: it scales by the enemy's Flame multiplier, so a weakness or
 ## resistance scales it, immunity voids it and absorption heals (ruling of
-## 2026-10-29, #246). A Pallor enemy then regenerates while the party despairs.
+## 2026-10-29, #246). A Pallor enemy then regenerates while the party despairs,
+## and a party Regen on it lands its tick (BattleEnemyHeal.tick_regen, #503).
 func _tick_enemy_statuses(enemy: Node, idx: int) -> void:
 	var max_hp: int = enemy.enemy_data.get("hp", 0)
 	var eid: String = "enemy_%d" % idx
@@ -151,13 +152,12 @@ func _tick_enemy_statuses(enemy: Node, idx: int) -> void:
 				dmg = maxi(1, int(dmg * mult))
 			enemy.take_damage(dmg, false)  # DoT must not wake Sleep/Confusion
 			_manager.damage_dealt.emit(eid, dmg, "burn" if sname == "burn" else "poison")
-			# A DoT kill must clean up like any other kill, or the dead enemy's
-			# gauge keeps filling and re-enters the ready queue.
-			if not enemy.is_alive:
+			if not enemy.is_alive:  # cleaned up like any kill, or its gauge refills
 				_manager.combatant_died.emit(eid)
 				_atb.remove_combatant(eid)
 	if enemy.is_alive and enemy.get_type() == "pallor" and _party_despairs():
 		_heal_enemy(enemy, eid, int(max_hp * PALLOR_REGEN_PCT))
+	BattleEnemyHeal.tick_regen(_manager, enemy, idx)
 	enemy.tick_statuses()
 	enemy.tick_buffs()
 
@@ -233,7 +233,7 @@ func _do_spawn(action: Dictionary, enemy: Node, enemies: Array[Node], idx: int) 
 		_atb.add_combatant(eid, new_enemy.get_stats().get("spd", 10), true)
 		new_enemy.died.connect(_manager._on_enemy_died.bind(new_enemy))
 		new_enemy.status_applied.connect(_manager._on_enemy_status_applied.bind(new_enemy))
-		announce_wakes(new_enemy)
+		announce_status_ends(new_enemy)
 		spawned += 1
 	if spawned > 0:
 		_manager.message.emit("Corrupted Spawns emerge from the depths!")
@@ -268,14 +268,20 @@ static func wake_lines(state: Node, before: Array[int]) -> Array[String]:
 	return out
 
 
-## Announce [param enemy] waking (a hit cured its Sleep, as enemy.take_damage
-## does) with the same canonical line the party uses. Wired to each enemy's
-## status_removed by BattleManager and by _do_spawn.
-func announce_wakes(enemy: Node) -> void:
+## Announce [param enemy] waking (a hit cured its Sleep) and its Poison or
+## Silence running out (#246), with the party's lines; any other status, and any
+## on a fallen enemy, ends silently. Wired by BattleManager and _do_spawn.
+func announce_status_ends(enemy: Node) -> void:
 	enemy.status_removed.connect(
 		func(status_name: String) -> void:
 			if status_name == "sleep" and enemy.is_alive:
 				_manager.message.emit(StatusEffects.wake_notice(enemy.get_display_name()))
+	)
+	enemy.status_expired.connect(
+		func(status_name: String) -> void:
+			var line: String = StatusEffects.wears_off_notice(status_name)
+			if enemy.is_alive and not line.is_empty():
+				_manager.message.emit(line)
 	)
 
 

@@ -2,8 +2,9 @@ class_name BattleMagicCommand
 extends RefCounted
 ## The Magic command in battle: validates targets, spends MP, and resolves a
 ## spell's damage, healing or status against the chosen side, an ally spell's
-## revive, stat buff, regeneration, MP restore, cure or escape (#503), or an
-## enemy debuff's stat penalty or dispel (#514).
+## revive, stat buff, regeneration, MP restore, cure or escape (#503), an
+## enemy debuff's stat penalty or dispel (#514), or a heal or Regen turned on
+## an enemy (BattleEnemyHeal).
 ##
 ## Extracted from battle_manager.gd (GAP-087) so the manager holds the ATB loop
 ## and the command dispatch while each command owns its own resolution rules.
@@ -24,11 +25,6 @@ const MAREN_WEAVE_GAIN: int = 10
 ## Statuses under which a party member cannot cast: Silence, "Cannot cast
 ## spells" (magic.md § Status Effect Reference).
 const CAST_BLOCKING_STATUSES: Array[String] = ["silence"]
-
-## Enemy types a heal spell hurts instead of heals, for exactly the HP it
-## would have restored: Undead ("Healing spells deal damage", bestiary/README.md
-## § Undead) and Pallor (Pallor Feedback, combat-formulas.md § Tier 2).
-const HEAL_REVERSING_TYPES: Array[String] = ["undead", "pallor"]
 
 ## Targets on the party's own side. A spell aimed there needs a built effect
 ## to be cast in battle (is_castable_in_battle).
@@ -119,8 +115,9 @@ func do_magic(actor_id: String, command: Dictionary) -> bool:
 
 ## The target type [param spell] resolves as, or "" when it cannot be cast: no
 ## battle effect is built, or it was turned on the enemy line (ui-design.md
-## § 2.6) with no enemy-side rule. A heal crosses as "ally_on_enemy", a revive
-## as "revive_on_enemy" (do_magic holds that to an Undead).
+## § 2.6) with no enemy-side rule. A heal or a Regen crosses as
+## "ally_on_enemy", a revive as "revive_on_enemy" (do_magic holds that to an
+## Undead).
 static func _target_type(spell: Dictionary, command: Dictionary) -> String:
 	if not is_castable_in_battle(spell):
 		return ""
@@ -128,7 +125,7 @@ static func _target_type(spell: Dictionary, command: Dictionary) -> String:
 	if not command.get("target_enemy", false):
 		return target_type
 	if target_type == "single_ally":
-		return "ally_on_enemy" if restores_hp(spell) else ""
+		return "ally_on_enemy" if restores_hp(spell) or spell.get("regen_pct") != null else ""
 	if target_type == "fainted_ally":
 		return "revive_on_enemy"
 	return target_type
@@ -179,13 +176,15 @@ func _resolve(
 		return _for_each_targetable_enemy(
 			func(i: int) -> bool: return _magic_on_enemy(slot, mag, power, element, rider, i)
 		)
+	if target_type == "ally_on_enemy" and spell.get("regen_pct") != null:
+		return BattleEnemyHeal.grant_regen(_battle, slot, spell, resolved_enemy_target)
 	if target_type == "ally_on_enemy":
 		return _heal_on_enemy(slot, DamageCalc.calculate_healing(mag, power), resolved_enemy_target)
 	if target_type == "revive_on_enemy":
 		var enemy: Node = _battle.get_enemies()[resolved_enemy_target]
 		var hp: int = enemy.current_hp
 		enemy.take_damage(hp)
-		_land_spell_damage(slot, hp, resolved_enemy_target)
+		BattleEnemyHeal.land_spell_damage(_battle, slot, hp, enemy, resolved_enemy_target)
 		return true
 	if target_type in ALLY_TARGETS:
 		# One heal roll for the whole cast, as a party heal has always rolled.
@@ -194,6 +193,13 @@ func _resolve(
 			_allies = AllySpells.new(_battle)
 		return _allies.resolve(slot, spell, target_type, command, heal_amt)
 	return false
+
+
+## A heal spell's [param heal_amt], rolled once for the cast, landing on enemy
+## [param idx] by the heal-on-enemy rules (BattleEnemyHeal.land: an Undead or
+## Pallor takes it as damage). Returns whether the cast earns Weave Gauge.
+func _heal_on_enemy(caster_slot: int, heal_amt: int, idx: int) -> bool:
+	return BattleEnemyHeal.land(_battle, caster_slot, heal_amt, _battle.get_enemies()[idx], idx)
 
 
 ## Run [param apply] against every alive, targetable enemy. Returns whether any
@@ -206,42 +212,6 @@ func _for_each_targetable_enemy(apply: Callable) -> bool:
 			if apply.call(i):
 				had_effect = true
 	return had_effect
-
-
-## A heal spell landing on enemy [param idx]. An Undead or Pallor enemy takes
-## [param heal_amt] as damage — the heal as rolled, with its own variance and
-## 14,999 cap, no hit roll and no element or type multiplier, cut by the
-## caster's Despair (BattleDamageMods, #246) — and that damage counts as spell
-## damage: threat for the caster, Weave Gauge for the cast, and a kill handled
-## like any other. A normal enemy is healed by it. Returns
-## whether the cast earns Weave Gauge, which only heal damage does: healing an
-## enemy earns none (2026-10-29 ruling).
-func _heal_on_enemy(caster_slot: int, heal_amt: int, idx: int) -> bool:
-	var enemy: Node = _battle.get_enemies()[idx]
-	if enemy.get_type() in HEAL_REVERSING_TYPES:
-		heal_amt = BattleDamageMods.cut_dealt(
-			heal_amt, _battle.get_battle_state().get_member(caster_slot)
-		)
-		enemy.take_damage(heal_amt)
-		_land_spell_damage(caster_slot, heal_amt, idx)
-		return heal_amt > 0
-	var before: int = enemy.current_hp
-	enemy.heal(heal_amt)
-	var healed: int = enemy.current_hp - before
-	if healed > 0:
-		_battle.damage_dealt.emit("enemy_%d" % idx, healed, "heal")
-	return false
-
-
-## Book [param dmg] of spell damage already dealt to enemy [param idx]: the
-## caster's threat (GAP-009 highest-threat), the number shown over the enemy,
-## and the kill if it fell.
-func _land_spell_damage(caster_slot: int, dmg: int, idx: int) -> void:
-	_battle.get_battle_state().add_threat(caster_slot, dmg)
-	_battle.damage_dealt.emit("enemy_%d" % idx, dmg, "magic")
-	if not _battle.get_enemies()[idx].is_alive:
-		_battle.combatant_died.emit("enemy_%d" % idx)
-		_battle.get_atb().remove_combatant("enemy_%d" % idx)
 
 
 ## Resolve a damage spell against one enemy, then roll its status [param rider]
@@ -265,7 +235,8 @@ func _magic_on_enemy(
 		_battle.damage_dealt.emit("enemy_%d" % idx, result.get("damage", 0), "heal")
 		return true
 	if result.get("hit", false):
-		_land_spell_damage(caster_slot, int(result.get("damage", 0)), idx)
+		var dmg: int = int(result.get("damage", 0))
+		BattleEnemyHeal.land_spell_damage(_battle, caster_slot, dmg, enemies[idx], idx)
 		if enemies[idx].is_alive and not rider.is_empty():
 			# The rider rides on landed damage, and only onto a target still alive.
 			BattleActions.roll_status_rider(state, caster_slot, rider, enemies[idx])
@@ -318,8 +289,7 @@ func _status_on_enemy(caster_slot: int, spell: Dictionary, idx: int) -> bool:
 ## stat debuff or dispel (EnemyDebuffs, #514). One not built yet is refused
 ## before MP is spent, and the Magic menu grays it out: Leymirror, Last Breath,
 ## Drift, Forgeshield, the field-only Waymark, Linewalk and Veilstep, and on the
-## enemy side Crumble, Drag Tide, Spiritsight, Glintmark and the enemy-only
-## Drinker of Days.
+## enemy side Crumble, Spiritsight, Glintmark and the enemy-only Drinker of Days.
 static func is_castable_in_battle(spell: Dictionary) -> bool:
 	var turns: Variant = spell.get("duration")
 	for key: String in TIMED_EFFECTS:
