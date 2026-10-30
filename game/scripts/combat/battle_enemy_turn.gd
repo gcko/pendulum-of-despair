@@ -280,27 +280,18 @@ func _resolve_attack_or_ability(action: Dictionary, enemy: Node, idx: int) -> vo
 	var atype: String = action.get("type", "")
 	var elem: String = action.get("element", "")
 	if action.get("target", "") == "all":
-		(
-			_manager
-			. message
-			. emit(
-				(
-					"%s uses %s!"
-					% [
-						enemy.get_display_name(),
-						action.get("id", "ability"),
-					]
-				)
-			)
-		)
+		var move: String = action.get("id", "ability")
+		_manager.message.emit("%s uses %s!" % [enemy.get_display_name(), move])
 		var status_name: String = action.get("status", "")
+		var first: bool = true  # one Arc Trap per attack, on its first target
 		for i: int in range(4):
 			if not enemy.is_alive:  # a Riposte felled it: the rest of the AoE never lands
 				break
 			var m: Dictionary = _state.get_member(i)
 			if m.is_empty() or not m.get("is_alive", false):
 				continue
-			var result: Dictionary = _resolve_offensive(action, enemy, i, elem)
+			var result: Dictionary = _resolve_offensive(action, enemy, i, elem, first)
+			first = false
 			_emit_hit(i, result, idx)
 			if not status_name.is_empty() and result.get("hit", false):
 				(
@@ -383,12 +374,15 @@ func _emit_hit(slot: int, result: Dictionary, idx: int) -> void:
 ## Resolve one offensive AoE hit against a party slot. Magic when
 ## BattleAI.resolves_as_magic says so: atk_type "magic" OR the action carries an
 ## element (the legacy boss AoE shape, which routes by element with no
-## atk_type); otherwise physical, with ability_mult + multi-hit support.
-func _resolve_offensive(action: Dictionary, enemy: Node, slot: int, elem: String) -> Dictionary:
+## atk_type); otherwise physical, with ability_mult + multi-hit support, and an
+## Arc Trap sprung only where [param first].
+func _resolve_offensive(
+	action: Dictionary, enemy: Node, slot: int, elem: String, first: bool
+) -> Dictionary:
 	if BattleAI.resolves_as_magic(str(action.get("atk_type", "")), "all", elem):
 		return BattleActions.execute_enemy_magic(
 			_state, enemy, slot, elem, int(action.get("power", 0))
 		)
-	return BattleActions.execute_enemy_physical_ability(
-		_state, enemy, slot, float(action.get("ability_mult", 1.0)), int(action.get("hits", 1))
-	)
+	var mult: float = float(action.get("ability_mult", 1.0))
+	var hits: int = int(action.get("hits", 1))
+	return BattleActions.execute_enemy_physical_ability(_state, enemy, slot, mult, hits, 1.0, first)

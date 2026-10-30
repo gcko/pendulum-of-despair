@@ -131,3 +131,26 @@ func test_a_coil_kill_whose_death_burst_fells_lira_opens_no_menu_for_her() -> vo
 		assert_signal_not_emitted(battle, "victory", "one vermin still stands")
 		return
 	fail_test("the coil never landed")
+
+
+# --- One Arc Trap per AoE attack ---
+
+
+func test_one_aoe_attack_springs_one_of_two_traps() -> void:
+	var battle: Node = _boot()
+	var state: Node = battle.get_battle_state()
+	var vermin: Node = battle.get_enemies()[0]
+	vermin.current_hp = STURDY_HP
+	Forgewright.deploy(state, LIRA, _ability("arc_trap"), -1)
+	Forgewright.deploy(state, LIRA, _ability("arc_trap"), -1)
+	var quake: Dictionary = {
+		"type": "ability",
+		"id": "quake",
+		"target": "all",
+		"atk_type": "attack",
+		"ability_mult": 1.0,
+		"hits": 1,
+	}
+	battle._enemy_turn._do_attack_or_ability(quake, vermin, 0)
+	var left: Array = Forgewright.devices(state.get_member(LIRA))
+	assert_eq(left.size(), 1, "three targets, one trap sprung, one left armed")
