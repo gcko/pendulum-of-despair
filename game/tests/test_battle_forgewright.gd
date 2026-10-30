@@ -413,8 +413,8 @@ func test_shock_coil_picks_among_living_enemies_only() -> void:
 
 
 func test_a_shock_coil_kill_is_reported_once() -> void:
-	# The strike reports its kill; the battle cleans it up (removing it from the
-	# ATB and announcing it), which test_battle_device_seams.gd pins.
+	# The strike reports its kill; the battle cleans it up, announcing it and
+	# taking it off the ATB: test_battle_device_seams.gd pins both.
 	var dying: Enemy = _make_enemy({"hp": 1})
 	_battle.enemies = [dying] as Array[Node]
 	_use("shock_coil")

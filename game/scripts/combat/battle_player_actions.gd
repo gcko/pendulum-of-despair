@@ -52,13 +52,20 @@ func strike(slot: int, target_idx: int, damage_mult: float = 1.0) -> Dictionary:
 	var result: Dictionary = BattleActions.execute_party_attack(
 		state, slot, _battle.get_enemies()[target_idx], target_idx, 1.0, damage_mult
 	)
-	if result.get("type", "") in ["physical", "critical"]:
+	if dealt_damage(result):
 		state.add_threat(slot, int(result.get("damage", 0)))  # GAP-009 highest-threat
 	_battle.damage_dealt.emit(eid, result.get("damage", 0), result.get("type", "miss"))
 	if result.get("killed", false):
 		_battle.combatant_died.emit(eid)
 		_battle.get_atb().remove_combatant(eid)
 	return result
+
+
+## Whether a strike or counter [param result] dealt damage, which is all that
+## earns threat (GAP-009): a physical, critical or magic hit. A miss, an
+## immunity, or an absorbed hit that healed the enemy deals none.
+static func dealt_damage(result: Dictionary) -> bool:
+	return result.get("type", "") in ["physical", "critical", "magic"]
 
 
 ## Halve incoming damage until this member's next action.

@@ -127,10 +127,12 @@ func _show_ally_hit(target: String, r: Dictionary) -> void:
 
 ## A party member's basic attack on an ally: the physical formula with the
 ## attacker's ATK/SPD/LCK and row against the ally's DEF/SPD, row and Defend.
-## A Bulwark stance meets it as it meets an enemy's hit: Edren absorbs his
-## share, or counts a direct hit on himself, but never ripostes an ally (ruling
-## of 2026-10-30). Returns {hit, damage, type}, plus "absorbed": {slot, damage}
-## when a stance split it. [param mult] scales its final damage (Berserk).
+## Bulkhead cuts it as it cuts an enemy's hit, and a Bulwark stance meets it as
+## it meets one: Edren absorbs his share, or counts a direct hit on himself. But
+## no counter answers an ally, Riposte or Thornveil (rulings of 2026-10-30).
+## Returns {hit, damage, type},
+## plus "absorbed": {slot, damage} when a stance split it. [param mult] scales
+## its final damage (Berserk).
 static func party_strikes_ally(
 	state: Node, slot: int, target: int, mult: float = 1.0
 ) -> Dictionary:
@@ -143,6 +145,7 @@ static func party_strikes_ally(
 	var taken_mult: float = state.get_member(target).get("damage_taken_mult", 1.0)
 	if taken_mult < 1.0:
 		reduction.append(1.0 - taken_mult)
+	reduction.append_array(BattleForgewright.reductions(state, target, "physical"))  # Bulkhead
 	var guard: Dictionary = Bulwark.guard_for(state, target, "physical")
 	var dmg: int = DamageCalc.calculate_physical(
 		state.get_effective_stat(slot, "atk"),
@@ -187,17 +190,30 @@ static func _land_guarded(
 
 ## Enemy [param attacker]'s basic attack on [param target] ("enemy_N"), another
 ## enemy, announced and shown on [param manager], its kill cleaned up off
-## [param atb] as any kill is.
+## [param atb] as any kill is. It is a physical attack, so an armed Arc Trap
+## then goes off on the attacker, whatever its target (abilities.md § Lira —
+## Forgewright, ruling of 2026-10-30), shown and cleaned up the same way.
 static func enemy_hits_enemy(
 	manager: Node, atb: Node, attacker: Node, enemies: Array[Node], target: String
 ) -> void:
 	var other: Node = enemies[target.replace("enemy_", "").to_int()]
 	manager.message.emit("%s attacks %s!" % [attacker.get_display_name(), other.get_display_name()])
 	var r: Dictionary = enemy_strikes_enemy(attacker, other, damage_mult(attacker.active_statuses))
-	manager.damage_dealt.emit(target, int(r["damage"]), r["type"])
-	if r["killed"]:
-		manager.combatant_died.emit(target)
-		atb.remove_combatant(target)
+	_show_enemy_hit(manager, atb, target, r)
+	var state: Node = manager.get_battle_state()
+	var aid: String = "enemy_%d" % enemies.find(attacker)
+	for trap: Dictionary in BattleForgewright.spring_trap(state, attacker):
+		if BattlePlayerActions.dealt_damage(trap):
+			state.add_threat(int(trap["slot"]), int(trap["damage"]))  # GAP-009
+		_show_enemy_hit(manager, atb, aid, trap)
+
+
+## Show [param r] on enemy [param eid] and clean up the kill it made.
+static func _show_enemy_hit(manager: Node, atb: Node, eid: String, r: Dictionary) -> void:
+	manager.damage_dealt.emit(eid, int(r.get("damage", 0)), r.get("type", "miss"))
+	if r.get("killed", false):
+		manager.combatant_died.emit(eid)
+		atb.remove_combatant(eid)
 
 
 ## An enemy's basic attack on another enemy: the enemy-side physical formula

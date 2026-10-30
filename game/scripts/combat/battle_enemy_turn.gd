@@ -368,7 +368,8 @@ func _emit_hit(slot: int, result: Dictionary, idx: int) -> void:
 		)
 	var eid: String = "enemy_%d" % idx
 	for counter: Dictionary in result.get("ripostes", []):
-		_state.add_threat(int(counter["slot"]), int(counter.get("damage", 0)))  # GAP-009
+		if BattlePlayerActions.dealt_damage(counter):  # healing it earns no threat
+			_state.add_threat(int(counter["slot"]), int(counter.get("damage", 0)))  # GAP-009
 		_manager.damage_dealt.emit(eid, int(counter.get("damage", 0)), counter.get("type", "miss"))
 		if counter.get("killed", false):
 			_manager.combatant_died.emit(eid)

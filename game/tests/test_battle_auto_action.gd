@@ -13,6 +13,7 @@ const ATBSystem = preload("res://scripts/combat/atb_system.gd")
 const AbilityCommand = preload("res://scripts/combat/battle_ability_command.gd")
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 const Bulwark = preload("res://scripts/combat/battle_bulwark.gd")
+const Forgewright = preload("res://scripts/combat/battle_forgewright.gd")
 const BATTLE: PackedScene = preload("res://scenes/core/battle.tscn")
 const ENEMY_SCENE: PackedScene = preload("res://scenes/entities/enemy.tscn")
 
@@ -586,3 +587,68 @@ func test_a_confused_and_berserk_enemy_s_blow_on_another_enemy_deals_half_again(
 			assert_true(_is_half_again(dealt[0], dealt[1]), "%d then %d" % [dealt[0], dealt[1]])
 			return
 	fail_test("the vermin never landed a plain hit on the other")
+
+
+# --- Friendly fire meets the ally's own protection (rulings of 2026-10-30) ---
+
+
+## Over seeds, the first on which [param actor]'s auto-attack lands a plain hit
+## of 4 or more on [param target] in a battle set up by [param arrange_a], and
+## what the same seed's hit does in one set up by [param arrange_b]: [a, b].
+func _same_roll_pair(
+	actor: String, target: String, arrange_a: Callable, arrange_b: Callable
+) -> Array:
+	for s: int in range(1, 80):
+		var a: Array = _auto_damage(actor, target, [], s, arrange_a)
+		if a.size() != 1 or a[0][2] != "physical" or int(a[0][1]) < 4:
+			continue
+		var b: Array = _auto_damage(actor, target, [], s, arrange_b)
+		return [int(a[0][1]), int(b[0][1]) if b.size() == 1 else -1]
+	fail_test("%s never landed a plain hit on %s" % [actor, target])
+	return [0, 0]
+
+
+## A confused Edren whose only targets are his allies (the vermin is off the
+## field), with Lira seated.
+func _edren_confused_among_allies(battle: Node) -> void:
+	_seat_lira(battle)
+	battle.get_enemies()[0].set_meta("untargetable", true)
+	battle.get_battle_state().apply_status(EDREN, "confusion", "turns", 3)
+
+
+func _lira_ability(ability_id: String) -> Dictionary:
+	for a: Variant in DataManager.load_abilities("lira"):
+		if (a as Dictionary).get("id", "") == ability_id:
+			return a
+	fail_test("lira.json has no ability '%s'" % ability_id)
+	return {}
+
+
+func test_bulkhead_cuts_a_confused_ally_s_hit_by_40_percent() -> void:
+	var pair: Array = _same_roll_pair(
+		"party_0",
+		"party_1",
+		_edren_confused_among_allies,
+		func(battle: Node) -> void:
+			_edren_confused_among_allies(battle)
+			var state: Node = battle.get_battle_state()
+			Forgewright.deploy(state, 2, _lira_ability("bulkhead"), CAEL)
+	)
+	var cut: int = pair[0] * 6 / 10
+	assert_between(pair[1], cut, cut + 1, "%d then %d: Bulkhead's 40%%" % [pair[0], pair[1]])
+
+
+func test_thornveil_never_counters_a_confused_ally() -> void:
+	var out: Array = _turn_landing_on(
+		"party_0",
+		"party_1",
+		func(battle: Node) -> void:
+			_edren_confused_among_allies(battle)
+			var state: Node = battle.get_battle_state()
+			Forgewright.deploy(state, 2, _lira_ability("thornveil_barrier"), CAEL)
+	)
+	if out.is_empty():
+		return
+	var state: Node = out[0].get_battle_state()
+	assert_lt(state.get_member(CAEL)["current_hp"], STURDY_HP, "the hit landed")
+	assert_eq(state.get_member(EDREN)["current_hp"], STURDY_HP, "no thorns came back")

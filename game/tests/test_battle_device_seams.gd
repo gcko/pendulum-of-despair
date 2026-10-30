@@ -143,15 +143,7 @@ func test_one_aoe_attack_springs_one_of_two_traps() -> void:
 	vermin.current_hp = STURDY_HP
 	Forgewright.deploy(state, LIRA, _ability("arc_trap"), -1)
 	Forgewright.deploy(state, LIRA, _ability("arc_trap"), -1)
-	var quake: Dictionary = {
-		"type": "ability",
-		"id": "quake",
-		"target": "all",
-		"atk_type": "attack",
-		"ability_mult": 1.0,
-		"hits": 1,
-	}
-	battle._enemy_turn._do_attack_or_ability(quake, vermin, 0)
+	battle._enemy_turn._do_attack_or_ability(_quake(), vermin, 0)
 	var left: Array = Forgewright.devices(state.get_member(LIRA))
 	assert_eq(left.size(), 1, "three targets, one trap sprung, one left armed")
 
@@ -179,3 +171,97 @@ func test_an_overcharged_strike_the_enemy_absorbs_earns_no_threat() -> void:
 		assert_eq(state.get_highest_threat_slot(), EDREN, "Cael earned no threat by healing it")
 		return
 	fail_test("the strike never landed")
+
+
+func test_a_shock_coil_kill_takes_the_dead_enemy_off_the_atb() -> void:
+	# Two vermin, so the battle goes on past the kill and the gauge is still
+	# there to be asked about.
+	for s: int in range(1, 60):
+		var battle: Node = _boot(["ley_vermin", "ley_vermin"])
+		var enemies: Array[Node] = battle.get_enemies()
+		for e: Node in enemies:
+			e.current_hp = 1
+		Forgewright.deploy(battle.get_battle_state(), LIRA, _ability("shock_coil"), -1)
+		seed(s)
+		_only_turn(battle, "party_%d" % LIRA)
+		var dead: int = enemies.find_custom(func(e: Node) -> bool: return not e.is_alive)
+		if dead < 0:
+			continue  # the coil missed on this seed
+		var atb: Node = battle.get_atb()
+		atb.set_gauge("enemy_%d" % dead, ATBSystem.GAUGE_MAX)
+		assert_does_not_have(
+			atb.get_ready_queue(), "enemy_%d" % dead, "the dead vermin has left the ATB"
+		)
+		return
+	fail_test("the coil never landed")
+
+
+func test_an_aoe_springs_its_trap_even_when_slot_0_is_down() -> void:
+	# The trap goes off on the attack's first target, which is slot 1 here.
+	var battle: Node = _boot()
+	var state: Node = battle.get_battle_state()
+	var vermin: Node = battle.get_enemies()[0]
+	vermin.current_hp = STURDY_HP
+	vermin.enemy_data["hp"] = STURDY_HP
+	state.take_damage(EDREN, 99999)
+	Forgewright.deploy(state, LIRA, _ability("arc_trap"), -1)
+	battle._enemy_turn._do_attack_or_ability(_quake(), vermin, 0)
+	assert_eq(Forgewright.devices(state.get_member(LIRA)), [], "the one trap went off")
+
+
+func _quake() -> Dictionary:
+	return {
+		"type": "ability",
+		"id": "quake",
+		"target": "all",
+		"atk_type": "attack",
+		"ability_mult": 1.0,
+		"hits": 1,
+	}
+
+
+# --- An enemy's blow on another enemy is still a physical attack ---
+
+
+func test_a_confused_enemy_s_blow_on_another_enemy_springs_an_arc_trap() -> void:
+	# abilities.md § Lira — Forgewright, ruling of 2026-10-30: Arc Trap fires on
+	# any enemy's physical attack, whatever its target.
+	var battle: Node = _boot(["ley_vermin", "ley_vermin"])
+	var state: Node = battle.get_battle_state()
+	var enemies: Array[Node] = battle.get_enemies()
+	for e: Node in enemies:
+		e.current_hp = STURDY_HP
+		e.enemy_data["hp"] = STURDY_HP
+	enemies[0].apply_status("confusion", 3)
+	Forgewright.deploy(state, LIRA, _ability("arc_trap"), -1)
+	var shown: Array = []
+	battle.damage_dealt.connect(func(t: String, n: int, k: String) -> void: shown.append([t, n, k]))
+	BattleAutoAction.enemy_hits_enemy(battle, battle.get_atb(), enemies[0], enemies, "enemy_1")
+	assert_eq(Forgewright.devices(state.get_member(LIRA)), [], "the trap went off")
+	assert_true(shown.any(func(h: Array) -> bool: return h[0] == "enemy_0"), "on the attacker")
+
+
+# --- A counter the enemy absorbs earns no threat either ---
+
+
+func test_an_arc_trap_the_attacker_absorbs_earns_lira_no_threat() -> void:
+	for s: int in range(1, 60):
+		var battle: Node = _boot()
+		var state: Node = battle.get_battle_state()
+		var vermin: Node = battle.get_enemies()[0]
+		vermin.enemy_data["absorb"] = ["flame"]
+		vermin.current_hp = STURDY_HP
+		state.add_threat(CAEL, 1)  # Cael leads, so any threat Lira earns would show
+		Forgewright.deploy(state, LIRA, _ability("arc_trap"), -1)
+		var shown: Array = []
+		battle.damage_dealt.connect(
+			func(t: String, n: int, k: String) -> void: shown.append([t, n, k])
+		)
+		seed(s)
+		var attack: Dictionary = {"type": "attack", "target_slot": CAEL}
+		battle._enemy_turn._do_attack_or_ability(attack, vermin, 0)
+		if not shown.any(func(h: Array) -> bool: return h[0] == "enemy_0" and h[2] == "absorb"):
+			continue  # the trap missed on this seed
+		assert_eq(state.get_highest_threat_slot(), CAEL, "a trap that healed it earns no threat")
+		return
+	fail_test("the trap never landed")
