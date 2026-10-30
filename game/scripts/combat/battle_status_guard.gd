@@ -14,6 +14,8 @@ extends RefCounted
 ## BattleState.apply_status asks blocks() as the status would land, which on the
 ## enemy path is after the hit roll (combat-formulas.md § Status Spell
 ## Resolution, step 4). There is no field status system, so this is battle-only.
+## Torren's Stoneheart answers there too: a timed immunity on the member's battle
+## record (BattleSpiritcall.wards_off), asked after the gear.
 
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 const Helpers = preload("res://scripts/util/inventory_helpers.gd")
@@ -29,7 +31,7 @@ static func blocks(character_id: String, status: String) -> bool:
 	if character_id.is_empty() or StatusEffects.is_positive(status):
 		return false
 	var wards: Array[String] = immunities(character_id)
-	return ALL in wards or status in wards
+	return ALL in wards or status in wards or BattleSpiritcall.wards_off(character_id, status)
 
 
 ## Every `status_immunity` entry on the gear [param character_id] wears.

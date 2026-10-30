@@ -6,15 +6,17 @@ extends RefCounted
 ## A dispatcher. do_ability checks the ability can be issued, pays its cost
 ## (keyed on the data's cost_type), then hands it to the resolver for its
 ## command (the data's `command` field). Slice 158a of #158 built Cael's
-## Rally, 158b Edren's Bulwark, 158c Lira's Forgewright and 158d Sable's Tricks
-## (BattleTricksCommand resolves them). Spiritcall and Arcanum are slices
-## 158e-f: each adds a resolver here, and pay() learns its cost type. Until then
-## their abilities are not built, so the battle menu lists them disabled and
-## do_ability refuses them, as it does the Forgewright and Tricks abilities left
-## for a later slice (BattleForgewright.BUILT, BattleTricks.BUILT).
+## Rally, 158b Edren's Bulwark, 158c Lira's Forgewright, 158d Sable's Tricks
+## (BattleTricksCommand resolves them) and 158e Torren's Spiritcall
+## (BattleSpiritcallCommand). Arcanum is slice 158f: it adds a resolver here,
+## and pay() learns its cost type. Until then its abilities are not built, so
+## the battle menu lists them disabled and do_ability refuses them, as it does
+## the Forgewright, Tricks and Spiritcall abilities left for a later slice
+## (BattleForgewright.BUILT, BattleTricks.BUILT, BattleSpiritcall.BUILT).
 ##
-## The in-force rules live in BattleRally, BattleBulwark, BattleForgewright and
-## BattleTricks, reached through BattleState's ability hooks.
+## The in-force rules live in BattleRally, BattleBulwark, BattleForgewright,
+## BattleTricks and BattleSpiritcall, reached through BattleState's ability
+## hooks.
 
 const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
 const ModifierAggregator = preload("res://scripts/combat/modifier_aggregator.gd")
@@ -35,6 +37,7 @@ const RALLY_EFFECTS: Dictionary = {
 
 var _battle: Node
 var _tricks: BattleTricksCommand
+var _spiritcall: BattleSpiritcallCommand = null
 
 
 func _init(battle: Node) -> void:
@@ -66,7 +69,13 @@ func do_ability(actor_id: String, command: Dictionary) -> bool:
 		_battle.message.emit("Not enough %s!" % unit)
 		return false
 	_battle.message.emit(
-		"%s uses %s!" % [member.get("character_data", {}).get("name", "???"), ability["name"]]
+		(
+			"%s uses %s!"
+			% [
+				member.get("character_data", {}).get("name", "???"),
+				BattleSpiritcall.display_name(ability)
+			]
+		)
 	)
 	_resolver(ability).call(slot, ability, command)
 	return true
@@ -84,6 +93,8 @@ func _resolver(ability: Dictionary) -> Callable:
 			return _resolve_forgewright
 		"tricks":
 			return _tricks.resolve
+		"spiritcall":
+			return _resolve_spiritcall
 	return Callable()
 
 
@@ -125,6 +136,13 @@ func _resolve_forgewright(slot: int, ability: Dictionary, command: Dictionary) -
 			BattleForgewright.salvage(state, slot)
 		_:
 			BattleForgewright.deploy(state, slot, ability, target)
+
+
+## Torren's Spiritcall: BattleSpiritcallCommand resolves the spirit at its Favor.
+func _resolve_spiritcall(slot: int, ability: Dictionary, command: Dictionary) -> void:
+	if _spiritcall == null:
+		_spiritcall = BattleSpiritcallCommand.new(_battle)
+	_spiritcall.resolve(slot, ability, command)
 
 
 ## Shatter Guard lands the [param shattered] total on every targetable enemy as
@@ -186,6 +204,8 @@ static func is_built(ability: Dictionary) -> bool:
 			return BattleForgewright.BUILT.has(ability.get("id", ""))
 		"tricks":
 			return BattleTricks.BUILT.has(ability.get("id", ""))
+		"spiritcall":
+			return BattleSpiritcall.BUILT.has(ability.get("id", ""))
 	return false
 
 
@@ -199,7 +219,8 @@ static func is_rally(ability: Dictionary) -> bool:
 ## Silenced, since Silence would end it at once (abilities.md § Cael — Rally).
 ## Shatter Guard breaks a stance, so it needs one; Riposte is automatic under
 ## Oathkeeper, so it cannot be armed then. Salvage needs a device standing. A
-## Trick needs to be off cooldown, and a steal Trick the front row.
+## Trick needs to be off cooldown, and a steal Trick the front row. A
+## once-per-battle Spiritcall must not have been used this battle.
 static func is_available(member: Dictionary, ability: Dictionary) -> bool:
 	if not is_built(ability):
 		return false
@@ -207,6 +228,8 @@ static func is_available(member: Dictionary, ability: Dictionary) -> bool:
 		return BattleForgewright.can_issue(member, ability)
 	if ability.get("command", "") == "tricks":
 		return BattleTricks.can_issue(member, ability)
+	if ability.get("command", "") == "spiritcall":
+		return BattleSpiritcall.can_issue(member, ability)
 	if is_rally(ability) and not BattleRally.caster_can_sustain(member):
 		return false
 	if ability.get("id", "") == "shatter_guard" and not BattleBulwark.in_stance(member):
@@ -254,9 +277,10 @@ static func pay(state: Node, slot: int, ability: Dictionary) -> bool:
 ## Whether a single-ally ability has a living ally at command["target"]. Ironwall
 ## also needs that ally to be someone other than Edren: a hit on him already
 ## counts as absorbed while he holds any stance (BattleBulwark.guard_for), so
-## guarding himself would add nothing.
+## guarding himself would add nothing. A spirit's target is its current form's
+## (BattleSpiritcall.target_of): Torrent's Grace reaches every ally.
 static func _target_ok(state: Node, slot: int, ability: Dictionary, command: Dictionary) -> bool:
-	if ability.get("target", "") != "single_ally":
+	if BattleSpiritcall.target_of(ability) != "single_ally":
 		return true
 	var target: int = int(command.get("target", -1))
 	if not state.get_member(target).get("is_alive", false):

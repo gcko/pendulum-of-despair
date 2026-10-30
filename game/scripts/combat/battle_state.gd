@@ -21,15 +21,12 @@ signal ability_state_changed(slot: int)
 
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 const Helpers = preload("res://scripts/util/inventory_helpers.gd")
-const Rally = preload("res://scripts/combat/battle_rally.gd")
-const Bulwark = preload("res://scripts/combat/battle_bulwark.gd")
-const Forgewright = preload("res://scripts/combat/battle_forgewright.gd")
-const Buffs = preload("res://scripts/combat/battle_buffs.gd")
 const StatusGuard = preload("res://scripts/combat/battle_status_guard.gd")
 
 ## Modules holding in-force ability and buff state (#158), each answering on_damage,
-## on_fainted, on_status, on_turn_begin, on_turn_end and stat_pct (no seam names one).
-const ABILITY_HOOKS: Array = [Rally, Bulwark, Forgewright, Buffs, preload("battle_tricks.gd")]
+## on_fainted, on_status, on_turn_begin, on_turn_end and stat_pct (no seam names
+## one). The list and its order are battle_ability_hooks.gd's.
+const ABILITY_HOOKS: Array = preload("battle_ability_hooks.gd").HOOKS
 
 ## Party member data. Index = slot (0-3). Null entries = empty slots.
 var _members: Array = [null, null, null, null]
