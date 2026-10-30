@@ -408,7 +408,7 @@ unstated. `game/tests/test_spell_balance.gd` asserts all of them against
   A `stat_debuff` needs a `duration` of at least one turn. An enemy-side spell
   with no damage `power`, no registry `status` on a `status` spell and neither
   key has no battle effect yet and is refused before any MP is spent: Crumble,
-  Drag Tide, Spiritsight and Glintmark.
+  Drag Tide, Spiritsight and Glintmark, and the enemy-only Drinker of Days.
 
 ---
 
