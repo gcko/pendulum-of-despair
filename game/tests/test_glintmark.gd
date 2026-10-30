@@ -3,9 +3,10 @@ extends GutTest
 ## all sources for 3 turns" (magic.md § 78 Glintmark), the Status Effect
 ## Reference's "Takes 10% more damage from all sources", "Wears off". Its 10%
 ## is a final-damage multiplier: step 6 of a physical attack and step 5 of a
-## spell (combat-formulas.md § Combat Resolution Order, § Buff & Debuff
-## Interaction). It is the party's mark on the enemy, so Dispersion, which
-## removes an enemy's buffs and leaves the party's debuffs, leaves it on.
+## spell (combat-formulas.md § Combat Resolution Order; the Glintmark row of
+## its Buff & Debuff Interaction table). It is the party's mark on the enemy,
+## so Dispersion, which removes an enemy's buffs and leaves the party's
+## debuffs, leaves it on.
 ##
 ## The cast boots battle.tscn and goes in through BattleUI.command_submitted.
 ## The damage it adds is read through the seams the battle's own commands
