@@ -1699,6 +1699,8 @@ For quick reference, here are all status effects that spells in this system can 
 
 *For positive statuses, "Cured By" indicates spells that can remove the buff. Dispersion and Mass Dispersion target enemies, so in practice these buffs are stripped when an enemy casts Dispersion/Mass Dispersion against the buffed party. Player-side Dispersion removes enemy buffs, not friendly ones.*
 
+**Fainting clears statuses.** A member who Faints loses every positive status, and Confusion and Berserk as well, so a revived member acts normally (2026-10-30 ruling).
+
 ---
 
 ## Spell Count Summary
