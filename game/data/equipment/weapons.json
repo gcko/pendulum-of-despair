@@ -1140,6 +1140,7 @@
       "bonus_stats": {},
       "element": "spirit",
       "special": "+50% vs Pallor, Despair immunity",
+      "status_immunity": "despair",
       "buy_price": null,
       "sell_price": null,
       "acquired": "100 Pallor encounters",

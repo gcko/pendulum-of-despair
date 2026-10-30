@@ -969,6 +969,7 @@
       "effect": "Immunity to all status effects",
       "bonus_stats": {},
       "special": "Immunity to all status effects",
+      "status_immunity": "all",
       "source": "dreamers_fault_floor_20",
       "buy_price": null,
       "sell_price": null,

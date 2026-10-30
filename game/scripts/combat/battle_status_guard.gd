@@ -1,0 +1,47 @@
+extends RefCounted
+## Equipment status immunity (#512).
+##
+## A worn item's `status_immunity` names the status its wearer cannot be
+## afflicted with (equipment.md § Status Immunity Accessories, and the Warding
+## Crown, Spiritguard Helm and purified Grey Cleaver rows), or ALL for every
+## negative status (Dreamer's Mark). It may also be an Array of names. Every
+## worn slot counts, so the wards of everything a member wears add up. A
+## positive status (StatusEffects.is_positive) is never kept off, whatever the
+## gear says: Dreamer's Mark wards off ailments, not Haste (2026-10-30 ruling).
+##
+## BattleState.apply_status asks blocks() as the status would land, which on the
+## enemy path is after the hit roll (combat-formulas.md § Status Spell
+## Resolution, step 4). There is no field status system, so this is battle-only.
+
+const StatusEffects = preload("res://scripts/combat/status_effects.gd")
+const Helpers = preload("res://scripts/util/inventory_helpers.gd")
+
+## The `status_immunity` value that wards off every negative status.
+const ALL: String = "all"
+## The worn slots whose item data can carry a `status_immunity`.
+const WORN_SLOTS: Array[String] = ["weapon", "head", "body", "accessory"]
+
+
+## Whether the gear [param character_id] wears keeps [param status] off them.
+static func blocks(character_id: String, status: String) -> bool:
+	if character_id.is_empty() or StatusEffects.is_positive(status):
+		return false
+	var wards: Array[String] = immunities(character_id)
+	return ALL in wards or status in wards
+
+
+## Every `status_immunity` entry on the gear [param character_id] wears.
+static func immunities(character_id: String) -> Array[String]:
+	var wards: Array[String] = []
+	var worn: Dictionary = PartyState.get_member(character_id).get("equipment", {})
+	for slot: String in WORN_SLOTS:
+		var equipment_id: String = str(worn.get(slot, ""))
+		if equipment_id.is_empty():
+			continue
+		var ward: Variant = Helpers.lookup_equipment(equipment_id).get("status_immunity")
+		if ward is String:
+			wards.append(ward)
+		elif ward is Array:
+			for entry: Variant in ward:
+				wards.append(str(entry))
+	return wards
