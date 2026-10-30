@@ -157,14 +157,16 @@ static func reductions(state: Node, target: int, kind: String) -> Array[float]:
 
 
 ## Thornveil Barrier answering a physical hit that landed on [param target]:
-## 15% of the target's Defense, as fixed damage, back at [param enemy]. Returns
-## the counters in BattleActions' "ripostes" shape.
+## 15% of the target's Defense, as fixed damage, back at [param enemy], cut by
+## Lira's Despair (not the target's; ruling of 2026-10-30), never below 1.
+## Returns the counters in BattleActions' "ripostes" shape.
 static func thorns(state: Node, enemy: Node, target: int) -> Array:
 	var owner: Dictionary = _guarding(state, "thornveil_barrier", target)
 	if owner.is_empty() or not enemy.is_alive:
 		return []
 	var pct: int = int(DEVICES["thornveil_barrier"]["counter_pct"])
-	var dmg: int = maxi(1, state.get_effective_stat(target, "def") * pct / 100)
+	var raw: int = state.get_effective_stat(target, "def") * pct / 100
+	var dmg: int = maxi(1, BattleDamageMods.cut_dealt(raw, state.get_member(int(owner["slot"]))))
 	enemy.take_damage(dmg)
 	return [
 		{

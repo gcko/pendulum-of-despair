@@ -311,6 +311,34 @@ func test_a_despaired_confused_member_s_blow_on_an_ally_deals_four_fifths() -> v
 	assert_almost_eq(float(r["damage"]), plain * 0.8, 1.0, "x0.8 on %d" % plain)
 
 
+## Lira deploys Thornveil Barrier on [param ally]; returns the counter an
+## enemy's landing hit on that ally draws.
+func _thornveil_counter(ally: int) -> int:
+	var cmd: RefCounted = AbilityCommand.new(_battle)
+	var barrier: Dictionary = {}
+	for a: Variant in DataManager.load_abilities("lira"):
+		if (a as Dictionary).get("id", "") == "thornveil_barrier":
+			barrier = a
+	_state.get_member(LIRA)["ac"] = 12
+	var command: Dictionary = {"type": "ability", "ability": barrier, "target": ally}
+	assert_true(cmd.do_ability("party_%d" % LIRA, command), "precondition: deployed")
+	seed(_landing_seed())
+	var r: Dictionary = BattleActions.execute_enemy_physical_ability(_state, _enemy, ally)
+	assert_true(r["hit"], "precondition: the hit lands")
+	return int(r["ripostes"][0]["damage"])
+
+
+func test_a_despaired_lira_s_thornveil_barrier_counters_for_four_fifths() -> void:
+	# 15% of Cael's 40 Defense is 6; cut by a fifth and floored, 4.
+	_afflict(LIRA, "despair")
+	assert_eq(_thornveil_counter(CAEL), 4)
+
+
+func test_the_shielded_ally_s_despair_leaves_thornveil_barrier_s_counter_whole() -> void:
+	_afflict(CAEL, "despair")
+	assert_eq(_thornveil_counter(CAEL), 6, "15% of Cael's 40 Defense")
+
+
 func test_a_despaired_edren_s_shatter_guard_deals_four_fifths_of_its_total() -> void:
 	# DEF 999 puts the basic-attack floor at 1, below the total.
 	_enemy = _make_enemy({"def": 999})
