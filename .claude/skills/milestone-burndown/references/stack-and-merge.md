@@ -155,21 +155,29 @@ Wait with the skill's script, run with `run_in_background` and the head you
 just pushed:
 
 ```bash
-bash .claude/skills/milestone-burndown/scripts/wait-ci.sh <N> <head-sha> [timeout-minutes]
+bash .claude/skills/milestone-burndown/scripts/wait-ci.sh <N> <head-sha> [timeout-minutes] [min-checks]
 ```
 
 It always exits, and the exit wakes you: `0` pass, `1` a check failed, `2` gh
-failed three polls in a row, `3` deadline (default 45 minutes), `4` the head
-moved, `5` nothing registered in 10 minutes. Anything but `0` gets read and
-acted on; none of them is a reason to start the same wait again unchanged.
+failed or stalled on three polls in a row (each call is killed after 60
+seconds), `3` deadline (default 45 minutes), `4` the head moved, `5` nothing
+registered in 10 minutes. Anything but `0` gets read and acted on; none of
+them is a reason to start the same wait again unchanged.
+
+A pass means every check *visible on the head* passed on two polls at least 60
+seconds apart, with at least `min-checks` checks (default 1). It does not prove
+that every workflow registered. Before the checklist, compare the workflow
+list as section 6 step 5 does, or pass the expected check count as
+`min-checks`.
 
 Do not write your own `until`/`while` poll loop, and do not use
 `gh pr checks --watch`. Neither has a deadline. A loop that sends gh's stderr
 to `/dev/null` reads every error as "still pending": one invalid `--json`
 field (`gh pr checks` has no `headSha`) made a wait spin for 18 hours after CI
-had passed. Any wait you write for something else needs the same three
-guards: a deadline, errors printed and not discarded, and a progress line on
-every poll.
+had passed. Any wait you write for something else needs the same four
+guards: a deadline, a time limit on every call inside the loop (a stalled
+call blocks the deadline check), errors printed and not discarded, and a
+progress line on every poll.
 
 ## 5. Merge
 
@@ -294,7 +302,8 @@ Copilot review (section 3). Skip this when `X` already sits on the current
 
    `head` must equal `git -C wt-X rev-parse X`, and `workflows` must list
    the `name:` of every workflow the section 6 step 2 grep finds (an empty
-   name is a status context, such as GitGuardian). Then wait with
+   name is a check from a GitHub App rather than an Actions workflow, such as
+   GitGuardian). Then wait with
    `scripts/wait-ci.sh` (section 4, "Waiting on CI"), then `X`'s section 4
    checklist. Section 3's
    last-content-head rule holds: a base-only push does not reset the Copilot
