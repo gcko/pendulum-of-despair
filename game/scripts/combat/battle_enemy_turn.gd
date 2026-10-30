@@ -171,11 +171,12 @@ func _heal_enemy(enemy: Node, eid: String, amount: int) -> void:
 		_manager.damage_dealt.emit(eid, enemy.current_hp - before, "heal")
 
 
-## Whether a living party member has Despair, which feeds a Pallor enemy's
-## regen (a fallen member's does not: ruling of 2026-10-29).
+## Whether a party member still on the field has Despair, which feeds a Pallor
+## enemy's regen (a fallen member's does not, ruling of 2026-10-29, nor a
+## petrified one's, #246).
 func _party_despairs() -> bool:
 	for i: int in range(4):
-		if _state.get_member(i).get("is_alive", false) and _state.has_status(i, "despair"):
+		if BattleStatusGuard.on_field(_state.get_member(i)) and _state.has_status(i, "despair"):
 			return true
 	return false
 
@@ -296,8 +297,7 @@ func _resolve_attack_or_ability(action: Dictionary, enemy: Node, idx: int) -> vo
 		for i: int in range(4):
 			if not enemy.is_alive:  # a Riposte felled it: the rest of the AoE never lands
 				break
-			var m: Dictionary = _state.get_member(i)
-			if m.is_empty() or not m.get("is_alive", false):
+			if not BattleStatusGuard.on_field(_state.get_member(i)):  # a statue is passed over
 				continue
 			var result: Dictionary = _resolve_offensive(action, enemy, i, elem, first)
 			first = false

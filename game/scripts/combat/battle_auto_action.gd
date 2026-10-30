@@ -64,16 +64,17 @@ static func damage_mult(active_statuses: Array) -> float:
 
 
 ## The combatant [param own] ("party_N" or "enemy_N") auto-attacks under
-## [param status], chosen uniformly from those it may hit: living party members,
-## and living enemies the party could target (a petrified or diving one is off
-## the field). Returns its id, or "" when nobody is left to hit.
+## [param status], chosen uniformly from those it may hit: party members on the
+## field (BattleStatusGuard.on_field), and living enemies the party could target
+## (a petrified member or enemy, or a diving one, is off the field). Returns its
+## id, or "" when nobody is left to hit.
 static func pick_target(status: String, own: String, state: Node, enemies: Array[Node]) -> String:
 	var both: bool = AUTO_TARGETS.get(status, "foes") == "any"
 	var own_party: bool = own.begins_with("party_")
 	var pool: Array[String] = []
 	if both or not own_party:
 		for i: int in range(4):
-			if state.get_member(i).get("is_alive", false):
+			if BattleStatusGuard.on_field(state.get_member(i)):
 				pool.append("party_%d" % i)
 	if both or own_party:
 		for i: int in range(enemies.size()):

@@ -1,5 +1,7 @@
+class_name BattleStatusGuard
 extends RefCounted
-## Equipment status immunity (#512), and the cure that says so (#515).
+## Equipment status immunity (#512), the cure that says so (#515), and whether a
+## status has taken a member out of the fight (on_field, #246).
 ##
 ## A worn item's `status_immunity` names the status its wearer cannot be
 ## afflicted with (equipment.md § Status Immunity Accessories, and the Warding
@@ -17,6 +19,13 @@ extends RefCounted
 ## BattleState.apply_status asks ward_against, which adds Torren's Stoneheart: a
 ## timed immunity on the member's battle record (BattleSpiritcall.wards_off),
 ## asked after the gear. Both are pure queries.
+##
+## on_field is the party mirror of Enemy.is_removed_from_combat: Petrify is
+## "Removed from combat" (magic.md § Status Effect Reference). BattleAI's and
+## BossAI's target picks, BattleEnemyTurn's party-wide loop, a confused or berserk
+## attacker's pool (BattleAutoAction.pick_target), BattleState's highest threat,
+## flee-average and party-wipe checks, and the Despair that feeds a Pallor's
+## regen (BattleEnemyTurn._party_despairs) ask it instead of is_alive.
 
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 const Helpers = preload("res://scripts/util/inventory_helpers.gd")
@@ -58,6 +67,18 @@ static func immunities(character_id: String) -> Array[String]:
 			for entry: Variant in ward:
 				wards.append(str(entry))
 	return wards
+
+
+## Whether party member record [param m] (BattleState.get_member) is still in the
+## fight: living, and carrying no status that removes it from combat (Petrify,
+## StatusEffects.removes_from_combat). An empty record (an empty slot) is not.
+static func on_field(m: Dictionary) -> bool:
+	if not m.get("is_alive", false):
+		return false
+	for s: Dictionary in m.get("active_statuses", []):
+		if StatusEffects.removes_from_combat(s.get("name", "")):
+			return false
+	return true
 
 
 ## Lift [param status] from party slot [param slot] as a cure by a spell, item

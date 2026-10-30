@@ -232,23 +232,24 @@ static func _select_target(selector: String, state: Node) -> int:
 			return BattleAI.pick_alive_target(state)
 
 
-## Pick a living member in the given row, else any living member.
+## Pick a member on the field in the given row, else any member on the field.
 static func _pick_in_row(state: Node, row: String) -> int:
 	var matches: Array[int] = []
 	for i: int in range(4):
 		var m: Dictionary = state.get_member(i)
-		if m.get("is_alive", false) and m.get("row", "front") == row:
+		if BattleStatusGuard.on_field(m) and m.get("row", "front") == row:
 			matches.append(i)
 	if matches.is_empty():
 		return BattleAI.pick_alive_target(state)
 	return matches[randi() % matches.size()]
 
 
-## True if any living member occupies the given row.
+## True if any member on the field occupies the given row: a petrified one does
+## not count, so a statue in the back row triggers no "position" rule (#246).
 static func _any_in_row(state: Node, row: String) -> bool:
 	for i: int in range(4):
 		var m: Dictionary = state.get_member(i)
-		if m.get("is_alive", false) and m.get("row", "front") == row:
+		if BattleStatusGuard.on_field(m) and m.get("row", "front") == row:
 			return true
 	return false
 

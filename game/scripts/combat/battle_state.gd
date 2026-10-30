@@ -206,11 +206,10 @@ func has_status(slot: int, status_name: String) -> bool:
 	return false
 
 
-## Tick turn-based statuses at END of a combatant's turn. Applies Poison/Burn
-## HP ticks first, then decrements durations. UNTIL_CURED (negative) durations
-## persist — they are cured by remove_status, never by countdown. Closes the turn
-## for the ability hooks. Returns its events [{slot, dmg, type}] for feedback —
-## DoT ticks, then the hooks' turn-end events (mirrors the enemy-side tick).
+## Tick turn-based statuses at END of a combatant's turn: Poison/Burn HP ticks,
+## then durations (UNTIL_CURED, negative, never counts down). Closes the turn for
+## the ability hooks. Returns its events [{slot, dmg, type}] for feedback — DoT
+## ticks, then the hooks' turn-end events (mirrors the enemy-side tick).
 func tick_statuses(slot: int) -> Array:
 	var m: Dictionary = get_member(slot)
 	if m.is_empty():
@@ -232,7 +231,8 @@ func tick_statuses(slot: int) -> Array:
 			var sname: String = s.get("name", "")
 			m["active_statuses"].remove_at(i)
 			status_removed.emit(slot, sname)
-			status_expired.emit(slot, sname)
+			if m["is_alive"]:  # a fallen member's run out unannounced, as an enemy's do
+				status_expired.emit(slot, sname)
 	return dot_events
 
 
@@ -321,14 +321,14 @@ func add_threat(slot: int, amount: int) -> void:
 		m["threat_dealt"] = int(m.get("threat_dealt", 0)) + maxi(0, amount)
 
 
-## The living member with the most cumulative damage dealt = highest threat.
-## Ties (including the all-zero start) break to the lowest slot. -1 if none alive.
+## The member on the field (StatusGuard.on_field) with the most damage dealt = highest
+## threat. Ties (including the all-zero start) break to the lowest slot. -1 if none.
 func get_highest_threat_slot() -> int:
 	var best_slot: int = -1
 	var best_threat: int = -1
 	for i: int in range(4):
 		var m: Dictionary = get_member(i)
-		if m.is_empty() or not m.get("is_alive", false):
+		if not StatusGuard.on_field(m):
 			continue
 		var t: int = int(m.get("threat_dealt", 0))
 		if t > best_threat:
@@ -343,9 +343,9 @@ func set_defending(slot: int, defending: bool) -> void:
 		get_member(slot)["is_defending"] = defending
 
 
-## Check if all party members are dead.
+## Whether nobody is left in the fight: every member fainted or petrified (#246).
 func is_party_wiped() -> bool:
-	return not _members.any(func(m: Variant) -> bool: return m != null and m["is_alive"])
+	return not _members.any(func(m: Variant) -> bool: return m != null and StatusGuard.on_field(m))
 
 
 ## Check if a member is a valid heal target (alive for normal heal, any for revive).
@@ -354,13 +354,13 @@ func is_valid_heal_target(slot: int, can_revive: bool = false) -> bool:
 	return not m.is_empty() and (m["is_alive"] or can_revive)
 
 
-## Get average SPD of living party members.
+## Average SPD of the members still on the field, for fleeing: a petrified one
+## is left out, as a petrified enemy is on the other side (#246).
 func get_avg_party_spd() -> float:
 	var total: float = 0.0
 	var count: int = 0
 	for i: int in range(4):
-		var m: Dictionary = get_member(i)
-		if not m.is_empty() and m.get("is_alive", false):
+		if StatusGuard.on_field(get_member(i)):
 			total += get_effective_stat(i, "spd")
 			count += 1
 	return total / maxf(1.0, count)
