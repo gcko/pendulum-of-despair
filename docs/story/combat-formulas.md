@@ -544,11 +544,16 @@ a user ruling of 2026-10-30 unless marked as a reading.
 - **Despair cuts all damage its bearer deals by 20%** ([magic.md](magic.md)
   § Status Effect Reference: "damage dealt -20%"). That is physical attacks,
   spells, abilities, Lira's Shock Coil and Arc Trap ticks, and counters such
-  as Riposte. It does not cut healing. A heal turned into damage on an Undead
-  is damage, so Despair cuts it. In the physical formula the
-  ×0.8 is a step-6 modifier, as Berserk's +50% is; in the magic formula it is
-  a step-5 buff modifier (reading). Shatter Guard's fixed damage is cut after
-  its caps, never below 1 (reading).
+  as Riposte. Thornveil Barrier's counter is cut when Lira, the device's owner,
+  is under Despair; the shielded ally's Despair does not touch it. Despair
+  does not cut healing, but a heal that lands as damage on an enemy of any
+  type (Undead and Pallor alike) is damage, so the caster's Despair cuts it.
+  Poison and Burn ticks stay uncut even when a Despaired combatant inflicted
+  them, and so does an item's fixed damage such as Drake Fang's, whoever uses
+  the item. In the physical formula the ×0.8 is a step-6 modifier, as
+  Berserk's +50% is; in the magic formula it is a step-5 buff modifier
+  (reading). Shatter Guard's fixed damage is cut after its caps, and Thornveil
+  Barrier's counter after its 15%, never below 1 (reading).
 - **Blind halves its bearer's physical hit rate** ([magic.md](magic.md): "Physical
   accuracy -50%"). The rate from § Physical Attack Resolution step 1 is
   multiplied by 0.5 before the [20%, 99%] clamp and floored, so an even-SPD 90%
