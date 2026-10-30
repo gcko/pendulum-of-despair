@@ -297,6 +297,19 @@ func test_a_stat_buff_ends_when_its_bearer_faints() -> void:
 	assert_eq(_stat(battle, TARGET, "def"), BASE_STAT, "a KO ends a positive effect")
 
 
+func test_a_self_target_buff_lands_on_its_caster_whatever_slot_is_chosen() -> void:
+	# No shipped spell targets "self" with a battle effect yet; this one pins
+	# that such a spell lands on the caster, not on the slot in the command.
+	var battle: Node = _boot()
+	_set_base(battle, "def")
+	var spell: Dictionary = _spell("spirit", "ironhide")
+	spell["target"] = "self"
+	if not await _cast(battle, spell, TARGET):
+		return
+	assert_eq(_stat(battle, CASTER, "def"), _buffed(40), "the caster is buffed")
+	assert_eq(_stat(battle, TARGET, "def"), BASE_STAT, "the chosen slot is not")
+
+
 # ── Regeneration ─────────────────────────────────────────────────────────
 
 

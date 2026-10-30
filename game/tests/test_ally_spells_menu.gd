@@ -16,6 +16,7 @@ class EscapeBattle:
 	extends Node
 	signal message(text: String)
 	signal damage_dealt(target_id: String, amount: int, damage_type: String)
+	signal flee_result(success: bool)
 	var state: Node
 	var boss: bool = false
 	var exits: Array[String] = []
@@ -53,9 +54,9 @@ func _press(action: String) -> InputEventAction:
 
 ## Open the Magic submenu of Maren at [param level] with MP to spare, and
 ## return its entries by spell id.
-func _maren_spells(level: int) -> Dictionary:
+func _maren_spells(level: int, member: Dictionary = {"current_mp": 999}) -> Dictionary:
 	var m: Node = _make_menu()
-	m.show_commands({"character_id": "maren", "level": level}, false, {"current_mp": 999})
+	m.show_commands({"character_id": "maren", "level": level}, false, member)
 	m._cursor = 1  # Magic (Attack, Magic, Ability, Item, Defend, Flee)
 	m._confirm_command()
 	var by_id: Dictionary = {}
@@ -78,6 +79,15 @@ func test_built_ally_spells_stay_selectable_in_the_magic_menu() -> void:
 	]:
 		assert_true(spells.has(id), "precondition: Maren knows %s" % id)
 		assert_true(spells.get(id, {}).get("enabled", false), "%s can be cast" % id)
+
+
+func test_leydraught_is_grayed_when_the_caster_cannot_pay_its_hp() -> void:
+	# 15% of 1000 max HP is 150: the cast is refused at 150 HP or less
+	# (2026-10-30 ruling), so the menu does not offer it there.
+	var short: Dictionary = {"current_mp": 999, "max_hp": 1000, "current_hp": 150}
+	assert_false(_maren_spells(40, short)["leydraught"].get("enabled", true), "grayed at 150 HP")
+	var enough: Dictionary = {"current_mp": 999, "max_hp": 1000, "current_hp": 151}
+	assert_true(_maren_spells(40, enough)["leydraught"].get("enabled", false), "offered at 151")
 
 
 ## Drive the menu to the target cursor for a fainted-ally spell.
@@ -157,12 +167,18 @@ func _smokeveil() -> Dictionary:
 
 func test_smokeveil_ends_a_normal_battle_as_an_escape() -> void:
 	var battle: EscapeBattle = _escape_battle(false)
+	var said: Array[String] = []
+	battle.message.connect(func(text: String) -> void: said.append(text))
+	watch_signals(battle)
 	var cast: bool = BattleMagicCommand.new(battle).do_magic(
 		"party_0", {"type": "magic", "spell": _smokeveil(), "target": 0}
 	)
 	assert_true(cast, "the cast resolves")
 	assert_eq(battle.exits, ["flee"] as Array[String], "the party escapes, with no rewards")
 	assert_eq(int(battle.state.get_member(0)["current_mp"]), 16, "for Smokeveil's 4 MP")
+	# battle-dialogue.md § Escape, as a successful Flee announces it.
+	assert_has(said, "Escaped!", str(said))
+	assert_signal_emitted_with_parameters(battle, "flee_result", [true])
 
 
 func test_smokeveil_is_refused_in_a_boss_fight_before_mp() -> void:

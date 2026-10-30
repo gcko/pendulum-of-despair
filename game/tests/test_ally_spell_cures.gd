@@ -380,3 +380,20 @@ func test_ally_spells_with_no_battle_effect_are_refused_before_mp() -> void:
 	var refusals: Array[String] = said.filter(func(t: String) -> bool: return t == "No effect!")
 	assert_eq(refusals.size(), UNBUILT.size(), "each is refused out loud: %s" % str(said))
 	assert_false(said.any(func(t: String) -> bool: return " casts " in t), "none is cast")
+
+
+func test_a_timed_buff_with_no_duration_is_refused_before_mp() -> void:
+	# No shipped spell is shaped this way; a stat buff or Regen lasting 0 turns
+	# would spend MP for an effect gone before it could matter.
+	var battle: Node = _boot()
+	var said: Array[String] = _messages(battle)
+	if not await _await_prompt(battle):
+		return
+	battle.get_battle_state().get_member(CASTER)["current_mp"] = 50
+	for shape: Array in [["spirit", "ironhide", null], ["spirit", "kindle_breath", 0]]:
+		var spell: Dictionary = _spell(shape[0], shape[1], 1)
+		spell["duration"] = shape[2]
+		_submit(battle, spell, TARGET)
+		assert_eq(_mp(battle, CASTER), 50, "%s with duration %s spends no MP" % shape.slice(1))
+	var refusals: Array[String] = said.filter(func(t: String) -> bool: return t == "No effect!")
+	assert_eq(refusals.size(), 2, "both are refused out loud: %s" % str(said))

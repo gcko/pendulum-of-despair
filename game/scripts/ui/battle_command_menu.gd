@@ -244,7 +244,9 @@ func _confirm_command() -> void:
 			_target_side_switchable = false
 			_start_target_selection(true)
 		"magic":
-			set_submenu_items(_gray_unbuilt_spells(SubmenuItems.magic(_character_data, _member)))
+			set_submenu_items(
+				_gray_uncastable(SubmenuItems.magic(_character_data, _member), _member)
+			)
 			_show_submenu()
 		"ability":
 			set_submenu_items(SubmenuItems.abilities(_character_data, _member))
@@ -312,12 +314,17 @@ func _confirm_submenu() -> void:
 			_start_target_selection(true)
 
 
-## Gray out every spell in [param items] whose battle effect is not built yet,
-## as an unaffordable one is grayed: the battle refuses it on the same answer
-## (BattleMagicCommand.is_castable_in_battle), so it could only waste the turn.
-static func _gray_unbuilt_spells(items: Array[Dictionary]) -> Array[Dictionary]:
+## Gray out every spell in [param items] the battle would refuse, as an
+## unaffordable one is grayed ("Spells the character can't afford ... grayed
+## out", ui-design.md § 2.7): an ally-side spell whose battle effect is not built
+## yet (BattleMagicCommand.is_castable_in_battle), and one whose HP cost
+## [param member] cannot pay (BattleMagicCommand.can_pay_hp, Leydraught).
+static func _gray_uncastable(items: Array[Dictionary], member: Dictionary) -> Array[Dictionary]:
 	for item: Dictionary in items:
-		if not MagicCommand.is_castable_in_battle(item.get("command", {}).get("spell", {})):
+		var spell: Dictionary = item.get("command", {}).get("spell", {})
+		if not MagicCommand.is_castable_in_battle(spell):
+			item["enabled"] = false
+		elif not MagicCommand.can_pay_hp(spell, member):
 			item["enabled"] = false
 	return items
 

@@ -11,7 +11,7 @@ const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
 const BattleActions = preload("res://scripts/combat/battle_actions.gd")
 const SpellHelpers = preload("res://scripts/ui/spell_helpers.gd")
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
-const Buffs = preload("res://scripts/combat/battle_buffs.gd")
+const AllySpells = preload("res://scripts/combat/battle_ally_spells.gd")
 
 ## Weave Gauge earned by the caster for a spell that landed, and the share
 ## Maren banks when somebody else casts
@@ -33,12 +33,16 @@ const HEAL_REVERSING_TYPES: Array[String] = ["undead", "pallor"]
 const ALLY_TARGETS: Array[String] = ["single_ally", "all_allies", "fainted_ally", "self"]
 
 ## Spell data keys carrying an ally spell's battle effect (#503), each valued
-## from the spell's magic.md entry; _land_on_ally and do_magic read them.
+## from the spell's magic.md entry; BattleAllySpells and do_magic read them.
 const ALLY_EFFECTS: Array[String] = [
 	"stat_buff", "regen_pct", "revive_pct", "mp_restore_pct", "cure", "escape"
 ]
 
+## Effects that last the spell's duration, which must then be 1 turn or more.
+const TIMED_EFFECTS: Array[String] = ["stat_buff", "regen_pct"]
+
 var _battle: Node
+var _allies: AllySpells = null
 
 
 func _init(battle: Node) -> void:
@@ -48,8 +52,8 @@ func _init(battle: Node) -> void:
 ## Cast the spell in [param command]. Returns false, spending nothing, when the
 ## cast never happened, so the caller re-opens the menu: the caster is Silenced;
 ## _target_type refuses it; its ally target is not alive (or, for a revive, not
-## Fainted); no enemy is left; it is an escape in a boss fight; or the caster
-## cannot pay its MP or HP.
+## Fainted); no enemy is left; a revive was turned on anything but an Undead; it
+## is an escape in a boss fight; or the caster cannot pay its MP or HP.
 func do_magic(actor_id: String, command: Dictionary) -> bool:
 	var state: Node = _battle.get_battle_state()
 	var slot: int = actor_id.replace("party_", "").to_int()
@@ -82,8 +86,8 @@ func do_magic(actor_id: String, command: Dictionary) -> bool:
 	if spell.get("escape", false) and _battle.is_boss_battle():
 		_battle.message.emit("Can't use that here!")
 		return false
-	var hp_cost: int = int(member.get("max_hp", 0)) * int(spell.get("hp_cost_pct", 0)) / 100
-	if hp_cost > 0 and int(member.get("current_hp", 0)) <= hp_cost:
+	var hp_cost: int = hp_cost_of(spell, member)
+	if not can_pay_hp(spell, member):
 		_battle.message.emit("Not enough HP!")
 		return false
 	var cost: int = SpellHelpers.get_mp_cost(spell, member.get("character_id", ""))
@@ -96,7 +100,10 @@ func do_magic(actor_id: String, command: Dictionary) -> bool:
 		# Leydraught's price: the caster's own HP (magic.md § 43 Leydraught).
 		_battle.damage_dealt.emit(actor_id, state.take_damage(slot, hp_cost, false), "hp_cost")
 	if spell.get("escape", false):
-		# Smokeveil: "In combat, immediately ends the battle with no rewards."
+		# Smokeveil: "In combat, immediately ends the battle with no rewards",
+		# announced as a successful Flee is (battle-dialogue.md § Escape).
+		_battle.message.emit("Escaped!")
+		_battle.flee_result.emit(true)
 		_battle.exit_battle("flee")
 		return true
 	var had_effect: bool = _resolve(slot, spell, target_type, resolved_enemy_target, command)
@@ -166,14 +173,12 @@ func _resolve(
 		enemy.take_damage(hp)
 		_land_spell_damage(slot, hp, resolved_enemy_target)
 		return true
-	if target_type in ["single_ally", "all_allies", "fainted_ally"]:
+	if target_type in ALLY_TARGETS:
 		# One heal roll for the whole cast, as a party heal has always rolled.
 		var heal_amt: int = DamageCalc.calculate_healing(mag, power) if restores_hp(spell) else 0
-		var had_effect: bool = false
-		for i: int in _ally_slots(target_type, command):
-			if _land_on_ally(spell, i, heal_amt):
-				had_effect = true
-		return had_effect
+		if _allies == null:
+			_allies = AllySpells.new(_battle)
+		return _allies.resolve(slot, spell, target_type, command, heal_amt)
 	return false
 
 
@@ -187,96 +192,6 @@ func _for_each_targetable_enemy(apply: Callable) -> bool:
 			if apply.call(i):
 				had_effect = true
 	return had_effect
-
-
-## The party slots an ally spell lands on: the chosen one, or all living ones.
-func _ally_slots(target_type: String, command: Dictionary) -> Array[int]:
-	if target_type != "all_allies":
-		return [int(command.get("target", 0))]
-	var slots: Array[int] = []
-	for i: int in range(4):
-		if _battle.get_battle_state().get_member(i).get("is_alive", false):
-			slots.append(i)
-	return slots
-
-
-## Land every effect [param spell] carries on party slot [param slot], and
-## [param heal_amt] HP. Returns whether any of them changed the target.
-func _land_on_ally(spell: Dictionary, slot: int, heal_amt: int) -> bool:
-	var state: Node = _battle.get_battle_state()
-	var m: Dictionary = state.get_member(slot)
-	var landed: bool = false
-	if spell.get("revive_pct") != null:
-		var revive_hp: int = maxi(1, _pct_of(m, "max_hp", spell, "revive_pct"))
-		landed = _show_heal(slot, state.heal(slot, revive_hp, true)) or landed
-	if heal_amt > 0:
-		landed = _show_heal(slot, state.heal(slot, heal_amt)) or landed
-	var turns: int = int(spell.get("duration", 0)) if spell.get("duration") != null else 0
-	var buff: Variant = spell.get("stat_buff")
-	if buff is Dictionary:
-		var pct: int = int(buff.get("pct", 0))
-		landed = Buffs.grant(state, slot, str(buff.get("stat", "")), pct, turns) or landed
-	if spell.get("regen_pct") != null:
-		landed = Buffs.grant(state, slot, Buffs.REGEN, int(spell["regen_pct"]), turns) or landed
-	if spell.get("mp_restore_pct") != null:
-		var mp_before: int = int(m.get("current_mp", 0))
-		state.restore_mp(slot, _pct_of(m, "max_mp", spell, "mp_restore_pct"))
-		landed = int(m.get("current_mp", 0)) > mp_before or landed
-	if spell.get("cure") is Dictionary:
-		landed = _cure(slot, spell["cure"]) or landed
-	var status: String = str(spell.get("status", ""))
-	if spell.get("category", "") == "buff" and StatusEffects.is_known(status):
-		landed = _status_on_ally(slot, status, spell.get("duration")) or landed
-	return landed
-
-
-## [param spell]'s [param pct_key] percent of [param m]'s [param pool], floored.
-static func _pct_of(m: Dictionary, pool: String, spell: Dictionary, pct_key: String) -> int:
-	return int(m.get(pool, 0)) * int(spell.get(pct_key, 0)) / 100
-
-
-## Show [param healed] HP restored to [param slot]; returns whether any came back.
-func _show_heal(slot: int, healed: int) -> bool:
-	if healed > 0:
-		_battle.damage_dealt.emit("party_%d" % slot, healed, "heal")
-	return healed > 0
-
-
-## Cure party slot [param slot] by [param rule] {only, except, count}: the
-## listed statuses in order, else every negative one but the exceptions (Purge:
-## not Stop or Despair), at most count of them (Cleansing Draught: one), 0 = all.
-## A positive status is never cured. Returns whether anything was cured.
-func _cure(slot: int, rule: Dictionary) -> bool:
-	var state: Node = _battle.get_battle_state()
-	var candidates: Array = (rule.get("only", []) as Array).duplicate()
-	if candidates.is_empty():
-		for s: Dictionary in state.get_member(slot).get("active_statuses", []):
-			candidates.append(s.get("name", ""))
-	var limit: int = int(rule.get("count", 0))
-	var cured: int = 0
-	for status: Variant in candidates:
-		var name: String = str(status)
-		if limit > 0 and cured >= limit:
-			break
-		if StatusEffects.is_positive(name) or name in rule.get("except", []):
-			continue
-		if state.has_status(slot, name):
-			state.remove_status(slot, name)
-			cured += 1
-	return cured > 0
-
-
-## Land a buff spell's status on party slot [param slot] (Quickstep's Haste,
-## #246) for the spell's duration, else the status's own, plus one on a self-cast
-## (BattleBuffs.grant counts it the same way); a recast refreshes it. The battle
-## announces it from BattleState.status_applied. Returns true.
-func _status_on_ally(slot: int, status: String, duration: Variant) -> bool:
-	var state: Node = _battle.get_battle_state()
-	var turns: int = StatusEffects.resolve_duration(status, duration)
-	if state.get_member(slot).get("turn_open", false):
-		turns += 1
-	state.apply_status(slot, status, "turns", float(turns))
-	return true
 
 
 ## A heal spell landing on enemy [param idx]. An Undead or Pallor enemy takes
@@ -369,19 +284,38 @@ func _status_on_enemy(caster_slot: int, spell: Dictionary, idx: int) -> bool:
 	return false
 
 
-## Whether [param spell] has a battle effect. An ally-side spell needs a heal
-## with power, a registry status or one of ALLY_EFFECTS, so one not built yet
-## (Leymirror, Last Breath, Drift, Forgeshield, the field-only Waymark, Linewalk,
-## Veilstep) is refused before MP is spent, and the Magic menu grays it out.
+## Whether [param spell], if ally-side, has a battle effect: a heal with power,
+## a registry status or one of ALLY_EFFECTS (a timed one with a duration of a
+## turn or more). One not built yet (Leymirror, Last Breath, Drift, Forgeshield,
+## the field-only Waymark, Linewalk, Veilstep) is refused before MP is spent,
+## and the Magic menu grays it out. Enemy-side spells are not judged here.
 static func is_castable_in_battle(spell: Dictionary) -> bool:
 	if not str(spell.get("target", "single_enemy")) in ALLY_TARGETS:
 		return true
+	var turns: Variant = spell.get("duration")
+	for key: String in TIMED_EFFECTS:
+		if spell.get(key) != null and (turns == null or int(turns) < 1):
+			return false
 	if restores_hp(spell) or StatusEffects.is_known(str(spell.get("status", ""))):
 		return true
 	for key: String in ALLY_EFFECTS:
 		if spell.get(key) != null:
 			return true
 	return false
+
+
+## The HP [param member] pays to cast [param spell] (Leydraught: 15% of max
+## HP, floored), 0 when it costs none.
+static func hp_cost_of(spell: Dictionary, member: Dictionary) -> int:
+	return int(member.get("max_hp", 0)) * int(spell.get("hp_cost_pct", 0)) / 100
+
+
+## Whether [param member] can pay [param spell]'s HP cost: only with HP left
+## over, so the cost never KOs the caster (2026-10-30 ruling). The battle Magic
+## menu grays the spell out on the same answer.
+static func can_pay_hp(spell: Dictionary, member: Dictionary) -> bool:
+	var cost: int = hp_cost_of(spell, member)
+	return cost <= 0 or int(member.get("current_hp", 0)) > cost
 
 
 ## Whether [param spell] restores HP — a healing spell with a power — which is
