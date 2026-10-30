@@ -14,6 +14,12 @@ const LIVING_TARGET_EFFECTS: Array[String] = [
 	"restore_mp", "restore_hp_mp", "cure_status", "buff_atk", "buff_mag"
 ]
 
+## Ailments no item clears, so an item that "clears status ailments" leaves
+## them on (items.md § Status Cures): Stop wears off only, Berserk yields only
+## to the Purge spell, and Despair only to Pallor Salve, Hope Shard or Hollow
+## Mend. The items that do cure Despair name it in their own `cures` list.
+const ITEM_PROOF_STATUSES: Array[String] = ["stop", "berserk", "despair"]
+
 var _battle: Node
 
 
@@ -232,13 +238,14 @@ func _hp_amount(item: Dictionary, target: Dictionary) -> int:
 	return int(raw_val) if raw_val != null else 0
 
 
-## Strip every ailment from a slot, walking backwards so removal cannot skip
-## one. Positive statuses (Haste) are buffs, not something to cure, and stay.
+## Strip every ailment an item can cure from a slot, walking backwards so
+## removal cannot skip one. Positive statuses (Haste) are buffs, not something
+## to cure, and stay; so does every ITEM_PROOF_STATUSES ailment.
 func _clear_statuses(slot: int, member: Dictionary) -> void:
 	var statuses: Array = member.get("active_statuses", [])
 	for i: int in range(statuses.size() - 1, -1, -1):
 		var status: String = statuses[i].get("name", "")
-		if not StatusEffects.is_positive(status):
+		if not StatusEffects.is_positive(status) and status not in ITEM_PROOF_STATUSES:
 			_battle.get_battle_state().remove_status(slot, status)
 
 
