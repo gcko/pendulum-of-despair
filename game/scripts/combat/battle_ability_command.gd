@@ -6,14 +6,15 @@ extends RefCounted
 ## A dispatcher. do_ability checks the ability can be issued, pays its cost
 ## (keyed on the data's cost_type), then hands it to the resolver for its
 ## command (the data's `command` field). Slice 158a of #158 built Cael's
-## Rally, 158b Edren's Bulwark and 158c Lira's Forgewright. Tricks, Spiritcall
-## and Arcanum are slices 158d-f: each adds a resolver here, and pay() learns
-## its cost type. Until then their abilities are not built, so the battle menu
-## lists them disabled and do_ability refuses them, as it does the Forgewright
-## abilities left for a later slice (BattleForgewright.BUILT).
+## Rally, 158b Edren's Bulwark, 158c Lira's Forgewright and 158d Sable's Tricks
+## (BattleTricksCommand resolves them). Spiritcall and Arcanum are slices
+## 158e-f: each adds a resolver here, and pay() learns its cost type. Until then
+## their abilities are not built, so the battle menu lists them disabled and
+## do_ability refuses them, as it does the Forgewright and Tricks abilities left
+## for a later slice (BattleForgewright.BUILT, BattleTricks.BUILT).
 ##
-## The in-force rules live in BattleRally, BattleBulwark and BattleForgewright,
-## reached through BattleState's ability hooks.
+## The in-force rules live in BattleRally, BattleBulwark, BattleForgewright and
+## BattleTricks, reached through BattleState's ability hooks.
 
 const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
 const ModifierAggregator = preload("res://scripts/combat/modifier_aggregator.gd")
@@ -33,10 +34,12 @@ const RALLY_EFFECTS: Dictionary = {
 }
 
 var _battle: Node
+var _tricks: BattleTricksCommand
 
 
 func _init(battle: Node) -> void:
 	_battle = battle
+	_tricks = BattleTricksCommand.new(battle)
 
 
 ## Issue the ability in [param command]. Returns false when it never happened —
@@ -52,11 +55,15 @@ func do_ability(actor_id: String, command: Dictionary) -> bool:
 		return false
 	if not is_available(member, ability):
 		return false
-	if not _target_ok(state, slot, ability, command):
+	if (
+		not _target_ok(state, slot, ability, command)
+		or not _tricks_target_ok(slot, ability, command)
+	):
 		_battle.message.emit("No target!")
 		return false
 	if not pay(state, slot, ability):
-		_battle.message.emit("Not enough %s!" % String(ability.get("cost_type", "")).to_upper())
+		var unit: String = String(ability.get("cost_type", "")).trim_suffix("_cd").to_upper()
+		_battle.message.emit("Not enough %s!" % unit)
 		return false
 	_battle.message.emit(
 		"%s uses %s!" % [member.get("character_data", {}).get("name", "???"), ability["name"]]
@@ -75,6 +82,8 @@ func _resolver(ability: Dictionary) -> Callable:
 			return _resolve_bulwark
 		"forgewright":
 			return _resolve_forgewright
+		"tricks":
+			return _tricks.resolve
 	return Callable()
 
 
@@ -175,6 +184,8 @@ static func is_built(ability: Dictionary) -> bool:
 			return BattleBulwark.BUILT.has(ability.get("id", ""))
 		"forgewright":
 			return BattleForgewright.BUILT.has(ability.get("id", ""))
+		"tricks":
+			return BattleTricks.BUILT.has(ability.get("id", ""))
 	return false
 
 
@@ -187,12 +198,15 @@ static func is_rally(ability: Dictionary) -> bool:
 ## built and no status blocks it. A Rally is unavailable while Cael is
 ## Silenced, since Silence would end it at once (abilities.md § Cael — Rally).
 ## Shatter Guard breaks a stance, so it needs one; Riposte is automatic under
-## Oathkeeper, so it cannot be armed then. Salvage needs a device standing.
+## Oathkeeper, so it cannot be armed then. Salvage needs a device standing. A
+## Trick needs to be off cooldown, and a steal Trick the front row.
 static func is_available(member: Dictionary, ability: Dictionary) -> bool:
 	if not is_built(ability):
 		return false
 	if ability.get("command", "") == "forgewright":
 		return BattleForgewright.can_issue(member, ability)
+	if ability.get("command", "") == "tricks":
+		return BattleTricks.can_issue(member, ability)
 	if is_rally(ability) and not BattleRally.caster_can_sustain(member):
 		return false
 	if ability.get("id", "") == "shatter_guard" and not BattleBulwark.in_stance(member):
@@ -203,13 +217,14 @@ static func is_available(member: Dictionary, ability: Dictionary) -> bool:
 
 
 ## Whether [param member] has enough of [param ability]'s resource. Keyed on
-## the data's cost_type: "mp" (158a), "ap" (Bulwark's Aegis Points, 158b) and
-## "ac" (Forgewright's Arcanite Charges, 158c) are built. "mp_cd" (Tricks' MP
-## plus cooldown, 158d) and "wg" (Arcanum, 158f) answer false until their
-## slices add them, and "none" marks a passive, which is never issued.
+## the data's cost_type: "mp" (158a), "ap" (Bulwark's Aegis Points, 158b),
+## "ac" (Forgewright's Arcanite Charges, 158c) and "mp_cd" (Tricks' MP plus a
+## cooldown, 158d; the cooldown is is_available's) are built. "wg" (Arcanum,
+## 158f) answers false until its slice adds it, and "none" marks a passive,
+## which is never issued.
 static func can_pay(member: Dictionary, ability: Dictionary) -> bool:
 	match ability.get("cost_type", ""):
-		"mp":
+		"mp", "mp_cd":
 			return int(member.get("current_mp", 0)) >= int(ability.get("cost_value", 0))
 		"ap":
 			return BattleBulwark.can_spend(member, int(ability.get("cost_value", 0)))
@@ -230,6 +245,9 @@ static func pay(state: Node, slot: int, ability: Dictionary) -> bool:
 			return BattleBulwark.spend_ap(state, slot, int(ability.get("cost_value", 0)))
 		"ac":
 			return BattleForgewright.spend_ac(state, slot, int(ability.get("cost_value", 0)))
+		"mp_cd":
+			BattleTricks.start_cooldown(state, slot, ability)
+			return state.spend_mp(slot, int(ability.get("cost_value", 0)))
 	return false
 
 
@@ -244,3 +262,11 @@ static func _target_ok(state: Node, slot: int, ability: Dictionary, command: Dic
 	if not state.get_member(target).get("is_alive", false):
 		return false
 	return not (ability.get("id", "") == "ironwall" and target == slot)
+
+
+## Whether a Trick has what it aims at (BattleTricksCommand.target_ok); every
+## other command answers true.
+func _tricks_target_ok(slot: int, ability: Dictionary, command: Dictionary) -> bool:
+	if ability.get("command", "") != "tricks":
+		return true
+	return _tricks.target_ok(slot, ability, command)

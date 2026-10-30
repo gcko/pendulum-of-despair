@@ -259,7 +259,13 @@ Settled on #158 on 2026-10-30; the battle layer is built to these readings.
 | **Shiv** | Level 8 | 0 MP / 1 turn | Quick physical attack (`ability_mult` 1.0) that ignores 50% of target's Defense. If Sable has a stolen item, she can throw it instead: the same hit at the same multiplier and the same DEF ignore, re-elemented to the item's thrown element ([items.md](items.md) § Thrown-Item Elements). Most items are non-elemental and add nothing; the item is consumed either way. See § Damage Magnitudes. |
 | **Misdirect** | Interlude [S] (Lv 14+) | 6 MP / 3 turns | Forces one enemy to target a different ally than intended on its next attack. Against AoE attacks, Misdirect has no effect. Against non-physical actions (spells), it redirects the targeting as normal. If used on a boss, instead reduces the boss's next attack damage by 25%. |
 | **Ransack** | Interlude [S] (Lv 19+) | 8 MP / 4 turns | Steal from all enemies simultaneously. Lower success rate than Filch (70% of normal), but hits everyone. |
-| **Wild Card** | Story: After the Interlude (Sable's journey reuniting the party) | 10 MP / 5 turns | Sable improvises a powerful technique based on her current stolen goods. 0 items: physical damage to one enemy at `ability_mult` 2.0 ("2x her Attack"). 1 item: the same 2.0 strike against all enemies, carrying the thrown item's element. 2 items: as 1 item, plus a random debuff (drawn from: Poison, Sleep, Silence, Blind, Slow) on all enemies. 3 items: heavy — `ability_mult` 3.0 against all enemies, elemental, random debuff (same list), and restores 10% HP to all allies. *Which* of the held items supplies the element on the 2- and 3-item branches is open, not settled ([#447](https://github.com/gcko/pendulum-of-despair/issues/447)) — see § Damage Magnitudes. All stolen items are consumed. Multipliers per [combat-formulas.md](combat-formulas.md) § Physical Ability Multiplier Tiers; *which* element a given item confers is [items.md](items.md) § Thrown-Item Elements. See § Damage Magnitudes. |
+| **Wild Card** | Story: After the Interlude (Sable's journey reuniting the party) | 10 MP / 5 turns | Sable improvises a powerful technique based on her current stolen goods. 0 items: physical damage to one enemy at `ability_mult` 2.0 ("2x her Attack"). 1 item: the same 2.0 strike against all enemies, carrying the thrown item's element. 2 items: as 1 item, plus a random debuff (drawn from: Poison, Sleep, Silence, Blind, Slow) on all enemies. 3 items: heavy — `ability_mult` 3.0 against all enemies, elemental, random debuff (same list), and restores 10% HP to all allies. On the 2- and 3-item branches the element comes from the most recently stolen of the held items that has one, and with none the strike is non-elemental ([#447](https://github.com/gcko/pendulum-of-despair/issues/447)) — see § Damage Magnitudes. All stolen items are consumed. Multipliers per [combat-formulas.md](combat-formulas.md) § Physical Ability Multiplier Tiers; *which* element a given item confers is [items.md](items.md) § Thrown-Item Elements. See § Damage Magnitudes. |
+
+**Rulings (from [#158](https://github.com/gcko/pendulum-of-despair/issues/158), slice 158d):**
+- **Filch's success.** A Filch tries the enemy's common steal, then its rare one, and each tier succeeds at that tier's rate × clamp(1 + (Sable SPD − enemy SPD) / 100, 0.5, 1.5), floored. A 75% common steal is 75% at even Speed, 97% with a 30-point lead, and never below 37% or above certain. Ransack rolls each enemy at 70% of that.
+- **Cooldowns** count Sable's own turns: an *N*-turn cooldown keeps the Trick out of the menu for her next *N* turns, and nobody else's turns count it down. Wild Card's falls to 4 once `trial_sable_complete` is set.
+- **Stolen Goods.** A stolen item goes into the party inventory when it is taken, so whatever Sable still holds when the battle ends is kept. She holds the first three for her Tricks; a fourth steal still succeeds and goes to the inventory alone. A Trick that uses a held item consumes it from the inventory too, and an item the party has used from the inventory is no longer held.
+- **Built and left for later.** Filch, Smokescreen's accuracy cut, Shiv and its throw, Ransack, Wild Card and Unbreakable Thread are built. Misdirect, Smokescreen's Speed rider (no document says which items are "Forgewright components"), and the Pallor trial's doubled cooldowns and halved Filch are not.
 
 **Synergies:**
 - Sable + Lira: Stolen Forgewright components can be given to Lira between battles to restore 2 AC each.
@@ -1048,25 +1054,33 @@ Which element a given stolen item confers is
 [items.md](items.md) § Thrown-Item Elements — the same mapping Shiv's throw
 needed, made once and used by both.
 
-*What that mapping does not settle: which held item supplies the element*
+*Which held item supplies the element — settled*
 ([#447](https://github.com/gcko/pendulum-of-despair/issues/447)). Shiv throws
 one item, so the mapping answers the question outright. Wild Card's 2- and
 3-item branches consume the whole pool and still land as a single elemental
-strike, and no document says whether the element comes from the first item
-stolen, the last, a random one, the first *elemental* one, or whether the branch
-resolves as several strikes at all. `item_branch_element_field` in
-`game/data/abilities/sable.json` names the field the element is read from; it
-does not name the item to read it from. With most of the catalog throwing
-non-elemental, a pool of one Emberstone and two Potions has no defined answer
-today. That is **left open here rather than settled**, the same way
-[combat-formulas.md](combat-formulas.md) § Custom-Formula Abilities leaves
-Shattered Vanguard's cap ordering open: the readings differ in balance rather
-than in bookkeeping — "first elemental item wins" makes the branch reliably
-elemental, "last stolen" makes it a player choice, "one strike per element"
-changes the magnitude — and the decision belongs to the pass that implements the
-Stolen Goods pool in the battle layer. What *is* settled is the mapping and the
-magnitude: the multiplier is 2.0 through the 2-item branch and 3.0 at three,
-whichever element lands.
+strike, so they need a rule for which item to read, and the ruling recorded on
+#447 gives one: **the element comes from an elemental item held, the most
+recently stolen of them when there are several, and with no elemental item the
+strike is non-elemental.** A pool of an Emberstone and two Potions is Flame
+whichever order they came in; an Emberstone then a Spirit Dust is Spirit; three
+Potions are non-elemental. It is still one strike, so the magnitude does not
+move. That makes the element a player choice — steal the right thing last — and
+keeps a single non-elemental filler item from erasing an elemental one.
+`item_branch_element_field` in `game/data/abilities/sable.json` names the field
+the element is read from and `item_branch_element_pick` the rule,
+`"most_recent_elemental"`. What was settled before stays settled: the mapping,
+and the multiplier, 2.0 through the 2-item branch and 3.0 at three, whichever
+element lands.
+
+*What carries the element when it is built (158d).* combat-formulas.md
+§ Physical Elemental Attacks leaves Shiv and Wild Card to settle their own
+element when they are built. They carry the thrown item's element and nothing
+else: the equipped weapon's element is not theirs, which is what keeps a
+non-elemental throw "arithmetically identical to a bare Shiv" and #447's
+non-elemental Wild Card non-elemental. A Trick does not spend an Overcharge,
+which stays on the ally for its next Attack. Wild Card's debuff is drawn once
+for the whole field and lands, after the strike, on every enemy not immune to
+it, for that status's own duration.
 
 **Shiv's thrown-item branch — resolved on reading (a)**
 ([#359](https://github.com/gcko/pendulum-of-despair/issues/359)). The base attack
@@ -1088,7 +1102,7 @@ made here.
    always one decision covering both abilities, and the *mapping* is settled
    once here. Which of several held items supplies the element on Wild Card's
    2- and 3-item branches is a separate question the mapping does not reach; it
-   is named open above
+   is settled above
    ([#447](https://github.com/gcko/pendulum-of-despair/issues/447)).
 
 2. *The shape of the bonus.* Reading **(a)**: the throw re-elements the existing

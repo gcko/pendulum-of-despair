@@ -13,6 +13,7 @@ const InvHelpers := preload("res://scripts/util/inventory_helpers.gd")
 const AbilityHelpers := preload("res://scripts/ui/ability_helpers.gd")
 const AbilityCommand := preload("res://scripts/combat/battle_ability_command.gd")
 const MagicCommand := preload("res://scripts/combat/battle_magic_command.gd")
+const TricksCommand := preload("res://scripts/combat/battle_tricks_command.gd")
 
 
 ## The character's known spells (GAP-001), each routing a
@@ -44,7 +45,10 @@ static func magic(character_data: Dictionary, member: Dictionary) -> Array[Dicti
 ## {"type": "ability", "ability": <dict>} command. One is selectable when
 ## BattleAbilityCommand can issue it now and the member can pay for it, so
 ## unaffordable costs gray out as Magic's do, and so do abilities whose command
-## is not built yet (#158 slices b-f).
+## is not built yet (#158 slices b-f). A Trick also grays while it cools down or,
+## for a steal Trick, while Sable stands in the back row (BattleTricks.can_issue).
+## Shiv is listed once bare and once per item Sable holds to throw, and Wild
+## Card asks for one enemy when she holds nothing (BattleTricksCommand).
 static func abilities(character_data: Dictionary, member: Dictionary) -> Array[Dictionary]:
 	var items: Array[Dictionary] = []
 	for ability: Dictionary in known_abilities(character_data):
@@ -54,11 +58,29 @@ static func abilities(character_data: Dictionary, member: Dictionary) -> Array[D
 		var entry: Dictionary = {
 			"label": "%s  %s" % [ability.get("name", ""), AbilityHelpers.format_cost(ability)],
 			"command": {"type": "ability", "ability": ability},
-			"target_type": ability.get("target", "single_enemy"),
+			"target_type": TricksCommand.target_type(member, ability),
 			"enabled": usable,
 		}
 		items.append(entry)
+		if ability.get("id", "") == "shiv":
+			items.append_array(_throws(member, entry))
 	return items
+
+
+## Shiv's throw entries, one per distinct item in [param member]'s Stolen Goods,
+## each the bare [param shiv] entry carrying the item to throw.
+static func _throws(member: Dictionary, shiv: Dictionary) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var seen: Array[String] = []
+	for item_id: Variant in member.get("stolen_goods", []):
+		if String(item_id) in seen:
+			continue
+		seen.append(String(item_id))
+		var entry: Dictionary = shiv.duplicate(true)
+		entry["label"] = "Shiv: %s" % BattleTricks.item_name(String(item_id))
+		entry["command"]["throw_item"] = String(item_id)
+		out.append(entry)
+	return out
 
 
 ## The party's battle-usable items (GAP-019). Battle consumables and

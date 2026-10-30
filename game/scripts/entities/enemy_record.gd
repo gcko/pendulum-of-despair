@@ -38,7 +38,11 @@ static func list_multiplier(element: String, list: Array, default_mult: float) -
 ## the key exists, so a JSON null arrives as Nil rather than the default and
 ## reading it into a typed Dictionary local aborts the function. Widen through
 ## Variant; every non-dictionary means "carries nothing here".
-static func roll_steal(enemy_data: Dictionary, tier: String) -> Dictionary:
+##
+## [param rate_mult] scales the tier's rate before the roll, floored: Filch's
+## speed factor and Ransack's 70% (BattleTricks.steal_mult). Past 100 it is
+## certain.
+static func roll_steal(enemy_data: Dictionary, tier: String, rate_mult: float = 1.0) -> Dictionary:
 	var raw_steal: Variant = enemy_data.get("steal")
 	if not raw_steal is Dictionary:
 		return {"item_id": "", "success": false}
@@ -52,7 +56,7 @@ static func roll_steal(enemy_data: Dictionary, tier: String) -> Dictionary:
 	var rate: int = tier_data.get("rate", 0)
 	var raw_id: Variant = tier_data.get("item_id", "")
 	var item_id: String = raw_id as String if raw_id is String else ""
-	var success: bool = randi() % 100 < rate and not item_id.is_empty()
+	var success: bool = randi() % 100 < floori(rate * rate_mult) and not item_id.is_empty()
 	return {
 		"item_id": item_id if success else "",
 		"success": success,
