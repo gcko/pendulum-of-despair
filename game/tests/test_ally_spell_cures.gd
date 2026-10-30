@@ -194,15 +194,18 @@ func test_cleansing_draught_cures_a_listed_ailment() -> void:
 	assert_eq(_status_names(battle, TARGET), [] as Array[String], "Silence is cured")
 
 
-func test_cleansing_draught_cures_one_ailment_per_cast() -> void:
+func test_cleansing_draught_cures_the_first_listed_ailment_only() -> void:
+	# 2026-10-30 ruling: one per cast, the first in magic.md § 41's order
+	# (Poison, Burn, Sleep, Confusion, Silence, Blind), whatever order they
+	# landed in.
 	var battle: Node = _boot()
 	if not await _await_prompt(battle):
 		return
-	_afflict(battle, ["poison", "blind"])
+	_afflict(battle, ["blind", "sleep", "burn"])
 
 	_submit(battle, _spell("spirit", "cleansing_draught"), TARGET)
 
-	assert_eq(_status_names(battle, TARGET).size(), 1, "one of the two is left")
+	assert_eq(_status_names(battle, TARGET), ["blind", "sleep"] as Array[String], "Burn goes")
 
 
 func test_cleansing_draught_leaves_what_it_does_not_list() -> void:

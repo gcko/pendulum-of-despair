@@ -225,6 +225,55 @@ func test_recasting_a_buff_refreshes_it_rather_than_stacking() -> void:
 	assert_eq(_stat(battle, TARGET, "def"), BASE_STAT, "five turns after the recast, gone")
 
 
+func test_a_weaker_buff_never_overwrites_a_stronger_one_of_the_same_stat() -> void:
+	# 2026-10-30 ruling: same-type stat buffs keep the stronger. Bulwark Line's
+	# +25% leaves Ironhide's +40% in place, on its own clock.
+	var battle: Node = _boot()
+	_set_base(battle, "def")
+	var state: Node = battle.get_battle_state()
+	if not await _cast(battle, _spell("spirit", "ironhide")):
+		return
+	for turn: int in range(2):
+		_take_turn(state, TARGET)
+	if not await _cast(battle, _spell("spirit", "bulwark_line")):
+		return
+	assert_eq(_stat(battle, TARGET, "def"), _buffed(40), "Ironhide's +40% holds")
+	assert_eq(_stat(battle, CASTER, "def"), _buffed(25), "the unbuffed caster gets +25%")
+	for turn: int in range(2):
+		_take_turn(state, TARGET)
+	assert_eq(_stat(battle, TARGET, "def"), _buffed(40), "four turns in, still Ironhide")
+	_take_turn(state, TARGET)
+	assert_eq(_stat(battle, TARGET, "def"), BASE_STAT, "Ironhide ends on its own fifth turn")
+
+
+func test_leyward_never_overwrites_wardglass() -> void:
+	var battle: Node = _boot()
+	_set_base(battle, "mdef")
+	if not await _cast(battle, _spell("ley_line", "wardglass")):
+		return
+	if not await _cast(battle, _spell("ley_line", "leyward")):
+		return
+	assert_eq(_stat(battle, TARGET, "mdef"), _buffed(40), "Wardglass's +40% holds")
+
+
+func test_a_stronger_buff_replaces_a_weaker_one_and_restarts_the_clock() -> void:
+	var battle: Node = _boot()
+	_set_base(battle, "def")
+	var state: Node = battle.get_battle_state()
+	if not await _cast(battle, _spell("spirit", "bulwark_line")):
+		return
+	for turn: int in range(3):
+		_take_turn(state, TARGET)
+	if not await _cast(battle, _spell("spirit", "ironhide")):
+		return
+	assert_eq(_stat(battle, TARGET, "def"), _buffed(40), "Ironhide's +40% replaces +25%")
+	for turn: int in range(4):
+		_take_turn(state, TARGET)
+	assert_eq(_stat(battle, TARGET, "def"), _buffed(40), "on Ironhide's own 5-turn clock")
+	_take_turn(state, TARGET)
+	assert_eq(_stat(battle, TARGET, "def"), BASE_STAT, "five turns after it landed, gone")
+
+
 func test_a_spell_buff_adds_to_an_item_boost_rather_than_replacing_it() -> void:
 	# combat-formulas.md § Buff & Debuff Interaction: buffs on one stat add
 	# their percentages, then floor once.

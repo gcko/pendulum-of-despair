@@ -20,9 +20,9 @@ extends RefCounted
 ##
 ## Each buff is a percentage term of its own on the stat, so it adds to an item
 ## boost or a Rally rather than replacing it (combat-formulas.md § Buff & Debuff
-## Interaction). Two buffs of one kind do not stack: a new one replaces the old,
-## refreshing the duration (progression.md, "Buff stacking"). A buff is counted
-## down on its bearer's own turns, as party statuses are.
+## Interaction). Two buffs of one kind do not stack (progression.md, "Buff
+## stacking"): the stronger stays (see grant). A buff is counted down on its
+## bearer's own turns, as party statuses are.
 
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 
@@ -33,13 +33,17 @@ const REGEN: String = "regen"
 ## Land a spell buff of [param kind] on [param slot]: [param pct] percent for
 ## [param turns] of the bearer's turns, plus one when the bearer's turn is open
 ## (a self-cast), since that turn's end would otherwise spend one, as
-## BattleRally.start counts it. Returns whether it landed: a fallen member
-## carries none.
+## BattleRally.start counts it. One kind keeps the stronger (2026-10-30
+## ruling): a weaker buff leaves a stronger one in force, on its own clock, and
+## an equal or stronger one replaces it with a fresh duration. Returns whether
+## it landed: a fallen member carries none, and a weaker buff changes nothing.
 static func grant(state: Node, slot: int, kind: String, pct: int, turns: int) -> bool:
 	var m: Dictionary = state.get_member(slot)
 	if m.is_empty() or not m.get("is_alive", false):
 		return false
 	var buffs: Dictionary = m.get("spell_buffs", {})
+	if int(buffs.get(kind, {}).get("pct", 0)) > pct:
+		return false
 	buffs[kind] = {
 		"pct": pct,
 		"remaining_turns": turns + (1 if m.get("turn_open", false) else 0),
