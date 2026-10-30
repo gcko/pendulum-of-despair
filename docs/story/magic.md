@@ -432,11 +432,16 @@ unstated. `game/tests/test_spell_balance.gd` asserts all of them against
     +10% multiplies final damage, at step 6 of a physical blow and step 5 of a
     spell ([combat-formulas.md](combat-formulas.md) § Combat Resolution
     Order). It is the party's mark, so Dispersion leaves it on, as its row's
-    "Wears off" says. The mark reaches an Attack (a confused or berserk
-    member's too), a Riposte, a Trick, a spell, and a heal or Regen turned to
-    damage on an Undead or a Pallor. It does not yet reach the rest of "all
-    sources": Lira's Shock Coil, Arc Trap and Thornveil, Edren's Shatter
-    Guard, Torren's Greyveil and thorn barrier, and a Poison or Burn tick.
+    "Wears off" says. It raises damage taken and not healing: a spell or blow
+    of an element the enemy absorbs heals it as much marked as unmarked
+    (orchestrator reading, #514). Despair, which is on the attacker, cuts that
+    heal all the same. The mark reaches an Attack (a confused or berserk
+    member's too), a Riposte, a Trick, a spell, a confused or berserk enemy's
+    blow, a Drake Fang's fixed damage (which Despair leaves alone), and a heal
+    or Regen turned to damage on an Undead or a Pallor. It does not yet reach
+    the rest of "all sources": Lira's Forgewright devices (Shock Coil, Arc
+    Trap, Thornveil), Edren's Shatter Guard, Torren's Spiritcall (Greyveil,
+    the thorn barrier), and a Poison or Burn tick.
     Glintmark's other half, revealing an enemy's hidden and steal-able items,
     is not built either, any more than Spiritsight's scan is.
 

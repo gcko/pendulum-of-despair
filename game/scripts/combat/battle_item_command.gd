@@ -180,7 +180,9 @@ func _restore_hp_mp(item: Dictionary, target_type: String, target_slot: int) -> 
 
 
 ## Drake Fang: a flat hit that ignores DEF and cannot miss
-## (items.md § Drake Fang Special Case).
+## (items.md § Drake Fang Special Case). The user's Despair leaves it alone, but
+## a Glintmark on the target raises it: the mark is on "damage taken from all
+## sources" (BattleDamageMods.taken_mult, #514).
 func _fixed_damage(item: Dictionary, command: Dictionary) -> bool:
 	var enemies: Array[Node] = _battle.get_enemies()
 	var fd_idx: int = BattleActions.resolve_enemy_target(command.get("target", 0), enemies)
@@ -188,7 +190,8 @@ func _fixed_damage(item: Dictionary, command: Dictionary) -> bool:
 		_battle.message.emit("No target!")
 		return false
 	_battle.message.emit("Used %s!" % item.get("name", "Item"))
-	var fd_dmg: int = maxi(0, int(item.get("value", 0)))
+	var fd_mark: float = BattleDamageMods.taken_mult(enemies[fd_idx])
+	var fd_dmg: int = int(maxi(0, int(item.get("value", 0))) * fd_mark)
 	enemies[fd_idx].take_damage(fd_dmg)
 	_battle.damage_dealt.emit("enemy_%d" % fd_idx, fd_dmg, "physical")
 	if not enemies[fd_idx].is_alive:

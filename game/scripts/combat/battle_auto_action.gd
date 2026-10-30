@@ -225,7 +225,8 @@ static func _show_enemy_hit(manager: Node, atb: Node, eid: String, r: Dictionary
 ## (ATK/SPD, the flat enemy crit rate) against the target's DEF/SPD, halved
 ## before DEF on a Spirit as every physical hit on one is, with [param mult] on
 ## its final damage (Berserk), and the attacker's Despair and Blind as on any
-## enemy attack. Returns {hit, damage, type, killed}.
+## enemy attack, and a Glintmark on the target (BattleDamageMods.taken_mult,
+## #514). Returns {hit, damage, type, killed}.
 static func enemy_strikes_enemy(attacker: Node, target: Node, mult: float = 1.0) -> Dictionary:
 	var a: Dictionary = attacker.get_stats()
 	var t: Dictionary = target.get_stats()
@@ -242,7 +243,7 @@ static func enemy_strikes_enemy(attacker: Node, target: Node, mult: float = 1.0)
 		1.0,
 		t.get("def", 0),
 		is_crit,
-		mult * BattleDamageMods.dealt_mult(attacker),
+		mult * BattleDamageMods.dealt_mult(attacker) * BattleDamageMods.taken_mult(target),
 		"front",
 		"front",
 		false,

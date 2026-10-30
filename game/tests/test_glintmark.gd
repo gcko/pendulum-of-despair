@@ -18,6 +18,7 @@ const BATTLE: PackedScene = preload("res://scenes/core/battle.tscn")
 const ATBSystem = preload("res://scripts/combat/atb_system.gd")
 const BattleActions = preload("res://scripts/combat/battle_actions.gd")
 const CommandMenu := preload("res://scripts/ui/battle_command_menu.gd")
+const ItemCommand := preload("res://scripts/combat/battle_item_command.gd")
 
 const PROMPT_TIMEOUT: float = 5.0
 const CASTER: int = 0
@@ -103,12 +104,12 @@ func _cast(battle: Node, spell: Dictionary, target: int = 0) -> bool:
 	return true
 
 
-## The damage a power-50 non-elemental spell from the caster lands on
-## [param enemy], at MAG 100 and fixed rolls.
-func _spell_damage(battle: Node, enemy: Node) -> int:
+## The damage (or, absorbed, the healing) a power-50 spell of [param element]
+## from the caster lands on [param enemy], at MAG 100 and fixed rolls.
+func _spell_damage(battle: Node, enemy: Node, element: String = "non_elemental") -> int:
 	seed(SEED)
 	var r: Dictionary = BattleActions.apply_magic_to_enemy(
-		battle.get_battle_state(), CASTER, 100, 50, "non_elemental", enemy, 0
+		battle.get_battle_state(), CASTER, 100, 50, element, enemy, 0
 	)
 	assert_true(r.get("hit", false), "precondition: the probe spell lands")
 	return int(r.get("damage", 0))
@@ -246,3 +247,98 @@ func test_glintmark_can_be_cast_from_sable_s_magic_menu() -> void:
 			entry = item
 	assert_false(entry.is_empty(), "precondition: Sable knows Glintmark")
 	assert_true(entry.get("enabled", false), "Glintmark is offered")
+
+
+# ── The rest of "all sources" (#514) ─────────────────────────────────────
+
+
+func test_a_confused_enemy_s_blow_lands_10_percent_more_on_a_marked_enemy() -> void:
+	var battle: Node = _boot(["ley_vermin", "ley_vermin"])
+	var enemies: Array[Node] = battle.get_enemies()
+	assert_eq(enemies.size(), 2, "precondition: two enemies")
+	enemies[1].enemy_data["atk"] = 60
+	enemies[1].enemy_data["spd"] = 999  # every hit roll at the 99% cap
+	seed(SEED)
+	var plain: Dictionary = BattleAutoAction.enemy_strikes_enemy(enemies[1], enemies[0])
+	assert_true(plain.get("hit", false), "precondition: the blow lands")
+	if not await _cast(battle, _spell("streetwise", "glintmark"), 0):
+		return
+	seed(SEED)
+	var marked: Dictionary = BattleAutoAction.enemy_strikes_enemy(enemies[1], enemies[0])
+	_assert_raised_10_percent(int(marked["damage"]), int(plain["damage"]), "an enemy's blow")
+
+
+func test_a_drake_fang_lands_10_percent_more_on_a_marked_enemy() -> void:
+	# A thrown item's fixed damage: the user's Despair leaves it alone, but the
+	# mark is on "damage taken from all sources".
+	var battle: Node = _boot()
+	var enemy: Node = battle.get_enemies()[0]
+	if not await _cast(battle, _spell("streetwise", "glintmark")):
+		return
+	var fang: Dictionary = {
+		"name": "Drake Fang", "effect": "fixed_damage", "value": 500, "target": "single_enemy"
+	}
+	var before: int = enemy.current_hp
+	assert_true(ItemCommand.new(battle).do_item({"type": "item", "item": fang, "target": 0}))
+	assert_eq(before - enemy.current_hp, 550, "500 raised 10%")
+
+
+func test_a_riposte_lands_10_percent_more_on_a_marked_enemy() -> void:
+	var battle: Node = _boot()
+	var state: Node = battle.get_battle_state()
+	var enemy: Node = battle.get_enemies()[0]
+	enemy.enemy_data["spd"] = 999  # the enemy's blow on Cael lands
+	var rng: int = _riposte_seed(state, enemy)
+	if rng < 0:
+		return
+	var plain: int = _riposte_damage(state, enemy, rng)
+	if not await _cast(battle, _spell("streetwise", "glintmark")):
+		return
+	_assert_raised_10_percent(_riposte_damage(state, enemy, rng), plain, "a Riposte")
+
+
+## Edren's Riposte from Ironwall over Cael, answering [param enemy]'s blow on
+## Cael under [param rng]: its damage, or -1 when no counter landed.
+func _riposte_damage(state: Node, enemy: Node, rng: int) -> int:
+	BattleBulwark.enter_stance(state, CASTER, "ironwall", 1)
+	BattleBulwark.arm_riposte(state, CASTER)
+	for slot: int in [CASTER, 1]:
+		state.get_member(slot)["current_hp"] = state.get_member(slot)["max_hp"]
+	seed(rng)
+	var ripostes: Array = BattleActions.execute_enemy_attack(state, enemy, 1).get("ripostes", [])
+	if ripostes.is_empty() or not ripostes[0].get("hit", false):
+		return -1
+	return int(ripostes[0]["damage"])
+
+
+## A seed under which both the enemy's blow and Edren's counter land.
+func _riposte_seed(state: Node, enemy: Node) -> int:
+	for rng: int in range(1, 80):
+		if _riposte_damage(state, enemy, rng) > 0:
+			return rng
+	fail_test("no seed lands both the blow and its counter")
+	return -1
+
+
+func test_the_mark_does_not_raise_what_an_absorbing_enemy_heals_from_a_spell() -> void:
+	# The mark raises damage taken, not healing (orchestrator reading, #514).
+	var battle: Node = _boot()
+	var enemy: Node = battle.get_enemies()[0]
+	enemy.enemy_data["absorb"] = ["flame"]
+	var plain: int = _spell_damage(battle, enemy, "flame")
+	if not await _cast(battle, _spell("streetwise", "glintmark")):
+		return
+	assert_eq(_spell_damage(battle, enemy, "flame"), plain, "the Flame heal is the same")
+
+
+func test_the_mark_does_not_raise_what_an_absorbing_enemy_heals_from_a_blow() -> void:
+	var battle: Node = _boot()
+	PartyState.get_member("edren")["equipment"]["weapon"] = "forge_hammer"  # Flame
+	var enemy: Node = battle.get_enemies()[0]
+	enemy.enemy_data["absorb"] = ["flame"]
+	var plain: int = _attack_damage(battle, enemy)
+	if not await _cast(battle, _spell("streetwise", "glintmark")):
+		return
+	assert_eq(_attack_damage(battle, enemy), plain, "the Flame heal is the same")
+	var member: Dictionary = battle.get_battle_state().get_member(CASTER)
+	assert_eq(BattleDamageMods.trick_mods(member, enemy, "flame")["mult"], 1.0, "and a Trick's")

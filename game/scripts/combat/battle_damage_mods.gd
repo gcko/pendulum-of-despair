@@ -72,6 +72,15 @@ static func taken_mult(target: Variant) -> float:
 	return (200 - roundi(resist * 100.0)) / 100.0
 
 
+## [param target]'s mark (taken_mult) on a blow whose element meets it at
+## [param element_mod]: none on an absorbed element, which heals the target
+## rather than hurting it, since the mark raises damage taken and not healing
+## (orchestrator reading, #514). Despair, the attacker's side, cuts the heal
+## all the same (DamageCalc.calculate_magic).
+static func mark_on(target: Variant, element_mod: float) -> float:
+	return taken_mult(target) if element_mod > 0.0 else 1.0
+
+
 ## Land an enemy's [param kind] blow of [param dmg] on party slot [param slot]
 ## (BattleActions' damage types: "magic", "physical", "critical"). A magic one
 ## meets the slot's Forgeshield first (BattleBuffs.absorb_magic). Returns the
@@ -82,10 +91,11 @@ static func take_blow(state: Node, slot: int, dmg: int, kind: String) -> int:
 	return state.take_damage(slot, dmg)
 
 
-## The step-5 buff modifiers on a spell [param caster] lands on [param target],
-## for DamageCalc.calculate_magic: the caster's Despair and the target's mark.
-static func spell_mults(caster: Variant, target: Variant) -> Array:
-	return [dealt_mult(caster), taken_mult(target)]
+## The step-5 buff modifiers on a spell of [param element] that [param caster]
+## lands on enemy [param target], for DamageCalc.calculate_magic: the caster's
+## Despair and the target's mark (mark_on: not on a spell it absorbs).
+static func spell_mults(caster: Variant, target: Node, element: String) -> Array:
+	return [dealt_mult(caster), mark_on(target, target.get_element_multiplier(element))]
 
 
 ## The multiplier on [param who]'s physical hit rate: 0.5 under Blind, times
@@ -104,7 +114,7 @@ static func accuracy_mult(who: Variant) -> float:
 ## The modifiers on [param slot]'s physical strike at [param enemy], as
 ## {mult, element_mod}: mult is the final-damage multiplier (step 6), an
 ## Overcharge's +50% times the striker's Despair and the enemy's mark
-## (taken_mult); element_mod is there only when the strike is elemental — the
+## (mark_on); element_mod is there only when the strike is elemental — the
 ## Overcharge's (BattleForgewright.take_overcharge, spent here, hit or miss),
 ## else the equipped weapon's.
 static func strike_mods(state: Node, slot: int, enemy: Node) -> Dictionary:
@@ -114,21 +124,23 @@ static func strike_mods(state: Node, slot: int, enemy: Node) -> Dictionary:
 		var element: String = weapon_element(String(member.get("character_id", "")))
 		if not element.is_empty():
 			out["element_mod"] = enemy.get_element_multiplier(element)
-	out["mult"] = float(out.get("mult", 1.0)) * dealt_mult(member) * taken_mult(enemy)
+	var mark: float = mark_on(enemy, float(out.get("element_mod", 1.0)))
+	out["mult"] = float(out.get("mult", 1.0)) * dealt_mult(member) * mark
 	return out
 
 
 ## The modifiers on a Trick's strike by [param member] at [param enemy] carrying
 ## [param element] ("" for none), as strike_mods returns them: mult is the
-## striker's Despair times the enemy's mark; element_mod is there only when the
-## strike is elemental.
+## striker's Despair times the enemy's mark (mark_on); element_mod is there
+## only when the strike is elemental.
 ## A Trick's element is its thrown item's and never the weapon's, and it does
 ## not spend an Overcharge (abilities.md § Damage Magnitudes > 'Shiv', built in
 ## 158d).
 static func trick_mods(member: Dictionary, enemy: Node, element: String) -> Dictionary:
-	var out: Dictionary = {"mult": dealt_mult(member) * taken_mult(enemy)}
+	var out: Dictionary = {}
 	if not element.is_empty():
 		out["element_mod"] = enemy.get_element_multiplier(element)
+	out["mult"] = dealt_mult(member) * mark_on(enemy, float(out.get("element_mod", 1.0)))
 	return out
 
 

@@ -403,7 +403,7 @@ Buffs modify stats before they enter formulas, not damage output:
 | Attunement (+30% MAG) | MAG stat | MAG × power uses buffed value |
 | Ironhide (+40% DEF); Rally: Hold the Line (+15% DEF, +15% MDEF) | DEF stat (Hold the Line also MDEF) | Target DEF in subtraction; MDEF in the magic formula |
 | Sunder (-30% DEF) | DEF stat | Target DEF in subtraction |
-| Glintmark (+10% dmg taken) | Final damage | Multiplied after variance |
+| Glintmark (+10% dmg taken) | Final damage | Multiplied before variance (physical step 6, magic step 5) |
 | Resonance (+30% spell) | Spell output | Multiplied after base calc |
 
 Buffs that modify stats can push them past 255 temporarily in combat (per [progression.md](progression.md) rules). This is intentional — it is the pathway for mages to reach the damage cap. **Stat buffs on the same stat add, then floor once.** Each buff is a percentage of the one effective stat ([progression.md](progression.md) § Equipment and Buffs), so two buffs on DEF sum their percentages: Hold the Line's +15% with an item's +10% is `floor(DEF × 1.25)`, not `floor(floor(DEF × 1.15) × 1.10)`. A Rally keeps its own term, so a buff from another source outlives the Rally ending. (Two buffs of the *same* type still refresh rather than stack, per the same section.)
