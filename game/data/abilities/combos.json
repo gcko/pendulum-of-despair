@@ -200,6 +200,8 @@
 				"forbids_flags": [],
 				"requires_abilities": []
 			},
+			"_comment": "target is who the Combo menu aims it at, as a spell's target is: Ley Torrent hits every enemy, so it takes no cursor. Only built combos carry one (#176 slice b).",
+			"target": "all_enemies",
 			"effect": "Maren channels raw ley-line energy through Torren's spirit connection, unleashing a non-elemental blast that deals damage to all enemies equal to (Maren's Magic + Torren's Magic) x 4. Ignores Magic Defense. Generates 30 WG for Maren.",
 			"availability": "After both Maren and Torren are in the party",
 			"description": "Raw ley-line energy speaks through two people at once."

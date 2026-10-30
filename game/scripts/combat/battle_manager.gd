@@ -3,8 +3,9 @@ extends Node2D
 ## last enemy or the last party member falls.
 ##
 ## The commands a player can pick live in their own modules — BattlePlayerActions
-## (attack/defend/flee), BattleMagicCommand, BattleItemCommand and the unique
-## commands' BattleAbilityCommand — and battle-start assembly lives in
+## (attack/defend/flee), BattleMagicCommand, BattleItemCommand, the unique
+## commands' BattleAbilityCommand and BattleComboCommand — and battle-start
+## assembly lives in
 ## BattleSetup (GAP-087). This script dispatches to them and owns what they need.
 ## A confused or berserk member is not prompted: the loop issues an "auto"
 ## command for them, which BattleAutoAction resolves (#246).
@@ -45,6 +46,7 @@ var _actions: BattlePlayerActions = null
 var _magic: BattleMagicCommand = null
 var _items: BattleItemCommand = null
 var _abilities: BattleAbilityCommand = null
+var _combos: BattleComboCommand = null
 var _auto: BattleAutoAction = null
 
 @onready var _atb: Node = $ATBSystem
@@ -163,7 +165,7 @@ func _process(delta: float) -> void:
 			if StatusEffects.atb_effect(blocked_by) == "frozen":
 				continue
 			# The turn begins: Second Wind's regen lands (abilities.md § Cael — Rally).
-			_emit_party_events(_state.begin_turn(slot))
+			emit_party_events(_state.begin_turn(slot))
 			_check_end_conditions()  # a turn-start effect may have won or lost it
 			if _battle_resolved or not _battle_active:
 				return
@@ -231,6 +233,8 @@ func _on_ui_command(command: Dictionary) -> void:
 				_get_actions().do_flee()
 		"ability":
 			ok = _get_abilities().do_ability(actor_id, command)
+		"combo":
+			ok = _get_combos().do_combo(actor_id, command)
 		"auto":  # issued by _process, never by the menu
 			_auto.act_for(cmd_slot)
 	if not ok:
@@ -240,20 +244,24 @@ func _on_ui_command(command: Dictionary) -> void:
 		return
 	if not _battle_active:
 		return
-	# Clear defending from a PREVIOUS turn — skip if this action IS defend
-	if (
-		command.get("type", "") != "defend"
-		and _state.get_member(cmd_slot).get("is_defending", false)
-	):
-		_state.set_defending(cmd_slot, false)
-		_state.set_buff(cmd_slot, "damage_taken_mult", 1.0)
 	_awaiting_input_for = ""
-	_atb.reset_gauge(actor_id)
-	_turn_counter += 1
-	# Surface party-side DoT (Poison/Burn) through damage_dealt so it shows a
-	# floating number, mirroring the enemy-side tick.
-	_emit_party_events(_state.tick_statuses(cmd_slot))
+	_end_turn(cmd_slot, command.get("type", ""))
+	if command.get("type", "") == "combo":  # it used the partner's turn as well
+		_end_turn(_get_combos().partner_slot(), "combo")
 	_check_end_conditions()
+
+
+## Close [param slot]'s turn, spent on a [param command_type] command: clear a
+## Defend from a PREVIOUS turn, reset the gauge, and run the end-of-turn ticks,
+## surfacing party-side DoT (Poison/Burn) through damage_dealt so it shows a
+## floating number, mirroring the enemy-side tick.
+func _end_turn(slot: int, command_type: String) -> void:
+	if command_type != "defend" and _state.get_member(slot).get("is_defending", false):
+		_state.set_defending(slot, false)
+		_state.set_buff(slot, "damage_taken_mult", 1.0)
+	_atb.reset_gauge("party_%d" % slot)
+	_turn_counter += 1
+	emit_party_events(_state.tick_statuses(slot))
 
 
 func _on_ui_cancel() -> void:
@@ -300,7 +308,7 @@ func _incapacitating_status(slot: int) -> String:
 func _skip_incapacitated_turn(slot: int, id: String, status_name: String) -> void:
 	var nm: String = _state.get_member(slot).get("character_data", {}).get("name", "???")
 	message.emit("%s is %s and can't move!" % [nm, StatusEffects.display_adjective(status_name)])
-	_emit_party_events(_state.tick_statuses(slot))
+	emit_party_events(_state.tick_statuses(slot))
 	_atb.reset_gauge(id)
 	_check_end_conditions()
 
@@ -308,8 +316,9 @@ func _skip_incapacitated_turn(slot: int, id: String, status_name: String) -> voi
 ## Surface BattleState's turn events [{slot, dmg, type}] as floating numbers:
 ## a turn's start (Second Wind's heal) and its end (Poison/Burn damage, Regen
 ## and Mending Engine heals, each event carrying its own type). A Shock Coil's
-## request ({slot, shock_coil}) is answered here, where the enemies are.
-func _emit_party_events(events: Array) -> void:
+## request ({slot, shock_coil}) is answered here, where the enemies are. Public
+## for BattleComboCommand, which opens a combo partner's turn.
+func emit_party_events(events: Array) -> void:
 	for ev: Dictionary in events:
 		if ev.has("shock_coil"):
 			_shock_coil(int(ev["slot"]), int(ev["shock_coil"]))
@@ -570,3 +579,9 @@ func _get_abilities() -> BattleAbilityCommand:
 	if _abilities == null:
 		_abilities = BattleAbilityCommand.new(self)
 	return _abilities
+
+
+func _get_combos() -> BattleComboCommand:
+	if _combos == null:
+		_combos = BattleComboCommand.new(self)
+	return _combos

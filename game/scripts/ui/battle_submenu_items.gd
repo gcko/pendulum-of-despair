@@ -1,6 +1,6 @@
 extends RefCounted
 ## What each battle sub-menu lists (ui-design.md § 2.7 Battle Sub-Menus): the
-## entries for Magic, Item and the character's unique command, each as
+## entries for Magic, Item, Combo and the character's unique command, each as
 ## {label, command, target_type, enabled}. Pure static; the command menu owns
 ## the cursor and the input, this owns the contents.
 ##
@@ -14,6 +14,7 @@ const AbilityHelpers := preload("res://scripts/ui/ability_helpers.gd")
 const AbilityCommand := preload("res://scripts/combat/battle_ability_command.gd")
 const MagicCommand := preload("res://scripts/combat/battle_magic_command.gd")
 const TricksCommand := preload("res://scripts/combat/battle_tricks_command.gd")
+const BattleCombos := preload("res://scripts/combat/battle_combos.gd")
 
 
 ## The character's known spells (GAP-001), each routing a
@@ -111,6 +112,39 @@ static func items() -> Array[Dictionary]:
 		}
 		out.append(entry)
 	return out
+
+
+## The dual-tech combos the member at [param slot] can call on this turn
+## (abilities.md § 2, #176 slice b): only those taking in a partner who is
+## ready (BattleCombos.combos_for). Each routes a {"type": "combo", "combo_id"}
+## command and reads "<Name> (<Partner>)  <own>/<partner's> MP". One that is
+## not built, not paid for, or whose usage condition is unmet is grayed.
+## Its target is the combo's own `target` in combos.json.
+static func combos(state: Node, atb: Node, slot: int) -> Array[Dictionary]:
+	var items: Array[Dictionary] = []
+	var actor: String = state.get_member(slot).get("character_id", "")
+	for entry: Dictionary in BattleCombos.combos_for(state, atb, slot):
+		var combo: Dictionary = entry["combo"]
+		var partner: Dictionary = state.get_member(int(entry["partner"]))
+		var partner_id: String = partner.get("character_id", "")
+		var costs: Dictionary = combo.get("mp_costs", {})
+		var label: String = (
+			"%s (%s)  %d/%d MP"
+			% [
+				combo.get("name", "Combo"),
+				partner.get("character_data", {}).get("name", partner_id.capitalize()),
+				int(costs.get(actor, 0)),
+				int(costs.get(partner_id, 0)),
+			]
+		)
+		var entry_item: Dictionary = {
+			"label": label,
+			"command": {"type": "combo", "combo_id": entry["id"]},
+			"target_type": combo.get("target", ""),
+			"enabled": entry["usable"],
+		}
+		items.append(entry_item)
+	return items
 
 
 ## The character's known abilities that can be issued in battle: passives

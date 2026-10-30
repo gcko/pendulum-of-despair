@@ -62,6 +62,9 @@ var _character_data: Dictionary = {}
 ## The acting member's BattleState record: MP for affordability, statuses for
 ## what a status blocks. {} when the caller has none.
 var _member: Dictionary = {}
+## The Combo submenu's entries for this turn (BattleSubmenuItems.combos), built
+## by the caller, which holds the battle state and the gauges the menu does not.
+var _combos: Array[Dictionary] = []
 
 # get_node_or_null (not $) so unit tests can instantiate the menu via .new()
 # without a scene tree; every use of these refs is already null-guarded.
@@ -79,11 +82,15 @@ func _ready() -> void:
 ## Show command menu for a party member.
 ## [param member] is the actor's BattleState record; it drives MP affordability
 ## in the Magic and Ability submenus, and status blocks on Magic (Silence) and
-## on the unique command.
-func show_commands(character_data: Dictionary, is_boss: bool, member: Dictionary = {}) -> void:
+## on the unique command. [param combos] are the Combo submenu's entries; with
+## none, Combo is grayed (ui-design.md § 2.4).
+func show_commands(
+	character_data: Dictionary, is_boss: bool, member: Dictionary = {}, combos: Array = []
+) -> void:
 	_is_boss = is_boss
 	_character_data = character_data
 	_member = member
+	_combos.assign(combos)
 	_cursor = 0
 	_state = MenuState.COMMAND
 
@@ -95,6 +102,7 @@ func show_commands(character_data: Dictionary, is_boss: bool, member: Dictionary
 		{"label": "Attack", "type": "attack", "enabled": true},
 		{"label": "Magic", "type": "magic", "enabled": magic_on},
 		{"label": ability_name, "type": "ability", "enabled": ability_on},
+		{"label": "Combo", "type": "combo", "enabled": not _combos.is_empty()},
 		{"label": "Item", "type": "item", "enabled": true},
 		{"label": "Defend", "type": "defend", "enabled": true},
 		{"label": "Flee", "type": "flee", "enabled": not _is_boss},
@@ -251,6 +259,9 @@ func _confirm_command() -> void:
 		"ability":
 			set_submenu_items(SubmenuItems.abilities(_character_data, _member))
 			_show_submenu()
+		"combo":
+			set_submenu_items(_combos.duplicate(true))
+			_show_submenu()
 		"item":
 			set_submenu_items(SubmenuItems.items())
 			_show_submenu()
@@ -349,6 +360,12 @@ func set_party_count(count: int) -> void:
 func _update_command_display() -> void:
 	if _command_list == null:
 		return
+	# The scene seats six labels; a command beyond them (Combo made seven) gets
+	# a copy of the first, so it wears the same style.
+	var labels: int = _command_list.get_child_count()
+	while labels > 0 and labels < _commands.size():
+		_command_list.add_child(_command_list.get_child(0).duplicate())
+		labels += 1
 	for i: int in range(_command_list.get_child_count()):
 		if i >= _commands.size():
 			break

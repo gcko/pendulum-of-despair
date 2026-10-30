@@ -11,6 +11,7 @@ signal command_cancelled
 signal submenu_state_changed(is_open: bool)
 
 const BattleActions = preload("res://scripts/combat/battle_actions.gd")
+const SubmenuItems = preload("res://scripts/ui/battle_submenu_items.gd")
 
 const COLOR_DAMAGE: Color = Color("#ffffff")
 const COLOR_HEAL: Color = Color("#44ff44")
@@ -153,7 +154,10 @@ func _on_turn_ready(
 		var member: Dictionary = {}
 		if _battle_state != null:
 			member = _battle_state.get_member(slot)
-		_command_menu.show_commands(character_data, is_boss, member)
+		var combos: Array[Dictionary] = []
+		if _battle_state != null and _atb_system != null:
+			combos = SubmenuItems.combos(_battle_state, _atb_system, slot)
+		_command_menu.show_commands(character_data, is_boss, member, combos)
 
 
 func _on_command_selected(command: Dictionary) -> void:
