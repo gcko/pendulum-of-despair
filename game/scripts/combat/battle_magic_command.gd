@@ -9,6 +9,7 @@ extends RefCounted
 const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
 const BattleActions = preload("res://scripts/combat/battle_actions.gd")
 const SpellHelpers = preload("res://scripts/ui/spell_helpers.gd")
+const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 
 ## Weave Gauge earned by the caster for a spell that landed, and the share
 ## Maren banks when somebody else casts
@@ -20,6 +21,11 @@ const MAREN_WEAVE_GAIN: int = 10
 ## spells" (magic.md § Status Effect Reference).
 const CAST_BLOCKING_STATUSES: Array[String] = ["silence"]
 
+## Enemy types a heal spell hurts instead of heals, for exactly the HP it
+## would have restored: Undead ("Healing spells deal damage", bestiary/README.md
+## § Undead) and Pallor (Pallor Feedback, combat-formulas.md § Tier 2).
+const HEAL_REVERSING_TYPES: Array[String] = ["undead", "pallor"]
+
 var _battle: Node
 
 
@@ -28,8 +34,10 @@ func _init(battle: Node) -> void:
 
 
 ## Cast the spell in [param command]. Returns false when the cast never
-## happened — the caster is Silenced, no target, or not enough MP — so the
-## caller re-opens the menu. Nothing is spent unless the cast resolves.
+## happened — the caster is Silenced; the spell was turned on an enemy
+## ([code]target_enemy[/code]) but restores no HP; the ally is KO'd; no enemy is
+## left to target; or there is not enough MP — so the caller re-opens the menu.
+## Nothing is spent unless the cast resolves.
 func do_magic(actor_id: String, command: Dictionary) -> bool:
 	var state: Node = _battle.get_battle_state()
 	var slot: int = actor_id.replace("party_", "").to_int()
@@ -38,6 +46,12 @@ func do_magic(actor_id: String, command: Dictionary) -> bool:
 		return false
 	var spell: Dictionary = command.get("spell", {})
 	var target_type: String = spell.get("target", "single_enemy")
+	# A single-ally spell the player turned on the enemy line (ui-design.md § 2.6).
+	if target_type == "single_ally" and command.get("target_enemy", false):
+		if not restores_hp(spell):
+			_battle.message.emit("No effect!")
+			return false
+		target_type = "ally_on_enemy"
 	# Validate targets before spending MP or gaining gauge
 	if target_type == "single_ally":
 		var tm: Dictionary = state.get_member(command.get("target", 0))
@@ -45,7 +59,7 @@ func do_magic(actor_id: String, command: Dictionary) -> bool:
 			_battle.message.emit("No effect!")
 			return false
 	var resolved_enemy_target: int = -1
-	if target_type == "single_enemy":
+	if target_type in ["single_enemy", "ally_on_enemy"]:
 		resolved_enemy_target = BattleActions.resolve_enemy_target(
 			command.get("target", 0), _battle.get_enemies()
 		)
@@ -100,6 +114,12 @@ func _resolve(
 		return _for_each_targetable_enemy(
 			func(i: int) -> bool: return _magic_on_enemy(slot, mag, power, element, rider, i)
 		)
+	if spell.get("category", "") == "buff" and target_type == "single_ally":
+		var buff_status: String = str(spell.get("status", ""))
+		if StatusEffects.is_known(buff_status):
+			return _status_on_ally(command.get("target", 0), buff_status, spell.get("duration"))
+	if target_type == "ally_on_enemy":
+		return _heal_on_enemy(slot, DamageCalc.calculate_healing(mag, power), resolved_enemy_target)
 	if target_type in ["single_ally", "all_allies"]:
 		return _heal_allies(target_type, command, DamageCalc.calculate_healing(mag, power))
 	return false
@@ -138,6 +158,54 @@ func _heal_allies(target_type: String, command: Dictionary, heal_amt: int) -> bo
 	return had_effect
 
 
+## Land a buff spell's status on party slot [param slot] (Quickstep's Haste,
+## #246) for the spell's own duration, else the status's canonical one, plus
+## one when the target's turn is open (a self-cast): that turn's end would
+## otherwise spend one, as BattleRally.start and BattleBulwark count it. A
+## recast replaces the old one, refreshing the duration. The battle announces
+## it from BattleState.status_applied. Returns true: the target was validated
+## alive before any MP was spent.
+func _status_on_ally(slot: int, status: String, duration: Variant) -> bool:
+	var state: Node = _battle.get_battle_state()
+	var turns: int = StatusEffects.resolve_duration(status, duration)
+	if state.get_member(slot).get("turn_open", false):
+		turns += 1
+	state.apply_status(slot, status, "turns", float(turns))
+	return true
+
+
+## A heal spell landing on enemy [param idx]. An Undead or Pallor enemy takes
+## [param heal_amt] as damage — the heal as rolled, with its own variance and
+## 14,999 cap, no hit roll and no element or type multiplier — and that damage
+## counts as spell damage: threat for the caster, Weave Gauge for the cast, and
+## a kill handled like any other. A normal enemy is healed by it. Returns
+## whether the cast earns Weave Gauge, which only heal damage does: healing an
+## enemy earns none (2026-10-29 ruling).
+func _heal_on_enemy(caster_slot: int, heal_amt: int, idx: int) -> bool:
+	var enemy: Node = _battle.get_enemies()[idx]
+	if enemy.get_type() in HEAL_REVERSING_TYPES:
+		enemy.take_damage(heal_amt)
+		_land_spell_damage(caster_slot, heal_amt, idx)
+		return heal_amt > 0
+	var before: int = enemy.current_hp
+	enemy.heal(heal_amt)
+	var healed: int = enemy.current_hp - before
+	if healed > 0:
+		_battle.damage_dealt.emit("enemy_%d" % idx, healed, "heal")
+	return false
+
+
+## Book [param dmg] of spell damage already dealt to enemy [param idx]: the
+## caster's threat (GAP-009 highest-threat), the number shown over the enemy,
+## and the kill if it fell.
+func _land_spell_damage(caster_slot: int, dmg: int, idx: int) -> void:
+	_battle.get_battle_state().add_threat(caster_slot, dmg)
+	_battle.damage_dealt.emit("enemy_%d" % idx, dmg, "magic")
+	if not _battle.get_enemies()[idx].is_alive:
+		_battle.combatant_died.emit("enemy_%d" % idx)
+		_battle.get_atb().remove_combatant("enemy_%d" % idx)
+
+
 ## Resolve a damage spell against one enemy, then roll its status [param rider]
 ## (`{status, chance}`, or empty) if the damage landed and the enemy survived.
 ## Returns true if it landed (an absorb counts — the spell affected the target).
@@ -159,12 +227,8 @@ func _magic_on_enemy(
 		_battle.damage_dealt.emit("enemy_%d" % idx, result.get("damage", 0), "heal")
 		return true
 	if result.get("hit", false):
-		state.add_threat(caster_slot, int(result.get("damage", 0)))  # GAP-009 highest-threat
-		_battle.damage_dealt.emit("enemy_%d" % idx, result.get("damage", 0), "magic")
-		if result.get("killed", false):
-			_battle.combatant_died.emit("enemy_%d" % idx)
-			_battle.get_atb().remove_combatant("enemy_%d" % idx)
-		elif not rider.is_empty():
+		_land_spell_damage(caster_slot, int(result.get("damage", 0)), idx)
+		if enemies[idx].is_alive and not rider.is_empty():
 			# The rider rides on landed damage, and only onto a target still alive.
 			BattleActions.roll_status_rider(state, caster_slot, rider, enemies[idx])
 		return true
@@ -198,6 +262,13 @@ func _status_on_enemy(caster_slot: int, spell: Dictionary, idx: int) -> bool:
 		_:
 			_battle.damage_dealt.emit("enemy_%d" % idx, 0, "miss")
 	return false
+
+
+## Whether [param spell] restores HP — a healing spell with a power — which is
+## what lets a single-ally spell be turned on an enemy.
+static func restores_hp(spell: Dictionary) -> bool:
+	var power: Variant = spell.get("power")
+	return spell.get("category", "") == "healing" and power != null and int(power) > 0
 
 
 ## Whether [param member] (a BattleState record) can cast at all: no status

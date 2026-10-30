@@ -747,6 +747,7 @@ before the thread breaks entirely.
 - "[Character] is Confused!"
 - "[Character] is Blinded!"
 - "[Character] is Slowed!"
+- "[Character] is Hastened!"
 - "[Character] is Burning!"
 - "[Character] is afflicted with Despair!"
 - "[Character] is Berserk!"

@@ -104,7 +104,7 @@ func _vilethorn() -> Dictionary:
 
 func test_a_damage_spell_takes_hp_off_the_enemy_it_was_aimed_at() -> void:
 	# Spirit magic against the undead is the case the player feels most (a 1.5x
-	# type bonus, README:67) — but the point here is the whole command path:
+	# type bonus, README:147) — but the point here is the whole command path:
 	# prompt -> chosen spell -> that enemy loses HP and a number floats over it.
 	var battle: Node = _boot(["ley_vermin", "restless_dead"])
 	var undead: Node = battle.get_enemies()[1]

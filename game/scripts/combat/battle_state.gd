@@ -22,7 +22,7 @@ const Bulwark = preload("res://scripts/combat/battle_bulwark.gd")
 ## Modules holding in-force unique-command state (#158), each answering on_damage,
 ## on_fainted, on_status, on_turn_begin, on_turn_end and stat_pct, so no seam
 ## names one.
-const ABILITY_HOOKS: Array = [Rally, Bulwark]
+const ABILITY_HOOKS: Array = [Rally, Bulwark, preload("res://scripts/combat/battle_buffs.gd")]
 
 ## Party member data. Index = slot (0-3). Null entries = empty slots.
 var _members: Array = [null, null, null, null]

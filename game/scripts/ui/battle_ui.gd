@@ -10,6 +10,8 @@ signal command_submitted(command: Dictionary)
 signal command_cancelled
 signal submenu_state_changed(is_open: bool)
 
+const BattleActions = preload("res://scripts/combat/battle_actions.gd")
+
 const COLOR_DAMAGE: Color = Color("#ffffff")
 const COLOR_HEAL: Color = Color("#44ff44")
 const COLOR_MISS: Color = Color("#888888")
@@ -182,10 +184,14 @@ func _on_target_changed(index: int, is_enemy: bool) -> void:
 	if index < 0:
 		_target_arrow.visible = false
 		return
-	if is_enemy and index < _enemy_positions.size():
+	if is_enemy:
+		var idx: int = _enemy_index(index)
+		if idx < 0 or idx >= _enemy_positions.size():
+			_target_arrow.visible = false
+			return
 		_target_arrow.visible = true
-		_target_arrow.position = _to_screen(_enemy_positions[index]) - ENEMY_ARROW_OFFSET
-	elif not is_enemy:
+		_target_arrow.position = _to_screen(_enemy_positions[idx]) - ENEMY_ARROW_OFFSET
+	else:
 		var row: Rect2 = _party_row_rect(index)
 		if row.size == Vector2.ZERO:
 			_target_arrow.visible = false
@@ -199,8 +205,16 @@ func _on_target_changed(index: int, is_enemy: bool) -> void:
 			maxf(0.0, row.position.x - arrow.x - PARTY_ARROW_GAP),
 			row.position.y + (row.size.y - arrow.y) * 0.5
 		)
-	else:
-		_target_arrow.visible = false
+
+
+## The enemy an enemy-target cursor at [param cursor] points at. The cursor
+## counts living, targetable enemies only, and the battle resolves it the same
+## way, so a fallen first enemy does not leave the arrow over its corpse. -1
+## when none is left. Without a manager the cursor is taken as the index.
+func _enemy_index(cursor: int) -> int:
+	if _manager == null:
+		return cursor
+	return BattleActions.resolve_enemy_target(cursor, _manager.get_enemies())
 
 
 func _on_damage_dealt(target_id: String, amount: int, damage_type: String) -> void:

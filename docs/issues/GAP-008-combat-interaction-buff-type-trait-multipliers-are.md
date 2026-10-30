@@ -18,7 +18,7 @@ Every combat caller passes interaction_mult=1.0 and buff/reduction=[], so no Tie
 
 ## Current state (implementation)
 
-damage_calculator accepts the multiplier params but callers pass neutral values. enemy.gd derives only status immunities from type; heal() heals Undead instead of damaging. Tracker narrows 'type rules' to status immunities (false-completion of gap 2.3).
+damage_calculator accepts the multiplier params but callers pass neutral values. enemy.gd derives only status immunities from type. Tracker narrows 'type rules' to status immunities (false-completion of gap 2.3). (Undead heal-to-damage has since been built in `battle_magic_command.gd`; see the 2026-10-29 note below.)
 
 ## Desired state (per design)
 
@@ -30,7 +30,7 @@ Add a buff/status/type aggregation layer that, at attack time, collects modifier
 
 ## Acceptance criteria
 
-- [ ] Spirit enemies take 50% physical pre-DEF; Undead are damaged by heal magic
+- [x] Spirit enemies take 50% physical pre-DEF; Undead are damaged by heal magic
 - [ ] Type interaction bonus stacks multiplicatively with element weakness (e.g. 2.25x)
 - [ ] Resonance/amplification buffs alter spell damage
 - [ ] Tests cover at least one interaction per tier
@@ -41,17 +41,25 @@ Add a buff/status/type aggregation layer that, at attack time, collects modifier
 0.5 pre-DEF physical multiplier and the four type-element bonuses now reach
 `damage_calculator`, where they multiply separately from `element_mod` and
 therefore stack multiplicatively with it. `test_modifier_aggregator.gd` covers
-those values. None of the four criteria is fully met, so the Status does not
-move: Undead heal-to-damage, physical-elemental routing of type bonuses,
-Resonance/amplification, and per-tier interaction coverage all remain unbuilt,
-and the aggregator's own docstring names them as deferred to this gap.
+those values. None of the four criteria was fully met then, so the Status did
+not move: Undead heal-to-damage, physical-elemental routing of type bonuses,
+Resonance/amplification, and per-tier interaction coverage all remained
+unbuilt, and the aggregator's own docstring named them as deferred to this gap.
 
 Re-checked in the #413 behavior sweep on the same day and left as written:
 searching `game/scripts/` for `interaction_mult`, `undead` and `resonance`
 turns up only the four files already cited below — `modifier_aggregator.gd`,
 `damage_calculator.gd` (which multiplies `interaction_mult` into both the
 physical and the magic path) and `enemy.gd`'s per-type immunity table — plus no
-`resonance` anywhere at all. This record is current.
+`resonance` anywhere at all. That record held until 2026-10-29.
+
+**2026-10-29 (#178a).** The first criterion is now met. A heal spell can be
+turned on an enemy (the battle menu's side switch, ui-design.md § 2.6), and
+`BattleMagicCommand._heal_on_enemy()` makes an Undead or Pallor take the rolled
+heal as damage, with no element or type multiplier; a revival item kills an
+Undead outright (`BattleItemCommand._use_on_enemy()`). The rulings are recorded
+in bestiary/README.md § Undead and § Pallor. The other three criteria are
+unchanged, so the Status does not move.
 
 ## Design references
 
@@ -65,6 +73,8 @@ physical and the magic path) and `enemy.gd`'s per-type immunity table — plus n
 - game/scripts/combat/modifier_aggregator.gd — `type_element_multiplier()`, `physical_pre_def_mult()` (the slice of this gap that PR #243 landed)
 - game/scripts/combat/damage_calculator.gd — `calculate_physical()`, `calculate_magic()` (the interaction/buff params, now fed by the aggregator for type traits and still neutral for buffs and status interactions)
 - game/scripts/entities/enemy.gd
+- game/scripts/combat/battle_magic_command.gd — `_heal_on_enemy()` (Undead and Pallor heal-to-damage, #178a)
+- game/scripts/combat/battle_item_command.gd — `_use_on_enemy()` (a revival item slays an Undead, #178a)
 
 
 ## Verification (fresh-eyes adversarial pass)

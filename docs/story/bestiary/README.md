@@ -146,6 +146,17 @@ rather than turned off.
 - **Interactions:**
   - Spirit element deals 1.5x (stacks with weakness)
   - Drain effects reversed (drains caster instead of target)
+- **Healing and revival on an enemy (2026-10-29 rulings):** a healing
+  spell cast on an Undead deals damage equal to the heal it rolled: the
+  heal's own variance and 14,999 cap, no hit roll
+  ([combat-formulas.md](../combat-formulas.md) § Healing Resolution), and
+  no element or type multiplier at all, so neither the Spirit 1.5x above
+  nor the enemy's own Spirit weakness applies. That damage adds threat,
+  earns Weave Gauge and kills like any spell. A revival item used on an
+  Undead sets its HP to 0, an instant kill, and is used up. On any other
+  enemy, Pallor included, a revival item is refused and kept. Healing a
+  normal enemy heals it and earns no Weave Gauge. Any other single-ally
+  spell or item aimed at an enemy is refused.
 
 ### Construct
 
@@ -179,6 +190,10 @@ rather than turned off.
 - **Interactions:**
   - Spirit element deals 1.25x (additional type multiplier, stacks with weakness)
   - Maren's Pallor Sight: cancels regen for 3 turns
+- **Pallor Feedback (2026-10-29 rulings):** a healing spell cast on a
+  Pallor deals damage equal to the heal, by the same rules as on an Undead
+  (see § Undead and [combat-formulas.md](../combat-formulas.md) § Tier 2:
+  Experimental). A revival item on a Pallor is refused and kept.
 
 ### Elemental
 

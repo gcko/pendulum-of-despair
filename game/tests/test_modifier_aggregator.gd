@@ -8,22 +8,22 @@ const Agg := preload("res://scripts/combat/modifier_aggregator.gd")
 
 
 func test_undead_takes_spirit_element_1_5x() -> void:
-	# README:67 — Undead: Spirit element deals 1.5x.
+	# README:147 — Undead: Spirit element deals 1.5x.
 	assert_almost_eq(Agg.type_element_multiplier("undead", "spirit"), 1.5, 0.001)
 
 
 func test_spirit_takes_ley_element_1_5x() -> void:
-	# README:83 — Spirit: Ley element deals 1.5x.
+	# README:174 — Spirit: Ley element deals 1.5x.
 	assert_almost_eq(Agg.type_element_multiplier("spirit", "ley"), 1.5, 0.001)
 
 
 func test_construct_takes_storm_element_1_25x() -> void:
-	# README:75 — Construct: Storm deals 1.25x.
+	# README:166 — Construct: Storm deals 1.25x.
 	assert_almost_eq(Agg.type_element_multiplier("construct", "storm"), 1.25, 0.001)
 
 
 func test_pallor_takes_spirit_element_1_25x() -> void:
-	# README:100 — Pallor: Spirit element deals 1.25x.
+	# README:191 — Pallor: Spirit element deals 1.25x.
 	assert_almost_eq(Agg.type_element_multiplier("pallor", "spirit"), 1.25, 0.001)
 
 
@@ -37,11 +37,11 @@ func test_empty_element_is_neutral() -> void:
 	assert_almost_eq(Agg.type_element_multiplier("undead", ""), 1.0, 0.001)
 
 
-# --- Spirit physical pre-DEF reduction (README:80) ---
+# --- Spirit physical pre-DEF reduction (README:171) ---
 
 
 func test_spirit_physical_pre_def_half() -> void:
-	# README:80 — Spirit: physical damage reduced 50%, applied BEFORE DEF.
+	# README:171 — Spirit: physical damage reduced 50%, applied BEFORE DEF.
 	assert_almost_eq(Agg.physical_pre_def_mult("spirit"), 0.5, 0.001)
 
 

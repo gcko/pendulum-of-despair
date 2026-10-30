@@ -21,6 +21,9 @@ const UNIQUE_COMMAND_NAMES: Dictionary = {
 	"maren": "Arcanum",
 }
 
+## Commands whose single-ally entries may be turned on an enemy (#178a).
+const SIDE_SWITCH_COMMANDS: Array[String] = ["magic", "item"]
+
 const COLOR_SELECTED: Color = Color("#ffff88")
 const COLOR_NORMAL: Color = Color("#ccddff")
 const COLOR_DISABLED: Color = Color("#666688")
@@ -33,6 +36,11 @@ var _submenu_cursor: int = 0
 var _is_boss: bool = false
 var _target_cursor: int = 0
 var _target_is_enemy: bool = true
+## Whether the action being targeted may cross to the other side. Only a
+## single-ally spell or item can be turned on the enemy line (a heal on an
+## Undead, #178a): Magic and Item are the commands with an enemy-side rule.
+## Abilities, attacks and enemy-targeted actions stay on their own side.
+var _target_side_switchable: bool = false
 var _pending_command: Dictionary = {}
 ## Live range of the cursor in the mode currently being targeted. Derived from
 ## the per-mode counts below on every entry into TARGET, never carried over from
@@ -166,6 +174,9 @@ func _handle_submenu_input(event: InputEvent) -> bool:
 func _handle_target_input(event: InputEvent) -> bool:
 	var old_cursor: int = _target_cursor
 	var handled: bool = false
+	if _switches_side(event):
+		_enter_target_side(not _target_is_enemy)
+		return true
 	if _target_is_enemy:
 		if event.is_action_pressed("ui_left"):
 			_target_cursor = (_target_cursor - 1 + _target_count) % _target_count
@@ -186,6 +197,8 @@ func _handle_target_input(event: InputEvent) -> bool:
 
 	if event.is_action_pressed("ui_accept"):
 		_pending_command["target"] = _target_cursor
+		if _target_side_switchable:
+			_pending_command["target_enemy"] = _target_is_enemy
 		target_changed.emit(-1, _target_is_enemy)  # Hide arrow
 		command_selected.emit(_pending_command)
 		hide_menu()
@@ -203,6 +216,17 @@ func _handle_target_input(event: InputEvent) -> bool:
 	return handled
 
 
+## Whether [param event] moves the cursor to the other side. ui-design.md
+## § 2.6 gives each side its own axis — left/right cycles the enemies, up/down
+## the party — so the other side's axis is what crosses over.
+func _switches_side(event: InputEvent) -> bool:
+	if not _target_side_switchable:
+		return false
+	if _target_is_enemy:
+		return event.is_action_pressed("ui_up") or event.is_action_pressed("ui_down")
+	return event.is_action_pressed("ui_left") or event.is_action_pressed("ui_right")
+
+
 func _confirm_command() -> void:
 	var cmd: Dictionary = _commands[_cursor]
 	if not cmd.get("enabled", true):
@@ -211,6 +235,7 @@ func _confirm_command() -> void:
 	match cmd["type"]:
 		"attack":
 			_pending_command = {"type": "attack"}
+			_target_side_switchable = false
 			_start_target_selection(true)
 		"magic":
 			set_submenu_items(SubmenuItems.magic(_character_data, _member))
@@ -234,11 +259,17 @@ func _confirm_command() -> void:
 ## last selection left behind) is what stops a single_ally spell the player
 ## backed out of from capping the enemy cursor at the party size (#276).
 func _start_target_selection(is_enemy: bool) -> void:
+	_state = MenuState.TARGET
+	submenu_opened.emit()
+	_enter_target_side(is_enemy)
+
+
+## Put the cursor on the first target of one side, its range sized from that
+## side's own count.
+func _enter_target_side(is_enemy: bool) -> void:
 	_target_is_enemy = is_enemy
 	_target_cursor = 0
 	_target_count = maxi(1, _enemy_target_count if is_enemy else _party_target_count)
-	_state = MenuState.TARGET
-	submenu_opened.emit()
 	target_changed.emit(0, is_enemy)
 
 
@@ -259,6 +290,9 @@ func _confirm_submenu() -> void:
 		return
 	_pending_command = item.get("command", {})
 	var target_type: String = item.get("target_type", "single_enemy")
+	_target_side_switchable = (
+		target_type == "single_ally" and _pending_command.get("type", "") in SIDE_SWITCH_COMMANDS
+	)
 	match target_type:
 		"single_enemy":
 			_start_target_selection(true)
