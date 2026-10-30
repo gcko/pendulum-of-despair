@@ -22,7 +22,7 @@ battle_manager routes 'ability' to _do_attack (basic attack). The ability submen
 
 ### Slice 158a (Ability submenu, dispatcher, Cael's Rally)
 
-The Ability command now opens a sub-menu of the acting character's known abilities (passives excluded) with their cost, graying out what cannot be paid or is not built yet. `BattleAbilityCommand` is the dispatcher: it checks an ability can be issued, pays its cost by `cost_type`, and hands it to the resolver for its `command`. Cael's Rally and, since slices 158b and 158c, Edren's Bulwark and Lira's Forgewright have resolvers, and the `mp`, `ap` and `ac` cost types are paid; Tricks, Spiritcall and Arcanum (slices 158d-f) are listed disabled and refused. Hold the Line, Press Forward, Second Wind and Unbreakable are built to abilities.md § Cael — Rally: every living ally gets the full turns and counts them on its own turns, one Rally is active at a time, and it ends when Cael faints or is Silenced or put to Sleep. A Rally cannot be issued while Cael is Silenced. `BattleRally` holds those in-force rules behind `BattleState`'s ability hooks, which slices b-f extend. Vanguard Strike is a standalone command rather than a Rally and is not built yet.
+The Ability command now opens a sub-menu of the acting character's known abilities (passives excluded) with their cost, graying out what cannot be paid or is not built yet. `BattleAbilityCommand` is the dispatcher: it checks an ability can be issued, pays its cost by `cost_type`, and hands it to the resolver for its `command`. Cael's Rally and, since slices 158b-e, Edren's Bulwark, Lira's Forgewright, Sable's Tricks and Torren's Spiritcall have resolvers, and the `mp`, `ap`, `ac` and `mp_cd` cost types are paid; Arcanum (slice 158f) is listed disabled and refused. Hold the Line, Press Forward, Second Wind and Unbreakable are built to abilities.md § Cael — Rally: every living ally gets the full turns and counts them on its own turns, one Rally is active at a time, and it ends when Cael faints or is Silenced or put to Sleep. A Rally cannot be issued while Cael is Silenced. `BattleRally` holds those in-force rules behind `BattleState`'s ability hooks, which slices b-f extend. Vanguard Strike is a standalone command rather than a Rally and is not built yet.
 
 ### Slice 158b (Edren's Bulwark)
 
@@ -36,6 +36,10 @@ Shock Coil, Bulkhead, Arc Trap, Mending Engine, Overcharge, Salvage and Thornvei
 
 Filch, Smokescreen, Shiv, Ransack and Wild Card are built to abilities.md § Sable — Tricks, including the orchestrator readings recorded there from #158 and the element rule settled on #447, with `BattleTricks` behind the same ability hooks and `BattleTricksCommand` resolving each Trick. The `mp_cd` cost type is paid: MP, plus a cooldown that counts Sable's own turns, and Wild Card's drops from 5 to 4 after her trial. Filch tries the common tier and then the rare one, each at its rate times clamp(1 + (Sable SPD − enemy SPD) / 100, 0.5, 1.5), and Ransack takes 70% of that. A stolen item goes into the party inventory and a key item or equipment into its own bag. Sable holds the first three items for her Tricks, and an enemy is robbed only once. Filch and Ransack need the front row, and the menu grays them in the back row and grays any Trick still cooling down. Smokescreen cuts every enemy's physical hit rate 30% for 2 of its turns. Shiv halves DEF and can throw a held item at its thrown element. Wild Card runs its four branches by items held; its element is the newest elemental item's, and with none the strike is non-elemental. Unbreakable Thread turns the battle's first fatal blow on any ally into 1 HP while Sable stands. Misdirect, Smokescreen's Forgewright-component Speed rider and the Pallor trial's doubled cooldowns are not built, and Misdirect is listed unusable.
 
+### Slice 158e (Torren's Spiritcall)
+
+Thornveil, Dewfall, Ember Wing, Stoneheart, Greyveil, Convergence Chorus and Rootsong are built to abilities.md § Torren — Spiritcall and § Damage Magnitudes, including the readings paragraph recorded there from #158. `BattleSpiritcallCommand` resolves each cast at its spirit's Favor and `BattleSpiritcall` holds Favor and the two wards behind the same ability hooks, at the enemy-hit seam (through `BattleWards`, which now gathers Lira's and Torren's thorns and reductions) and in `BattleState.apply_status`, which asks `BattleStatusGuard.ward_against` for gear and a Stoneheart ward alike. Favor is `PartyState.spirit_favor`, 0-3 per spirit, and the save's additive optional `spirit_favor` carries it on save version 2 (save-system.md § 3.11). Matching a Flame weakness, Greyveil hitting a Pallor, Thornveil's counter felling its attacker, Stoneheart keeping a status off and a heal on an ally below 25% HP each raise that spirit by 1; the Chorus earns none and Rootsong raises every spirit by 1, each once per battle. A successful flight costs each spirit called that battle 1. At Favor 3 each spirit is its upgraded form, by name, and the Ability menu lists every spirit with its Favor pips. Each spirit earns at most 1 Favor a battle, a flight never lowers a spirit at Favor 3, and the cast that reaches Favor 3 resolves in its old form. Not built: Duskbreaker's 60% dispel of "Pallor buffs"; corrupted spirit calls and Purify (abilities.md § The Pallor's Effect on Magic), with Purify listed unusable; the Act III trial's Favor reset; Spiritcall calming beasts and revealing an Undead's hidden weakness (bestiary/README.md § Enemy Type Rules); Favor pips on the main-menu Abilities screen (ui-design.md § 7.3); and the boss-specific Spiritcall actions in dungeons-world.md.
+
 ## Desired state (per design)
 
 Each command opens its sub-ability list and executes documented mechanics, tracking per-character resources and applying stances, Rally buffs, Forgewright devices, Spirit Favor, Tricks/Steal, and Weave Gauge meta-magic per abilities.md §1.
@@ -47,7 +51,7 @@ Build per-command executor modules reading/writing battle_state resource fields,
 ## Acceptance criteria
 
 - [ ] Each character's command opens its sub-ability list, not a basic attack
-- [ ] Per-character resource (AP/AC/WG/Favor/cooldown) is tracked and spent (AP and AC so far)
+- [ ] Per-character resource (AP/AC/WG/Favor/cooldown) is tracked and spent (AP, AC, the Tricks cooldown and Favor so far)
 - [x] Edren stance + Riposte and Cael Rally buffs function as a first vertical slice
 - [ ] Tests cover at least one ability per command system
 
@@ -62,7 +66,10 @@ Build per-command executor modules reading/writing battle_state resource fields,
 - game/scripts/combat/battle_bulwark.gd — `guard_for()` (Edren's Bulwark: stances, absorption, AP, Riposte, Shatter Guard and Oathkeeper, via BattleState's ability hooks and the enemy-hit seam in BattleActions)
 - game/scripts/ui/battle_submenu_items.gd — `abilities()` (the Ability sub-menu's entries)
 - game/scripts/combat/battle_forgewright.gd — `deploy()` (Lira's Forgewright: devices, the two-device limit, Salvage, Overcharge and AC, via BattleState's ability hooks and the enemy-hit seam in BattleActions)
-- game/scripts/combat/battle_state.gd — `begin_turn()` (the per-turn hook fan-out; favor/stolen_goods still unused until slices d-f)
+- game/scripts/combat/battle_spiritcall.gd — `harmony()` (Torren's Spirit Favor, the Favor 3 forms, Thornveil's barrier and Stoneheart's immunity, via BattleState's ability hooks, BattleWards and BattleState.apply_status)
+- game/scripts/combat/battle_spiritcall_command.gd — `resolve()` (each Spiritcall at its spirit's Favor)
+- game/scripts/combat/battle_ability_hooks.gd — `HOOKS` (every ability-hook module, in the order BattleState fans out to them)
+- game/scripts/combat/battle_state.gd — `begin_turn()` (the per-turn hook fan-out; the member's `favor` stays unused, since Favor lives in PartyState.spirit_favor)
 
 
 ## Verification (fresh-eyes adversarial pass)

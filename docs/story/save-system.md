@@ -35,6 +35,7 @@ tables, not the save file.
 | World state | Event flags (58 numbered + parameterized `boss_cutscene_seen_*`), current act, location, position |
 | Quest progress | Active quests with step, completed quest list |
 | Crafting | Arcanite Charges, device loadout, synergies, recipes |
+| Spirit Favor | Torren's Favor (0-3) with each spirit ([abilities.md](abilities.md) § Torren — Spiritcall) |
 | Formation | Active 4, reserve 0–2, guests, row assignments |
 | Completion tracking | Bestiary entries, treasure chests, items ever found |
 | Metadata | Save format version, playtime, timestamp, slot type |
@@ -95,7 +96,8 @@ slot.
 
 ## 3. Save Data Schema
 
-Ten top-level groups. All IDs are strings. Quantities are integers.
+Ten required top-level groups, plus the additive optional `spirit_favor`
+(§ 3.11). All IDs are strings. Quantities are integers.
 
 ### 3.1 party
 
@@ -283,6 +285,26 @@ meta: {
   slot_type: string    -- "manual" | "auto"
 }
 ```
+
+### 3.11 spirit_favor
+
+Torren's Spirit Favor with each of his five spirits, keyed by the id of the
+Spiritcall that calls it. Favor is persistent across battles and is not
+derivable from anything else, so it must survive every save rewrite.
+
+```
+spirit_favor: {
+  <spirit_id>:  integer   -- "thornveil" | "dewfall" | "ember_wing" |
+}                         -- "stoneheart" | "greyveil"; 0-3
+```
+
+An additive optional field (§ 10 Migration Types): saves written before Favor
+was persisted have no `spirit_favor`, and a spirit with no entry is at Favor 0,
+the value every spirit starts at. So a save without it loads with every spirit
+at 0, with no version bump and no migration. Present, it is type-checked like
+any other field (§ 11 Corruption Detection): a `spirit_favor` that is not an
+object, or holds a value that is not a number, marks the save corrupted and it
+does not load. A numeric value outside 0-3 is held to 0-3 on load.
 
 ---
 
@@ -574,8 +596,8 @@ Every save file carries an integer `version` in its `meta` block
 
 | Change Type | Migration Needed? | Example |
 |-------------|-------------------|---------|
-| New field added | Yes — add with default | New `spirit_favor` tracking system |
-| New *additive optional* field whose absence is meaningful and safe | No — read the missing key as its documented default | `stat_capsules` (missing = no banked gains) |
+| New field added | Yes — add with default | A field whose absence would be misread, such as one with a non-zero default |
+| New *additive optional* field whose absence is meaningful and safe | No — read the missing key as its documented default | `stat_capsules` (missing = no banked gains), `spirit_favor` (missing = every spirit at Favor 0) |
 | Field renamed | Yes — map old to new | `gp` to `gold` |
 | Field removed | Yes — strip old field | System removed from game |
 | Balance retuned | No | Tent heals 60% instead of 50% |

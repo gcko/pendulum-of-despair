@@ -5,8 +5,8 @@ extends Node
 ## grouped into collaborators under `scripts/util/` — PartyCrystals,
 ## PartyRoster, PartyVitals, PartyInventory, PartyEquipment and
 ## PartyPersistence (GAP-087). The mutable state itself (members, formation,
-## inventory, owned_equipment, gold, arcanite_charges, ley_crystals,
-## puzzle_state) stays here, because saves and tests read it directly and the
+## inventory, owned_equipment, gold, arcanite_charges, spirit_favor,
+## ley_crystals, puzzle_state) stays here, because saves and tests read it directly and the
 ## facets are constructed lazily around it.
 ##
 ## Budget: the facade sits at 64 public methods against `max-public-methods: 65`
@@ -60,6 +60,12 @@ var gold: int = 0
 var arcanite_charges: int = PartyVitals.AC_MAX:
 	set(value):
 		arcanite_charges = PartyVitals.clamp_ac(value)
+## Torren's Spirit Favor, {spirit ability id: 0..3}: a spirit with no entry is
+## at 0 (abilities.md § Torren; save-system.md § 3.11). Assign a new Dictionary
+## to change it, so the write is held to 0..3 here.
+var spirit_favor: Dictionary = {}:
+	set(value):
+		spirit_favor = PartyVitals.clamp_favor(value)
 var playtime: int = 0
 var location_name: String = ""
 ## Player-facing place name for `location_name`'s map, taken from the map's
@@ -118,6 +124,7 @@ func initialize_new_game() -> void:
 	}
 	gold = STARTING_GOLD
 	arcanite_charges = PartyVitals.AC_MAX
+	spirit_favor = {}
 	playtime = 0
 	clear_player_location()
 	ley_crystals.clear()

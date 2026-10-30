@@ -11,7 +11,7 @@ signal member_revived(slot: int)
 signal status_applied(slot: int, status_name: String)
 signal status_removed(slot: int, status_name: String)
 ## Cured (BattleStatusGuard.cure) or expired follow a status_removed (#515); blocked
-## is a status worn gear kept off, so nothing landed (BattleStatusGuard.blocks, #512).
+## is a status gear or a Stoneheart ward kept off (BattleStatusGuard.ward_against, #512).
 signal status_cured(slot: int, status_name: String)
 signal status_expired(slot: int, status_name: String)
 signal status_blocked(slot: int, status_name: String)
@@ -21,15 +21,12 @@ signal ability_state_changed(slot: int)
 
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 const Helpers = preload("res://scripts/util/inventory_helpers.gd")
-const Rally = preload("res://scripts/combat/battle_rally.gd")
-const Bulwark = preload("res://scripts/combat/battle_bulwark.gd")
-const Forgewright = preload("res://scripts/combat/battle_forgewright.gd")
-const Buffs = preload("res://scripts/combat/battle_buffs.gd")
 const StatusGuard = preload("res://scripts/combat/battle_status_guard.gd")
 
 ## Modules holding in-force ability and buff state (#158), each answering on_damage,
-## on_fainted, on_status, on_turn_begin, on_turn_end and stat_pct (no seam names one).
-const ABILITY_HOOKS: Array = [Rally, Bulwark, Forgewright, Buffs, preload("battle_tricks.gd")]
+## on_fainted, on_status, on_turn_begin, on_turn_end and stat_pct (no seam names
+## one). The list and its order are battle_ability_hooks.gd's.
+const ABILITY_HOOKS: Array = preload("battle_ability_hooks.gd").HOOKS
 
 ## Party member data. Index = slot (0-3). Null entries = empty slots.
 var _members: Array = [null, null, null, null]
@@ -78,7 +75,6 @@ func add_member(slot: int, char_data: Dictionary) -> void:
 		"ap": 0,
 		"ac": PartyState.arcanite_charges,
 		"wg": 0,
-		"favor": {},
 		"stolen_goods": [] as Array[String],
 		# The Rally this member is under; battle_rally.gd owns its shape and rules.
 		"active_rally": {},
@@ -163,12 +159,16 @@ func restore_mp(slot: int, amount: int) -> void:
 
 
 ## Apply a status effect. Duration is turns (int) or seconds (float). Returns
-## false when nothing landed: no member, or worn gear wards it off (#512).
+## false when nothing landed: no member, or worn gear (#512) or a Stoneheart
+## ward keeps it off.
 func apply_status(slot: int, status_name: String, duration_type: String, duration: float) -> bool:
 	var m: Dictionary = get_member(slot)
 	if m.is_empty():
 		return false
-	if StatusGuard.blocks(m["character_id"], status_name):
+	var ward: String = StatusGuard.ward_against(self, slot, status_name)
+	if not ward.is_empty():
+		if ward == "spirit":
+			BattleSpiritcall.credit_block(self, slot)  # Stoneheart in harmony
 		status_blocked.emit(slot, status_name)
 		return false
 	remove_status(slot, status_name)  # a recast refreshes it

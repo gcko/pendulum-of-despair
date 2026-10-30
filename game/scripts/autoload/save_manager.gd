@@ -258,6 +258,10 @@ func _validate(data: Dictionary) -> bool:
 		return false
 	if not data["world"] is Dictionary:
 		return false
+	# An additive optional field may be absent, but when present it is still
+	# type-checked (save-system.md § 11, Corruption Detection).
+	if data.has("spirit_favor") and not SaveDataHelpers.is_favor_table(data["spirit_favor"]):
+		return false
 	return true
 
 

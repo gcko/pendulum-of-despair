@@ -49,6 +49,9 @@ static func magic(character_data: Dictionary, member: Dictionary) -> Array[Dicti
 ## for a steal Trick, while Sable stands in the back row (BattleTricks.can_issue).
 ## Shiv is listed once bare and once per item Sable holds to throw, and Wild
 ## Card asks for one enemy when she holds nothing (BattleTricksCommand).
+## A spirit of Torren's is listed by its current form's name with its Favor
+## pips, and takes that form's target (BattleSpiritcall.menu_name,
+## ui-design.md § 2.7).
 static func abilities(character_data: Dictionary, member: Dictionary) -> Array[Dictionary]:
 	var items: Array[Dictionary] = []
 	for ability: Dictionary in known_abilities(character_data):
@@ -56,15 +59,25 @@ static func abilities(character_data: Dictionary, member: Dictionary) -> Array[D
 			AbilityCommand.is_available(member, ability) and AbilityCommand.can_pay(member, ability)
 		)
 		var entry: Dictionary = {
-			"label": "%s  %s" % [ability.get("name", ""), AbilityHelpers.format_cost(ability)],
+			"label":
+			"%s  %s" % [BattleSpiritcall.menu_name(ability), AbilityHelpers.format_cost(ability)],
 			"command": {"type": "ability", "ability": ability},
-			"target_type": TricksCommand.target_type(member, ability),
+			"target_type": _target_type(member, ability),
 			"enabled": usable,
 		}
 		items.append(entry)
 		if ability.get("id", "") == "shiv":
 			items.append_array(_throws(member, entry))
 	return items
+
+
+## The target [param ability] takes from [param member] now: a spirit's current
+## form's (BattleSpiritcall.target_of), else the Trick rules' (Wild Card with
+## nothing stolen aims at one enemy), which answer any other ability's own.
+static func _target_type(member: Dictionary, ability: Dictionary) -> String:
+	if ability.get("command", "") == "spiritcall":
+		return BattleSpiritcall.target_of(ability)
+	return TricksCommand.target_type(member, ability)
 
 
 ## Shiv's throw entries, one per distinct item in [param member]'s Stolen Goods,

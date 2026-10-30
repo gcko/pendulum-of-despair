@@ -251,6 +251,7 @@ static func execute_enemy_magic(
 		return {"hit": false, "damage": 0, "type": "miss"}
 	var dmg_mult: float = member.get("damage_taken_mult", 1.0)
 	var reduction: Array[float] = Bulwark.reductions(state, target_slot, "magic")
+	reduction.append_array(BattleWards.reductions(state, target_slot, "magic"))
 	if dmg_mult < 1.0:
 		reduction.append(1.0 - dmg_mult)
 	var guard: Dictionary = Bulwark.guard_for(state, target_slot, "magic")
@@ -326,7 +327,7 @@ static func execute_enemy_attack(
 	var dmg_mult: float = member.get("damage_taken_mult", 1.0)
 	if dmg_mult < 1.0:
 		reduction.append(1.0 - dmg_mult)  # Convert mult to reduction source
-	reduction.append_array(Forgewright.reductions(state, target_slot, "physical"))  # Bulkhead
+	reduction.append_array(BattleWards.reductions(state, target_slot, "physical"))
 	var defender_row: String = member.get("row", "front")
 	var guard: Dictionary = Bulwark.guard_for(state, target_slot, "physical")
 	var dmg: int = DamageCalc.calculate_physical(
@@ -350,7 +351,7 @@ static func execute_enemy_attack(
 ## Each hit rolls its own hit/evasion/crit (enemy-ability-conventions.md §2.7),
 ## and the flurry stops once a counter fells the attacker. Returns the aggregate
 ## {hit, damage, type, hits_landed}, with "absorbed" (Edren's shares summed) and
-## "ripostes": every counter — Riposte, Thornveil Barrier per landed hit, then
+## "ripostes": every counter — Riposte, the thorns per landed hit, then
 ## one Arc Trap per attack (BattleForgewright; an AoE passes [param spring_trap]
 ## false after its first target). [param damage_mult] scales each hit's final
 ## damage. hits > 1 starts with the Act II Cave Vermin; this is test-covered.
@@ -378,7 +379,7 @@ static func execute_enemy_physical_ability(
 			landed += 1
 			total += int(r.get("damage", 0))
 			any_crit = any_crit or r.get("type", "") == "critical"
-			r["ripostes"] = r.get("ripostes", []) + Forgewright.thorns(state, enemy, target_slot)
+			r["ripostes"] = r.get("ripostes", []) + BattleWards.thorns(state, enemy, target_slot)
 		if r.has("absorbed"):  # each hit is absorbed on its own; the shares add
 			var share: Dictionary = r["absorbed"]
 			absorbed = {
