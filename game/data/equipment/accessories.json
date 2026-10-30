@@ -966,9 +966,9 @@
         "lira",
         "torren"
       ],
-      "effect": "Immunity to all status effects",
+      "effect": "Immunity to all negative status effects (positive ones such as Haste still land)",
       "bonus_stats": {},
-      "special": "Immunity to all status effects",
+      "special": "Immunity to all negative status effects (positive ones such as Haste still land)",
       "status_immunity": "all",
       "source": "dreamers_fault_floor_20",
       "buy_price": null,

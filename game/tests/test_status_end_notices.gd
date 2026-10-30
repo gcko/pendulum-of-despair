@@ -34,6 +34,8 @@ class EscapeBattle:
 	var state: Node
 	var boss: bool = false
 	var exits: Array[String] = []
+	## Every line, flee result and exit, in the order they happened.
+	var events: Array[String] = []
 
 	func get_battle_state() -> Node:
 		return state
@@ -43,6 +45,7 @@ class EscapeBattle:
 
 	func exit_battle(result: String) -> void:
 		exits.append(result)
+		events.append("exit %s" % result)
 
 
 var _booted: Node = null
@@ -268,6 +271,7 @@ func test_a_waking_hit_and_a_ko_add_no_cure_line() -> void:
 
 	assert_false(state.has_status(TARGET, "sleep"), "precondition: the hit woke Cael")
 	assert_false(state.has_status(TARGET, "berserk"), "precondition: the KO cleared Berserk")
+	assert_true(lines.size() > 0, "precondition: the battle said something to check")
 	for line: String in lines:
 		assert_false(line.ends_with("was cured!"), "no cure line, got %s" % line)
 		assert_false(line.ends_with("wears off."), "no wears-off line, got %s" % line)
@@ -281,15 +285,19 @@ func test_smoke_bomb_shows_escaped_and_reports_a_successful_flee() -> void:
 	add_child_autofree(battle)
 	battle.state = BattleState.new()
 	battle.add_child(battle.state)
-	var lines: Array[String] = []
-	battle.message.connect(func(text: String) -> void: lines.append(text))
-	watch_signals(battle)
+	battle.message.connect(func(text: String) -> void: battle.events.append(text))
+	battle.flee_result.connect(
+		func(success: bool) -> void: battle.events.append("flee_result %s" % success)
+	)
 
 	BattleItemCommand.new(battle).do_item({"item": _item("smoke_bomb"), "target": 0})
 
-	assert_has(lines, "Escaped!", "the escape line Flee shows")
-	assert_signal_emitted_with_parameters(battle, "flee_result", [true])
-	assert_eq(battle.exits, ["flee"] as Array[String], "and the party leaves")
+	# Flee's own order (BattlePlayerActions.do_flee): the line, the result, then
+	# the exit, so whatever hears flee_result hears it while the battle stands.
+	assert_eq(
+		battle.events,
+		["Used Smoke Bomb!", "Escaped!", "flee_result true", "exit flee"] as Array[String]
+	)
 
 
 func test_smoke_bomb_is_still_refused_in_a_boss_fight() -> void:

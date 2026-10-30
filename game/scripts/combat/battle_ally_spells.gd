@@ -115,11 +115,11 @@ func _cure(slot: int, rule: Dictionary) -> bool:
 ## Land a buff spell's status on party slot [param slot] (Quickstep's Haste,
 ## #246) for the spell's duration, else the status's own, plus one on a self-cast
 ## (BattleBuffs.grant counts it the same way); a recast refreshes it. The battle
-## announces it from BattleState.status_applied. Returns true.
+## announces it from BattleState.status_applied. Returns whether it landed: worn
+## gear never wards off a positive status, but apply_status is the one that says.
 func _status_on_ally(slot: int, status: String, duration: Variant) -> bool:
 	var state: Node = _battle.get_battle_state()
 	var turns: int = StatusEffects.resolve_duration(status, duration)
 	if state.get_member(slot).get("turn_open", false):
 		turns += 1
-	state.apply_status(slot, status, "turns", float(turns))
-	return true
+	return state.apply_status(slot, status, "turns", float(turns))

@@ -7,8 +7,8 @@ extends GutTest
 ##     (Berserk), Despair Ward (Despair);
 ##   - the Warding Crown ("Silence immune") and Spiritguard Helm ("Sleep immune")
 ##     head rows, and the purified Grey Cleaver ("Despair immunity");
-##   - Dreamer's Mark, "Immunity to all status effects", which the 2026-10-30
-##     ruling reads as every NEGATIVE status: Haste still lands on its wearer.
+##   - Dreamer's Mark, "Immunity to all negative status effects (positive ones
+##     such as Haste still land)", per the 2026-10-30 ruling.
 ## A blocked status shows the "Immune" marker the enemy side shows, and lands
 ## nothing, so no "is Poisoned!" line either. The check comes after the hit roll
 ## (combat-formulas.md § Status Spell Resolution, step 4).
@@ -119,7 +119,7 @@ func test_an_antidote_charm_wearer_is_not_poisoned_and_immune_shows() -> void:
 	_enemy_inflicts(battle, "poison")
 
 	assert_false(battle.get_battle_state().has_status(TARGET, "poison"), "Cael is not poisoned")
-	assert_has(markers, ["party_%d" % TARGET, 0, "immune"], "the Immune marker shows on Cael")
+	assert_eq(markers.count(["party_%d" % TARGET, 0, "immune"]), 1, "Immune shows on Cael, once")
 	assert_does_not_have(
 		lines, "Cael is Poisoned!", "and nothing announces a Poison that never landed"
 	)
@@ -147,7 +147,7 @@ func test_dreamers_mark_blocks_poison_but_not_haste() -> void:
 	state.apply_status(TARGET, "haste", "turns", 5.0)
 
 	assert_false(state.has_status(TARGET, "poison"), "Poison is kept off")
-	assert_has(markers, ["party_%d" % TARGET, 0, "immune"], "and shows Immune")
+	assert_eq(markers.count(["party_%d" % TARGET, 0, "immune"]), 1, "and shows Immune, once")
 	assert_true(state.has_status(TARGET, "haste"), "Haste, a positive status, still lands")
 	assert_has(lines, "Cael is Hastened!", "and is announced as usual")
 
@@ -201,3 +201,68 @@ func test_the_wards_of_everything_worn_add_up() -> void:
 
 	assert_false(state.has_status(0, "silence"), "the crown keeps Silence off")
 	assert_false(state.has_status(0, "poison"), "and the charm keeps Poison off")
+
+
+func test_one_piece_of_gear_can_ward_off_a_list_of_statuses() -> void:
+	# No shipped item names two yet; a test-local one in the loaded data does.
+	PartyState.initialize_new_game()
+	var twin_ward: Dictionary = {
+		"id": "test_twin_ward",
+		"name": "Twin Ward",
+		"bonus_stats": {},
+		"status_immunity": ["poison", "silence"],
+	}
+	DataManager.load_equipment("accessories").append(twin_ward)
+	_wear("cael", "accessory", "test_twin_ward")
+	var state: Node = _state_with("cael")
+
+	state.apply_status(0, "poison", "turns", -1.0)
+	state.apply_status(0, "silence", "turns", 4.0)
+	state.apply_status(0, "blind", "turns", 4.0)
+
+	assert_false(state.has_status(0, "poison"), "the first status listed is kept off")
+	assert_false(state.has_status(0, "silence"), "and so is the second")
+	assert_true(state.has_status(0, "blind"), "but not one the list leaves out")
+
+
+func test_every_positive_status_gets_through_dreamers_mark() -> void:
+	# The positive statuses are read from magic.md § Status Effect Reference,
+	# not from the registry's own flag, so a positive status added to the
+	# registry without that flag is blocked by "all" and turns this red.
+	PartyState.initialize_new_game()
+	_wear("cael", "accessory", "dreamers_mark")
+	var state: Node = _state_with("cael")
+	var checked: Array[String] = []
+	for status: String in _doc_positive_statuses():
+		if not StatusEffects.is_known(status):
+			continue  # not built yet: nothing can land it
+		checked.append(status)
+		state.apply_status(0, status, "turns", 3.0)
+		assert_true(state.has_status(0, status), "%s still lands on the wearer" % status)
+	assert_true("haste" in checked, "precondition: the scan reached Haste (got %s)" % checked)
+
+
+## The statuses magic.md § Status Effect Reference types "Positive", as registry
+## names: a row's parenthesized name where it has one ("Quickstep (Haste)" ->
+## "haste"), else its own ("Regen" -> "regen").
+func _doc_positive_statuses() -> Array[String]:
+	var path: String = ProjectSettings.globalize_path("res://").trim_suffix("/").get_base_dir()
+	var doc: String = FileAccess.get_file_as_string(path.path_join("docs/story/magic.md"))
+	assert_false(doc.is_empty(), "precondition: magic.md is readable")
+	var out: Array[String] = []
+	var in_table: bool = false
+	for line: String in doc.split("\n"):
+		if line.begins_with("## Status Effect Reference"):
+			in_table = true
+		elif in_table and line.begins_with("## "):
+			break
+		if not in_table or not line.begins_with("| "):
+			continue
+		var cells: PackedStringArray = line.split("|")
+		if cells.size() < 3 or not cells[2].strip_edges().begins_with("Positive"):
+			continue
+		var status_name: String = cells[1].strip_edges()
+		if "(" in status_name:
+			status_name = status_name.get_slice("(", 1).get_slice(")", 0)
+		out.append(status_name.to_lower())
+	return out

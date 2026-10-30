@@ -4,9 +4,11 @@ extends RefCounted
 ## A worn item's `status_immunity` names the status its wearer cannot be
 ## afflicted with (equipment.md § Status Immunity Accessories, and the Warding
 ## Crown, Spiritguard Helm and purified Grey Cleaver rows), or ALL for every
-## negative status (Dreamer's Mark). It may also be an Array of names. Every
-## worn slot counts, so the wards of everything a member wears add up. A
-## positive status (StatusEffects.is_positive) is never kept off, whatever the
+## negative status (Dreamer's Mark). It may also be an Array of names. Each of
+## the four equipment slots counts (WORN_SLOTS), so the wards of everything a
+## member wears add up. The crystal slot does not: the Null Crystal's Despair
+## immunity (progression.md § Special Crystals) is a crystal passive, tracked on
+## #181. A positive status (StatusEffects.is_positive) is never kept off, whatever the
 ## gear says: Dreamer's Mark wards off ailments, not Haste (2026-10-30 ruling).
 ##
 ## BattleState.apply_status asks blocks() as the status would land, which on the
