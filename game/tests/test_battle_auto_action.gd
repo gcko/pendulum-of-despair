@@ -6,7 +6,8 @@ extends GutTest
 ## enemy", until cured, ATB x1.25. Rulings of 2026-10-30: a confused combatant
 ## picks uniformly among every living combatant on both sides but itself; an
 ## auto-action is a full turn (begin-turn effects and status ticks run); both
-## sides can be confused or berserk.
+## sides can be confused or berserk. Haste is an ATB fill-rate x1.5 and Coil
+## applies it (#506).
 
 const ATBSystem = preload("res://scripts/combat/atb_system.gd")
 const AbilityCommand = preload("res://scripts/combat/battle_ability_command.gd")
@@ -280,3 +281,33 @@ func test_constructs_shrug_off_berserk() -> void:
 	golem.is_alive = true
 	assert_false(golem.apply_status("berserk", StatusEffects.UNTIL_CURED), "construct: immune")
 	assert_false(golem.has_status("berserk"))
+
+
+# --- Coil applies Haste (#506) ---
+
+
+func test_a_coiled_serpent_is_hastened_and_its_gauge_fills_half_again_as_fast() -> void:
+	# enemy-ability-conventions.md § Coil: the Quickstep analog, so the same
+	# Haste status (combat-formulas.md § Fill Rate Modifiers, x1.5).
+	for s: int in range(1, 80):
+		var battle: Node = _boot(["corrupted_spawn"])
+		var spawn: Node = battle.get_enemies()[0]
+		var messages: Array[String] = []
+		battle.message.connect(func(t: String) -> void: messages.append(t))
+		seed(s)
+		_only_turn(battle, "enemy_0")
+		if not messages.has("Corrupted Spawn uses coil!"):
+			continue
+		assert_true(spawn.has_status("haste"), "Coil leaves the serpent Hastened")
+		assert_has(messages, "Corrupted Spawn is Hastened!", "announced like any Haste")
+		var atb: Node = battle.get_atb()
+		var speed: int = ATBSystem.settings_from_config(PartyState.get_config())["speed"]
+		atb.set_gauge("enemy_0", 0)
+		battle._process(1.0 / ATBSystem.TICKS_PER_SECOND)
+		assert_eq(
+			atb.get_gauge("enemy_0"),
+			atb.calculate_fill_rate(int(spawn.enemy_data.get("spd", 0)), speed, [1.5]),
+			"Haste fills the gauge x1.5"
+		)
+		return
+	fail_test("the serpent never chose Coil")

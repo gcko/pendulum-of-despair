@@ -889,13 +889,9 @@
           "name": "Coil",
           "type": "buff",
           "target": "self",
-          "buff": {
-            "stat": "spd",
-            "mult": 1.5,
-            "duration": 5,
-            "scope": "self"
-          },
-          "_comment": "Coil +50% SPD/5t self; Quickstep analog (enemy-ability-conventions.md §2.4; palette-families.md § Serpent Family > 'Coil')"
+          "status": "haste",
+          "status_duration": 5,
+          "_comment": "Coil Hastens itself (ATB fill x1.5) for 5t; Quickstep analog (enemy-ability-conventions.md §2.4; combat-formulas.md § Fill Rate Modifiers; palette-families.md § Serpent Family > 'Coil')"
         }
       ]
     },

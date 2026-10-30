@@ -90,8 +90,14 @@ with the same effect (its magnitude and duration are canon):
 |---------------|-------|------|----------|------------------------|
 | Pack Howl | ATK | ×1.30 | 5 turns | Rallying Cry +30% ATK / 5t (`magic.md § Rallying Cry`) |
 | Guard Stance | DEF | ×1.40 | 5 turns | Ironhide +40% DEF / 5t (`magic.md § Ironhide`) |
-| Coil | SPD | ×1.50 | 5 turns | Quickstep +50% / 5t (`magic.md § Quickstep`) |
+| Coil | ATB fill rate (the Haste status, not SPD) | ×1.50 | 5 turns | Quickstep's Haste, ATB fill ×1.5 / 5t (`magic.md § Quickstep`; `combat-formulas.md § Fill Rate Modifiers`) |
 | Elemental Shield | MDEF | ×1.40 | 5 turns | Wardglass +40% MDEF / 5t (`magic.md § Wardglass`) |
+
+Coil is the one row that is a status rather than a stat buff. Haste multiplies
+the ATB gauge's fill rate and leaves SPD alone (`combat-formulas.md § Fill Rate
+Modifiers`), so Coil's data carries `"status": "haste"` with
+`"status_duration": 5` in place of a `buff`, and the serpent is Hastened exactly
+as a Quickstep target is.
 
 `scope` is `"self"` (buffs only the caster) or `"pack"` (buffs every living
 enemy sharing the caster's **`id`** — its own kind, e.g. Pack Howl across all

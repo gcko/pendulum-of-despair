@@ -185,12 +185,16 @@ func _party_despairs() -> bool:
 	return false
 
 
-## Resolve a self-targeted ability (GAP-024): apply its stat buff. scope "pack"
-## buffs every living enemy of the caster's own kind (same enemy id — Pack Howl
-## across all Wayward Wolves, palette-families.md § Wolf Family); "self" buffs
-## only the caster.
+## Resolve a self-targeted ability (GAP-024): land its status on the caster
+## (Coil's Haste, #506), or apply its stat buff. scope "pack" buffs every living
+## enemy of the caster's own kind (same enemy id — Pack Howl across all Wayward
+## Wolves, palette-families.md § Wolf Family); "self" buffs only the caster.
 func _do_self_ability(action: Dictionary, enemy: Node, enemies: Array[Node]) -> void:
 	_manager.message.emit("%s uses %s!" % [enemy.get_display_name(), action.get("id", "")])
+	var status_name: String = action.get("status", "")
+	if StatusEffects.is_known(status_name):
+		var explicit: Variant = action.get("status_duration")
+		enemy.apply_status(status_name, StatusEffects.resolve_duration(status_name, explicit))
 	var buff: Dictionary = action.get("buff", {})
 	if buff.is_empty():
 		return
