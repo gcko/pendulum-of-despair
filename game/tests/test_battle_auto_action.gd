@@ -1,13 +1,13 @@
 extends GutTest
 ## Confusion and Berserk take the command away (GAP-003 slice 5, #246).
 ##
-## combat-formulas.md § Status Effect ATB Interactions: Confusion "Auto-attack
-## random ally or enemy", 3 turns or until damaged; Berserk "Auto-attack random
-## enemy", until cured, ATB x1.25. Rulings of 2026-10-30: a confused combatant
-## picks uniformly among every living combatant on both sides but itself; an
-## auto-action is a full turn (begin-turn effects and status ticks run); both
-## sides can be confused or berserk. Haste is an ATB fill-rate x1.5 and Coil
-## applies it (#506).
+## Confusion: "Auto-attack random ally or enemy", 3 turns or until damaged;
+## Berserk: "Auto-attack random enemy", until cured, ATB x1.25
+## (combat-formulas.md § Status Effect ATB Interactions). Rulings of
+## 2026-10-30: a confused combatant picks uniformly among every living combatant
+## on both sides but itself; an auto-action is a full turn (begin-turn effects
+## and status ticks run); both sides can be confused or berserk. Haste is an
+## ATB fill-rate x1.5 and Coil applies it (#506).
 
 const ATBSystem = preload("res://scripts/combat/atb_system.gd")
 const AbilityCommand = preload("res://scripts/combat/battle_ability_command.gd")
@@ -163,7 +163,7 @@ func test_a_hit_snaps_a_confused_member_out_of_it() -> void:
 
 func test_an_auto_attack_is_a_full_turn_so_second_wind_still_heals() -> void:
 	# Ruling of 2026-10-30: begin-turn effects run on an auto-action turn as on
-	# a commanded one (abilities.md § Cael — Rally, Second Wind's 5% regen).
+	# a commanded one. Second Wind's 5% regen: abilities.md § Cael — Rally.
 	var battle: Node = _boot()
 	var state: Node = battle.get_battle_state()
 	state.take_damage(EDREN, 400)
@@ -225,7 +225,7 @@ func test_a_berserk_member_s_gauge_fills_a_quarter_faster() -> void:
 	assert_eq(
 		atb.get_gauge("party_0"),
 		atb.calculate_fill_rate(state.get_effective_stat(EDREN, "spd"), speed, [1.25]),
-		"combat-formulas.md § Fill Rate Modifiers: Berserk x1.25"
+		"Berserk fills x1.25 (combat-formulas.md § Fill Rate Modifiers)"
 	)
 
 
@@ -287,8 +287,9 @@ func test_constructs_shrug_off_berserk() -> void:
 
 
 func test_a_coiled_serpent_is_hastened_and_its_gauge_fills_half_again_as_fast() -> void:
-	# enemy-ability-conventions.md § Coil: the Quickstep analog, so the same
-	# Haste status (combat-formulas.md § Fill Rate Modifiers, x1.5).
+	# Coil is the Quickstep analog, so the same Haste status
+	# (enemy-ability-conventions.md § 2.4 Stat buffs — reuse the player-analog
+	# magnitude & duration), which fills x1.5 (combat-formulas.md § Fill Rate Modifiers).
 	for s: int in range(1, 80):
 		var battle: Node = _boot(["corrupted_spawn"])
 		var spawn: Node = battle.get_enemies()[0]
