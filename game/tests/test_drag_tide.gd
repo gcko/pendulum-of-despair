@@ -179,3 +179,26 @@ func test_an_enemy_spd_debuff_fills_its_gauge_at_the_floored_stat() -> void:
 	enemy.apply_buff("spd", 0.7, 5)
 	assert_eq(int(enemy.get_stats()["spd"]), 63, "precondition: the stat reads 63")
 	assert_eq(_fill(battle), _rate(battle, 63, []), "the gauge fills as SPD 63")
+
+
+## Land Drag Tide, then [param status] on the enemy, and return its fill.
+func _fill_with(status: String) -> int:
+	var battle: Node = _boot()
+	var enemy: Node = battle.get_enemies()[0]
+	if not await _cast(battle, _drag_tide(100)):
+		return -1
+	assert_true(enemy.apply_status(status, 5), "precondition: %s lands" % status)
+	enemy.enemy_data["spd"] = FILL_SPD
+	return _fill(battle)
+
+
+func test_drag_tide_and_haste_multiply() -> void:
+	# combat-formulas.md § Fill Rate Modifiers (Status Effects): "Multiple
+	# modifiers stack multiplicatively".
+	var fill: int = await _fill_with("haste")
+	assert_eq(fill, _rate(_booted, FILL_SPD, [1.5, 0.7]), "Haste x Drag Tide is x1.05")
+
+
+func test_drag_tide_and_slow_multiply() -> void:
+	var fill: int = await _fill_with("slow")
+	assert_eq(fill, _rate(_booted, FILL_SPD, [0.5, 0.7]), "Slow x Drag Tide is x0.35")

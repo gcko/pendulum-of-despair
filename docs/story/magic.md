@@ -400,17 +400,18 @@ unstated. `game/tests/test_spell_balance.gd` asserts all of them against
   crosses to the enemy line ([ui-design.md](ui-design.md) § 2.6).
 - **Enemy debuff effects in battle (#514).** A debuff aimed at the enemy line
   carries its effect in its own data keys, each valued from its entry above:
-  - `stat_debuff: {stat, pct}` lowers one enemy stat (`def`, `mdef` or `mag`)
-    by `pct`% for `duration` turns of that enemy's: Sunder, Fray and Dampening
-    Field 30, for 5. Drag Tide's stat is `atb_fill`, the enemy's ATB fill
-    speed (30, for 5): a × 0.7 fill-rate modifier, which stacks
+  - `stat_debuff: {stat, pct}` lowers one enemy stat (`def`, `mdef`, `mag` or
+    `atb_fill`) by `pct`% for `duration` turns of that enemy's: Sunder, Fray
+    and Dampening Field 30, for 5. Drag Tide's stat is `atb_fill`, the enemy's
+    ATB fill speed (30, for 5): a × 0.7 fill-rate modifier, which stacks
     multiplicatively with the status modifiers
     ([combat-formulas.md](combat-formulas.md) § Fill Rate Modifiers (Status
     Effects)), and it lowers no stat a hit or evasion roll reads. It rolls its
-    `hit_rate` through the same two-stage roll a status spell makes; a miss spends the MP and changes nothing. It adds to a
-    buff on the same stat ([combat-formulas.md](combat-formulas.md) § Buff &
-    Debuff Interaction: Guard Stance's +40% with Sunder's -30% is +10%), and a
-    recast refreshes it.
+    `hit_rate` through the same two-stage roll a status spell makes; a miss
+    spends the MP and changes nothing. It adds to a buff on the same stat
+    ([combat-formulas.md](combat-formulas.md) § Buff & Debuff Interaction:
+    Guard Stance's +40% with Sunder's -30% is +10%), and a recast refreshes
+    it.
   - `dispel: true` (Dispersion, Mass Dispersion) always lands and removes every
     positive effect the enemy carries: its stat buffs and its positive statuses
     (Haste). A debuff the party laid stays on it (§ Status Effect Reference).
