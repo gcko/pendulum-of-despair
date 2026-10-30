@@ -6,6 +6,8 @@ extends Node2D
 ## (attack/defend/flee), BattleMagicCommand, BattleItemCommand and the unique
 ## commands' BattleAbilityCommand — and battle-start assembly lives in
 ## BattleSetup (GAP-087). This script dispatches to them and owns what they need.
+## A confused or berserk member is not prompted: the loop issues an "auto"
+## command for them, which BattleAutoAction resolves (#246).
 
 signal battle_started(party: Array, enemies: Array, enemy_positions: Array)
 signal turn_ready(
@@ -53,7 +55,7 @@ var _auto: BattleAutoAction = null
 
 func _ready() -> void:
 	_enemy_turn = BattleEnemyTurn.new(self, _state, _atb, _enemy_area)
-	_auto = BattleAutoAction.new(self)
+	_auto = BattleAutoAction.new(self, _get_actions())
 	if _ui == null:
 		push_error("BattleManager: BattleUI not found")
 		call_deferred("exit_battle", "flee")
@@ -162,6 +164,8 @@ func _process(delta: float) -> void:
 			_check_end_conditions()  # a turn-start effect may have won or lost it
 			if _battle_resolved or not _battle_active:
 				return
+			if not _state.get_member(slot).get("is_alive", false):
+				continue  # it felled them: their turn ends unprompted
 			if blocked_by != "":
 				# Paralysis fills the gauge instead, so it does have a turn to
 				# consume: the status counts down on this would-be turn (the
@@ -174,10 +178,12 @@ func _process(delta: float) -> void:
 				# frame. The announcement's readability is the UI's job —
 				# battle_ui queues messages (ui-design.md § 2.5).
 				break
-			# Confusion/Berserk make this turn's basic attack for them (#246).
-			if _auto.take_party_turn(slot):
-				break
 			_awaiting_input_for = id
+			# Confusion/Berserk make this turn's basic attack for them (#246).
+			var statuses: Array = _state.get_member(slot).get("active_statuses", [])
+			if not BattleAutoAction.driving_status(statuses).is_empty():
+				_on_ui_command({"type": "auto"})
+				break
 			_atb.set_command_menu_open(true)
 			var char_data: Dictionary = _state.get_member(slot).get("character_data", {})
 			turn_ready.emit(id, true, slot, _targetable_enemy_count(), _is_boss, char_data)
@@ -222,6 +228,8 @@ func _on_ui_command(command: Dictionary) -> void:
 				_get_actions().do_flee()
 		"ability":
 			ok = _get_abilities().do_ability(actor_id, command)
+		"auto":  # issued by _process, never by the menu
+			_auto.act_for(cmd_slot)
 	if not ok:
 		_atb.set_command_menu_open(true)
 		var char_data: Dictionary = _state.get_member(cmd_slot).get("character_data", {})
@@ -236,18 +244,12 @@ func _on_ui_command(command: Dictionary) -> void:
 	):
 		_state.set_defending(cmd_slot, false)
 		_state.set_buff(cmd_slot, "damage_taken_mult", 1.0)
-	end_party_turn(cmd_slot)
-
-
-## Close [param slot]'s turn once its action has resolved, commanded or not
-## (BattleAutoAction): the gauge empties and the end-of-turn statuses tick.
-func end_party_turn(slot: int) -> void:
 	_awaiting_input_for = ""
-	_atb.reset_gauge("party_%d" % slot)
+	_atb.reset_gauge(actor_id)
 	_turn_counter += 1
 	# Surface party-side DoT (Poison/Burn) through damage_dealt so it shows a
 	# floating number, mirroring the enemy-side tick.
-	_emit_party_events(_state.tick_statuses(slot))
+	_emit_party_events(_state.tick_statuses(cmd_slot))
 	_check_end_conditions()
 
 
@@ -300,8 +302,9 @@ func _skip_incapacitated_turn(slot: int, id: String, status_name: String) -> voi
 	_check_end_conditions()
 
 
-## Surface BattleState's turn events [{slot, dmg, type}] — DoT ticks at a
-## turn's end, Second Wind's heal at its start — as floating numbers.
+## Surface BattleState's turn events [{slot, dmg, type}] as floating numbers:
+## a turn's start (Second Wind's heal) and its end (Poison/Burn damage and
+## Regen heals alike, each event carrying its own type).
 func _emit_party_events(events: Array) -> void:
 	for ev: Dictionary in events:
 		damage_dealt.emit(
@@ -353,7 +356,8 @@ func resync_enemy_atb(idx: int) -> void:
 	var st: Dictionary = StatusEffects.atb_state(_enemies[idx].active_statuses)
 	_atb.set_frozen(eid, st["frozen"])
 	_atb.set_status_mods(eid, st["mods"])
-	_atb.set_spd(eid, _enemies[idx].get_stats().get("spd", 0))  # SPD buffs (Arc Trap)
+	var e: Node = _enemies[idx]
+	_atb.set_spd(eid, int(e.enemy_data.get("spd", 0) * e.buff_mult("spd")))  # Arc Trap
 	if st["zeroed"]:
 		_atb.set_gauge(eid, 0)
 

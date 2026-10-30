@@ -114,3 +114,25 @@ func test_a_turn_start_effect_that_fells_the_last_enemy_wins_before_any_menu() -
 	assert_false(vermin.is_alive, "precondition: the turn-start heal felled the vermin")
 	assert_signal_emitted(battle, "victory", "the battle is won on this frame")
 	assert_signal_not_emitted(battle, "turn_ready", "no command menu for a won battle")
+
+
+func test_a_member_felled_by_their_own_turn_start_is_never_prompted() -> void:
+	# A turn-start effect, or a death burst it sets off, can KO the member whose
+	# turn it is. Here Second Wind's regen on Edren is hooked to fell him.
+	var battle: Node = _boot()
+	var state: Node = battle.get_battle_state()
+	state.take_damage(EDREN, 40)
+	BattleRally.start(state, CAEL, "second_wind", AbilityCommand.RALLY_EFFECTS["second_wind"])
+	state.member_healed.connect(
+		func(slot: int, _amount: int) -> void:
+			if slot == EDREN:
+				state.take_damage(EDREN, 99999)
+	)
+	watch_signals(battle)
+	var atb: Node = battle.get_atb()
+	for id: String in ["party_1", "enemy_0"]:
+		atb.set_gauge(id, 0)
+	atb.set_gauge("party_0", ATBSystem.GAUGE_MAX)
+	battle._process(0.0)
+	assert_false(state.get_member(EDREN)["is_alive"], "precondition: the turn start felled Edren")
+	assert_signal_not_emitted(battle, "turn_ready", "no command menu for a fallen member")

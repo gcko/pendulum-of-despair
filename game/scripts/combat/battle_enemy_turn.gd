@@ -92,15 +92,7 @@ func _auto_turn(status: String, enemy: Node, enemies: Array[Node], idx: int) -> 
 		_apply_action({"type": "attack", "target_slot": slot}, enemy, enemies, idx)
 		return
 	if target.begins_with("enemy_"):
-		var other: Node = enemies[target.replace("enemy_", "").to_int()]
-		_manager.message.emit(
-			"%s attacks %s!" % [enemy.get_display_name(), other.get_display_name()]
-		)
-		var r: Dictionary = BattleAutoAction.enemy_strikes_enemy(enemy, other)
-		_manager.damage_dealt.emit(target, int(r["damage"]), r["type"])
-		if r["killed"]:
-			_manager.combatant_died.emit(target)
-			_atb.remove_combatant(target)
+		BattleAutoAction.enemy_hits_enemy(_manager, _atb, enemy, enemies, target)
 	_tick_enemy_statuses(enemy, idx)
 
 

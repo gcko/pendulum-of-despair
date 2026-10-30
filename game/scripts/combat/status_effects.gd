@@ -6,11 +6,14 @@ extends RefCounted
 ## value traces to docs/story/magic.md and docs/story/combat-formulas.md.
 ##
 ## Scope: the ailments spells and enemies inflict (Bundle 2b), plus Haste, the
-## one positive status built so far (#246; is_positive). Ailments whose
-## *behavioral* effect needs an unbuilt system are still inflictable here, but
-## their effect is deferred (tracked on #246):
+## one positive status built so far (#246; is_positive), and Berserk, which no
+## content inflicts yet. Where part of a status's *behavioral* effect needs an
+## unbuilt system, the status is still in the registry but that part is deferred
+## (tracked on #246):
 ##   - blind (-50% enemy accuracy) — needs enemy-AI hooks (GAP-009).
-##   - despair's -20% damage-dealt needs an attacker-status param in DamageCalc.
+##   - despair's -20% damage-dealt needs an attacker-status param in DamageCalc,
+##     and berserk's +50% basic attack damage the same kind of final-damage
+##     multiplier on the attack calls.
 ## Silence blocks casting on both sides: BattleMagicCommand for the party, and
 ## BattleAI / BossAI for enemies, which skip spell moves (#246). Stop is the one
 ## status counted in real-time seconds rather than turns: see is_realtime().

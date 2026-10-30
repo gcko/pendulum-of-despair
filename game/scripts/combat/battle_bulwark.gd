@@ -6,8 +6,10 @@ extends RefCounted
 ## through BattleState's ability-hook fan-out (on_damage, on_fainted, on_status,
 ## on_turn_begin, on_turn_end, stat_pct); where an enemy hit resolves, from
 ## BattleActions (guard_for, split, absorb, count_absorbed, take_riposte,
-## reductions); and from the commands that issue Bulwark abilities or read its
-## state (BattleAbilityCommand, BattlePlayerActions.do_attack's attack_hits).
+## reductions); where a confused ally's hit resolves, from BattleAutoAction
+## (the same calls bar take_riposte); and from the commands that issue Bulwark
+## abilities or read its state (BattleAbilityCommand, and attack_hits from
+## BattlePlayerActions.do_attack and BattleAutoAction).
 ##
 ## Design law: abilities.md § Edren — Bulwark; combat-formulas.md § Damage
 ## Reduction Sources and its "Absorption vs flat reduction" note.

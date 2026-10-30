@@ -6,18 +6,20 @@ extends RefCounted
 ## "Auto-attack[s] random ally or enemy", and a berserk one "Auto-attack[s]
 ## random enemy". Rulings of 2026-10-30: Confusion picks uniformly among every
 ## living combatant on both sides except itself, Berserk among the living
-## combatants of the other side; the attack is the plain basic attack; and the
+## combatants of the other side; the attack is the plain basic attack, twice
+## under Oathkeeper; friendly fire meets Bulwark but draws no Riposte; and the
 ## turn is a full turn, so begin-turn effects and the status tick run exactly as
 ## on a commanded one and Confusion's 3 turns run out. Both sides are covered:
-## BattleManager hands a party member's turn here instead of prompting it, and
-## BattleEnemyTurn hands an enemy's here instead of asking its AI.
+## BattleManager issues a party member's turn here as an "auto" command instead
+## of prompting it, and BattleEnemyTurn hands an enemy's here instead of asking
+## its AI.
 ##
 ## Not built here: Berserk's "+50% basic attack damage". That is a multiplier on
 ## the attack's final damage (as Overcharge's "+50% damage" is, combat-formulas.md
 ## § Physical Ability Multiplier Tiers), not an ability_mult, and neither
 ## BattleActions.execute_party_attack nor execute_enemy_attack takes one yet.
 
-const BattleActions = preload("res://scripts/combat/battle_actions.gd")
+const Bulwark = preload("res://scripts/combat/battle_bulwark.gd")
 const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
 const ModifierAggregator = preload("res://scripts/combat/modifier_aggregator.gd")
 const Enemy = preload("res://scripts/entities/enemy.gd")
@@ -28,10 +30,14 @@ const Enemy = preload("res://scripts/entities/enemy.gd")
 const AUTO_TARGETS: Dictionary = {"confusion": "any", "berserk": "foes"}
 
 var _battle: Node
+var _actions: BattlePlayerActions
 
 
-func _init(battle: Node) -> void:
+## [param actions] is the battle's own BattlePlayerActions, whose strike is
+## the Attack command's swing.
+func _init(battle: Node, actions: BattlePlayerActions) -> void:
 	_battle = battle
+	_actions = actions
 
 
 ## The status making this combatant's turn for it ("confusion" or "berserk"),
@@ -66,40 +72,51 @@ static func pick_target(status: String, own: String, state: Node, enemies: Array
 	return pool[randi() % pool.size()]
 
 
-## Take [param slot]'s turn for it if Confusion or Berserk holds it, and return
-## whether it did. The caller has already begun the turn; this ends it the way
-## a commanded Attack does: a Defend from a previous turn lapses, then
-## BattleManager.end_party_turn empties the gauge and ticks the statuses.
-func take_party_turn(slot: int) -> bool:
+## Make [param slot]'s basic attack for it under Confusion or Berserk: twice
+## under Edren's Oathkeeper, as the Attack command swings, the second only if
+## the first left the target standing. Resolves the attack only; the manager
+## opens and closes the turn around it, as it does around any command.
+func act_for(slot: int) -> void:
 	var state: Node = _battle.get_battle_state()
-	var status: String = driving_status(state.get_member(slot).get("active_statuses", []))
-	if status.is_empty():
-		return false
+	var member: Dictionary = state.get_member(slot)
+	var status: String = driving_status(member.get("active_statuses", []))
 	var target: String = pick_target(status, "party_%d" % slot, state, _battle.get_enemies())
 	var nm: String = _member_name(state, slot)
 	if target.begins_with("enemy_"):
 		var idx: int = target.replace("enemy_", "").to_int()
 		var enemy: Node = _battle.get_enemies()[idx]
 		_battle.message.emit("%s attacks %s!" % [nm, enemy.get_display_name()])
-		BattlePlayerActions.new(_battle).strike(slot, idx)
+		for _swing: int in range(Bulwark.attack_hits(member)):
+			if not enemy.is_alive:
+				break
+			_actions.strike(slot, idx)
 	elif target.begins_with("party_"):
 		var ally: int = target.replace("party_", "").to_int()
 		_battle.message.emit("%s attacks %s!" % [nm, _member_name(state, ally)])
 		var asleep: Array[int] = BattleEnemyTurn.sleeping_slots(state)
-		var r: Dictionary = party_strikes_ally(state, slot, ally)
-		_battle.damage_dealt.emit(target, int(r["damage"]), r["type"])
+		for _swing: int in range(Bulwark.attack_hits(member)):
+			if not state.get_member(ally).get("is_alive", false):
+				break
+			_show_ally_hit(target, party_strikes_ally(state, slot, ally))
 		for line: String in BattleEnemyTurn.wake_lines(state, asleep):
 			_battle.message.emit(line)
-	if state.get_member(slot).get("is_defending", false):
-		state.set_defending(slot, false)
-		state.set_buff(slot, "damage_taken_mult", 1.0)
-	_battle.end_party_turn(slot)
-	return true
+
+
+## Show a blow on an ally ([param target], "party_N"), and the share Edren's
+## stance took from it as his own number.
+func _show_ally_hit(target: String, r: Dictionary) -> void:
+	_battle.damage_dealt.emit(target, int(r["damage"]), r["type"])
+	var share: Dictionary = r.get("absorbed", {})
+	if not share.is_empty():
+		_battle.damage_dealt.emit("party_%d" % int(share["slot"]), int(share["damage"]), r["type"])
 
 
 ## A party member's basic attack on an ally: the physical formula with the
 ## attacker's ATK/SPD/LCK and row against the ally's DEF/SPD, row and Defend.
-## Returns {hit, damage, type}.
+## A Bulwark stance meets it as it meets an enemy's hit: Edren absorbs his
+## share, or counts a direct hit on himself, but never ripostes an ally (ruling
+## of 2026-10-30). Returns {hit, damage, type}, plus "absorbed": {slot, damage}
+## when a stance split it.
 static func party_strikes_ally(state: Node, slot: int, target: int) -> Dictionary:
 	var spd: int = state.get_effective_stat(slot, "spd")
 	var target_spd: int = state.get_effective_stat(target, "spd")
@@ -110,6 +127,7 @@ static func party_strikes_ally(state: Node, slot: int, target: int) -> Dictionar
 	var taken_mult: float = state.get_member(target).get("damage_taken_mult", 1.0)
 	if taken_mult < 1.0:
 		reduction.append(1.0 - taken_mult)
+	var guard: Dictionary = Bulwark.guard_for(state, target, "physical")
 	var dmg: int = DamageCalc.calculate_physical(
 		state.get_effective_stat(slot, "atk"),
 		1.0,
@@ -119,12 +137,51 @@ static func party_strikes_ally(state: Node, slot: int, target: int) -> Dictionar
 		state.get_member(slot).get("row", "front"),
 		state.get_member(target).get("row", "front"),
 		false,
-		reduction,
+		reduction if guard.is_empty() else [],
 		false,
 		1.0
 	)
-	dmg = state.take_damage(target, dmg)
-	return {"hit": true, "damage": dmg, "type": "critical" if is_crit else "physical"}
+	var dtype: String = "critical" if is_crit else "physical"
+	if guard.is_empty():
+		return {"hit": true, "damage": state.take_damage(target, dmg), "type": dtype}
+	var out: Dictionary = _land_guarded(state, target, dmg, reduction, guard)
+	out["hit"] = true
+	out["type"] = dtype
+	return out
+
+
+## Land [param pre], an ally's hit before any damage reduction, on
+## [param target] as a Bulwark stance meets an enemy's: Edren absorbs his share
+## (Bulwark.split, Bulwark.absorb), or a direct hit on him in his stance is
+## counted (Bulwark.count_absorbed) and splits nothing. Unlike an enemy's hit,
+## no Riposte follows. Returns {damage}, plus "absorbed": {slot, damage}.
+static func _land_guarded(
+	state: Node, target: int, pre: int, reductions: Array[float], guard: Dictionary
+) -> Dictionary:
+	var shares: Dictionary = Bulwark.split(pre, reductions, guard)
+	var edren: int = int(guard["slot"])
+	if edren == target:
+		Bulwark.count_absorbed(state, edren, int(shares["damage"]), pre)
+		return {"damage": state.take_damage(target, int(shares["damage"]))}
+	var out: Dictionary = {"damage": state.take_damage(target, int(shares["damage"]))}
+	var taken: int = Bulwark.absorb(state, guard, int(shares["absorbed"]), pre)
+	out["absorbed"] = {"slot": edren, "damage": taken}
+	return out
+
+
+## Enemy [param attacker]'s basic attack on [param target] ("enemy_N"), another
+## enemy, announced and shown on [param manager], its kill cleaned up off
+## [param atb] as any kill is.
+static func enemy_hits_enemy(
+	manager: Node, atb: Node, attacker: Node, enemies: Array[Node], target: String
+) -> void:
+	var other: Node = enemies[target.replace("enemy_", "").to_int()]
+	manager.message.emit("%s attacks %s!" % [attacker.get_display_name(), other.get_display_name()])
+	var r: Dictionary = enemy_strikes_enemy(attacker, other)
+	manager.damage_dealt.emit(target, int(r["damage"]), r["type"])
+	if r["killed"]:
+		manager.combatant_died.emit(target)
+		atb.remove_combatant(target)
 
 
 ## An enemy's basic attack on another enemy: the enemy-side physical formula

@@ -12,6 +12,7 @@ extends GutTest
 const ATBSystem = preload("res://scripts/combat/atb_system.gd")
 const AbilityCommand = preload("res://scripts/combat/battle_ability_command.gd")
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
+const Bulwark = preload("res://scripts/combat/battle_bulwark.gd")
 const BATTLE: PackedScene = preload("res://scenes/core/battle.tscn")
 const ENEMY_SCENE: PackedScene = preload("res://scenes/entities/enemy.tscn")
 
@@ -74,7 +75,7 @@ func _boot(encounter: Array = ["ley_vermin"]) -> Node:
 ## frame, so it and nobody else takes this turn.
 func _only_turn(battle: Node, id: String) -> void:
 	var atb: Node = battle.get_atb()
-	for slot: int in [EDREN, CAEL]:
+	for slot: int in range(4):
 		atb.set_gauge("party_%d" % slot, 0)
 	for i: int in range(battle.get_enemies().size()):
 		atb.set_gauge("enemy_%d" % i, 0)
@@ -262,14 +263,24 @@ func test_a_berserk_enemy_only_attacks_the_party() -> void:
 
 
 func test_a_confused_enemy_s_turn_counts_down_its_confusion() -> void:
+	# Only the confused vermin acts, and it never hits itself, so nothing but its
+	# own turns can move the count: one a turn, never two.
 	var battle: Node = _boot(["ley_vermin", "ley_vermin"])
 	var vermin: Node = battle.get_enemies()[0]
 	vermin.apply_status("confusion", 3)
+	var left: Array[int] = []
 	for _turn: int in range(3):
-		if not vermin.has_status("confusion"):
-			break  # the other vermin is not acting, so only a party hit could end it
 		_only_turn(battle, "enemy_0")
-	assert_false(vermin.has_status("confusion"), "3 turns, then gone")
+		left.append(_turns_left(vermin.active_statuses, "confusion"))
+	assert_eq(left, [2, 1, 0] as Array[int], "3 turns, one a turn, then gone")
+
+
+## Turns [param status] has left in [param statuses], 0 once it is gone.
+func _turns_left(statuses: Array, status: String) -> int:
+	for s: Dictionary in statuses:
+		if s.get("name", "") == status:
+			return int(s.get("remaining_turns", 0))
+	return 0
 
 
 func test_constructs_shrug_off_berserk() -> void:
@@ -312,6 +323,123 @@ func test_a_coiled_serpent_is_hastened_and_its_gauge_fills_half_again_as_fast() 
 		)
 		return
 	fail_test("the serpent never chose Coil")
+
+
+# --- Oathkeeper and Bulwark under an auto-attack (rulings of 2026-10-30) ---
+
+
+## Seat Lira in slot 2 of [param battle], in the front row, with the rest of
+## the party's HP, so a third member can strike or be struck.
+func _seat_lira(battle: Node) -> void:
+	var state: Node = battle.get_battle_state()
+	(
+		state
+		. add_member(
+			2,
+			{
+				"character_id": "lira",
+				"name": "Lira",
+				"max_hp": STURDY_HP,
+				"base_stats":
+				{"hp": STURDY_HP, "atk": 40, "def": 20, "mag": 10, "mdef": 10, "spd": 10, "lck": 0},
+			}
+		)
+	)
+	state.get_member(2)["row"] = "front"
+	battle.get_atb().add_combatant("party_2", 10, false)
+
+
+## The first seeded turn of [param actor] whose auto-attack lands on
+## [param target], as the hits shown that turn; [] if none did in 80 tries.
+## [param arrange] sets each fresh battle up before the turn.
+func _turn_landing_on(actor: String, target: String, arrange: Callable) -> Array:
+	for s: int in range(1, 80):
+		var battle: Node = _boot()
+		arrange.call(battle)
+		var shown: Array = []
+		battle.damage_dealt.connect(
+			func(t: String, n: int, k: String) -> void: shown.append([t, n, k])
+		)
+		seed(s)
+		_only_turn(battle, actor)
+		var landed: bool = shown.any(
+			func(h: Array) -> bool: return h[0] == target and h[2] != "miss"
+		)
+		if landed:
+			return [battle, shown]
+	fail_test("%s never landed a hit on %s" % [actor, target])
+	return []
+
+
+func test_oathkeeper_doubles_a_confused_edren_s_swing_at_an_enemy() -> void:
+	var out: Array = _turn_landing_on(
+		"party_0",
+		"enemy_0",
+		func(battle: Node) -> void:
+			var state: Node = battle.get_battle_state()
+			state.apply_status(EDREN, "confusion", "turns", 3)
+			Bulwark.oathkeeper(state, EDREN)
+	)
+	if out.is_empty():
+		return
+	var at_enemy: Array = out[1].filter(func(h: Array) -> bool: return h[0] == "enemy_0")
+	assert_eq(at_enemy.size(), 2, "two swings, as the Attack command makes under Oathkeeper")
+
+
+func test_oathkeeper_doubles_a_confused_edren_s_swing_at_an_ally() -> void:
+	var out: Array = _turn_landing_on(
+		"party_0",
+		"party_1",
+		func(battle: Node) -> void:
+			var state: Node = battle.get_battle_state()
+			state.apply_status(EDREN, "confusion", "turns", 3)
+			Bulwark.oathkeeper(state, EDREN)
+	)
+	if out.is_empty():
+		return
+	var at_cael: Array = out[1].filter(func(h: Array) -> bool: return h[0] == "party_1")
+	assert_eq(at_cael.size(), 2, "both swings land on the ally too")
+
+
+func test_ironwall_absorbs_a_confused_ally_s_hit_and_edren_does_not_riposte() -> void:
+	# Ruling of 2026-10-30: friendly fire runs through Bulwark's absorb split,
+	# like an enemy hit, but Riposte never counters an ally.
+	var out: Array = _turn_landing_on(
+		"party_2",
+		"party_1",
+		func(battle: Node) -> void:
+			var state: Node = battle.get_battle_state()
+			_seat_lira(battle)
+			Bulwark.enter_stance(state, EDREN, "ironwall", CAEL)
+			Bulwark.oathkeeper(state, EDREN)  # every absorbed enemy hit would counter
+			state.apply_status(2, "confusion", "turns", 3)
+	)
+	if out.is_empty():
+		return
+	var state: Node = out[0].get_battle_state()
+	var to_edren: Array = out[1].filter(func(h: Array) -> bool: return h[0] == "party_0")
+	assert_eq(to_edren.size(), 1, "Edren's share of the hit shows as his own number")
+	assert_lt(state.get_member(EDREN)["current_hp"], STURDY_HP, "Edren took his share")
+	assert_gt(int(state.get_member(EDREN).get("ap", 0)), 0, "the absorbed hit earned AP")
+	assert_eq(state.get_member(2)["current_hp"], STURDY_HP, "no Riposte hit Lira")
+
+
+func test_a_confused_ally_s_direct_hit_on_edren_in_stance_earns_ap_but_no_riposte() -> void:
+	var out: Array = _turn_landing_on(
+		"party_2",
+		"party_0",
+		func(battle: Node) -> void:
+			var state: Node = battle.get_battle_state()
+			_seat_lira(battle)
+			Bulwark.enter_stance(state, EDREN, "rampart", -1)
+			Bulwark.arm_riposte(state, EDREN)
+			state.apply_status(2, "confusion", "turns", 3)
+	)
+	if out.is_empty():
+		return
+	var state: Node = out[0].get_battle_state()
+	assert_gt(int(state.get_member(EDREN).get("ap", 0)), 0, "a direct hit in stance earns AP")
+	assert_eq(state.get_member(2)["current_hp"], STURDY_HP, "no Riposte hit Lira")
 
 
 # --- What an item cannot cure (items.md § Status Cures) ---
