@@ -210,14 +210,18 @@ func _for_each_targetable_enemy(apply: Callable) -> bool:
 
 ## A heal spell landing on enemy [param idx]. An Undead or Pallor enemy takes
 ## [param heal_amt] as damage — the heal as rolled, with its own variance and
-## 14,999 cap, no hit roll and no element or type multiplier — and that damage
-## counts as spell damage: threat for the caster, Weave Gauge for the cast, and
-## a kill handled like any other. A normal enemy is healed by it. Returns
+## 14,999 cap, no hit roll and no element or type multiplier, cut by the
+## caster's Despair (BattleDamageMods, #246) — and that damage counts as spell
+## damage: threat for the caster, Weave Gauge for the cast, and a kill handled
+## like any other. A normal enemy is healed by it. Returns
 ## whether the cast earns Weave Gauge, which only heal damage does: healing an
 ## enemy earns none (2026-10-29 ruling).
 func _heal_on_enemy(caster_slot: int, heal_amt: int, idx: int) -> bool:
 	var enemy: Node = _battle.get_enemies()[idx]
 	if enemy.get_type() in HEAL_REVERSING_TYPES:
+		heal_amt = BattleDamageMods.cut_dealt(
+			heal_amt, _battle.get_battle_state().get_member(caster_slot)
+		)
 		enemy.take_damage(heal_amt)
 		_land_spell_damage(caster_slot, heal_amt, idx)
 		return heal_amt > 0
