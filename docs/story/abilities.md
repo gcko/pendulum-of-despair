@@ -143,8 +143,9 @@ these readings.
 **Mechanic:** Lira builds and deploys **devices** in combat. She carries a pool of **Arcanite Charges (AC)** that fuel device construction. Devices are temporary constructs that persist on the battlefield for a set number of turns or until destroyed. Lira can have up to 2 devices active simultaneously. Deploying a third destroys the oldest one. **Exception:** devices deployed via dual tech combos do not count toward this limit (they are fused directly onto the target rather than placed on the field).
 
 **Resource: Arcanite Charges (AC)**
-- Max 12 AC. Starts each battle at current AC pool (12 minus any AC
-  spent on pre-crafting since the last rest; see [crafting.md](crafting.md)).
+- Max 12 AC. Starts each battle at current AC pool: 12 minus any AC spent
+  since the last rest, in battle or on pre-crafting (see
+  [crafting.md](crafting.md)). AC spent in one battle stays spent in the next.
 - Restored when resting at save points via rest items (Sleeping Bag 25%,
   Tent 50%, Pavilion 100%), fully at inns, and by Arcanite Shards (+3 AC
   each). See [save-system.md](save-system.md).
@@ -179,9 +180,10 @@ Settled on #158 on 2026-10-30; the battle layer is built to these readings.
 - *Most injured* (Mending Engine) is the lowest share of max HP; a tie goes to
   the lower party slot.
 - *Thornveil Barrier* counters physical hits only.
-- *Deferred.* Arcanite Colossus, Cael's Edge and Calibrate are a later slice of
-  #158 (Cael's Edge and Calibrate are story-scripted). Lira's battle menu lists
-  them, unusable, until then.
+- *Deferred.* Arcanite Colossus, Cael's Edge, Calibrate, Disrupt and the 15%
+  Pallor-zone malfunction chance (§ Arcanite Channeling below) are a later
+  slice of #158 (Cael's Edge, Calibrate and Disrupt are story-scripted). Lira's
+  battle menu lists the first three, unusable, until then.
 
 **Synergies:**
 - Lira + Maren: Maren's Resonance extends the next device Lira deploys by 1 turn.

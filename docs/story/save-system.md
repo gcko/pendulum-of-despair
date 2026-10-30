@@ -192,8 +192,9 @@ crafting: {
 spent in one battle stays spent until a rest (§ 4) refills it. The load holds it
 to 0-12. Every save has carried the field since the format began, written as a
 constant 12 while AC could not yet be spent, so reading it back needed no
-migration: an existing save holds exactly the full pool it always meant, and a
-save missing the field loads with a full pool for the same reason.
+migration: an existing save holds exactly the full pool it always meant. A
+save missing the field, or holding a non-number there, loads with a full pool:
+the narrow exception recorded in § 10.
 
 ### 3.6 ley_crystals
 
@@ -593,6 +594,15 @@ gives the same result a migration would, without rewriting every
 existing save. Anything outside those three conditions takes a version
 bump and a migration step.
 
+**One tolerated field: `crafting.arcanite_charges`.** It is not an
+additive optional field, since its default is the full pool of 12 rather
+than zero, but it gets a tolerant read for a reason of its own: every
+loadable save has written it, and until AC could be spent (#158) it was
+always the constant 12. A missing or non-numeric value can therefore only
+mean the full pool it always held, and loads as 12; a numeric one is held
+to 0-12. The exception covers this one field and sets no precedent: a new
+field with a non-zero default still takes a version bump and a migration.
+
 ### Breaking Changes
 
 Rare structural overhauls (e.g., replacing the Ley Crystal system)
@@ -620,7 +630,8 @@ If validation fails, mark the slot as corrupted in the load screen UI
 and prevent loading. Do not silently load partial data. Additive
 optional fields (§ 10 Migration Types) are exempt from the existence
 check — their absence is a documented default, not corruption — but
-they are still type-checked when present.
+they are still type-checked when present. `crafting.arcanite_charges`
+is the one field read tolerantly whatever it holds (§ 10).
 
 ### File Size
 

@@ -180,11 +180,12 @@ during the next combat encounters.
   point reduces the pool until the next rest — crafting 3 devices at 2
   AC each leaves 6 AC for battle device deployment until the next save
   point.
-- **Battle start:** Per [abilities.md](abilities.md), "Starts each
-  battle at max" — this means the *current* max (12 minus any AC spent
-  on pre-crafting since the last rest). Battle device deployment draws
-  from this pool during combat. AC is not auto-refilled between
-  battles; only rest points restore the full 12.
+- **Battle start:** Per [abilities.md](abilities.md), Lira's AC "Starts
+  each battle at current AC pool": 12 minus any AC spent since the last
+  rest, in battle or on pre-crafting. Battle device deployment draws
+  from this pool during combat, and what a battle spends stays spent.
+  AC is not auto-refilled between battles; only rest points restore the
+  full 12.
 - **Arcanite Shards:** Restore **3 AC** when used as consumables (per
   abilities.md). Field-usable between battles. One shard = 3 AC = enough
   to craft one Advanced-tier or one Basic-tier + one Expert-tier device.
