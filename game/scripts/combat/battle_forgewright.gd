@@ -16,28 +16,33 @@ extends RefCounted
 ## fires as each of those turns begins and Mending Engine heals as each ends;
 ## Arc Trap fires on any enemy's physical attack, whatever its target, and is
 ## spent; a KO on Lira ends every device she has up, refunding nothing.
-## Salvage takes the oldest device unless told which; Mending Engine's "most
+## Salvage takes the oldest device; Mending Engine's "most
 ## injured" is the lowest share of max HP, the lower slot on a tie; Thornveil
 ## Barrier answers physical hits only. Arcanite Colossus, Cael's Edge and
 ## Calibrate are a later slice.
 ##
 ## Lira's record carries her AC in member["ac"] and her devices, oldest first,
 ## in member["forgewright"]["devices"], each {id, cost, power, target,
-## turns_left, fresh, fused}: turns_left is -1 for Arc Trap, which waits to be
-## sprung; fresh marks the turn it was deployed on; fused marks one a combo
-## put straight onto its target, which the device limit does not count. An
+## turns_left, fresh, fused}: turns_left is UNTIL_SPRUNG for Arc Trap; fresh
+## marks the turn it was deployed on; fused marks one a combo put straight onto
+## its target, which the device limit does not count and which cost no AC. An
 ## Overcharged ally carries member["forgewright"]["overcharged"]. AC spent or
 ## refunded here is written through to PartyState.arcanite_charges, the pool
 ## the next battle starts from (only a rest refills it).
 
 const BattleActions = preload("res://scripts/combat/battle_actions.gd")
 
-## Each device: the Lira turns it persists (0 = until sprung), and its
-## magnitudes. Spell powers come from the ability data's `power`.
+## A device's turns when it waits to be sprung rather than counting down.
+const UNTIL_SPRUNG: int = -1
+
+## Each device: the Lira turns it persists (UNTIL_SPRUNG for Arc Trap), and its
+## magnitudes. Spell powers come from the ability data's `power`; Shock Coil's
+## turns are its ticks, one per turn, held to lira.json's `ticks` by its test.
 const DEVICES: Dictionary = {
 	"shock_coil": {"turns": 3, "element": "storm"},
 	"bulkhead": {"turns": 3, "reduction_pct": 40},
-	"arc_trap": {"turns": 0, "element": "flame", "spd_debuff_pct": 20, "debuff_turns": 2},
+	"arc_trap":
+	{"turns": UNTIL_SPRUNG, "element": "flame", "spd_debuff_pct": 20, "debuff_turns": 2},
 	"mending_engine": {"turns": 4, "heal_pct": 15},
 	"thornveil_barrier": {"turns": 3, "counter_pct": 15},
 }
@@ -67,7 +72,8 @@ const BUILT: Array[String] = [
 ## Deploy [param ability]'s device from Lira at [param slot], aimed at ally
 ## [param target] where it has one. [param battle] is where its effects are
 ## shown. A third device on the field destroys the oldest; a [param fused] one
-## (a combo's) neither counts nor is destroyed.
+## (a combo's) neither counts nor is destroyed, and records no AC cost, since a
+## combo pays MP instead.
 static func deploy(
 	state: Node, slot: int, ability: Dictionary, target: int, battle: Node, fused: bool = false
 ) -> void:
@@ -78,13 +84,12 @@ static func deploy(
 	var field: Array = list.filter(func(d: Dictionary) -> bool: return not d["fused"])
 	if not fused and field.size() >= DEVICE_LIMIT:
 		_remove(list, field[0])
-	var turns: int = int(DEVICES[ability["id"]]["turns"])
 	var device: Dictionary = {
 		"id": ability["id"],
-		"cost": int(ability.get("cost_value", 0)),
+		"cost": 0 if fused else int(ability.get("cost_value", 0)),
 		"power": int(ability.get("power", 0)),
 		"target": target,
-		"turns_left": turns if turns > 0 else -1,
+		"turns_left": int(DEVICES[ability["id"]]["turns"]),
 		"fresh": m.get("turn_open", false),
 		"fused": fused,
 	}
@@ -93,14 +98,14 @@ static func deploy(
 	state.ability_state_changed.emit(slot)
 
 
-## Salvage device [param index] (oldest first) from Lira at [param slot]:
-## destroy it and return half its AC cost, rounded down. Returns the refund.
-static func salvage(state: Node, slot: int, index: int) -> int:
+## Salvage Lira's oldest device, at [param slot]: destroy it and return half
+## its AC cost, rounded down (2026-10-30 ruling). Returns the refund.
+static func salvage(state: Node, slot: int) -> int:
 	var list: Array = devices(state.get_member(slot))
-	if index < 0 or index >= list.size():
+	if list.is_empty():
 		return 0
-	var refund: int = int(list[index]["cost"]) / 2
-	list.remove_at(index)
+	var refund: int = int(list[0]["cost"]) / 2
+	list.remove_at(0)
 	_set_ac(state, slot, int(state.get_member(slot).get("ac", 0)) + refund)
 	state.ability_state_changed.emit(slot)
 	return refund
@@ -232,10 +237,12 @@ static func land_strike(enemy: Node, dmg: int, dtype: String, charge: Dictionary
 
 
 ## Start of Lira's turn: each Shock Coil standing since an earlier turn strikes
-## a random living enemy.
+## a random living enemy, until a strike's consequences (a death burst) fell her.
 static func on_turn_begin(state: Node, slot: int) -> Array:
 	var m: Dictionary = state.get_member(slot)
 	for d: Dictionary in devices(m).duplicate():
+		if not m.get("is_alive", false):
+			break
 		if d["id"] == "shock_coil" and not d["fresh"]:
 			_shock(state, slot, d)
 	return []
@@ -378,11 +385,11 @@ static func _record(m: Dictionary) -> Dictionary:
 	return m["forgewright"]
 
 
-## Set [param slot]'s AC, held to the pool's bounds, and write it through to the
-## party's pool.
+## Set [param slot]'s AC and write it through to the party's pool, both held to
+## the pool's bounds by PartyVitals.clamp_ac.
 static func _set_ac(state: Node, slot: int, ac: int) -> void:
 	var m: Dictionary = state.get_member(slot)
-	var clamped: int = clampi(ac, 0, PartyVitals.AC_MAX)
+	var clamped: int = PartyVitals.clamp_ac(ac)
 	PartyState.arcanite_charges = clamped
 	if clamped == int(m.get("ac", 0)):
 		return

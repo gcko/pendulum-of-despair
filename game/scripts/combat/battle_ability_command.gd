@@ -105,8 +105,7 @@ func _resolve_bulwark(slot: int, ability: Dictionary, command: Dictionary) -> vo
 
 
 ## Lira's Forgewright: deploy a device (at command["target"] where it takes an
-## ally), Overcharge an ally, or Salvage device command["device"] (oldest
-## first; the oldest when none is named).
+## ally), Overcharge an ally, or Salvage her oldest device.
 func _resolve_forgewright(slot: int, ability: Dictionary, command: Dictionary) -> void:
 	var state: Node = _battle.get_battle_state()
 	var target: int = int(command.get("target", -1))
@@ -114,7 +113,7 @@ func _resolve_forgewright(slot: int, ability: Dictionary, command: Dictionary) -
 		"overcharge":
 			BattleForgewright.overcharge(state, target)
 		"salvage":
-			BattleForgewright.salvage(state, slot, int(command.get("device", 0)))
+			BattleForgewright.salvage(state, slot)
 		_:
 			BattleForgewright.deploy(state, slot, ability, target, _battle)
 
@@ -235,11 +234,8 @@ static func pay(state: Node, slot: int, ability: Dictionary) -> bool:
 ## Whether a single-ally ability has a living ally at command["target"]. Ironwall
 ## also needs that ally to be someone other than Edren: a hit on him already
 ## counts as absorbed while he holds any stance (BattleBulwark.guard_for), so
-## guarding himself would add nothing. Salvage needs the device it names.
+## guarding himself would add nothing.
 static func _target_ok(state: Node, slot: int, ability: Dictionary, command: Dictionary) -> bool:
-	if ability.get("id", "") == "salvage" and ability.get("command", "") == "forgewright":
-		var index: int = int(command.get("device", 0))
-		return index >= 0 and index < BattleForgewright.devices(state.get_member(slot)).size()
 	if ability.get("target", "") != "single_ally":
 		return true
 	var target: int = int(command.get("target", -1))

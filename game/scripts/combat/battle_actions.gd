@@ -154,7 +154,7 @@ static func resolve_enemy_target(cursor: int, enemies: Array[Node]) -> int:
 ## [param ability_mult] (1.0 for the Attack command, 1.5 for Riposte's counter),
 ## which scales power before DEF; [param damage_mult] multiplies final damage
 ## (combat-formulas.md step 6), as does an Overcharge on the member, spent on
-## it hit or miss (BattleForgewright.take_overcharge). Returns the damage dealt.
+## it hit or miss (BattleForgewright.take_overcharge). Returns {hit, damage, type}.
 static func execute_party_attack(
 	state: Node,
 	slot: int,
@@ -210,30 +210,25 @@ static func apply_magic_to_enemy(
 ) -> Dictionary:
 	if not enemy.is_alive:
 		return {"hit": false, "damage": 0, "type": "miss"}
-
 	var spd: int = state.get_effective_stat(caster_slot, "spd")
 	var enemy_stats: Dictionary = enemy.get_stats()
 	var target_mdef: int = enemy_stats.get("mdef", 0)
 	var target_spd: int = enemy_stats.get("spd", 0)
-
 	if not DamageCalc.roll_hit(spd, target_spd):
 		return {"hit": false, "damage": 0, "type": "miss"}
 	if DamageCalc.roll_evasion(target_spd):
 		return {"hit": false, "damage": 0, "type": "miss"}
-
 	var element_mod: float = enemy.get_element_multiplier(element)
 	# Enemy type-element bonus stacks multiplicatively with weakness (GAP-008).
 	var interaction: float = ModifierAggregator.type_element_multiplier(enemy.get_type(), element)
 	var dmg: int = DamageCalc.calculate_magic(
 		mag, power, target_mdef, element_mod, interaction, [], []
 	)
-
 	if element_mod == 0.0:
 		return {"hit": true, "damage": 0, "type": "immune"}
 	if element_mod < 0.0:
 		enemy.heal(dmg)
 		return {"hit": true, "damage": dmg, "type": "absorb"}
-
 	enemy.take_damage(dmg)
 	return {"hit": true, "damage": dmg, "type": "magic", "killed": not enemy.is_alive}
 
@@ -327,7 +322,6 @@ static func execute_enemy_attack(
 		return {"hit": false, "damage": 0, "type": "miss"}
 	if DamageCalc.roll_evasion(target_spd):
 		return {"hit": false, "damage": 0, "type": "miss"}
-
 	var is_crit: bool = randf() < Enemy.ENEMY_CRIT_RATE
 	var reduction: Array[float] = []
 	var dmg_mult: float = member.get("damage_taken_mult", 1.0)
@@ -336,21 +330,18 @@ static func execute_enemy_attack(
 	reduction.append_array(Forgewright.reductions(state, target_slot, "physical"))  # Bulkhead
 	var defender_row: String = member.get("row", "front")
 	var guard: Dictionary = Bulwark.guard_for(state, target_slot, "physical")
-	var dmg: int = (
-		DamageCalc
-		. calculate_physical(
-			atk,
-			ability_mult,
-			target_def,
-			is_crit,
-			damage_mult,
-			"front",
-			defender_row,
-			false,
-			reduction if guard.is_empty() else [],
-			false,
-			1.0,
-		)
+	var dmg: int = DamageCalc.calculate_physical(
+		atk,
+		ability_mult,
+		target_def,
+		is_crit,
+		damage_mult,
+		"front",
+		defender_row,
+		false,
+		reduction if guard.is_empty() else [],
+		false,
+		1.0
 	)
 	var dtype: String = "critical" if is_crit else "physical"
 	return _land_on_party(state, target_slot, dmg, reduction, guard, dtype, enemy)
@@ -361,10 +352,17 @@ static func execute_enemy_attack(
 ## and the flurry stops once a counter fells the attacker. Returns the aggregate
 ## {hit, damage, type, hits_landed}, with "absorbed" (Edren's shares summed) and
 ## "ripostes": every counter — Riposte, Thornveil Barrier per landed hit, then
-## one Arc Trap for the attack (BattleForgewright). No Act I production enemy
-## sets hits > 1 (first is the Act II Cave Vermin); this path is test-covered.
+## one Arc Trap per attack (BattleForgewright; an AoE passes [param spring_trap]
+## false after its first target). [param damage_mult] scales each hit's final
+## damage. hits > 1 starts with the Act II Cave Vermin; this is test-covered.
 static func execute_enemy_physical_ability(
-	state: Node, enemy: Node, target_slot: int, ability_mult: float = 1.0, hits: int = 1
+	state: Node,
+	enemy: Node,
+	target_slot: int,
+	ability_mult: float = 1.0,
+	hits: int = 1,
+	damage_mult: float = 1.0,
+	spring_trap: bool = true
 ) -> Dictionary:
 	var total: int = 0
 	var landed: int = 0
@@ -374,7 +372,9 @@ static func execute_enemy_physical_ability(
 	for _h: int in range(maxi(1, hits)):
 		if not enemy.is_alive:  # a Riposte felled the attacker mid-flurry
 			break
-		var r: Dictionary = execute_enemy_attack(state, enemy, target_slot, ability_mult)
+		var r: Dictionary = execute_enemy_attack(
+			state, enemy, target_slot, ability_mult, damage_mult
+		)
 		if r.get("hit", false):
 			landed += 1
 			total += int(r.get("damage", 0))
@@ -387,7 +387,7 @@ static func execute_enemy_physical_ability(
 				"damage": int(absorbed.get("damage", 0)) + int(share["damage"]),
 			}
 		ripostes.append_array(r.get("ripostes", []))
-	ripostes.append_array(Forgewright.spring_trap(state, enemy))  # any physical attack (Arc Trap)
+	ripostes.append_array(Forgewright.spring_trap(state, enemy) if spring_trap else [])
 	# Report "critical" if ANY sub-hit crit, not just the last (which could miss);
 	# a flurry that lands nothing is a "miss", shown as Miss rather than 0 (#500).
 	var dtype: String = "miss" if landed == 0 else ("critical" if any_crit else "physical")

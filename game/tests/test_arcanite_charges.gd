@@ -138,6 +138,23 @@ func test_a_save_from_before_ac_was_spendable_loads_with_a_full_pool() -> void:
 	assert_eq(PartyState.arcanite_charges, 12)
 
 
+func test_a_save_holding_a_non_number_for_ac_loads_with_a_full_pool() -> void:
+	# save-system.md § 10's narrow exception: the field was a constant 12 in
+	# every save before AC could be spent.
+	var data: Dictionary = PartyState.build_save_data()
+	data["crafting"]["arcanite_charges"] = "twelve"
+	PartyState.arcanite_charges = 2
+	PartyState.load_from_save(data)
+	assert_eq(PartyState.arcanite_charges, 12)
+
+
+func test_the_pool_holds_to_zero_through_twelve_whoever_writes_it() -> void:
+	PartyState.arcanite_charges = 40
+	assert_eq(PartyState.arcanite_charges, 12)
+	PartyState.arcanite_charges = -5
+	assert_eq(PartyState.arcanite_charges, 0)
+
+
 func test_a_loaded_pool_is_held_to_zero_through_twelve() -> void:
 	var data: Dictionary = PartyState.build_save_data()
 	data["crafting"]["arcanite_charges"] = 40

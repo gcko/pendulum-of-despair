@@ -86,6 +86,14 @@ func rest_party(restore_pct: float, clears_status: bool) -> void:
 			m["status_effects"] = []
 
 
-## Return [param amount] AC to Lira's pool, up to AC_MAX.
+## Return [param amount] AC to Lira's pool; PartyState's setter holds it to
+## AC_MAX.
 func restore_ac(amount: int) -> void:
-	_party.arcanite_charges = clampi(_party.arcanite_charges + maxi(0, amount), 0, AC_MAX)
+	_party.arcanite_charges += maxi(0, amount)
+
+
+## [param ac] held to the pool's bounds, 0..AC_MAX: the one clamp every AC
+## write goes through (PartyState.arcanite_charges' setter, and Lira's battle
+## copy in BattleForgewright).
+static func clamp_ac(ac: int) -> int:
+	return clampi(ac, 0, AC_MAX)

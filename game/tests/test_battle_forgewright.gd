@@ -195,6 +195,10 @@ func test_every_device_magnitude_matches_the_shipped_effect_text() -> void:
 	)
 
 
+func test_shock_coil_lasts_one_turn_per_tick_in_the_data() -> void:
+	assert_eq(Forgewright.DEVICES["shock_coil"]["turns"], int(_ability("shock_coil")["ticks"]))
+
+
 func test_the_damage_devices_are_storm_and_flame_as_the_data_says() -> void:
 	assert_string_contains(_ability("shock_coil")["effect"], "Storm")
 	assert_eq(Forgewright.DEVICES["shock_coil"]["element"], "storm")
@@ -303,17 +307,21 @@ func test_salvage_destroys_a_device_and_refunds_half_its_cost_rounded_down() -> 
 	assert_eq(_ac(), 10 - 4 + 2, "4 AC -> 2 back")
 
 
-func test_salvage_takes_the_device_it_is_pointed_at() -> void:
+func test_with_two_devices_up_salvage_takes_the_older() -> void:
 	_use("shock_coil")
 	_use("mending_engine")
-	assert_true(
-		_cmd.do_ability(
-			"party_%d" % LIRA, {"type": "ability", "ability": _ability("salvage"), "device": 1}
-		),
-		"salvaged the second"
-	)
-	assert_eq(_device_ids(), ["shock_coil"] as Array[String])
-	assert_eq(_ac(), 12 - 2 - 4 + 2)
+	assert_true(_use("salvage"), "salvaged")
+	assert_eq(_device_ids(), ["mending_engine"] as Array[String], "the coil, deployed first")
+	assert_eq(_ac(), 12 - 2 - 4 + 1, "Shock Coil's 2 AC -> 1 back")
+
+
+func test_salvaging_a_combo_fused_device_refunds_nothing() -> void:
+	# A combo pays MP for its device, so taking it down returns no AC.
+	Forgewright.deploy(_state, LIRA, _ability("mending_engine"), CAEL, _battle, true)
+	_state.get_member(LIRA)["ac"] = 5
+	assert_true(_use("salvage"), "salvaged")
+	assert_eq(_device_ids(), [] as Array[String])
+	assert_eq(_ac(), 5, "no AC was spent on it, so none comes back")
 
 
 func test_salvage_is_unavailable_with_no_device_up() -> void:
@@ -394,6 +402,23 @@ func test_a_shock_coil_kill_removes_the_enemy_from_battle() -> void:
 			_lira_turn()
 	assert_false(dying.is_alive, "a tick landed")
 	assert_eq(died, ["enemy_0"] as Array[String], "its fall is reported once")
+
+
+func test_shock_coils_stop_once_a_strike_s_aftermath_fells_lira() -> void:
+	# Two coils, two 1-HP enemies, and a death burst (Shard Burst) that fells
+	# Lira: the first kill ends her volley, so the second coil never fires.
+	seed(12345)
+	var first: Enemy = _make_enemy({"hp": 1})
+	var second: Enemy = _make_enemy({"hp": 1})
+	_battle.enemies = [first, second] as Array[Node]
+	for e: Enemy in [first, second]:
+		e.died.connect(func() -> void: _state.take_damage(LIRA, 99999))
+	_use("shock_coil")
+	_use("shock_coil")
+	_state.begin_turn(LIRA)
+	assert_false(_state.get_member(LIRA)["is_alive"], "precondition: a coil killed and Lira fell")
+	assert_eq(int(first.is_alive) + int(second.is_alive), 1, "one enemy still stands")
+	assert_eq(_hits.size(), 1, "one strike in all")
 
 
 # --- Mending Engine: at the end of each of Lira's turns, for four of them ---

@@ -55,8 +55,11 @@ var inventory: Dictionary = {"consumables": {}, "materials": {}, "key_items": []
 var owned_equipment: Array[Dictionary] = []
 var gold: int = 0
 ## Lira's Arcanite Charges, the pool every battle starts from and spends into;
-## only a rest refills it (abilities.md § Lira; save-system.md § 3.5).
-var arcanite_charges: int = PartyVitals.AC_MAX
+## only a rest refills it (abilities.md § Lira; save-system.md § 3.5). Every
+## write is held to 0..12 here.
+var arcanite_charges: int = PartyVitals.AC_MAX:
+	set(value):
+		arcanite_charges = PartyVitals.clamp_ac(value)
 var playtime: int = 0
 var location_name: String = ""
 ## Player-facing place name for `location_name`'s map, taken from the map's

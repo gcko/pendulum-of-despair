@@ -69,17 +69,16 @@ func build_save_data() -> Dictionary:
 
 
 ## Lira's AC pool as a save records it in crafting.arcanite_charges
-## (save-system.md § 3.5), held to 0..AC_MAX. Every save written before AC
-## could be spent recorded a constant full pool, so a missing or non-numeric
-## value reads as full: the same thing it always meant.
+## (save-system.md § 3.5). Every save written before AC could be spent recorded
+## a constant full pool, so a missing or non-numeric value reads as full: the
+## narrow exception save-system.md § 10 records. PartyState's setter holds the
+## result to 0..AC_MAX.
 static func saved_arcanite_charges(data: Dictionary) -> int:
 	var crafting: Variant = data.get("crafting", {})
 	var ac: Variant = null
 	if crafting is Dictionary:
 		ac = (crafting as Dictionary).get("arcanite_charges")
-	if not (ac is int or ac is float):
-		return PartyVitals.AC_MAX
-	return clampi(int(ac), 0, PartyVitals.AC_MAX)
+	return int(ac) if ac is int or ac is float else PartyVitals.AC_MAX
 
 
 ## The world block written to a save: which map the party is on, where they

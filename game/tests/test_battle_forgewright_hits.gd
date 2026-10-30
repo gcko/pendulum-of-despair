@@ -300,6 +300,21 @@ func test_arc_trap_goes_off_once_only() -> void:
 	assert_eq(_answers(_strike(CAEL, s)), [], "the second attack draws nothing")
 
 
+func test_one_aoe_attack_springs_one_trap_however_many_it_hits() -> void:
+	# An AoE resolves target by target and passes spring_trap false after the
+	# first, so two traps up meet one attack with one trap.
+	_use("arc_trap")
+	_use("arc_trap")
+	seed(3)
+	BattleActions.execute_enemy_physical_ability(_state, _enemy, CAEL)
+	seed(4)
+	var second: Dictionary = BattleActions.execute_enemy_physical_ability(
+		_state, _enemy, MAREN, 1.0, 1, 1.0, false
+	)
+	assert_eq(_answers(second), [], "no trap on the second target")
+	assert_eq(_device_ids(), ["arc_trap"] as Array[String], "one trap left armed")
+
+
 func test_a_sprung_arc_trap_frees_its_slot() -> void:
 	_use("arc_trap")
 	_use("shock_coil")
@@ -437,3 +452,14 @@ func test_an_enemy_strike_s_damage_mult_scales_its_final_damage() -> void:
 		BattleActions.execute_enemy_attack(_state, _enemy, CAEL, 1.0, 1.5)["damage"]
 	)
 	assert_almost_eq(float(scaled), plain * 1.5, 1.0, "x1.5 on %d" % plain)
+
+
+func test_an_enemy_physical_ability_carries_its_damage_mult_to_each_hit() -> void:
+	var s: int = _landing_seed(CAEL)
+	var plain: int = int(_strike(CAEL, s)["damage"])
+	_heal_all()
+	seed(s)
+	var scaled: Dictionary = BattleActions.execute_enemy_physical_ability(
+		_state, _enemy, CAEL, 1.0, 1, 1.5
+	)
+	assert_almost_eq(float(scaled["damage"]), plain * 1.5, 1.0, "x1.5 on %d" % plain)

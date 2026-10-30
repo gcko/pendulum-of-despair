@@ -10,8 +10,8 @@ signal member_died(slot: int)
 signal member_revived(slot: int)
 signal status_applied(slot: int, status_name: String)
 signal status_removed(slot: int, status_name: String)
-## A member's unique-command state changed: a Rally, Bulwark's stance, AP or
-## effects, or Forgewright's devices or AC, landed on or left them.
+## A member's in-force ability or buff state changed: a Rally, Bulwark's stance,
+## AP or effects, Forgewright's devices or AC, or a buff landed on or left them.
 signal ability_state_changed(slot: int)
 
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
@@ -21,7 +21,7 @@ const Bulwark = preload("res://scripts/combat/battle_bulwark.gd")
 const Forgewright = preload("res://scripts/combat/battle_forgewright.gd")
 const Buffs = preload("res://scripts/combat/battle_buffs.gd")
 
-## Modules holding in-force unique-command state (#158), each answering on_damage,
+## Modules holding in-force ability and buff state (#158), each answering on_damage,
 ## on_fainted, on_status, on_turn_begin, on_turn_end and stat_pct (no seam names one).
 const ABILITY_HOOKS: Array = [Rally, Bulwark, Forgewright, Buffs]
 
