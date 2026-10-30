@@ -129,8 +129,8 @@ func _show_ally_hit(target: String, r: Dictionary) -> void:
 ## attacker's ATK/SPD/LCK and row against the ally's DEF/SPD, row and Defend.
 ## Bulkhead cuts it as it cuts an enemy's hit, and a Bulwark stance meets it as
 ## it meets one: Edren absorbs his share, or counts a direct hit on himself. But
-## no counter answers an ally, Riposte or Thornveil (rulings of 2026-10-30).
-## Returns {hit, damage, type},
+## no counter answers an ally, Riposte or Thornveil, and Edren's stance never
+## absorbs his own blow (rulings of 2026-10-30). Returns {hit, damage, type},
 ## plus "absorbed": {slot, damage} when a stance split it. [param mult] scales
 ## its final damage (Berserk).
 static func party_strikes_ally(
@@ -147,6 +147,8 @@ static func party_strikes_ally(
 		reduction.append(1.0 - taken_mult)
 	reduction.append_array(BattleForgewright.reductions(state, target, "physical"))  # Bulkhead
 	var guard: Dictionary = Bulwark.guard_for(state, target, "physical")
+	if int(guard.get("slot", -1)) == slot:
+		guard = {}  # Edren's own blow on the ally he guards lands whole
 	var dmg: int = DamageCalc.calculate_physical(
 		state.get_effective_stat(slot, "atk"),
 		1.0,

@@ -652,3 +652,34 @@ func test_thornveil_never_counters_a_confused_ally() -> void:
 	var state: Node = out[0].get_battle_state()
 	assert_lt(state.get_member(CAEL)["current_hp"], STURDY_HP, "the hit landed")
 	assert_eq(state.get_member(EDREN)["current_hp"], STURDY_HP, "no thorns came back")
+
+
+func test_edren_s_stance_never_absorbs_his_own_confused_blow() -> void:
+	var out: Array = _turn_landing_on(
+		"party_0",
+		"party_1",
+		func(battle: Node) -> void:
+			_edren_confused_among_allies(battle)
+			Bulwark.enter_stance(battle.get_battle_state(), EDREN, "ironwall", CAEL)
+	)
+	if out.is_empty():
+		return
+	var state: Node = out[0].get_battle_state()
+	var to_edren: Array = out[1].filter(func(h: Array) -> bool: return h[0] == "party_0")
+	assert_eq(to_edren, [], "no share split off to Edren")
+	assert_eq(state.get_member(EDREN)["current_hp"], STURDY_HP, "the whole blow is Cael's")
+	assert_eq(int(state.get_member(EDREN).get("ap", 0)), 0, "and Edren earns no AP for it")
+
+
+# --- An auto-attack is a new action, so Defend lapses ---
+
+
+func test_a_defending_member_s_auto_turn_ends_their_defend() -> void:
+	var battle: Node = _boot()
+	var state: Node = battle.get_battle_state()
+	state.set_defending(EDREN, true)
+	state.set_buff(EDREN, "damage_taken_mult", 0.5)
+	state.apply_status(EDREN, "confusion", "turns", 3)
+	_only_turn(battle, "party_0")
+	assert_false(state.get_member(EDREN).get("is_defending", false), "Defend lapsed")
+	assert_eq(state.get_member(EDREN).get("damage_taken_mult", 1.0), 1.0, "and its halving")

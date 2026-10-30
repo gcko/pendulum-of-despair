@@ -165,7 +165,7 @@ func _process(delta: float) -> void:
 			if _battle_resolved or not _battle_active:
 				return
 			if not _state.get_member(slot).get("is_alive", false):
-				continue  # it felled them: their turn ends unprompted
+				break  # it felled them: their turn ends unprompted, and it used the frame (#260)
 			if blocked_by != "":
 				# Paralysis fills the gauge instead, so it does have a turn to
 				# consume: the status counts down on this would-be turn (the

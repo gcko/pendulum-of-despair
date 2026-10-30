@@ -11,9 +11,7 @@ extends RefCounted
 ## unbuilt system, the status is still in the registry but that part is deferred
 ## (tracked on #246):
 ##   - blind (-50% enemy accuracy) — needs enemy-AI hooks (GAP-009).
-##   - despair's -20% damage-dealt needs an attacker-status param in DamageCalc,
-##     and berserk's +50% basic attack damage the same kind of final-damage
-##     multiplier on the attack calls.
+##   - despair's -20% damage-dealt needs an attacker-status param in DamageCalc.
 ## Silence blocks casting on both sides: BattleMagicCommand for the party, and
 ## BattleAI / BossAI for enemies, which skip spell moves (#246). Stop is the one
 ## status counted in real-time seconds rather than turns: see is_realtime().
