@@ -157,12 +157,18 @@ func _resolve(
 		return _for_each_targetable_enemy(
 			func(i: int) -> bool: return _status_on_enemy(slot, spell, i)
 		)
-	if EnemyDebuffs.has_effect(spell) and target_type == "single_enemy":
-		return _debuff_on_enemy(mag, spell, resolved_enemy_target)
-	if EnemyDebuffs.has_effect(spell) and target_type == "all_enemies":
-		return _for_each_targetable_enemy(
-			func(i: int) -> bool: return _debuff_on_enemy(mag, spell, i)
+	if EnemyDebuffs.has_effect(spell) and target_type in ["single_enemy", "all_enemies"]:
+		var took: bool = (
+			_debuff_on_enemy(mag, spell, resolved_enemy_target)
+			if target_type == "single_enemy"
+			else _for_each_targetable_enemy(
+				func(i: int) -> bool: return _debuff_on_enemy(mag, spell, i)
+			)
 		)
+		if not took and bool(spell.get("dispel", false)):
+			# Nothing to strip on any target: said once per cast, not per enemy.
+			_battle.message.emit("No effect!")
+		return took
 	if target_type == "single_enemy" or target_type == "all_enemies":
 		# An offensive spell's status rider (magic.md § Derived Rules); null when none.
 		var rider: Dictionary = {}
@@ -265,17 +271,13 @@ func _magic_on_enemy(
 
 
 ## Land a debuff spell's stat penalty or dispel on enemy [param idx], cast at
-## [param mag]: a missed roll shows as a miss, a dispel with nothing to remove
-## says so. Neither deals damage. Returns whether it took (Weave Gauge).
+## [param mag]: a missed roll shows as a miss. Neither deals damage. Returns
+## whether it took (Weave Gauge); _resolve says when a dispel took nowhere.
 func _debuff_on_enemy(mag: int, spell: Dictionary, idx: int) -> bool:
-	match EnemyDebuffs.land(mag, spell, _battle.get_enemies()[idx]):
-		"missed":
-			_battle.damage_dealt.emit("enemy_%d" % idx, 0, "miss")
-		"no_effect":
-			_battle.message.emit("No effect!")
-		_:
-			return true
-	return false
+	var outcome: String = EnemyDebuffs.land(mag, spell, _battle.get_enemies()[idx])
+	if outcome == "missed":
+		_battle.damage_dealt.emit("enemy_%d" % idx, 0, "miss")
+	return outcome in ["debuffed", "dispelled"]
 
 
 ## Resolve a status spell against a single enemy (GAP-003). Returns true if a
@@ -312,7 +314,8 @@ func _status_on_enemy(caster_slot: int, spell: Dictionary, idx: int) -> bool:
 ## stat debuff or dispel (EnemyDebuffs, #514). One not built yet is refused
 ## before MP is spent, and the Magic menu grays it out: Leymirror, Last Breath,
 ## Drift, Forgeshield, the field-only Waymark, Linewalk and Veilstep, and on the
-## enemy side Crumble, Drag Tide, Spiritsight and Glintmark.
+## enemy side Crumble, Drag Tide, Spiritsight, Glintmark and the enemy-only
+## Drinker of Days.
 static func is_castable_in_battle(spell: Dictionary) -> bool:
 	var turns: Variant = spell.get("duration")
 	for key: String in TIMED_EFFECTS:

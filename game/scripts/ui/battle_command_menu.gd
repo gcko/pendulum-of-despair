@@ -316,8 +316,8 @@ func _confirm_submenu() -> void:
 
 ## Gray out every spell in [param items] the battle would refuse, as an
 ## unaffordable one is grayed ("Spells the character can't afford ... grayed
-## out", ui-design.md § 2.7): an ally-side spell whose battle effect is not built
-## yet (BattleMagicCommand.is_castable_in_battle), and one whose HP cost
+## out", ui-design.md § 2.7): a spell on either side whose battle effect is not
+## built yet (BattleMagicCommand.is_castable_in_battle), and one whose HP cost
 ## [param member] cannot pay (BattleMagicCommand.can_pay_hp, Leydraught).
 static func _gray_uncastable(items: Array[Dictionary], member: Dictionary) -> Array[Dictionary]:
 	for item: Dictionary in items:

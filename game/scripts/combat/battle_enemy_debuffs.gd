@@ -43,15 +43,11 @@ static func land(caster_mag: int, spell: Dictionary, enemy: Node) -> String:
 	return "debuffed"
 
 
-## Strip [param enemy]'s positive effects: its stat buffs above 1x and its
-## positive statuses (Haste), each status through remove_status so the battle
-## hears it end. Returns how many effects went.
+## Strip [param enemy]'s positive effects: its stat buffs above 1x
+## (Enemy.strip_buffs) and its positive statuses (Haste), each status through
+## remove_status so the battle hears it end. Returns how many effects went.
 static func dispel(enemy: Node) -> int:
-	var removed: int = 0
-	for i: int in range(enemy.active_buffs.size() - 1, -1, -1):
-		if float(enemy.active_buffs[i].get("mult", 1.0)) > 1.0:
-			enemy.active_buffs.remove_at(i)
-			removed += 1
+	var removed: int = enemy.strip_buffs()
 	var positive: Array[String] = []
 	for s: Dictionary in enemy.active_statuses:
 		if StatusEffects.is_positive(s.get("name", "")):

@@ -25,6 +25,8 @@ const CommandMenu := preload("res://scripts/ui/battle_command_menu.gd")
 const PROMPT_TIMEOUT: float = 5.0
 ## New-game party: Edren in slot 0 casts.
 const CASTER: int = 0
+## Maren's slot when _boot recruits her behind the new-game pair.
+const MAREN: int = 2
 ## Every pinned enemy stat starts here, so -30% reads as 70.
 const BASE_STAT: int = 100
 
@@ -62,8 +64,12 @@ func after_each() -> void:
 	DataManager.clear_cache()
 
 
-func _boot(encounter: Array = ["ley_vermin"]) -> Node:
+## Boot a battle against [param encounter]; [param with_maren] recruits her
+## into the active party's third slot (MAREN) for the Weave Gauge tests.
+func _boot(encounter: Array = ["ley_vermin"], with_maren: bool = false) -> Node:
 	PartyState.initialize_new_game()
+	if with_maren:
+		PartyState.add_member("maren", 10)
 	GameManager.transition_data = {
 		"return_map_id": "test_overworld",
 		"return_position": Vector2.ZERO,
@@ -78,15 +84,15 @@ func _boot(encounter: Array = ["ley_vermin"]) -> Node:
 	return battle
 
 
-func _await_prompt(battle: Node) -> bool:
+func _await_prompt(battle: Node, caster: int = CASTER) -> bool:
 	var prompted: Array[String] = []
 	battle.turn_ready.connect(
 		func(id: String, _p: bool, _s: int, _e: int, _b: bool, _c: Dictionary) -> void:
 			prompted.append(id)
 	)
-	battle.get_atb().set_gauge("party_%d" % CASTER, ATBSystem.GAUGE_MAX)
+	battle.get_atb().set_gauge("party_%d" % caster, ATBSystem.GAUGE_MAX)
 	var fired: bool = await wait_for_signal(battle.turn_ready, PROMPT_TIMEOUT)
-	if not fired or not "party_%d" % CASTER in prompted:
+	if not fired or not "party_%d" % caster in prompted:
 		fail_test("the battle never asked the caster for a command (asked: %s)" % str(prompted))
 		return false
 	return true
@@ -116,9 +122,9 @@ func _pin_enemies(battle: Node) -> void:
 		enemy.enemy_data = data
 
 
-## Wait for the caster's prompt, then cast [param spell] on enemy [param target].
-func _cast(battle: Node, spell: Dictionary, target: int = 0) -> bool:
-	if not await _await_prompt(battle):
+## Wait for [param caster]'s prompt, then cast [param spell] on enemy [param target].
+func _cast(battle: Node, spell: Dictionary, target: int = 0, caster: int = CASTER) -> bool:
+	if not await _await_prompt(battle, caster):
 		return false
 	battle.get_node("BattleUI").command_submitted.emit(
 		{"type": "magic", "spell": spell, "target": target, "target_enemy": true}
@@ -310,6 +316,60 @@ func test_dispersion_with_nothing_to_strip_is_cast_and_says_so() -> void:
 		return
 	assert_true(said.any(func(t: String) -> bool: return " casts Dispersion!" in t), str(said))
 	assert_has(said, "No effect!", "nothing was there to remove: %s" % str(said))
+
+
+func test_mass_dispersion_with_nothing_to_strip_says_so_once() -> void:
+	var battle: Node = _boot(["ley_vermin", "ley_vermin", "ley_vermin"])
+	_pin_enemies(battle)
+	assert_eq(battle.get_enemies().size(), 3, "precondition: three enemies")
+	var said: Array[String] = _messages(battle)
+	if not await _cast(battle, _spell("ley_line", "mass_dispersion")):
+		return
+	var refusals: Array[String] = said.filter(func(t: String) -> bool: return t == "No effect!")
+	assert_eq(refusals.size(), 1, "one line for the cast, not one per enemy: %s" % str(said))
+
+
+# ── Weave Gauge ──────────────────────────────────────────────────────────
+# A spell that took earns its caster 5 and banks Maren 10 when somebody else
+# cast it (abilities.md § Resource Cost Invariants > 'Weave Gauge derivation').
+# Only Maren holds a gauge, so the caster's +5 is read off a Maren cast.
+
+
+func _weave(battle: Node) -> int:
+	return int(battle.get_battle_state().get_member(MAREN).get("wg", 0))
+
+
+## Boot with Maren, pin the enemies, and cast [param spell] from [param caster].
+func _weave_after(spell: Dictionary, caster: int) -> int:
+	var battle: Node = _boot(["ley_vermin"], true)
+	_pin_enemies(battle)
+	var maren: Dictionary = battle.get_battle_state().get_member(MAREN)
+	assert_eq(String(maren.get("character_id", "")), "maren", "precondition: Maren is in")
+	if not await _cast(battle, spell, 0, caster):
+		return -1
+	return _weave(battle)
+
+
+func test_a_landed_debuff_earns_its_caster_weave_gauge() -> void:
+	var spell: Dictionary = _spell("ley_line", "sunder")
+	spell["hit_rate"] = 100
+	assert_eq(await _weave_after(spell, MAREN), 5, "Maren casts Sunder and it lands")
+
+
+func test_a_landed_debuff_banks_maren_weave_gauge_when_another_casts_it() -> void:
+	var spell: Dictionary = _spell("ley_line", "sunder")
+	spell["hit_rate"] = 100
+	assert_eq(await _weave_after(spell, CASTER), 10, "Edren's Sunder lands")
+
+
+func test_a_missed_debuff_earns_no_weave_gauge() -> void:
+	var spell: Dictionary = _spell("ley_line", "sunder")
+	spell["hit_rate"] = 0
+	assert_eq(await _weave_after(spell, CASTER), 0, "Edren's Sunder misses")
+
+
+func test_a_dispel_with_nothing_to_strip_earns_no_weave_gauge() -> void:
+	assert_eq(await _weave_after(_spell("ley_line", "dispersion"), CASTER), 0, "nothing to strip")
 
 
 # ── Unbuilt enemy-side spells ────────────────────────────────────────────
