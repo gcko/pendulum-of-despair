@@ -389,9 +389,15 @@ unstated. `game/tests/test_spell_balance.gd` asserts all of them against
   spent: Leymirror, Last Breath, Drift and Forgeshield, plus the field-only
   Waymark, Linewalk and Veilstep. Turned on the enemy line, a revival spell
   kills an Undead outright and is refused on a Pallor or a normal foe, as a
-  revival item is ([bestiary/README.md](bestiary/README.md) § Undead), and
-  Kindle Breath is refused until an enemy-side Regen tick exists (2026-10-30
-  rulings).
+  revival item is ([bestiary/README.md](bestiary/README.md) § Undead)
+  (2026-10-30 rulings). Kindle Breath turned on an enemy ticks the way a heal
+  on that enemy lands (#503 ruling): `regen_pct` of its max HP, at least 1, at
+  the end of each of its turns for `duration` turns. It heals a normal foe and
+  earns no Weave Gauge; on an Undead or a Pallor each tick is damage, cut by
+  the caster's Despair, drawing threat for the caster, and the cast earns
+  Weave Gauge. A recast refreshes it, and Dispersion strips it (the Regen row
+  of § Status Effect Reference). Rekindling targets all allies, which never
+  crosses to the enemy line ([ui-design.md](ui-design.md) § 2.6).
 - **Enemy debuff effects in battle (#514).** A debuff aimed at the enemy line
   carries its effect in its own data keys, each valued from its entry above:
   - `stat_debuff: {stat, pct}` lowers one enemy stat (`def`, `mdef` or `mag`)

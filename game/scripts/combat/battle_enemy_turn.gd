@@ -158,6 +158,7 @@ func _tick_enemy_statuses(enemy: Node, idx: int) -> void:
 				_atb.remove_combatant(eid)
 	if enemy.is_alive and enemy.get_type() == "pallor" and _party_despairs():
 		_heal_enemy(enemy, eid, int(max_hp * PALLOR_REGEN_PCT))
+	BattleEnemyHeal.tick_regen(_manager, enemy, idx)  # a Kindle Breath turned on it (#503)
 	enemy.tick_statuses()
 	enemy.tick_buffs()
 
