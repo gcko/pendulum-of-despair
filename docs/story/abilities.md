@@ -212,6 +212,15 @@ Settled on #158 on 2026-10-30; the battle layer is built to these readings.
 - At Favor 3, the spirit's ability transforms into an upgraded version permanently.
 - Favor can decrease by 1 if a spirit is summoned and the battle is fled from (spirits don't appreciate being abandoned).
 
+**Readings (2026-10-30, #158).** How the Favor rules above read in battle. Everything below is a reading posted on #158 except the second bullet, the last sentence of the fourth and the sixth, which are how slice 158e reads the text where it is silent:
+- The three listed conditions are the only harmony. A weakness is matched when at least one living target the spirit hits is weak to its element; Greyveil, which has no element, is in harmony when it hits a Pallor enemy. An ally is protected from death when Thornveil's counter fells its attacker, or when Stoneheart keeps a status off. A heal is in harmony when an ally it heals was below 25% HP.
+- One use of a spirit's ability earns at most 1 Favor, however many of its targets, counters or blocks are in harmony ("increases by 1 when the spirit's ability is used").
+- Convergence Chorus earns no Favor. Rootsong raises every spirit by 1 directly, once per battle, and is not itself a harmony.
+- Favor is kept per spirit in the save (save-system.md § 3.11). A fled battle costs each spirit called in it 1 Favor, once, however often it was called. The Chorus calls the spirits of the components it lands; Rootsong sings to the spirits and calls none.
+- A spirit at Favor 3 is its upgraded form from its next call on, and the battle menu lists it by that name (Deeproot Veil and so on).
+- Thornveil's barrier and Stoneheart's immunity count down on their bearer's turns, one more when cast on Torren's own open turn, as a Rally's copy does. Two of one kind keep the stronger, and a KO ends both. Thornveil counters physical hits only, as its device variant does ("functions identically"); Deeproot Veil's 15% reduction applies to every enemy hit, physical or magic, since "incoming damage" names no kind.
+- Not built yet: Duskbreaker's 60% dispel, because no document says which buffs are "Pallor buffs", and the Pallor-zone corruption and Purify (§ Spirit Communion), which need a Pallor-zone system.
+
 **Sub-Abilities:**
 
 | Ability | Learned | MP Cost | Effect | Favor 3 Upgrade |
@@ -724,7 +733,7 @@ were pinned by nothing: the Chorus's "counter 10% of DEF" and "status immunity,
 1 turn", and Shock Coil's "3 ticks"
 ([#355](https://github.com/gcko/pendulum-of-despair/issues/355)). They are real
 data fields now, and the 50% Chorus rule is asserted across all four components
-rather than the two numeric ones. An offensive ability that inflicts a status on hit (Ember Wing's 40% Burn) uses the spell `rider: {status, chance}` shape from [magic.md](magic.md) § Derived Rules; no ability carries the field yet.
+rather than the two numeric ones. An offensive ability that inflicts a status on hit (Ember Wing's 40% Burn) uses the spell `rider: {status, chance}` shape from [magic.md](magic.md) § Derived Rules; Ember Wing carries it, and Inferno Gale's guaranteed Burn is the `rider` of its `favor3` form, with `guaranteed: true`.
 
 No *number* here is a fresh design choice. Each one falls out of a rule already
 written down somewhere, and the derivation sits next to the value so a reader can
