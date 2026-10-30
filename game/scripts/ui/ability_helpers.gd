@@ -11,6 +11,11 @@ const RESOURCE_LABELS: Dictionary = {
 }
 
 
+## The abilities [param character_id] knows at [param level]. A level-up ability
+## needs its level_learned. A story-gated [S] ability needs its story_event flag
+## and, when it also has a level_learned (its minimum level in abilities.md
+## § Ability Progression Table), that level too (abilities.md § Character
+## Unique Commands > 'Unlock conditions').
 static func get_known_abilities(character_id: String, level: int) -> Array:
 	var all_abilities: Array = DataManager.load_abilities(character_id)
 	var result: Array = []
@@ -23,9 +28,9 @@ static func get_known_abilities(character_id: String, level: int) -> Array:
 			var event: String = a.get("story_event", "")
 			if event == "" or not EventFlags.get_flag(event):
 				continue
-		elif req_level != null and int(req_level) > level:
-			continue
 		elif req_level == null:
+			continue
+		if req_level != null and int(req_level) > level:
 			continue
 		result.append(a)
 	result.sort_custom(_sort_by_level)

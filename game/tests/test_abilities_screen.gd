@@ -72,6 +72,40 @@ func test_story_gated_excluded_without_flag() -> void:
 	assert_does_not_have(names, "Oathkeeper", "story-gated ability should be excluded without flag")
 
 
+## An [S] ability with a level in abilities.md § Ability Progression Table
+## unlocks only once BOTH the level and the story trigger are met
+## (abilities.md § Character Unique Commands > 'Unlock conditions').
+func test_a_story_ability_with_a_minimum_level_needs_both() -> void:
+	# [character, ability, minimum level, story flag]: Misdirect (Interlude:
+	# Sable's journey) and Thornveil Barrier (Act III scene with Torren).
+	for row: Array in [
+		["sable", "misdirect", 14, "interlude_sable_journey"],
+		["lira", "thornveil_barrier", 14, "act_iii_cross_train_torren"],
+	]:
+		var cid: String = row[0]
+		var ability_id: String = row[1]
+		var level: int = row[2]
+		EventFlags.clear_all()
+		assert_does_not_have(_known_ids(cid, level), ability_id, "%s: level, no story" % ability_id)
+		EventFlags.set_flag(row[3], true)
+		assert_does_not_have(
+			_known_ids(cid, level - 1), ability_id, "%s: story, 1 short" % ability_id
+		)
+		assert_has(_known_ids(cid, level), ability_id, "%s: both met" % ability_id)
+
+
+func test_a_story_ability_with_no_level_needs_only_its_story() -> void:
+	# Oathkeeper: [S] with no level in that table, so the story trigger alone teaches it.
+	EventFlags.set_flag("act_iv_caels_sword", true)
+	assert_has(_known_ids("edren", 1), "oathkeeper", "no level gate to meet")
+
+
+func _known_ids(character_id: String, level: int) -> Array:
+	return AbilityHelpers.get_known_abilities(character_id, level).map(
+		func(a: Dictionary) -> String: return a.get("id", "")
+	)
+
+
 func test_unknown_character_returns_empty() -> void:
 	var abilities: Array = AbilityHelpers.get_known_abilities("nonexistent", 99)
 	assert_eq(abilities.size(), 0, "Unknown character should return an empty ability list")

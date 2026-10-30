@@ -62,14 +62,13 @@ func _find_ability(ability_id: String) -> Dictionary:
 # a number without moving its derivation fails here.
 
 
-## Load combos.json directly — DataManager.load_abilities() only reads the
-## "abilities" key, and this file stores its entries under "combos".
+## The combos.json entries. Fails the test rather than checking nothing when the
+## file does not load.
 func _load_combos() -> Array:
-	var data: Variant = DataManager.load_json("res://data/abilities/combos.json")
-	if data is Dictionary and (data as Dictionary).has("combos"):
-		return (data as Dictionary)["combos"]
-	fail_test("combos.json did not load")
-	return []
+	var combos: Array = DataManager.load_combos()
+	if combos.is_empty():
+		fail_test("combos.json did not load")
+	return combos
 
 
 func _find_combo(combo_id: String) -> Dictionary:

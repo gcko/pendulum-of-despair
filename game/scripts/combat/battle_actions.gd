@@ -387,8 +387,9 @@ static func execute_enemy_physical_ability(
 				"damage": int(absorbed.get("damage", 0)) + int(share["damage"]),
 			}
 		ripostes.append_array(r.get("ripostes", []))
-	# Report "critical" if ANY sub-hit crit, not just the last (which could miss).
-	var dtype: String = "critical" if any_crit else "physical"
+	# Report "critical" if ANY sub-hit crit, not just the last (which could miss);
+	# a flurry that lands nothing is a "miss", shown as Miss rather than 0 (#500).
+	var dtype: String = "miss" if landed == 0 else ("critical" if any_crit else "physical")
 	var out: Dictionary = {"hit": landed > 0, "damage": total, "type": dtype, "hits_landed": landed}
 	if not absorbed.is_empty():
 		out["absorbed"] = absorbed

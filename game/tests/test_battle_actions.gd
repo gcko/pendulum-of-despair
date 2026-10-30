@@ -1,6 +1,6 @@
 extends GutTest
-## Tests for BattleActions.apply_status_to_enemy (GAP-003) + status spell data
-## integrity.
+## Tests for BattleActions.apply_status_to_enemy (GAP-003), status spell data
+## integrity, and how an enemy physical attack reports a miss (#500).
 
 const BattleActions = preload("res://scripts/combat/battle_actions.gd")
 const BattleState = preload("res://scripts/combat/battle_state.gd")
@@ -121,3 +121,69 @@ func test_every_status_spell_has_a_status_field() -> void:
 					StatusEffects.is_known(st) or st in DEFERRED_STATUSES,
 					"status spell %s declares unknown status '%s'" % [sid, st]
 				)
+
+
+# --- Enemy physical attacks: a miss reads as a miss (#500) ---
+
+
+## A party of one "tester" with this SPD and HP, and an ATK 40 enemy with this SPD.
+func _duel(target_spd: int, hp: int, enemy_spd: int) -> Array:
+	var state: Node = BattleState.new()
+	add_child_autofree(state)
+	state.add_member(
+		0,
+		{
+			"character_id": "tester",
+			"base_stats": {"def": 5, "spd": target_spd},
+			"max_hp": 99999,
+			"current_hp": hp
+		}
+	)
+	var enemy: Enemy = ENEMY_SCENE.instantiate()
+	add_child_autofree(enemy)
+	enemy.enemy_data = {"atk": 40, "spd": enemy_spd, "type": "humanoid", "hp": 100}
+	enemy.current_hp = 100
+	enemy.is_alive = true
+	return [state, enemy]
+
+
+## The battle UI prints "Miss" for a "miss" result and the damage figure for
+## every other type, so an attack that lands nothing must report "miss" or the
+## party row shows a 0 popup. SPD 1 against SPD 255 lands roughly one hit in
+## seven, so across these seeds some attacks miss with every hit and some land,
+## for a single hit and for a two-hit flurry alike.
+func test_an_enemy_attack_that_misses_every_hit_reports_a_miss() -> void:
+	for hits: int in [1, 2]:
+		var whiffs: int = 0
+		var landings: int = 0
+		for s: int in range(60):
+			seed(s)
+			var duel: Array = _duel(255, 99999, 1)
+			var r: Dictionary = BattleActions.execute_enemy_physical_ability(
+				duel[0], duel[1], 0, 1.0, hits
+			)
+			var tag: String = "hits %d, seed %d" % [hits, s]
+			if int(r.get("hits_landed", -1)) == 0:
+				whiffs += 1
+				assert_eq(r.get("type", ""), "miss", "%s: nothing landed, so it is a Miss" % tag)
+				assert_eq(int(r.get("damage", -1)), 0, "%s: a miss deals nothing" % tag)
+			else:
+				landings += 1
+				assert_has(["physical", "critical"], r.get("type", ""), "%s: a hit landed" % tag)
+		assert_gt(whiffs, 0, "hits %d: some seed must miss, or the miss rule went unchecked" % hits)
+		assert_gt(
+			landings, 0, "hits %d: some seed must land, or the hit rule went unchecked" % hits
+		)
+
+
+## A hit that lands for 0 is a hit, not a miss: the popup shows 0. Unbreakable
+## leaves a member at 1 HP, so on a member already at 1 HP a landed hit applies
+## nothing (abilities.md § Cael — Rally).
+func test_an_enemy_hit_that_lands_for_nothing_is_not_a_miss() -> void:
+	seed(7)
+	var duel: Array = _duel(1, 1, 50)
+	BattleRally.start(duel[0], 0, "unbreakable", {"last_stand": true, "turns": 3})
+	var r: Dictionary = BattleActions.execute_enemy_physical_ability(duel[0], duel[1], 0, 1.0, 1)
+	assert_eq(int(r.get("hits_landed", 0)), 1, "SPD 50 against SPD 1 lands under this seed")
+	assert_eq(int(r.get("damage", -1)), 0, "Unbreakable held the member at 1 HP")
+	assert_has(["physical", "critical"], r.get("type", ""), "it landed, so it is no Miss")
