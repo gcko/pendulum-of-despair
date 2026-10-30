@@ -245,20 +245,23 @@ func _on_ui_command(command: Dictionary) -> void:
 	if not _battle_active:
 		return
 	_awaiting_input_for = ""
-	_end_turn(cmd_slot, command.get("type", ""))
-	if command.get("type", "") == "combo":  # it used the partner's turn as well
-		_end_turn(_get_combos().partner_slot(), "combo")
+	var kind: String = command.get("type", "")
+	var ended: Array[int] = [cmd_slot]
+	if kind == "combo":  # it used the partner's turn as well
+		ended.append(_get_combos().partner_slot())
+	for slot: int in ended:
+		# Clear defending from a PREVIOUS turn — skip if this action IS defend
+		if kind != "defend" and _state.get_member(slot).get("is_defending", false):
+			_state.set_defending(slot, false)
+			_state.set_buff(slot, "damage_taken_mult", 1.0)
+		_end_turn(slot)
 	_check_end_conditions()
 
 
-## Close [param slot]'s turn, spent on a [param command_type] command: clear a
-## Defend from a PREVIOUS turn, reset the gauge, and run the end-of-turn ticks,
+## Close [param slot]'s turn: reset the gauge and run the end-of-turn ticks,
 ## surfacing party-side DoT (Poison/Burn) through damage_dealt so it shows a
 ## floating number, mirroring the enemy-side tick.
-func _end_turn(slot: int, command_type: String) -> void:
-	if command_type != "defend" and _state.get_member(slot).get("is_defending", false):
-		_state.set_defending(slot, false)
-		_state.set_buff(slot, "damage_taken_mult", 1.0)
+func _end_turn(slot: int) -> void:
 	_atb.reset_gauge("party_%d" % slot)
 	_turn_counter += 1
 	emit_party_events(_state.tick_statuses(slot))
