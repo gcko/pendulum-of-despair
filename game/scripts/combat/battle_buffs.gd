@@ -29,6 +29,10 @@ const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 ## The spell_buffs kind for regeneration.
 const REGEN: String = "regen"
 
+## Negative statuses a KO also clears, so a revived member acts normally
+## (2026-10-30 ruling).
+const KO_CLEARED_STATUSES: Array[String] = ["confusion", "berserk"]
+
 
 ## Land a spell buff of [param kind] on [param slot]: [param pct] percent for
 ## [param turns] of the bearer's turns, plus one when the bearer's turn is open
@@ -53,12 +57,14 @@ static func grant(state: Node, slot: int, kind: String, pct: int, turns: int) ->
 	return true
 
 
-## A member fainted: every positive status and spell buff on it ends.
+## A member fainted: every positive status and spell buff on it ends, and so do
+## Confusion and Berserk (KO_CLEARED_STATUSES).
 static func on_fainted(state: Node, slot: int) -> void:
 	var m: Dictionary = state.get_member(slot)
 	for s: Dictionary in (m.get("active_statuses", []) as Array).duplicate():
-		if StatusEffects.is_positive(s.get("name", "")):
-			state.remove_status(slot, s["name"])
+		var status: String = s.get("name", "")
+		if StatusEffects.is_positive(status) or status in KO_CLEARED_STATUSES:
+			state.remove_status(slot, status)
 	if not (m.get("spell_buffs", {}) as Dictionary).is_empty():
 		m["spell_buffs"] = {}
 		state.ability_state_changed.emit(slot)
@@ -76,12 +82,21 @@ static func on_status(_state: Node, _slot: int, _status: String) -> void:
 ## ("Restore 5% max HP per turn", magic.md § Status Effect Reference > 'Regen'),
 ## at least 1 as a Poison tick takes at least 1. Returns heal events in
 ## BattleState's turn-event shape [{slot, dmg, type}].
+##
+## Cael's Second Wind (the Rally's regen_pct in member["active_rally"]) and a
+## spell's Regen are one regen effect, and the stronger applies (2026-10-30
+## ruling). BattleRally comes before this hook in BattleState.ABILITY_HOOKS, so
+## its heal has already landed: an equal or stronger Second Wind leaves the
+## spell's tick nothing to add, and a weaker one leaves it only the rest.
 static func on_turn_begin(state: Node, slot: int) -> Array:
 	var m: Dictionary = state.get_member(slot)
 	var pct: int = int(m.get("spell_buffs", {}).get(REGEN, {}).get("pct", 0))
-	if pct <= 0:
+	var rally_pct: int = int(m.get("active_rally", {}).get("regen_pct", 0))
+	if pct <= rally_pct:
 		return []
-	var healed: int = state.heal(slot, maxi(1, int(m.get("max_hp", 0)) * pct / 100))
+	var max_hp: int = int(m.get("max_hp", 0))
+	var share: int = maxi(1, max_hp * pct / 100) - max_hp * rally_pct / 100
+	var healed: int = state.heal(slot, share)
 	if healed <= 0:
 		return []
 	return [{"slot": slot, "dmg": healed, "type": "heal"}]

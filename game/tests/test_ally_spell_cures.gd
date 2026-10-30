@@ -306,6 +306,25 @@ func test_second_dawn_revives_a_fainted_ally_at_75_percent_hp() -> void:
 	assert_eq(_hp(battle, TARGET), 300, "at 75% of 400")
 
 
+func test_a_revived_ally_is_no_longer_confused_or_berserk() -> void:
+	# 2026-10-30 ruling: a KO clears Confusion and Berserk. The KO here does not
+	# wake (as a Poison tick's does not), so Confusion's own wake-on-damage cure
+	# is not what clears it. Berserk is applied by name: the registry row for it
+	# comes from another branch.
+	var battle: Node = _boot()
+	if not await _await_prompt(battle):
+		return
+	var state: Node = battle.get_battle_state()
+	_afflict(battle, ["confusion", "berserk"])
+	state.take_damage(TARGET, 99999, false)
+	assert_false(state.get_member(TARGET)["is_alive"], "precondition: the target has fainted")
+
+	_submit(battle, _spell("spirit", "spirit_recall"), TARGET)
+
+	assert_true(state.get_member(TARGET)["is_alive"], "precondition: revived")
+	assert_eq(_status_names(battle, TARGET), [] as Array[String], "neither is left")
+
+
 func test_a_revive_on_a_living_ally_is_refused_before_mp() -> void:
 	var battle: Node = _boot()
 	var said: Array[String] = _messages(battle)

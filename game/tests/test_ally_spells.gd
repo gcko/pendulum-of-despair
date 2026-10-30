@@ -16,6 +16,8 @@ extends GutTest
 
 const BATTLE: PackedScene = preload("res://scenes/core/battle.tscn")
 const ATBSystem = preload("res://scripts/combat/atb_system.gd")
+const BattleRally = preload("res://scripts/combat/battle_rally.gd")
+const BattleAbilityCommand = preload("res://scripts/combat/battle_ability_command.gd")
 
 const PROMPT_TIMEOUT: float = 5.0
 ## New-game party: Edren in slot 0 casts, Cael in slot 1 is cast on.
@@ -381,6 +383,36 @@ func test_regeneration_ends_when_its_bearer_faints() -> void:
 	state.heal(TARGET, 10, true)
 	_take_turn(state, TARGET)
 	assert_eq(_hp(battle, TARGET), 10, "the KO ended the regeneration")
+
+
+## Cast [param spell] on the target at 100/1000 HP under Cael's Second Wind
+## (5% regen, abilities.md § Cael — Rally), take one of its turns, and return
+## its HP. Cael, in slot 1, is the Rally's caster and the target.
+func _regen_under_second_wind(spell: Dictionary) -> int:
+	var battle: Node = _boot()
+	if not await _cast(battle, spell):
+		return -1
+	var state: Node = battle.get_battle_state()
+	BattleRally.start(
+		state, TARGET, "second_wind", BattleAbilityCommand.RALLY_EFFECTS["second_wind"]
+	)
+	_pin_hp(battle, TARGET, 1000, 100)
+	_take_turn(state, TARGET)
+	return _hp(battle, TARGET)
+
+
+func test_second_wind_and_an_equal_spell_regen_do_not_stack() -> void:
+	# 2026-10-30 ruling: they are one regen effect and the stronger applies.
+	var hp: int = await _regen_under_second_wind(_spell("spirit", "kindle_breath"))
+	assert_eq(hp, 150, "5% from one of them, not 10% from both")
+
+
+func test_a_stronger_spell_regen_applies_over_second_wind_without_stacking() -> void:
+	# No shipped Regen is stronger than 5%; this one is, to pin the other side.
+	var spell: Dictionary = _spell("spirit", "kindle_breath")
+	spell["regen_pct"] = 10
+	var hp: int = await _regen_under_second_wind(spell)
+	assert_eq(hp, 200, "the spell's 10%, not 10% plus Second Wind's 5%")
 
 
 func test_kindle_breath_turned_on_an_enemy_is_refused_before_mp() -> void:
