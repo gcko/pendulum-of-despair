@@ -165,6 +165,18 @@ these readings.
 
 **Pallor-zone action:** Calibrate (0 AC, targets one active device, removes malfunction chance for remaining duration). Available only in Pallor-corrupted zones.
 
+**Forgewright rulings ([#158](https://github.com/gcko/pendulum-of-despair/issues/158)).**
+Settled on #158 on 2026-10-30; the battle layer is built to these readings.
+
+- *Device turns are Lira's.* "Persists 3 turns" means three of Lira's turns
+  after the one she deploys it on. Shock Coil strikes as each of those turns
+  begins; Mending Engine heals as each of them ends.
+- *Arc Trap.* It goes off on any enemy's physical attack, whatever that attack
+  targets, and is then spent. Until then it holds one of the two device slots.
+- *Deferred.* Arcanite Colossus, Cael's Edge and Calibrate are a later slice of
+  #158 (Cael's Edge and Calibrate are story-scripted). Lira's battle menu lists
+  them, unusable, until then.
+
 **Synergies:**
 - Lira + Maren: Maren's Resonance extends the next device Lira deploys by 1 turn.
 - Lira + Sable: Sable can steal Arcanite Shards from Carradan-type enemies, feeding Lira's resource pool.

@@ -44,7 +44,7 @@ in these docs.**
 | Game overview | `gdd-overview.md` (270), `outline.md` (371), `world.md` (79) |
 | Combat mechanics | `combat-formulas.md` (1,088) |
 | Character stats/growth | `progression.md` (511), `characters.md` (220) |
-| Abilities & magic | `abilities.md` (1,103), `magic.md` (1,702) |
+| Abilities & magic | `abilities.md` (1,115), `magic.md` (1,702) |
 | Enemy data | `bestiary/` (10 files) |
 | Items & equipment | `items.md` (724), `equipment.md` (735) |
 | Economy & shops | `economy.md` (965) |
@@ -52,7 +52,7 @@ in these docs.**
 | Encounters | `dungeons-world.md` (5,352), `dungeons-city.md` (1,489), `combat-formulas.md` |
 | Dialogue | `dialogue-system.md` (639), `script/` (9 files) |
 | UI & menus | `ui-design.md` (1,252) |
-| Save/load | `save-system.md` (622) |
+| Save/load | `save-system.md` (629) |
 | Audio | `audio.md` (323), `music.md` (528) |
 | Overworld & maps | `overworld.md` (512), `geography.md` (718), `locations.md` (1,244), `biomes.md` (999) |
 | Dungeons | `dungeons-world.md` (5,352), `dungeons-city.md` (1,489) |

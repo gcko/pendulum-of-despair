@@ -188,6 +188,13 @@ crafting: {
 }
 ```
 
+`arcanite_charges` is the pool Lira's battles start from and spend into, so AC
+spent in one battle stays spent until a rest (§ 4) refills it. The load holds it
+to 0-12. Every save has carried the field since the format began, written as a
+constant 12 while AC could not yet be spent, so reading it back needed no
+migration: an existing save holds exactly the full pool it always meant, and a
+save missing the field loads with a full pool for the same reason.
+
 ### 3.6 ley_crystals
 
 Crystal collection and progression. Assignment to characters is stored
