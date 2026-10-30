@@ -3,7 +3,7 @@ extends GutTest
 ## battle scene the way a player calls it: Maren is prompted, Torren's gauge is
 ## full beside hers, and the battle UI submits the Combo command.
 ##
-## abilities.md § Combo List: Maren + Torren, 18 MP (10/8), "(Maren's Magic +
+## abilities.md § Combo List, row 7: Maren + Torren, 18 MP (10/8), "(Maren's Magic +
 ## Torren's Magic) x 4. Ignores Magic Defense. Generates 30 WG for Maren."
 ## Readings for 176b (#176, abilities.md § 2): a combo uses both characters'
 ## turns, so both gauges reset and each one's start-of-turn effects and
