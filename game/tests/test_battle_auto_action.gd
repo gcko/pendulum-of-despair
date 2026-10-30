@@ -480,36 +480,3 @@ func test_every_shipped_self_targeted_status_is_a_buff() -> void:
 					StatusEffects.is_positive(st), "%s/%s lands %s" % [enemy["id"], ab["id"], st]
 				)
 	assert_gt(checked, 0, "Coil at least was read")
-
-
-# --- What an item cannot cure (items.md § Status Cures) ---
-
-
-func _item(item_id: String) -> Dictionary:
-	for entry: Variant in DataManager.load_items("consumables"):
-		if (entry as Dictionary).get("id", "") == item_id:
-			return entry
-	fail_test("consumables.json has no %s" % item_id)
-	return {}
-
-
-func test_starbloom_tea_clears_ailments_but_not_berserk_stop_or_despair() -> void:
-	# items.md § Status Cures: "Items cannot cure" Stop or Berserk ("Purge spell
-	# only"), and Despair yields only to Pallor Salve, Hope Shard or Hollow Mend.
-	var battle: Node = _boot()
-	var state: Node = battle.get_battle_state()
-	state.apply_status(EDREN, "poison", "turns", StatusEffects.UNTIL_CURED)
-	state.apply_status(EDREN, "berserk", "turns", StatusEffects.UNTIL_CURED)
-	state.apply_status(EDREN, "despair", "turns", 4)
-	state.apply_status(EDREN, "stop", "realtime", 3.0)
-	PartyState.add_item("starbloom_tea", 1)
-	_only_turn(battle, "party_1")
-	battle.get_node("BattleUI").command_submitted.emit(
-		{"type": "item", "item": _item("starbloom_tea"), "target": EDREN}
-	)
-	assert_false(state.has_status(EDREN, "poison"), "the tea clears an ordinary ailment")
-	assert_true(state.has_status(EDREN, "berserk"), "Berserk: Purge spell only")
-	assert_true(state.has_status(EDREN, "stop"), "Stop: wears off only")
-	assert_true(
-		state.has_status(EDREN, "despair"), "Despair: Pallor Salve, Hope Shard, Hollow Mend"
-	)

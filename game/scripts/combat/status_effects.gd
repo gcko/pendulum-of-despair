@@ -25,7 +25,7 @@ const UNTIL_CURED: int = -1
 
 ## status_name -> rule. Omitted keys fall back to defaults via the accessors
 ## below: atb "none", atb_mult 1.0, tick_pct 0.0, wake_on_damage false,
-## positive false.
+## positive false, item_proof false.
 ## atb is "none" | "frozen" | "mod"; tick_pct is fraction of MAX HP lost at the
 ## end of the bearer's turn. Sources are cited per status.
 const RULES: Dictionary = {
@@ -62,7 +62,7 @@ const RULES: Dictionary = {
 	# Despair: ATB fill x0.75 for 4 turns (combat-formulas.md
 	# § Fill Rate Modifiers + § Status Effect ATB Interactions). The
 	# -20% damage-dealt half is deferred (needs an attacker-status param).
-	"despair": {"atb": "mod", "atb_mult": 0.75, "duration": 4},
+	"despair": {"atb": "mod", "atb_mult": 0.75, "duration": 4, "item_proof": true},
 	# Silence: cannot cast, 4 turns (magic.md § Status Effect Reference > 'Silence').
 	# Enforced by the caster's side, not here (see the scope note above).
 	"silence": {"duration": 4},
@@ -75,7 +75,7 @@ const RULES: Dictionary = {
 	# Stop: gauge "Frozen at current value", cannot act, "3 real-time seconds"
 	# counted only while battle time runs (combat-formulas.md § Status Effect ATB
 	# Interactions; magic.md § Stillwatch). Its duration is SECONDS, not turns.
-	"stop": {"atb": "frozen", "duration": 3, "realtime": true},
+	"stop": {"atb": "frozen", "duration": 3, "realtime": true, "item_proof": true},
 	# Haste (Quickstep): ATB fill x1.5 for 5 turns (combat-formulas.md
 	# § Fill Rate Modifiers + § Status Effect ATB Interactions). A positive
 	# status (magic.md § Status Effect Reference): a KO ends it, a cure-all keeps it.
@@ -83,7 +83,7 @@ const RULES: Dictionary = {
 	# Berserk: ATB fill x1.25, until cured, Purge its only cure (combat-formulas.md
 	# § Fill Rate Modifiers + § Status Effect ATB Interactions; magic.md § Status
 	# Effect Reference > 'Berserk'). Its auto-attack is BattleAutoAction's.
-	"berserk": {"atb": "mod", "atb_mult": 1.25, "duration": UNTIL_CURED},
+	"berserk": {"atb": "mod", "atb_mult": 1.25, "duration": UNTIL_CURED, "item_proof": true},
 }
 
 ## Player-facing adjective for an ACTION-DENIAL announcement ("paralysis" ->
@@ -149,6 +149,14 @@ static func removes_from_combat(status: String) -> bool:
 ## statuses leaves it alone.
 static func is_positive(status: String) -> bool:
 	return RULES.get(status, {}).get("positive", false)
+
+
+## Whether a clear-all item (Starbloom Tea) leaves this ailment on (items.md
+## § Status Cures): Stop wears off only and Berserk yields only to the Purge
+## spell, while Despair yields only to the items that name it in their own
+## cures (Pallor Salve, Pallor Antidote, Hope Shard) or to Hollow Mend.
+static func is_item_proof(status: String) -> bool:
+	return RULES.get(status, {}).get("item_proof", false)
 
 
 ## Whether the registry knows this status, so a spell can land it.

@@ -14,12 +14,6 @@ const LIVING_TARGET_EFFECTS: Array[String] = [
 	"restore_mp", "restore_hp_mp", "cure_status", "buff_atk", "buff_mag"
 ]
 
-## Ailments no item clears, so an item that "clears status ailments" leaves
-## them on (items.md § Status Cures): Stop wears off only, Berserk yields only
-## to the Purge spell, and Despair only to Pallor Salve, Hope Shard or Hollow
-## Mend. The items that do cure Despair name it in their own `cures` list.
-const ITEM_PROOF_STATUSES: Array[String] = ["stop", "berserk", "despair"]
-
 var _battle: Node
 
 
@@ -54,8 +48,8 @@ func do_item(command: Dictionary) -> bool:
 				if not _revive(item, target_slot):
 					return false
 			"restore_mp":
-				_battle.message.emit("Used %s!" % item.get("name", "Item"))
-				_restore_mp(item, target_slot)
+				if not _restore_mp(item, target_slot):
+					return false
 			"restore_hp_mp":
 				_battle.message.emit("Used %s!" % item.get("name", "Item"))
 				_restore_hp_mp(item, target_type, target_slot)
@@ -63,9 +57,8 @@ func do_item(command: Dictionary) -> bool:
 				if not _fixed_damage(item, command):
 					return false
 			"cure_status":
-				_battle.message.emit("Used %s!" % item.get("name", "Item"))
-				for sname: String in item.get("cures", []):
-					state.remove_status(target_slot, sname)
+				if not _cure(item, target_slot):
+					return false
 			"buff_atk":
 				_battle.message.emit("Used %s!" % item.get("name", "Item"))
 				var raw_atk: Variant = item.get("value")
@@ -131,15 +124,37 @@ func _revive(item: Dictionary, target_slot: int) -> bool:
 	return true
 
 
-func _restore_mp(item: Dictionary, target_slot: int) -> void:
+## Lift every status [param item] cures from [param target_slot]. Returns false,
+## spending nothing, when the target has none of them: a no-op item is refused,
+## not consumed (items.md § Battle Utility).
+func _cure(item: Dictionary, target_slot: int) -> bool:
+	var state: Node = _battle.get_battle_state()
+	var cures: Array = item.get("cures", [])
+	if not cures.any(func(sname: String) -> bool: return state.has_status(target_slot, sname)):
+		_battle.message.emit("No effect!")
+		return false
+	_battle.message.emit("Used %s!" % item.get("name", "Item"))
+	for sname: String in cures:
+		state.remove_status(target_slot, sname)
+	return true
+
+
+## Restore MP to [param target_slot]. Returns false, spending nothing, when its
+## MP is already full (items.md § Battle Utility: a no-op item is refused).
+func _restore_mp(item: Dictionary, target_slot: int) -> bool:
 	var state: Node = _battle.get_battle_state()
 	var mp_tgt: Dictionary = state.get_member(target_slot)
+	if int(mp_tgt.get("current_mp", 0)) >= int(mp_tgt.get("max_mp", 0)):
+		_battle.message.emit("No effect!")
+		return false
+	_battle.message.emit("Used %s!" % item.get("name", "Item"))
 	var raw_mp: Variant = item.get("value")
 	var mp_amt: int = int(raw_mp) if raw_mp != null else 0
 	if item.has("restore_percent"):
 		var pct: int = item.get("restore_percent", 100)
 		mp_amt = int(float(mp_tgt.get("max_mp", 1)) * float(pct) / 100.0)
 	state.restore_mp(target_slot, mp_amt)
+	return true
 
 
 func _restore_hp_mp(item: Dictionary, target_type: String, target_slot: int) -> void:
@@ -240,12 +255,12 @@ func _hp_amount(item: Dictionary, target: Dictionary) -> int:
 
 ## Strip every ailment an item can cure from a slot, walking backwards so
 ## removal cannot skip one. Positive statuses (Haste) are buffs, not something
-## to cure, and stay; so does every ITEM_PROOF_STATUSES ailment.
+## to cure, and stay; so does every item-proof ailment (StatusEffects.is_item_proof).
 func _clear_statuses(slot: int, member: Dictionary) -> void:
 	var statuses: Array = member.get("active_statuses", [])
 	for i: int in range(statuses.size() - 1, -1, -1):
 		var status: String = statuses[i].get("name", "")
-		if not StatusEffects.is_positive(status) and status not in ITEM_PROOF_STATUSES:
+		if not StatusEffects.is_positive(status) and not StatusEffects.is_item_proof(status):
 			_battle.get_battle_state().remove_status(slot, status)
 
 
