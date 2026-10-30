@@ -366,6 +366,19 @@ unstated. `game/tests/test_spell_balance.gd` asserts all of them against
     (2026-10-30 ruling).
   - `revive_pct` revives a Fainted ally (target `fainted_ally`) at that
     percent of max HP: Spirit Recall 25, Second Dawn 75.
+  - `magic_absorb_base` is Forgeshield's ward on one ally: the next enemy
+    spell that lands on the bearer loses up to that plus the caster's MAG,
+    read when the ward is cast (Forgeshield 150). The ward then shatters,
+    whether the spell was under that threshold or over it, and the rest of a
+    spell over it lands (a reading of "up to a threshold"). A physical blow
+    and a missed spell leave it up, and so does a Poison or Burn tick, which
+    is not directed at the bearer. A spell aimed at the whole party meets each
+    member's own ward. Under Edren's stance the split comes first: Edren takes
+    his share in full, and the ward meets only the bearer's share. A spell on
+    Edren himself while he holds a stance still counts toward his stance's
+    absorbed total even when his own ward takes all of it. Like a stat buff, a
+    weaker recast leaves a stronger ward up and an equal or stronger one
+    replaces it (a reading).
   - `mp_restore_pct` restores that percent of the target's max MP
     (Leydraught 20).
   - `hp_cost_pct` is paid by the caster as that percent of its own max HP,
@@ -386,8 +399,11 @@ unstated. `game/tests/test_spell_balance.gd` asserts all of them against
   A timed effect (`stat_buff`, `regen_pct`) needs a `duration` of at least one
   turn. A party-side spell with none of these keys, no heal power and no
   registry `status` has no battle effect yet and is refused before any MP is
-  spent: Leymirror, Last Breath, Drift and Forgeshield, plus the field-only
-  Waymark, Linewalk and Veilstep. Turned on the enemy line, a revival spell
+  spent: Leymirror, Last Breath and Drift, plus the field-only Waymark,
+  Linewalk and Veilstep. Last Breath waits on a revive that settles once the
+  felling action has resolved, since one that stands the member up inside the
+  blow lets the rest of that action (a rider, the remaining hits of a flurry,
+  the next damage tick) land on them. Turned on the enemy line, a revival spell
   kills an Undead outright and is refused on a Pallor or a normal foe, as a
   revival item is ([bestiary/README.md](bestiary/README.md) § Undead)
   (2026-10-30 rulings). Kindle Breath turned on an enemy ticks the way a heal
@@ -415,11 +431,29 @@ unstated. `game/tests/test_spell_balance.gd` asserts all of them against
   - `dispel: true` (Dispersion, Mass Dispersion) always lands and removes every
     positive effect the enemy carries: its stat buffs and its positive statuses
     (Haste). A debuff the party laid stays on it (§ Status Effect Reference).
+  - `damage_taken_pct` marks the enemy: Glintmark 10, for 3 of the enemy's
+    turns. It has no hit rate and always lands, and a recast refreshes it. Its
+    +10% multiplies final damage, at step 6 of a physical blow and step 5 of a
+    spell ([combat-formulas.md](combat-formulas.md) § Combat Resolution
+    Order). It is the party's mark, so Dispersion leaves it on, as its row's
+    "Wears off" says. It raises damage taken and not healing: a spell or blow
+    of an element the enemy absorbs heals it as much marked as unmarked
+    (orchestrator reading, #514). Despair, which is on the attacker, cuts that
+    heal all the same. The mark reaches an Attack (a confused or berserk
+    member's too), a Riposte, a Trick, a spell, a confused or berserk enemy's
+    blow, a Drake Fang's fixed damage (which Despair leaves alone), and a heal
+    or Regen turned to damage on an Undead or a Pallor. It does not yet reach
+    the rest of "all sources": Lira's Forgewright devices (Shock Coil, Arc
+    Trap, Thornveil), Edren's Shatter Guard, Torren's Spiritcall (Greyveil,
+    the thorn barrier), and a Poison or Burn tick.
+    Glintmark's other half, revealing an enemy's hidden and steal-able items,
+    is not built either, any more than Spiritsight's scan is.
 
-  A `stat_debuff` needs a `duration` of at least one turn. An enemy-side spell
-  with no damage `power`, no registry `status` on a `status` spell and neither
-  key has no battle effect yet and is refused before any MP is spent: Crumble,
-  Spiritsight and Glintmark, and the enemy-only Drinker of Days.
+  A `stat_debuff` or a mark needs a `duration` of at least one turn. An
+  enemy-side spell with no damage `power`, no registry `status` on a `status`
+  spell and none of these keys has no battle effect yet and is refused before
+  any MP is spent: Crumble and Spiritsight, and the enemy-only Drinker of
+  Days.
 
 ---
 

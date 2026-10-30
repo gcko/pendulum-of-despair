@@ -142,7 +142,8 @@
 					"character": "lira",
 					"level": 14
 				}
-			]
+			],
+			"magic_absorb_base": 150
 		}
 	]
 }

@@ -114,18 +114,17 @@ static func enemy_aoe_on_death_ability(enemy: Node) -> Dictionary:
 	return {}
 
 
-## Fire an aoe_on_death ability against the whole living party when its bearer
-## dies. Resolves through execute_enemy_magic (non-elemental by default; element
-## is cosmetic until party resistances exist). Returns per-slot
-## [{slot, damage, type}], plus Edren's "absorbed" share where a stance took
-## one, so the battle layer can emit damage signals.
+## Fire an aoe_on_death ability at every member on the field (a statue is not:
+## BattleStatusGuard.on_field) when its bearer dies. Resolves through
+## execute_enemy_magic (non-elemental by default; element is cosmetic until
+## party resistances exist). Returns per-slot [{slot, damage, type}], plus
+## Edren's "absorbed" share where a stance took one, for the damage signals.
 static func execute_aoe_on_death(state: Node, enemy: Node, ability: Dictionary) -> Array:
 	var results: Array = []
 	var element: String = ability.get("element", "")
 	var power: int = int(ability.get("spell_power", ability.get("power", 0)))
 	for i: int in range(4):
-		var m: Dictionary = state.get_member(i)
-		if m.is_empty() or not m.get("is_alive", false):
+		if not BattleStatusGuard.on_field(state.get_member(i)):
 			continue
 		var r: Dictionary = execute_enemy_magic(state, enemy, i, element, power)
 		var entry: Dictionary = {
@@ -219,9 +218,9 @@ static func apply_magic_to_enemy(
 	var element_mod: float = enemy.get_element_multiplier(element)
 	# Enemy type-element bonus stacks multiplicatively with weakness (GAP-008).
 	var interaction: float = ModifierAggregator.type_element_multiplier(enemy.get_type(), element)
-	var despair: Array = [BattleDamageMods.dealt_mult(state.get_member(caster_slot))]
+	var mults: Array = BattleDamageMods.spell_mults(state.get_member(caster_slot), enemy, element)
 	var dmg: int = DamageCalc.calculate_magic(
-		mag, power, target_mdef, element_mod, interaction, despair, []
+		mag, power, target_mdef, element_mod, interaction, mults, []
 	)
 	if element_mod == 0.0:
 		return {"hit": true, "damage": 0, "type": "immune"}
@@ -262,14 +261,14 @@ static func execute_enemy_magic(
 	return _land_on_party(state, target_slot, dmg, reduction, guard, "magic", enemy)
 
 
-## Land [param enemy]'s hit of [param dmg] on [param slot]. Unguarded,
-## [param dmg] already carries the member's reductions. Met by a Bulwark stance
-## (BattleBulwark.guard_for) it is the hit before them, and BattleBulwark.split
-## divides it: the member takes the rest, Edren absorbs his share, reported as
-## "absorbed": {slot, damage}. A hit on Edren himself in a stance counts as
-## absorbed but splits nothing off. If he then counters (Riposte), the counter
-## is in "ripostes": [{slot, hit, damage, type, killed}], and a landed counter
-## earns him 1 AP.
+## Land [param enemy]'s hit of [param dmg] on [param slot] through take_blow,
+## where a spell meets a Forgeshield (BattleDamageMods). Unguarded, [param dmg]
+## carries the member's reductions. Met by a Bulwark stance (guard_for) it is
+## the hit before them, and BattleBulwark.split divides it: the member takes the
+## rest, Edren absorbs his share, reported as "absorbed": {slot, damage}. A hit
+## on Edren himself in a stance counts as absorbed but splits nothing off. If he
+## counters (Riposte), the counter is in "ripostes": [{slot, hit, damage, type,
+## killed}], and a landed counter earns him 1 AP.
 static func _land_on_party(
 	state: Node,
 	slot: int,
@@ -280,16 +279,16 @@ static func _land_on_party(
 	enemy: Node
 ) -> Dictionary:
 	if guard.is_empty():
-		dmg = state.take_damage(slot, dmg)  # after Unbreakable, as applied
+		dmg = BattleDamageMods.take_blow(state, slot, dmg, dtype)  # as applied
 		return {"hit": true, "damage": dmg, "type": dtype}
 	var shares: Dictionary = Bulwark.split(dmg, reduction, guard)
 	var edren: int = int(guard["slot"])
 	var out: Dictionary = {"hit": true, "type": dtype}
 	if edren == slot:  # a direct hit: counted before it lands, as a share is
 		Bulwark.count_absorbed(state, edren, int(shares["damage"]), dmg)
-		out["damage"] = state.take_damage(slot, int(shares["damage"]))
+		out["damage"] = BattleDamageMods.take_blow(state, slot, int(shares["damage"]), dtype)
 	else:
-		out["damage"] = state.take_damage(slot, int(shares["damage"]))
+		out["damage"] = BattleDamageMods.take_blow(state, slot, int(shares["damage"]), dtype)
 		var taken: int = Bulwark.absorb(state, guard, int(shares["absorbed"]), dmg)
 		out["absorbed"] = {"slot": edren, "damage": taken}
 	if enemy.is_alive and Bulwark.take_riposte(state, edren):

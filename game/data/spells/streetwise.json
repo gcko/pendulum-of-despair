@@ -39,7 +39,8 @@
 					"character": "sable",
 					"level": 5
 				}
-			]
+			],
+			"damage_taken_pct": 10
 		}
 	]
 }
