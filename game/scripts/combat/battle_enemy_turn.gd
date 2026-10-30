@@ -54,6 +54,10 @@ func execute(enemy_id: String, enemies: Array[Node], is_boss: bool, turn_counter
 			_manager.message.emit("%s is %s and can't move!" % [enemy.get_display_name(), adj])
 			_tick_enemy_statuses(enemy, idx)
 		return turn_counter
+	var auto: String = BattleAutoAction.driving_status(enemy.active_statuses)
+	if not auto.is_empty():
+		_auto_turn(auto, enemy, enemies, idx)
+		return turn_counter + 1
 	var pm: Array = range(4).map(func(i: int) -> Dictionary: return _state.get_member(i))
 	var pr: Array = pm.map(
 		func(m: Dictionary) -> String:
@@ -75,6 +79,24 @@ func _select_action(
 	if BossAI.has_script(enemy.enemy_data):
 		return BossAI.select_action(enemy, turn_counter, _state, enemies)
 	return BattleAI.select_action(enemy.enemy_data, pm, pr, enemy.has_status("silence"))
+
+
+## Confusion or Berserk makes the enemy's basic attack for it, at the target
+## BattleAutoAction picks (#246): on a party member, the very attack its AI
+## would make; on another enemy, BattleAutoAction's enemy-on-enemy blow. A full
+## turn either way, so its statuses tick and Confusion's 3 turns run out.
+func _auto_turn(status: String, enemy: Node, enemies: Array[Node], idx: int) -> void:
+	var target: String = BattleAutoAction.pick_target(status, "enemy_%d" % idx, _state, enemies)
+	if target.begins_with("party_"):
+		var slot: int = target.replace("party_", "").to_int()
+		var mult: float = BattleAutoAction.damage_mult(enemy.active_statuses)  # Berserk
+		_apply_action(
+			{"type": "attack", "target_slot": slot, "damage_mult": mult}, enemy, enemies, idx
+		)
+		return
+	if target.begins_with("enemy_"):
+		BattleAutoAction.enemy_hits_enemy(_manager, _atb, enemy, enemies, target)
+	_tick_enemy_statuses(enemy, idx)
 
 
 func _apply_action(action: Dictionary, enemy: Node, enemies: Array[Node], idx: int) -> void:
@@ -158,12 +180,20 @@ func _party_despairs() -> bool:
 	return false
 
 
-## Resolve a self-targeted ability (GAP-024): apply its stat buff. scope "pack"
-## buffs every living enemy of the caster's own kind (same enemy id — Pack Howl
-## across all Wayward Wolves, palette-families.md § Wolf Family); "self" buffs
-## only the caster.
+## Resolve a self-targeted ability (GAP-024): land its status on the caster,
+## without a roll (Coil's Haste, #506), or apply its stat buff. Only a positive
+## status may land this way; an ailment or an unknown name is a data error,
+## reported and not applied. scope "pack" buffs every living enemy of the
+## caster's own kind (same enemy id — Pack Howl across all Wayward Wolves,
+## palette-families.md § Wolf Family); "self" buffs only the caster.
 func _do_self_ability(action: Dictionary, enemy: Node, enemies: Array[Node]) -> void:
 	_manager.message.emit("%s uses %s!" % [enemy.get_display_name(), action.get("id", "")])
+	var status_name: String = action.get("status", "")
+	if StatusEffects.is_positive(status_name):
+		var explicit: Variant = action.get("status_duration")
+		enemy.apply_status(status_name, StatusEffects.resolve_duration(status_name, explicit))
+	elif not status_name.is_empty():
+		push_error("BattleEnemyTurn: self ability lands '%s', not a buff" % status_name)
 	var buff: Dictionary = action.get("buff", {})
 	if buff.is_empty():
 		return
@@ -253,27 +283,18 @@ func _resolve_attack_or_ability(action: Dictionary, enemy: Node, idx: int) -> vo
 	var atype: String = action.get("type", "")
 	var elem: String = action.get("element", "")
 	if action.get("target", "") == "all":
-		(
-			_manager
-			. message
-			. emit(
-				(
-					"%s uses %s!"
-					% [
-						enemy.get_display_name(),
-						action.get("id", "ability"),
-					]
-				)
-			)
-		)
+		var move: String = action.get("id", "ability")
+		_manager.message.emit("%s uses %s!" % [enemy.get_display_name(), move])
 		var status_name: String = action.get("status", "")
+		var first: bool = true  # one Arc Trap per attack, on its first target
 		for i: int in range(4):
 			if not enemy.is_alive:  # a Riposte felled it: the rest of the AoE never lands
 				break
 			var m: Dictionary = _state.get_member(i)
 			if m.is_empty() or not m.get("is_alive", false):
 				continue
-			var result: Dictionary = _resolve_offensive(action, enemy, i, elem)
+			var result: Dictionary = _resolve_offensive(action, enemy, i, elem, first)
+			first = false
 			_emit_hit(i, result, idx)
 			if not status_name.is_empty() and result.get("hit", false):
 				(
@@ -310,6 +331,7 @@ func _resolve_attack_or_ability(action: Dictionary, enemy: Node, idx: int) -> vo
 					tgt,
 					float(action.get("ability_mult", 1.0)),
 					int(action.get("hits", 1)),
+					float(action.get("damage_mult", 1.0)),
 				)
 			)
 		_emit_hit(tgt, result, idx)
@@ -346,7 +368,8 @@ func _emit_hit(slot: int, result: Dictionary, idx: int) -> void:
 		)
 	var eid: String = "enemy_%d" % idx
 	for counter: Dictionary in result.get("ripostes", []):
-		_state.add_threat(int(counter["slot"]), int(counter.get("damage", 0)))  # GAP-009
+		if BattlePlayerActions.dealt_damage(counter):  # healing it earns no threat
+			_state.add_threat(int(counter["slot"]), int(counter.get("damage", 0)))  # GAP-009
 		_manager.damage_dealt.emit(eid, int(counter.get("damage", 0)), counter.get("type", "miss"))
 		if counter.get("killed", false):
 			_manager.combatant_died.emit(eid)
@@ -356,12 +379,15 @@ func _emit_hit(slot: int, result: Dictionary, idx: int) -> void:
 ## Resolve one offensive AoE hit against a party slot. Magic when
 ## BattleAI.resolves_as_magic says so: atk_type "magic" OR the action carries an
 ## element (the legacy boss AoE shape, which routes by element with no
-## atk_type); otherwise physical, with ability_mult + multi-hit support.
-func _resolve_offensive(action: Dictionary, enemy: Node, slot: int, elem: String) -> Dictionary:
+## atk_type); otherwise physical, with ability_mult + multi-hit support, and an
+## Arc Trap sprung only where [param first].
+func _resolve_offensive(
+	action: Dictionary, enemy: Node, slot: int, elem: String, first: bool
+) -> Dictionary:
 	if BattleAI.resolves_as_magic(str(action.get("atk_type", "")), "all", elem):
 		return BattleActions.execute_enemy_magic(
 			_state, enemy, slot, elem, int(action.get("power", 0))
 		)
-	return BattleActions.execute_enemy_physical_ability(
-		_state, enemy, slot, float(action.get("ability_mult", 1.0)), int(action.get("hits", 1))
-	)
+	var mult: float = float(action.get("ability_mult", 1.0))
+	var hits: int = int(action.get("hits", 1))
+	return BattleActions.execute_enemy_physical_ability(_state, enemy, slot, mult, hits, 1.0, first)

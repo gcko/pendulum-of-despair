@@ -6,6 +6,8 @@ extends Node2D
 ## (attack/defend/flee), BattleMagicCommand, BattleItemCommand and the unique
 ## commands' BattleAbilityCommand — and battle-start assembly lives in
 ## BattleSetup (GAP-087). This script dispatches to them and owns what they need.
+## A confused or berserk member is not prompted: the loop issues an "auto"
+## command for them, which BattleAutoAction resolves (#246).
 
 signal battle_started(party: Array, enemies: Array, enemy_positions: Array)
 signal turn_ready(
@@ -43,6 +45,7 @@ var _actions: BattlePlayerActions = null
 var _magic: BattleMagicCommand = null
 var _items: BattleItemCommand = null
 var _abilities: BattleAbilityCommand = null
+var _auto: BattleAutoAction = null
 
 @onready var _atb: Node = $ATBSystem
 @onready var _state: Node = $BattleState
@@ -52,6 +55,7 @@ var _abilities: BattleAbilityCommand = null
 
 func _ready() -> void:
 	_enemy_turn = BattleEnemyTurn.new(self, _state, _atb, _enemy_area)
+	_auto = BattleAutoAction.new(self, _get_actions())
 	if _ui == null:
 		push_error("BattleManager: BattleUI not found")
 		call_deferred("exit_battle", "flee")
@@ -157,6 +161,11 @@ func _process(delta: float) -> void:
 				continue
 			# The turn begins: Second Wind's regen lands (abilities.md § Cael — Rally).
 			_emit_party_events(_state.begin_turn(slot))
+			_check_end_conditions()  # a turn-start effect may have won or lost it
+			if _battle_resolved or not _battle_active:
+				return
+			if not _state.get_member(slot).get("is_alive", false):
+				break  # it felled them: their turn ends unprompted, and it used the frame (#260)
 			if blocked_by != "":
 				# Paralysis fills the gauge instead, so it does have a turn to
 				# consume: the status counts down on this would-be turn (the
@@ -170,6 +179,11 @@ func _process(delta: float) -> void:
 				# battle_ui queues messages (ui-design.md § 2.5).
 				break
 			_awaiting_input_for = id
+			# Confusion/Berserk make this turn's basic attack for them (#246).
+			var statuses: Array = _state.get_member(slot).get("active_statuses", [])
+			if not BattleAutoAction.driving_status(statuses).is_empty():
+				_on_ui_command({"type": "auto"})
+				break
 			_atb.set_command_menu_open(true)
 			var char_data: Dictionary = _state.get_member(slot).get("character_data", {})
 			turn_ready.emit(id, true, slot, _targetable_enemy_count(), _is_boss, char_data)
@@ -214,6 +228,8 @@ func _on_ui_command(command: Dictionary) -> void:
 				_get_actions().do_flee()
 		"ability":
 			ok = _get_abilities().do_ability(actor_id, command)
+		"auto":  # issued by _process, never by the menu
+			_auto.act_for(cmd_slot)
 	if not ok:
 		_atb.set_command_menu_open(true)
 		var char_data: Dictionary = _state.get_member(cmd_slot).get("character_data", {})
@@ -286,13 +302,30 @@ func _skip_incapacitated_turn(slot: int, id: String, status_name: String) -> voi
 	_check_end_conditions()
 
 
-## Surface BattleState's turn events [{slot, dmg, type}] — DoT ticks at a
-## turn's end, Second Wind's heal at its start — as floating numbers.
+## Surface BattleState's turn events [{slot, dmg, type}] as floating numbers:
+## a turn's start (Second Wind's heal) and its end (Poison/Burn damage, Regen
+## and Mending Engine heals, each event carrying its own type). A Shock Coil's
+## request ({slot, shock_coil}) is answered here, where the enemies are.
 func _emit_party_events(events: Array) -> void:
 	for ev: Dictionary in events:
+		if ev.has("shock_coil"):
+			_shock_coil(int(ev["slot"]), int(ev["shock_coil"]))
+			continue
 		damage_dealt.emit(
 			"party_%d" % int(ev.get("slot", 0)), int(ev.get("dmg", 0)), ev.get("type", "poison")
 		)
+
+
+## Lira's Shock Coil at [param slot] strikes for [param power]: show the hit,
+## and clean up the kill it makes as any kill is cleaned up.
+func _shock_coil(slot: int, power: int) -> void:
+	var hit: Dictionary = BattleForgewright.shock(_state, slot, power, _enemies)
+	if hit.is_empty():
+		return
+	damage_dealt.emit(hit["target"], int(hit["damage"]), hit["type"])
+	if hit["killed"]:
+		combatant_died.emit(hit["target"])
+		_atb.remove_combatant(hit["target"])
 
 
 func _on_party_member_died(slot: int) -> void:
@@ -328,9 +361,10 @@ func _on_enemy_died(enemy: Node) -> void:
 		message.emit(line)
 
 
-## Recompute an enemy's ATB freeze/mods from its current statuses. Idempotent;
-## called for living enemies each frame and after status changes so cured or
-## expired statuses clear (StatusEffects.atb_state is the pure, tested core).
+## Recompute an enemy's ATB freeze/mods from its current statuses, and its SPD
+## from its buffs, so a SPD buff or debuff changes how fast the gauge fills.
+## Idempotent; called for living enemies each frame and after status changes so
+## cured or expired statuses clear (StatusEffects.atb_state is the pure core).
 func resync_enemy_atb(idx: int) -> void:
 	if idx < 0 or idx >= _enemies.size():
 		return
@@ -338,6 +372,8 @@ func resync_enemy_atb(idx: int) -> void:
 	var st: Dictionary = StatusEffects.atb_state(_enemies[idx].active_statuses)
 	_atb.set_frozen(eid, st["frozen"])
 	_atb.set_status_mods(eid, st["mods"])
+	var e: Node = _enemies[idx]
+	_atb.set_spd(eid, int(e.enemy_data.get("spd", 0) * e.buff_mult("spd")))  # Arc Trap
 	if st["zeroed"]:
 		_atb.set_gauge(eid, 0)
 

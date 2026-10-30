@@ -42,7 +42,7 @@ in these docs.**
 | Category | Source Documents |
 |----------|----------------|
 | Game overview | `gdd-overview.md` (270), `outline.md` (371), `world.md` (79) |
-| Combat mechanics | `combat-formulas.md` (1,088) |
+| Combat mechanics | `combat-formulas.md` (1,089) |
 | Character stats/growth | `progression.md` (511), `characters.md` (220) |
 | Abilities & magic | `abilities.md` (1,123), `magic.md` (1,750) |
 | Enemy data | `bestiary/` (10 files) |
