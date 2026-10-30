@@ -14,10 +14,11 @@ extends RefCounted
 ## of prompting it, and BattleEnemyTurn hands an enemy's here instead of asking
 ## its AI.
 ##
-## Not built here: Berserk's "+50% basic attack damage". That is a multiplier on
-## the attack's final damage (as Overcharge's "+50% damage" is, combat-formulas.md
-## § Physical Ability Multiplier Tiers), not an ability_mult, and neither
-## BattleActions.execute_party_attack nor execute_enemy_attack takes one yet.
+## Berserk's "+50% basic attack damage" multiplies the blow's final damage at
+## step 6, after DEF (as Overcharge's "+50% damage" does, combat-formulas.md
+## § Physical Ability Multiplier Tiers), on every blow a berserk unit lands —
+## one Confusion is driving included: BattleActions' damage_mult on its attack
+## calls, and the same step on the two blows built here.
 
 const Bulwark = preload("res://scripts/combat/battle_bulwark.gd")
 const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
@@ -28,6 +29,9 @@ const Enemy = preload("res://scripts/entities/enemy.gd")
 ## "any" (both sides, never itself) or "foes" (the other side only). Confusion is
 ## listed first, so it decides the turn of a combatant carrying both.
 const AUTO_TARGETS: Dictionary = {"confusion": "any", "berserk": "foes"}
+
+## Berserk's final-damage multiplier on its bearer's basic attack.
+const BERSERK_DAMAGE_MULT: float = 1.5
 
 var _battle: Node
 var _actions: BattlePlayerActions
@@ -48,6 +52,15 @@ static func driving_status(active_statuses: Array) -> String:
 			if s.get("name", "") == status:
 				return status
 	return ""
+
+
+## The final-damage multiplier on a basic attack by a bearer of
+## [param active_statuses]: BERSERK_DAMAGE_MULT under Berserk, else 1.0.
+static func damage_mult(active_statuses: Array) -> float:
+	for s: Dictionary in active_statuses:
+		if s.get("name", "") == "berserk":
+			return BERSERK_DAMAGE_MULT
+	return 1.0
 
 
 ## The combatant [param own] ("party_N" or "enemy_N") auto-attacks under
@@ -82,6 +95,7 @@ func act_for(slot: int) -> void:
 	var status: String = driving_status(member.get("active_statuses", []))
 	var target: String = pick_target(status, "party_%d" % slot, state, _battle.get_enemies())
 	var nm: String = _member_name(state, slot)
+	var mult: float = damage_mult(member.get("active_statuses", []))
 	if target.begins_with("enemy_"):
 		var idx: int = target.replace("enemy_", "").to_int()
 		var enemy: Node = _battle.get_enemies()[idx]
@@ -89,7 +103,7 @@ func act_for(slot: int) -> void:
 		for _swing: int in range(Bulwark.attack_hits(member)):
 			if not enemy.is_alive:
 				break
-			_actions.strike(slot, idx)
+			_actions.strike(slot, idx, mult)
 	elif target.begins_with("party_"):
 		var ally: int = target.replace("party_", "").to_int()
 		_battle.message.emit("%s attacks %s!" % [nm, _member_name(state, ally)])
@@ -97,7 +111,7 @@ func act_for(slot: int) -> void:
 		for _swing: int in range(Bulwark.attack_hits(member)):
 			if not state.get_member(ally).get("is_alive", false):
 				break
-			_show_ally_hit(target, party_strikes_ally(state, slot, ally))
+			_show_ally_hit(target, party_strikes_ally(state, slot, ally, mult))
 		for line: String in BattleEnemyTurn.wake_lines(state, asleep):
 			_battle.message.emit(line)
 
@@ -116,8 +130,10 @@ func _show_ally_hit(target: String, r: Dictionary) -> void:
 ## A Bulwark stance meets it as it meets an enemy's hit: Edren absorbs his
 ## share, or counts a direct hit on himself, but never ripostes an ally (ruling
 ## of 2026-10-30). Returns {hit, damage, type}, plus "absorbed": {slot, damage}
-## when a stance split it.
-static func party_strikes_ally(state: Node, slot: int, target: int) -> Dictionary:
+## when a stance split it. [param mult] scales its final damage (Berserk).
+static func party_strikes_ally(
+	state: Node, slot: int, target: int, mult: float = 1.0
+) -> Dictionary:
 	var spd: int = state.get_effective_stat(slot, "spd")
 	var target_spd: int = state.get_effective_stat(target, "spd")
 	if not DamageCalc.roll_hit(spd, target_spd) or DamageCalc.roll_evasion(target_spd):
@@ -133,7 +149,7 @@ static func party_strikes_ally(state: Node, slot: int, target: int) -> Dictionar
 		1.0,
 		state.get_effective_stat(target, "def"),
 		is_crit,
-		1.0,
+		mult,
 		state.get_member(slot).get("row", "front"),
 		state.get_member(target).get("row", "front"),
 		false,
@@ -177,7 +193,7 @@ static func enemy_hits_enemy(
 ) -> void:
 	var other: Node = enemies[target.replace("enemy_", "").to_int()]
 	manager.message.emit("%s attacks %s!" % [attacker.get_display_name(), other.get_display_name()])
-	var r: Dictionary = enemy_strikes_enemy(attacker, other)
+	var r: Dictionary = enemy_strikes_enemy(attacker, other, damage_mult(attacker.active_statuses))
 	manager.damage_dealt.emit(target, int(r["damage"]), r["type"])
 	if r["killed"]:
 		manager.combatant_died.emit(target)
@@ -186,9 +202,9 @@ static func enemy_hits_enemy(
 
 ## An enemy's basic attack on another enemy: the enemy-side physical formula
 ## (ATK/SPD, the flat enemy crit rate) against the target's DEF/SPD, halved
-## before DEF on a Spirit as every physical hit on one is. Returns
-## {hit, damage, type, killed}.
-static func enemy_strikes_enemy(attacker: Node, target: Node) -> Dictionary:
+## before DEF on a Spirit as every physical hit on one is, with [param mult] on
+## its final damage (Berserk). Returns {hit, damage, type, killed}.
+static func enemy_strikes_enemy(attacker: Node, target: Node, mult: float = 1.0) -> Dictionary:
 	var a: Dictionary = attacker.get_stats()
 	var t: Dictionary = target.get_stats()
 	var target_spd: int = t.get("spd", 0)
@@ -202,7 +218,7 @@ static func enemy_strikes_enemy(attacker: Node, target: Node) -> Dictionary:
 		1.0,
 		t.get("def", 0),
 		is_crit,
-		1.0,
+		mult,
 		"front",
 		"front",
 		false,

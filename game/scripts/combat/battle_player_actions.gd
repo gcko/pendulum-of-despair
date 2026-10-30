@@ -43,12 +43,13 @@ func do_attack(actor_id: String, command: Dictionary) -> bool:
 
 ## One basic attack from [param slot] on enemy [param target_idx], shown and
 ## counted: its damage number, the threat it earns, and the kill it makes. A
-## swing of the Attack command, and a confused or berserk member's auto-attack.
-func strike(slot: int, target_idx: int) -> Dictionary:
+## swing of the Attack command, and a confused or berserk member's auto-attack,
+## whose [param damage_mult] (Berserk's 1.5) scales its final damage.
+func strike(slot: int, target_idx: int, damage_mult: float = 1.0) -> Dictionary:
 	var state: Node = _battle.get_battle_state()
 	var eid: String = "enemy_%d" % target_idx
 	var result: Dictionary = BattleActions.execute_party_attack(
-		state, slot, _battle.get_enemies()[target_idx], target_idx
+		state, slot, _battle.get_enemies()[target_idx], target_idx, 1.0, damage_mult
 	)
 	state.add_threat(slot, int(result.get("damage", 0)))  # GAP-009 highest-threat
 	_battle.damage_dealt.emit(eid, result.get("damage", 0), result.get("type", "miss"))

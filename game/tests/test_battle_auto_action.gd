@@ -480,3 +480,109 @@ func test_every_shipped_self_targeted_status_is_a_buff() -> void:
 					StatusEffects.is_positive(st), "%s/%s lands %s" % [enemy["id"], ab["id"], st]
 				)
 	assert_gt(checked, 0, "Coil at least was read")
+
+
+# --- Berserk's +50% basic attack damage (combat-formulas.md § Fill Rate Modifiers) ---
+# Applied as a final-damage multiplier at step 6, after DEF, so against the same
+# target and rolls a berserk blow is floor(base x 1.5), give or take the one
+# point flooring after variance can move (combat-formulas.md § Physical Attack
+# Resolution).
+
+
+## Whether [param berserk] is within flooring of 1.5x [param base].
+func _is_half_again(base: int, berserk: int) -> bool:
+	return berserk >= base * 3 / 2 and berserk <= base * 3 / 2 + 1
+
+
+## The damage [param actor]'s auto-attack showed on [param target] under
+## [param statuses], seeded with [param s]. [param arrange] narrows each fresh
+## battle to that one target before the turn.
+func _auto_damage(
+	actor: String, target: String, statuses: Array, s: int, arrange: Callable
+) -> Array:
+	var battle: Node = _boot()
+	arrange.call(battle)
+	for status: String in statuses:
+		_afflict(battle, actor, status)
+	var shown: Array = []
+	battle.damage_dealt.connect(func(t: String, n: int, k: String) -> void: shown.append([t, n, k]))
+	seed(s)
+	_only_turn(battle, actor)
+	return shown.filter(func(h: Array) -> bool: return h[0] == target)
+
+
+## A seed on which [param actor] lands a plain hit of 4 or more on [param target] with
+## [param baseline] statuses, and that hit and the berserk one, as [base, berserk].
+func _berserk_pair(
+	actor: String, target: String, baseline: Array, berserk: Array, arrange: Callable
+) -> Array:
+	for s: int in range(1, 80):
+		var base: Array = _auto_damage(actor, target, baseline, s, arrange)
+		if base.size() != 1 or base[0][2] != "physical" or int(base[0][1]) < 4:
+			continue  # a miss, a crit, or a hit too small for half again to show
+		var raged: Array = _auto_damage(actor, target, berserk, s, arrange)
+		return [int(base[0][1]), int(raged[0][1]) if raged.size() == 1 else -1]
+	fail_test("%s never landed a plain hit on %s" % [actor, target])
+	return [0, 0]
+
+
+## Cael is KO'd, so a confused Edren's only target is the vermin, as a berserk
+## one's is: both turns draw the same rolls.
+func _only_the_vermin_left(battle: Node) -> void:
+	battle.get_battle_state().take_damage(CAEL, 99999)
+
+
+func test_a_berserk_member_s_blow_on_an_enemy_deals_half_again() -> void:
+	var pair: Array = _berserk_pair(
+		"party_0", "enemy_0", ["confusion"], ["berserk"], _only_the_vermin_left
+	)
+	assert_true(_is_half_again(pair[0], pair[1]), "%d then %d" % [pair[0], pair[1]])
+
+
+func test_a_berserk_enemy_s_blow_on_the_party_deals_half_again() -> void:
+	var pair: Array = _berserk_pair(
+		"enemy_0",
+		"party_0",
+		["confusion"],
+		["berserk"],
+		func(battle: Node) -> void:
+			_only_the_vermin_left(battle)
+			battle.get_battle_state().get_member(EDREN)["effective_stats"]["def"] = 0
+	)
+	assert_true(_is_half_again(pair[0], pair[1]), "%d then %d" % [pair[0], pair[1]])
+
+
+func test_a_confused_and_berserk_member_s_blow_on_an_ally_deals_half_again() -> void:
+	# Confusion drives the turn, and the Berserk it also carries still adds +50%.
+	var pair: Array = _berserk_pair(
+		"party_0",
+		"party_1",
+		["confusion"],
+		["confusion", "berserk"],
+		func(battle: Node) -> void: battle.get_enemies()[0].set_meta("untargetable", true)
+	)
+	assert_true(_is_half_again(pair[0], pair[1]), "%d then %d" % [pair[0], pair[1]])
+
+
+func test_a_confused_and_berserk_enemy_s_blow_on_another_enemy_deals_half_again() -> void:
+	for s: int in range(1, 80):
+		var dealt: Array[int] = []
+		for raging: bool in [false, true]:
+			var battle: Node = _boot(["ley_vermin", "ley_vermin"])
+			var enemies: Array[Node] = battle.get_enemies()
+			enemies[0].apply_status("confusion", 3)
+			if raging:
+				enemies[0].apply_status("berserk", StatusEffects.UNTIL_CURED)
+			var shown: Array = []
+			battle.damage_dealt.connect(
+				func(t: String, n: int, k: String) -> void: shown.append([t, n, k])
+			)
+			seed(s)
+			BattleAutoAction.enemy_hits_enemy(
+				battle, battle.get_atb(), enemies[0], enemies, "enemy_1"
+			)
+			dealt.append(int(shown[0][1]) if shown[0][2] == "physical" else -1)
+		if dealt[0] >= 4:
+			assert_true(_is_half_again(dealt[0], dealt[1]), "%d then %d" % [dealt[0], dealt[1]])
+			return
+	fail_test("the vermin never landed a plain hit on the other")

@@ -89,7 +89,10 @@ func _auto_turn(status: String, enemy: Node, enemies: Array[Node], idx: int) -> 
 	var target: String = BattleAutoAction.pick_target(status, "enemy_%d" % idx, _state, enemies)
 	if target.begins_with("party_"):
 		var slot: int = target.replace("party_", "").to_int()
-		_apply_action({"type": "attack", "target_slot": slot}, enemy, enemies, idx)
+		var mult: float = BattleAutoAction.damage_mult(enemy.active_statuses)  # Berserk
+		_apply_action(
+			{"type": "attack", "target_slot": slot, "damage_mult": mult}, enemy, enemies, idx
+		)
 		return
 	if target.begins_with("enemy_"):
 		BattleAutoAction.enemy_hits_enemy(_manager, _atb, enemy, enemies, target)
@@ -328,6 +331,7 @@ func _resolve_attack_or_ability(action: Dictionary, enemy: Node, idx: int) -> vo
 					tgt,
 					float(action.get("ability_mult", 1.0)),
 					int(action.get("hits", 1)),
+					float(action.get("damage_mult", 1.0)),
 				)
 			)
 		_emit_hit(tgt, result, idx)
