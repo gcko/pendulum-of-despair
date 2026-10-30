@@ -11,7 +11,7 @@ signal member_revived(slot: int)
 signal status_applied(slot: int, status_name: String)
 signal status_removed(slot: int, status_name: String)
 ## Cured (BattleStatusGuard.cure) or expired follow a status_removed (#515); blocked
-## is a status worn gear kept off, so nothing landed (BattleStatusGuard.blocks, #512).
+## is a status gear or a Stoneheart ward kept off (BattleStatusGuard.ward_against, #512).
 signal status_cured(slot: int, status_name: String)
 signal status_expired(slot: int, status_name: String)
 signal status_blocked(slot: int, status_name: String)
@@ -75,7 +75,6 @@ func add_member(slot: int, char_data: Dictionary) -> void:
 		"ap": 0,
 		"ac": PartyState.arcanite_charges,
 		"wg": 0,
-		"favor": {},
 		"stolen_goods": [] as Array[String],
 		# The Rally this member is under; battle_rally.gd owns its shape and rules.
 		"active_rally": {},
@@ -160,12 +159,16 @@ func restore_mp(slot: int, amount: int) -> void:
 
 
 ## Apply a status effect. Duration is turns (int) or seconds (float). Returns
-## false when nothing landed: no member, or worn gear wards it off (#512).
+## false when nothing landed: no member, or worn gear (#512) or a Stoneheart
+## ward keeps it off.
 func apply_status(slot: int, status_name: String, duration_type: String, duration: float) -> bool:
 	var m: Dictionary = get_member(slot)
 	if m.is_empty():
 		return false
-	if StatusGuard.blocks(m["character_id"], status_name):
+	var ward: String = StatusGuard.ward_against(self, slot, status_name)
+	if not ward.is_empty():
+		if ward == "spirit":
+			BattleSpiritcall.credit_block(self, slot)  # Stoneheart in harmony
 		status_blocked.emit(slot, status_name)
 		return false
 	remove_status(slot, status_name)  # a recast refreshes it

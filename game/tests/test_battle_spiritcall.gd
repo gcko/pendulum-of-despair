@@ -48,7 +48,9 @@ func test_thornveil_shields_only_its_target() -> void:
 
 
 func test_thornveil_ends_after_three_of_the_bearers_turns() -> void:
-	_call("thornveil", EDREN)
+	assert_true(_call("thornveil", EDREN), "issued")
+	var standing: Array = _torren_counters(_enemy_hits(_make_enemy({"atk": 10}), EDREN))
+	assert_eq(standing.size(), 1, "the barrier is up before the turns pass")
 	for i: int in range(3):
 		_turn(EDREN)
 	assert_eq(_torren_counters(_enemy_hits(_battle.enemies[0], EDREN)).size(), 0)
@@ -56,8 +58,10 @@ func test_thornveil_ends_after_three_of_the_bearers_turns() -> void:
 
 func test_thornveil_at_favor_zero_takes_nothing_off_the_hit() -> void:
 	var bare: int = _seeded_hit(EDREN, false)
-	_call("thornveil", EDREN)
+	assert_true(_call("thornveil", EDREN), "issued")
 	assert_eq(_seeded_hit(EDREN, false), bare, "same blow, same damage")
+	var counters: Array = _torren_counters(_enemy_hits(_make_enemy({"atk": 10}), EDREN))
+	assert_eq(counters.size(), 1, "the barrier was up all along")
 
 
 func test_deeproot_veil_counters_for_two_fifths_of_defense() -> void:
@@ -95,6 +99,18 @@ func test_dewfall_at_favor_zero_leaves_sleep() -> void:
 	_state.apply_status(EDREN, "sleep", "turns", -1)
 	_call("dewfall", EDREN)
 	assert_true(_state.has_status(EDREN, "sleep"))
+
+
+func test_the_cast_that_reaches_favor_three_resolves_in_its_old_form() -> void:
+	_set_favor("dewfall", 2)
+	_set_hp(EDREN, 100)
+	_state.apply_status(EDREN, "poison", "turns", -1)
+	assert_true(_state.apply_status(EDREN, "sleep", "turns", -1), "Edren is asleep")
+	assert_true(_call("dewfall", EDREN), "issued")
+	assert_eq(_favor("dewfall"), 3, "the heal below 25% reached Favor 3")
+	assert_false(_state.has_status(EDREN, "poison"), "Dewfall cures Poison")
+	assert_true(_state.has_status(EDREN, "sleep"), "but not Sleep: that is Torrent's Grace")
+	assert_eq(_healed(CAEL), 0, "and it reached one ally, not all")
 
 
 func test_torrents_grace_heals_and_cures_every_ally_with_no_target() -> void:

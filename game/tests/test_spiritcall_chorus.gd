@@ -53,8 +53,8 @@ func test_the_chorus_cleanses_sleep_only_once_rain_is_at_favor_three() -> void:
 	assert_true(_state.has_status(EDREN, "sleep"), "Favor 0 cleanses Poison only")
 	_new_battle(30)
 	_set_favor("dewfall", 3)
-	_state.apply_status(EDREN, "sleep", "turns", -1)
-	_call("convergence_chorus")
+	assert_true(_state.apply_status(EDREN, "sleep", "turns", -1), "Edren is asleep")
+	assert_true(_call("convergence_chorus"), "issued")
 	assert_false(_state.has_status(EDREN, "sleep"), "Favor 3 Rain also cleanses Sleep")
 
 
@@ -77,11 +77,13 @@ func test_the_chorus_barrier_carries_no_damage_cut_even_at_favor_three() -> void
 	seed(5)
 	var bare: Dictionary = BattleActions.execute_enemy_attack(_state, enemy, CAEL)
 	_set_hp(CAEL, 1000)
-	_call("convergence_chorus")
+	assert_true(_call("convergence_chorus"), "issued")
 	_set_hp(CAEL, 1000)
 	seed(5)
 	var warded: Dictionary = BattleActions.execute_enemy_attack(_state, enemy, CAEL)
 	assert_eq(int(warded["damage"]), int(bare["damage"]))
+	var counters: Array = _torren_counters(_enemy_hits(_make_enemy({"atk": 10}), CAEL))
+	assert_eq(counters.size(), 1, "the party barrier was up")
 
 
 func test_the_chorus_skips_a_spirit_torren_has_not_learned() -> void:
@@ -113,11 +115,22 @@ func test_the_chorus_is_once_per_battle() -> void:
 func test_a_flight_after_the_chorus_costs_the_spirits_it_called() -> void:
 	for spirit: String in SPIRITS:
 		_set_favor(spirit, 2)
+	_set_hp(EDREN, 300)
 	_call("convergence_chorus")
 	_battle.flee_result.emit(true)
 	for spirit: String in ["thornveil", "dewfall", "ember_wing", "stoneheart"]:
 		assert_eq(_favor(spirit), 1, spirit)
 	assert_eq(_favor("greyveil"), 2, "Twilight is not in the Chorus")
+
+
+func test_a_chorus_component_that_lands_nothing_calls_no_spirit() -> void:
+	_new_battle(15)  # no Stoneheart yet
+	_set_favor("dewfall", 2)
+	_set_favor("stoneheart", 2)
+	_call("convergence_chorus")  # the party is at full HP and unpoisoned
+	_battle.flee_result.emit(true)
+	assert_eq(_favor("dewfall"), 2, "the Rain spirit healed and cured nothing")
+	assert_eq(_favor("stoneheart"), 2, "the Earth spirit is not learned")
 
 
 # --- Rootsong ---

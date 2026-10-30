@@ -14,8 +14,9 @@ extends RefCounted
 ## BattleState.apply_status asks blocks() as the status would land, which on the
 ## enemy path is after the hit roll (combat-formulas.md § Status Spell
 ## Resolution, step 4). There is no field status system, so this is battle-only.
-## Torren's Stoneheart answers there too: a timed immunity on the member's battle
-## record (BattleSpiritcall.wards_off), asked after the gear.
+## BattleState.apply_status asks ward_against, which adds Torren's Stoneheart: a
+## timed immunity on the member's battle record (BattleSpiritcall.wards_off),
+## asked after the gear. Both are pure queries.
 
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 const Helpers = preload("res://scripts/util/inventory_helpers.gd")
@@ -31,7 +32,15 @@ static func blocks(character_id: String, status: String) -> bool:
 	if character_id.is_empty() or StatusEffects.is_positive(status):
 		return false
 	var wards: Array[String] = immunities(character_id)
-	return ALL in wards or status in wards or BattleSpiritcall.wards_off(character_id, status)
+	return ALL in wards or status in wards
+
+
+## What keeps [param status] off party [param slot] of [param state] as it would
+## land: "gear" (blocks), else "spirit" (a Stoneheart ward), else "".
+static func ward_against(state: Node, slot: int, status: String) -> String:
+	if blocks(String(state.get_member(slot).get("character_id", "")), status):
+		return "gear"
+	return "spirit" if BattleSpiritcall.wards_off(state, slot, status) else ""
 
 
 ## Every `status_immunity` entry on the gear [param character_id] wears.

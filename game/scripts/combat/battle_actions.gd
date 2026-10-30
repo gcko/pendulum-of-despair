@@ -251,7 +251,7 @@ static func execute_enemy_magic(
 		return {"hit": false, "damage": 0, "type": "miss"}
 	var dmg_mult: float = member.get("damage_taken_mult", 1.0)
 	var reduction: Array[float] = Bulwark.reductions(state, target_slot, "magic")
-	reduction.append_array(BattleWards.reductions(state, target_slot, "magic"))  # Deeproot
+	reduction.append_array(BattleWards.reductions(state, target_slot, "magic"))
 	if dmg_mult < 1.0:
 		reduction.append(1.0 - dmg_mult)
 	var guard: Dictionary = Bulwark.guard_for(state, target_slot, "magic")
@@ -327,7 +327,7 @@ static func execute_enemy_attack(
 	var dmg_mult: float = member.get("damage_taken_mult", 1.0)
 	if dmg_mult < 1.0:
 		reduction.append(1.0 - dmg_mult)  # Convert mult to reduction source
-	reduction.append_array(BattleWards.reductions(state, target_slot, "physical"))  # Bulkhead
+	reduction.append_array(BattleWards.reductions(state, target_slot, "physical"))
 	var defender_row: String = member.get("row", "front")
 	var guard: Dictionary = Bulwark.guard_for(state, target_slot, "physical")
 	var dmg: int = DamageCalc.calculate_physical(

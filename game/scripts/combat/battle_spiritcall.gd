@@ -5,32 +5,28 @@ extends RefCounted
 ## spirit leaves on an ally — Thornveil's thorn barrier and Stoneheart's status
 ## immunity. Pure static rules over BattleState's member records, reached
 ## through BattleState's ability-hook fan-out, from BattleWards where an enemy
-## hit resolves, from BattleStatusGuard as a status would land, and from
+## hit resolves, from BattleState.apply_status as a status would land, and from
 ## BattleSpiritcallCommand, which resolves the casts.
 ##
-## Design law: abilities.md § Torren — Spiritcall and § Damage Magnitudes, with
-## the orchestrator readings on #158 (2026-10-30):
-##   1. Only the three listed conditions are harmony. Convergence Chorus earns
-##      no Favor; Rootsong raises every spirit by 1 directly, once per battle,
-##      and is not itself a harmony.
-##   2. "Matching a weakness" is at least one living target hit being weak to
-##      the element. Greyveil, which has none, is in harmony when it hits a
-##      Pallor enemy.
-##   3. "Protecting an ally from death" is Thornveil's counter felling its
-##      attacker, or Stoneheart keeping a status off.
-##   4. Favor persists per spirit in PartyState.spirit_favor and the save.
-##   5. A fled battle costs each spirit used in it 1 Favor, once.
-##   6. At Favor 3 a spirit's ability is its upgraded form, by that name.
-## A use of a spirit's ability earns at most 1 Favor ("increases by 1 when the
-## spirit's ability is used in harmony"), however many of its targets or blocks
-## are in harmony. Favor is read as the cast begins, so the Favor 3 form starts
-## with the next cast after the third point.
+## Design law: abilities.md § Torren — Spiritcall and abilities.md § Damage
+## Magnitudes, with the readings posted on #158 (2026-10-30), recorded in full
+## in abilities.md § Torren — Spiritcall. The ones this file carries:
+##   - Harmony is a Flame weakness hit, Greyveil hitting a Pallor, a thorn
+##     counter felling its attacker, Stoneheart keeping a status off, and a heal
+##     on an ally below 25% HP. The Chorus earns none; Rootsong raises every
+##     spirit by 1 directly and is not a harmony.
+##   - A spirit earns at most 1 Favor a battle, however many of its uses are in
+##     harmony (the 15-20 battles abilities.md § Balance Targets sets).
+##   - A spirit's form is read once, as its cast begins (form): the cast that
+##     reaches Favor 3 resolves in the old form, and the next one is upgraded.
+##   - A flight costs each spirit called that battle 1 Favor, once, unless it is
+##     at Favor 3, which is permanent.
 ##
-## Each ward is counted on its bearer's own turns, one more when the bearer's
-## turn is open (a self-cast), as a Rally's copy and a spell buff are; one of a
-## kind keeps the stronger, and a KO ends both, as it ends every positive effect
-## (2026-10-29 ruling). Torren's record carries member["spiritcall"]: {summoned,
-## once}; a bearer's wards are member["spirit_wards"]: {barrier, immunity}.
+## Each ward is counted on its bearer's own turns, one more when Torren casts it
+## on himself, as a Rally's copy and a spell buff are; one of a kind keeps the
+## stronger, and a KO ends both, as it ends every positive effect (2026-10-29
+## ruling). Torren's record carries member["spiritcall"]: {summoned, once,
+## earned}; a bearer's wards are member["spirit_wards"]: {barrier, immunity}.
 
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 
@@ -38,8 +34,9 @@ const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 ## kept per spirit under these ids.
 const SPIRITS: Array[String] = ["thornveil", "dewfall", "ember_wing", "stoneheart", "greyveil"]
 
-## The Spiritcall abilities this slice resolves. Purify needs the Pallor-zone
-## corruption of abilities.md § Spirit Communion, which nothing models yet.
+## The Spiritcall abilities this slice resolves. Purify needs the corrupted
+## spirit calls of abilities.md § The Pallor's Effect on Magic, which nothing
+## models yet.
 const BUILT: Array[String] = [
 	"thornveil",
 	"dewfall",
@@ -54,12 +51,6 @@ const BUILT: Array[String] = [
 ## filled").
 const PIP_FILLED: String = "●"
 const PIP_EMPTY: String = "○"
-
-## Party-side BattleStates by the id of each character seated in them, held
-## weakly so a battle that has ended blocks nothing. BattleStatusGuard.blocks
-## is asked with a character id alone, and this is how it finds the record that
-## carries a Stoneheart ward. One battle runs at a time, so one entry each.
-static var _seated: Dictionary = {}
 
 # ---------- Favor ----------
 
@@ -83,30 +74,32 @@ static func upgraded(ability: Dictionary) -> bool:
 	return id in SPIRITS and favor(id) >= PartyVitals.FAVOR_MAX
 
 
-## [param key] of [param ability] in its current form. At Favor 3 that is the
-## upgraded form's: its `favor3` record (the name, target, cures and riders that
-## change), else the `<key>_favor3` magnitude (power, counter), else the base
-## value, which an upgrade that leaves it alone keeps.
-static func field(ability: Dictionary, key: String, default: Variant = null) -> Variant:
-	if upgraded(ability):
-		var form: Dictionary = ability.get("favor3", {})
-		if form.has(key):
-			return form[key]
-		if ability.has(key + "_favor3"):
-			return ability[key + "_favor3"]
-	return ability.get(key, default)
+## [param ability] in the form its spirit's Favor gives it now, as one snapshot:
+## at Favor 3 its `favor3` record (the name, target, cures and riders that
+## change) and its `<key>_favor3` magnitudes (power, counter) replace the base
+## values; an upgrade that leaves a value alone keeps it. A cast reads this
+## once, before anything it does can raise the Favor.
+static func form(ability: Dictionary) -> Dictionary:
+	var out: Dictionary = ability.duplicate(true)
+	if not upgraded(ability):
+		return out
+	for key: String in ability.keys():
+		if key.ends_with("_favor3"):
+			out[key.trim_suffix("_favor3")] = ability[key]
+	out.merge(ability.get("favor3", {}), true)
+	return out
 
 
 ## The name [param ability] goes by now: Deeproot Veil for Thornveil at Favor 3
 ## and so on. Any other ability keeps its own.
 static func display_name(ability: Dictionary) -> String:
-	return String(field(ability, "name", ""))
+	return String(form(ability).get("name", ""))
 
 
 ## The target [param ability] takes now: Torrent's Grace and Mountain's Resolve
 ## reach every ally.
 static func target_of(ability: Dictionary) -> String:
-	return String(field(ability, "target", "single_enemy"))
+	return String(form(ability).get("target", "single_enemy"))
 
 
 ## What the battle menu lists [param ability] as: a spirit's current name and its
@@ -120,18 +113,24 @@ static func menu_name(ability: Dictionary) -> String:
 	return "%s %s" % [display_name(ability), pips]
 
 
-## A new use of [param spirit] in harmony or not: the record its wards share, so
-## the use earns at most 1 Favor. "" for a use that earns none (the Chorus).
-static func new_cast(spirit: String) -> Dictionary:
-	return {"spirit": spirit, "earned": false}
+## A use of [param spirit] by Torren at [param slot] in [param state]: the
+## record its wards carry, so harmony long after the cast (a counter, a block)
+## credits the battle it was cast in. "" for a use that earns none (the Chorus).
+static func new_cast(state: Node, slot: int, spirit: String) -> Dictionary:
+	return {"spirit": spirit, "battle": _record(state.get_member(slot))}
 
 
-## [param cast] was in harmony: its spirit gains 1 Favor, the first time only.
+## [param cast] was in harmony: its spirit gains 1 Favor, unless it has already
+## gained one this battle.
 static func harmony(cast: Dictionary) -> void:
-	if String(cast.get("spirit", "")).is_empty() or cast.get("earned", false):
+	var spirit: String = String(cast.get("spirit", ""))
+	var battle: Dictionary = cast.get("battle", {})
+	var earned: Array = battle.get("earned", [])
+	if spirit.is_empty() or spirit in earned:
 		return
-	cast["earned"] = true
-	add_favor(String(cast["spirit"]), 1)
+	earned.append(spirit)
+	battle["earned"] = earned
+	add_favor(spirit, 1)
 
 
 # ---------- One battle ----------
@@ -161,12 +160,17 @@ static func mark_used(state: Node, slot: int, ability: Dictionary, spirits: Arra
 	rec["summoned"] = summoned
 
 
-## The party fled the battle in [param state]: every spirit called in it loses
-## 1 Favor, once ("spirits don't appreciate being abandoned").
+## The party fled the battle in [param state]: every spirit called in it below
+## Favor 3 loses 1 Favor, once ("spirits don't appreciate being abandoned"; a
+## Favor 3 upgrade is permanent). The record is spent, so a second report of the
+## same flight costs nothing.
 static func on_fled(state: Node) -> void:
 	for i: int in range(4):
-		for spirit: Variant in state.get_member(i).get("spiritcall", {}).get("summoned", []):
-			add_favor(String(spirit), -1)
+		var rec: Dictionary = state.get_member(i).get("spiritcall", {})
+		for spirit: Variant in rec.get("summoned", []):
+			if favor(String(spirit)) < PartyVitals.FAVOR_MAX:
+				add_favor(String(spirit), -1)
+		rec["summoned"] = []
 
 
 # ---------- Wards ----------
@@ -197,10 +201,7 @@ static func grant_barrier(
 ## Give [param slot] immunity to negative statuses for [param turns]. A shorter
 ## one leaves a longer one standing. Returns whether it landed.
 static func grant_immunity(state: Node, slot: int, turns: int, cast: Dictionary) -> bool:
-	if not _grant(state, slot, "immunity", {"cast": cast}, turns, 0):
-		return false
-	_seated[String(state.get_member(slot).get("character_id", ""))] = weakref(state)
-	return true
+	return _grant(state, slot, "immunity", {"cast": cast}, turns, 0)
 
 
 ## [param slot]'s ward of [param kind], or {} when none stands.
@@ -246,23 +247,19 @@ static func reductions(state: Node, target: int, _kind: String) -> Array[float]:
 	return out
 
 
-## Whether a Stoneheart ward keeps [param status] off [param character_id] in
-## the battle running now. A ward that does is in harmony. BattleStatusGuard
-## asks this as the status would land, after the gear check.
-static func wards_off(character_id: String, status: String) -> bool:
-	var ref: WeakRef = _seated.get(character_id)
-	var state: Node = ref.get_ref() if ref != null else null
-	if state == null or StatusEffects.is_positive(status):
-		return false
-	for i: int in range(4):
-		if state.get_member(i).get("character_id", "") != character_id:
-			continue
-		var immunity: Dictionary = ward(state, i, "immunity")
-		if immunity.is_empty():
-			return false
+## Whether a Stoneheart ward keeps [param status] off party [param slot] of
+## [param state]. A pure query: BattleStatusGuard.ward_against asks it after the
+## gear, and BattleState.apply_status credits the block (credit_block).
+static func wards_off(state: Node, slot: int, status: String) -> bool:
+	return not StatusEffects.is_positive(status) and not ward(state, slot, "immunity").is_empty()
+
+
+## A Stoneheart ward on [param slot] has just kept a status off: Stoneheart in
+## harmony.
+static func credit_block(state: Node, slot: int) -> void:
+	var immunity: Dictionary = ward(state, slot, "immunity")
+	if not immunity.is_empty():
 		harmony(immunity["cast"])
-		return true
-	return false
 
 
 # ---------- BattleState ability hooks ----------
