@@ -212,7 +212,7 @@ stat derivation, and naming conventions.
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Marsh Serpent | 6 | Beast | — | Fang Strike, Venom Spit (Poison) | Low |
-| 2 | Corrupted Spawn | 10 | Beast | — | +Lunge (back-row target), +Coil (SPD up) | Standard |
+| 2 | Corrupted Spawn | 10 | Beast | — | +Lunge (back-row target), +Coil (Haste: ATB fill ×1.5) | Standard |
 | 2 | Deep Serpent | 19 | Beast | Weak->Frost | +Constrict (Stun + DoT), +Ley Infusion (MAG up) | Standard |
 | 3 | Greater Serpent | 28 | Beast | Weak->Frost | +Constrict (Stun + damage over time), +Toxic Spray (AoE Poison) | Standard |
 | 4 | Ashen Serpent | 42 | Pallor | Weak->Spirit, Resist->Void | +Despair Fang (Poison + Despair), +Shed Skin (remove debuffs) | Dangerous |
