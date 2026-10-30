@@ -173,6 +173,12 @@ Settled on #158 on 2026-10-30; the battle layer is built to these readings.
   begins; Mending Engine heals as each of them ends.
 - *Arc Trap.* It goes off on any enemy's physical attack, whatever that attack
   targets, and is then spent. Until then it holds one of the two device slots.
+- *A KO on Lira* ends every device she has up, with no AC back, as a KO ends a
+  Rally, Bulwark's state and positive statuses.
+- *Salvage* takes the oldest device.
+- *Most injured* (Mending Engine) is the lowest share of max HP; a tie goes to
+  the lower party slot.
+- *Thornveil Barrier* counters physical hits only.
 - *Deferred.* Arcanite Colossus, Cael's Edge and Calibrate are a later slice of
   #158 (Cael's Edge and Calibrate are story-scripted). Lira's battle menu lists
   them, unusable, until then.
