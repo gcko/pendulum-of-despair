@@ -428,9 +428,9 @@ func test_stat_penalty_debuffs_use_the_standard_hit_rate_band() -> void:
 	for spell: Dictionary in _spells:
 		if String(spell.get("category", "")) != "debuff":
 			continue
-		if spell.get("hit_rate") == null:
-			continue  # dispel-type debuff, always lands
-		var rate: int = int(spell.get("hit_rate"))
+		if spell.get("hit_rate") == null and spell.get("stat_debuff") == null:
+			continue  # a dispel always lands; a stat_debuff rolls, so needs a rate (#514)
+		var rate: int = int(spell["hit_rate"]) if spell.get("hit_rate") != null else -1
 		assert_between(rate, 60, 80, "%s is a stat-penalty debuff, band is 60-80" % _label(spell))
 		checked += 1
 	assert_gt(checked, 0, "no stat-penalty debuffs were checked")

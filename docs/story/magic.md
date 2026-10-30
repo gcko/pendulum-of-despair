@@ -392,6 +392,23 @@ unstated. `game/tests/test_spell_balance.gd` asserts all of them against
   revival item is ([bestiary/README.md](bestiary/README.md) § Undead), and
   Kindle Breath is refused until an enemy-side Regen tick exists (2026-10-30
   rulings).
+- **Enemy debuff effects in battle (#514).** A debuff aimed at the enemy line
+  carries its effect in its own data keys, each valued from its entry above:
+  - `stat_debuff: {stat, pct}` lowers one enemy stat (`def`, `mdef` or `mag`)
+    by `pct`% for `duration` turns of that enemy's: Sunder, Fray and Dampening
+    Field 30, for 5. It rolls its `hit_rate` through the same two-stage roll a
+    status spell makes; a miss spends the MP and changes nothing. It adds to a
+    buff on the same stat ([combat-formulas.md](combat-formulas.md) § Buff &
+    Debuff Interaction: Guard Stance's +40% with Sunder's -30% is +10%), and a
+    recast refreshes it.
+  - `dispel: true` (Dispersion, Mass Dispersion) always lands and removes every
+    positive effect the enemy carries: its stat buffs and its positive statuses
+    (Haste). A debuff the party laid stays on it (§ Status Effect Reference).
+
+  A `stat_debuff` needs a `duration` of at least one turn. An enemy-side spell
+  with no damage `power`, no registry `status` on a `status` spell and neither
+  key has no battle effect yet and is refused before any MP is spent: Crumble,
+  Drag Tide, Spiritsight and Glintmark, and the enemy-only Drinker of Days.
 
 ---
 

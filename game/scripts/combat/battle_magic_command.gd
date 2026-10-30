@@ -1,8 +1,9 @@
 class_name BattleMagicCommand
 extends RefCounted
 ## The Magic command in battle: validates targets, spends MP, and resolves a
-## spell's damage, healing or status against the chosen side, or an ally
-## spell's revive, stat buff, regeneration, MP restore, cure or escape (#503).
+## spell's damage, healing or status against the chosen side, an ally spell's
+## revive, stat buff, regeneration, MP restore, cure or escape (#503), or an
+## enemy debuff's stat penalty or dispel (#514).
 ##
 ## Extracted from battle_manager.gd (GAP-087) so the manager holds the ATB loop
 ## and the command dispatch while each command owns its own resolution rules.
@@ -12,6 +13,7 @@ const BattleActions = preload("res://scripts/combat/battle_actions.gd")
 const SpellHelpers = preload("res://scripts/ui/spell_helpers.gd")
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 const AllySpells = preload("res://scripts/combat/battle_ally_spells.gd")
+const EnemyDebuffs = preload("res://scripts/combat/battle_enemy_debuffs.gd")
 
 ## Weave Gauge earned by the caster for a spell that landed, and the share
 ## Maren banks when somebody else casts
@@ -39,7 +41,7 @@ const ALLY_EFFECTS: Array[String] = [
 ]
 
 ## Effects that last the spell's duration, which must then be 1 turn or more.
-const TIMED_EFFECTS: Array[String] = ["stat_buff", "regen_pct"]
+const TIMED_EFFECTS: Array[String] = ["stat_buff", "regen_pct", "stat_debuff"]
 
 var _battle: Node
 var _allies: AllySpells = null
@@ -155,6 +157,18 @@ func _resolve(
 		return _for_each_targetable_enemy(
 			func(i: int) -> bool: return _status_on_enemy(slot, spell, i)
 		)
+	if EnemyDebuffs.has_effect(spell) and target_type in ["single_enemy", "all_enemies"]:
+		var took: bool = (
+			_debuff_on_enemy(mag, spell, resolved_enemy_target)
+			if target_type == "single_enemy"
+			else _for_each_targetable_enemy(
+				func(i: int) -> bool: return _debuff_on_enemy(mag, spell, i)
+			)
+		)
+		if not took and bool(spell.get("dispel", false)):
+			# Nothing to strip on any target: said once per cast, not per enemy.
+			_battle.message.emit("No effect!")
+		return took
 	if target_type == "single_enemy" or target_type == "all_enemies":
 		# An offensive spell's status rider (magic.md § Derived Rules); null when none.
 		var rider: Dictionary = {}
@@ -196,14 +210,18 @@ func _for_each_targetable_enemy(apply: Callable) -> bool:
 
 ## A heal spell landing on enemy [param idx]. An Undead or Pallor enemy takes
 ## [param heal_amt] as damage — the heal as rolled, with its own variance and
-## 14,999 cap, no hit roll and no element or type multiplier — and that damage
-## counts as spell damage: threat for the caster, Weave Gauge for the cast, and
-## a kill handled like any other. A normal enemy is healed by it. Returns
+## 14,999 cap, no hit roll and no element or type multiplier, cut by the
+## caster's Despair (BattleDamageMods, #246) — and that damage counts as spell
+## damage: threat for the caster, Weave Gauge for the cast, and a kill handled
+## like any other. A normal enemy is healed by it. Returns
 ## whether the cast earns Weave Gauge, which only heal damage does: healing an
 ## enemy earns none (2026-10-29 ruling).
 func _heal_on_enemy(caster_slot: int, heal_amt: int, idx: int) -> bool:
 	var enemy: Node = _battle.get_enemies()[idx]
 	if enemy.get_type() in HEAL_REVERSING_TYPES:
+		heal_amt = BattleDamageMods.cut_dealt(
+			heal_amt, _battle.get_battle_state().get_member(caster_slot)
+		)
 		enemy.take_damage(heal_amt)
 		_land_spell_damage(caster_slot, heal_amt, idx)
 		return heal_amt > 0
@@ -256,6 +274,16 @@ func _magic_on_enemy(
 	return false
 
 
+## Land a debuff spell's stat penalty or dispel on enemy [param idx], cast at
+## [param mag]: a missed roll shows as a miss. Neither deals damage. Returns
+## whether it took (Weave Gauge); _resolve says when a dispel took nowhere.
+func _debuff_on_enemy(mag: int, spell: Dictionary, idx: int) -> bool:
+	var outcome: String = EnemyDebuffs.land(mag, spell, _battle.get_enemies()[idx])
+	if outcome == "missed":
+		_battle.damage_dealt.emit("enemy_%d" % idx, 0, "miss")
+	return outcome in ["debuffed", "dispelled"]
+
+
 ## Resolve a status spell against a single enemy (GAP-003). Returns true if a
 ## status was inflicted (drives Weave Gauge gain in do_magic).
 func _status_on_enemy(caster_slot: int, spell: Dictionary, idx: int) -> bool:
@@ -284,19 +312,28 @@ func _status_on_enemy(caster_slot: int, spell: Dictionary, idx: int) -> bool:
 	return false
 
 
-## Whether [param spell], if ally-side, has a battle effect: a heal with power,
-## a registry status or one of ALLY_EFFECTS (a timed one with a duration of a
-## turn or more). One not built yet (Leymirror, Last Breath, Drift, Forgeshield,
-## the field-only Waymark, Linewalk, Veilstep) is refused before MP is spent,
-## and the Magic menu grays it out. Enemy-side spells are not judged here.
+## Whether [param spell] has a battle effect, a timed one lasting a turn or
+## more. Ally-side: a heal with power, a registry status or one of ALLY_EFFECTS.
+## Enemy-side: a damage power, a status spell landing a registry status, or a
+## stat debuff or dispel (EnemyDebuffs, #514). One not built yet is refused
+## before MP is spent, and the Magic menu grays it out: Leymirror, Last Breath,
+## Drift, Forgeshield, the field-only Waymark, Linewalk and Veilstep, and on the
+## enemy side Crumble, Drag Tide, Spiritsight, Glintmark and the enemy-only
+## Drinker of Days.
 static func is_castable_in_battle(spell: Dictionary) -> bool:
-	if not str(spell.get("target", "single_enemy")) in ALLY_TARGETS:
-		return true
 	var turns: Variant = spell.get("duration")
 	for key: String in TIMED_EFFECTS:
 		if spell.get(key) != null and (turns == null or int(turns) < 1):
 			return false
-	if restores_hp(spell) or StatusEffects.is_known(str(spell.get("status", ""))):
+	var known_status: bool = StatusEffects.is_known(str(spell.get("status", "")))
+	if not str(spell.get("target", "single_enemy")) in ALLY_TARGETS:
+		var power: Variant = spell.get("power")
+		if power != null and int(power) > 0:
+			return true
+		if spell.get("category", "") == "status":
+			return known_status
+		return EnemyDebuffs.has_effect(spell)
+	if restores_hp(spell) or known_status:
 		return true
 	for key: String in ALLY_EFFECTS:
 		if spell.get(key) != null:

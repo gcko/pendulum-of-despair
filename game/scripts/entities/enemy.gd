@@ -66,8 +66,9 @@ var current_mp: int = 0
 ## [{name, remaining_seconds: float}] for a realtime status (Stop).
 var active_statuses: Array[Dictionary] = []
 
-## Active stat buffs (GAP-024): [{stat: String, mult: float, remaining_turns: int}].
-## Applied multiplicatively in get_stats(); ticked down at end of turn.
+## Active stat buffs (GAP-024) and debuffs (mult under 1): [{stat: String, mult:
+## float, remaining_turns: int}], at most one of each per stat. get_stats() sums
+## a stat's percentages and floors once; ticked down at end of turn.
 var active_buffs: Array[Dictionary] = []
 
 ## Transient boss-AI state (GAP-009): the data-driven BossAI interpreter reads
@@ -116,39 +117,47 @@ func initialize(p_enemy_id: String, p_act: String) -> void:
 func get_stats() -> Dictionary:
 	if enemy_data.is_empty():
 		return {}
-	var stat_keys: Array[String] = [
-		"hp",
-		"mp",
-		"atk",
-		"def",
-		"mag",
-		"mdef",
-		"spd",
-	]
+	var stat_keys: Array[String] = ["hp", "mp", "atk", "def", "mag", "mdef", "spd"]
 	var stats: Dictionary = {}
 	for key: String in stat_keys:
-		var base: int = enemy_data.get(key, 0)
-		var mult: float = buff_mult(key)
-		stats[key] = int(base * mult) if mult != 1.0 else base
+		stats[key] = maxi(0, int(enemy_data.get(key, 0)) * (100 + _buff_pct(key)) / 100)
 	return stats
 
 
-## Apply a stat buff (GAP-024). Replaces any existing buff on the same stat
-## (refresh, no stacking), per enemy-ability-conventions.md §2.4.
+## Apply a stat buff (GAP-024), or with [param mult] under 1 a debuff (Arc
+## Trap, Sunder). It refreshes one of the same direction on the stat rather
+## than stacking (progression.md § Equipment and Buffs, "Buff stacking"), and
+## adds to one of the other direction (combat-formulas.md § Buff & Debuff
+## Interaction, #514). Replacement goes by direction, not source: each stat has
+## one source per direction today, and a second one would replace the first.
 func apply_buff(stat: String, mult: float, duration: int) -> void:
 	for i: int in range(active_buffs.size() - 1, -1, -1):
-		if active_buffs[i].get("stat", "") == stat:
+		var b: Dictionary = active_buffs[i]
+		if b.get("stat", "") == stat and (float(b.get("mult", 1.0)) > 1.0) == (mult > 1.0):
 			active_buffs.remove_at(i)
 	active_buffs.append({"stat": stat, "mult": mult, "remaining_turns": duration})
 
 
 ## Combined multiplier for a stat from active buffs (1.0 when none).
 func buff_mult(stat: String) -> float:
-	var product: float = 1.0
+	return (100 + _buff_pct(stat)) / 100.0
+
+
+## A stat's buff percentages summed, "add, then floor once" (combat-formulas.md
+## § Buff & Debuff Interaction): +40% and -30% is +10%.
+func _buff_pct(stat: String) -> int:
+	var pct: int = 0
 	for b: Dictionary in active_buffs:
 		if b.get("stat", "") == stat:
-			product *= float(b.get("mult", 1.0))
-	return product
+			pct += roundi((float(b.get("mult", 1.0)) - 1.0) * 100.0)
+	return pct
+
+
+## Remove every buff above 1x, leaving debuffs (Dispersion). Returns how many.
+func strip_buffs() -> int:
+	var before: int = active_buffs.size()
+	active_buffs.assign(active_buffs.filter(func(b: Dictionary) -> bool: return b["mult"] <= 1.0))
+	return before - active_buffs.size()
 
 
 ## Tick buff durations down by 1 at END of the enemy's turn; remove expired.
