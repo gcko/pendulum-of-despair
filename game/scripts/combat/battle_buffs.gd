@@ -9,11 +9,10 @@ extends RefCounted
 ##   - spell buffs in member["spell_buffs"], {kind: {pct, remaining_turns}},
 ##     where kind is a stat ("atk", "def", "mag", "mdef") for a stat buff
 ##     (Ironhide, Wardglass, Rallying Cry, Attunement, Bulwark Line, Leyward),
-##     REGEN for Kindle Breath and Rekindling's regeneration, RERAISE for
-##     Last Breath's auto-revive, whose remaining_turns is UNTIMED: it lasts
-##     "until triggered or battle ends" (magic.md § 62 Last Breath), or
-##     FORGESHIELD for Forgeshield's ward, also UNTIMED, whose pct is the HP of
-##     magic it absorbs before it shatters (magic.md § 79 Forgeshield).
+##     REGEN for Kindle Breath and Rekindling's regeneration, or FORGESHIELD
+##     for Forgeshield's ward, whose remaining_turns is UNTIMED (no turn count
+##     ends it) and whose pct is the HP of magic it absorbs before it shatters
+##     (magic.md § 79 Forgeshield).
 ##
 ## Spell buffs are kept out of active_statuses because every status there must
 ## announce a canonical line on landing (test_status_effects.gd), and
@@ -32,10 +31,6 @@ const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 
 ## The spell_buffs kind for regeneration.
 const REGEN: String = "regen"
-
-## The spell_buffs kind for Last Breath's Reraise; its pct is the share of max
-## HP the bearer stands again with.
-const RERAISE: String = "reraise"
 
 ## The spell_buffs kind for Forgeshield; its pct is the HP of the next spell's
 ## damage it absorbs, 150 + the caster's MAG when cast.
@@ -73,19 +68,9 @@ static func grant(state: Node, slot: int, kind: String, pct: int, turns: int) ->
 
 
 ## A member fainted: every positive status and spell buff on it ends, and so do
-## Confusion and Berserk (KO_CLEARED_STATUSES). A Reraise ends with them, spent
-## on this fall: once BattleState has announced it (member_died), the member
-## stands again at its share of max HP, at least 1, as a revival spell stands
-## them, so the battle hears the fall and then the revive, and puts them back
-## on the ATB with an empty gauge.
+## Confusion and Berserk (KO_CLEARED_STATUSES).
 static func on_fainted(state: Node, slot: int) -> void:
 	var m: Dictionary = state.get_member(slot)
-	var reraise: int = int(m.get("spell_buffs", {}).get(RERAISE, {}).get("pct", 0))
-	if reraise > 0:
-		var hp: int = maxi(1, int(m.get("max_hp", 0)) * reraise / 100)
-		state.member_died.connect(
-			func(_fallen: int) -> void: state.heal(slot, hp, true), CONNECT_ONE_SHOT
-		)
 	for s: Dictionary in (m.get("active_statuses", []) as Array).duplicate():
 		var status: String = s.get("name", "")
 		if StatusEffects.is_positive(status) or status in KO_CLEARED_STATUSES:
@@ -145,7 +130,7 @@ static func on_turn_end(state: Node, slot: int) -> void:
 
 ## The spell buff's +% to [param stat] on member [param m] (0 when none).
 static func stat_pct(m: Dictionary, stat: String) -> int:
-	if stat in [REGEN, RERAISE, FORGESHIELD]:
+	if stat in [REGEN, FORGESHIELD]:
 		return 0
 	return int(m.get("spell_buffs", {}).get(stat, {}).get("pct", 0))
 

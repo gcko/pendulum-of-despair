@@ -1,7 +1,7 @@
 extends RefCounted
 ## Lands an ally spell on the party (#503): the revive, heal, stat buff,
-## regeneration, Reraise, Forgeshield, MP restore, cure or registry status its
-## data carries, on the slots its target type names. Each value is the spell's own data, from its
+## regeneration, Forgeshield, MP restore, cure or registry status its data
+## carries, on the slots its target type names. Each value is the spell's own data, from its
 ## magic.md entry (magic.md § Derived Rules > 'Ally spell effects').
 ##
 ## Extracted from battle_magic_command.gd, which validates the cast, spends its
@@ -65,9 +65,6 @@ func _land_on_ally(spell: Dictionary, slot: int, heal_amt: int, mag: int) -> boo
 		landed = Buffs.grant(state, slot, str(buff.get("stat", "")), pct, turns) or landed
 	if spell.get("regen_pct") != null:
 		landed = Buffs.grant(state, slot, Buffs.REGEN, int(spell["regen_pct"]), turns) or landed
-	if spell.get("reraise_pct") != null:
-		var pct: int = int(spell["reraise_pct"])
-		landed = Buffs.grant(state, slot, Buffs.RERAISE, pct, Buffs.UNTIMED) or landed
 	if spell.get("magic_absorb_base") != null:
 		# Forgeshield's threshold: "150 + caster MAG" (magic.md § 79).
 		var held: int = int(spell["magic_absorb_base"]) + mag

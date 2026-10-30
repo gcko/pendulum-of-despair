@@ -67,7 +67,7 @@ func _maren_spells(level: int, member: Dictionary = {"current_mp": 999}) -> Dict
 
 func test_ally_spells_with_no_battle_effect_are_grayed_in_the_magic_menu() -> void:
 	var spells: Dictionary = _maren_spells(40)
-	for id: String in ["leymirror", "drift", "waymark", "linewalk"]:
+	for id: String in ["leymirror", "last_breath", "drift", "waymark", "linewalk"]:
 		assert_true(spells.has(id), "precondition: Maren knows %s" % id)
 		assert_false(spells.get(id, {}).get("enabled", true), "%s is grayed" % id)
 

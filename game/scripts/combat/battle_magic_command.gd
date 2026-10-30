@@ -2,10 +2,9 @@ class_name BattleMagicCommand
 extends RefCounted
 ## The Magic command in battle: validates targets, spends MP, and resolves a
 ## spell's damage, healing or status against the chosen side, an ally spell's
-## revive, stat buff, regeneration, Reraise, Forgeshield, MP restore, cure or
-## escape (#503), an
-## enemy debuff's stat penalty, dispel or mark (#514), or a heal or Regen
-## turned on an enemy (BattleEnemyHeal).
+## revive, stat buff, regeneration, Forgeshield ward, MP restore, cure or escape
+## (#503), an enemy debuff's stat penalty, dispel or mark (#514), or a heal or
+## Regen turned on an enemy (BattleEnemyHeal).
 ##
 ## Extracted from battle_manager.gd (GAP-087) so the manager holds the ATB loop
 ## and the command dispatch while each command owns its own resolution rules.
@@ -36,7 +35,6 @@ const ALLY_TARGETS: Array[String] = ["single_ally", "all_allies", "fainted_ally"
 const ALLY_EFFECTS: Array[String] = [
 	"stat_buff",
 	"regen_pct",
-	"reraise_pct",
 	"magic_absorb_base",
 	"revive_pct",
 	"mp_restore_pct",
@@ -295,9 +293,9 @@ func _status_on_enemy(caster_slot: int, spell: Dictionary, idx: int) -> bool:
 ## more. Ally-side: a heal with power, a registry status or one of ALLY_EFFECTS.
 ## Enemy-side: a damage power, a status spell landing a registry status, or a
 ## stat debuff, dispel or mark (EnemyDebuffs, #514). One not built yet is
-## refused before MP is spent, and the Magic menu grays it out: Leymirror,
-## Drift, the field-only Waymark, Linewalk and Veilstep, and on the enemy side
-## Crumble, Spiritsight and the enemy-only Drinker of Days.
+## refused before MP is spent, and the Magic menu grays it out: Leymirror, Last
+## Breath, Drift, the field-only Waymark, Linewalk and Veilstep, and on the
+## enemy side Crumble, Spiritsight and the enemy-only Drinker of Days.
 static func is_castable_in_battle(spell: Dictionary) -> bool:
 	var turns: Variant = spell.get("duration")
 	for key: String in TIMED_EFFECTS:
