@@ -800,7 +800,11 @@
 					"character": "torren",
 					"level": 10
 				}
-			]
+			],
+			"stat_debuff": {
+				"stat": "atb_fill",
+				"pct": 30
+			}
 		},
 		{
 			"id": "dispersion",

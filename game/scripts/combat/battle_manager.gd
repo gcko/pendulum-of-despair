@@ -364,19 +364,22 @@ func _on_enemy_died(enemy: Node) -> void:
 		message.emit(line)
 
 
-## Recompute an enemy's ATB freeze/mods from its current statuses, and its SPD
-## from its buffs, so a SPD buff or debuff changes how fast the gauge fills.
+## Recompute an enemy's ATB freeze/mods from its current statuses and Drag
+## Tide's fill penalty (its "atb_fill" debuff, #514), and its SPD from its buffs
+## as get_stats floors it, so a SPD buff or debuff changes how fast it fills.
 ## Idempotent; called for living enemies each frame and after status changes so
 ## cured or expired statuses clear (StatusEffects.atb_state is the pure core).
 func resync_enemy_atb(idx: int) -> void:
 	if idx < 0 or idx >= _enemies.size():
 		return
 	var eid: String = "enemy_%d" % idx
-	var st: Dictionary = StatusEffects.atb_state(_enemies[idx].active_statuses)
+	var e: Node = _enemies[idx]
+	var st: Dictionary = StatusEffects.atb_state(e.active_statuses)
+	if e.buff_mult("atb_fill") != 1.0:
+		st["mods"].append(e.buff_mult("atb_fill"))
 	_atb.set_frozen(eid, st["frozen"])
 	_atb.set_status_mods(eid, st["mods"])
-	var e: Node = _enemies[idx]
-	_atb.set_spd(eid, int(e.enemy_data.get("spd", 0) * e.buff_mult("spd")))  # Arc Trap
+	_atb.set_spd(eid, int(e.get_stats().get("spd", 0)))  # Arc Trap
 	if st["zeroed"]:
 		_atb.set_gauge(eid, 0)
 

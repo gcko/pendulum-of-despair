@@ -38,13 +38,12 @@ const STAT_DEBUFFS: Array = [
 ]
 
 ## Enemy-side spells with no battle effect built yet: Crumble's resistance
-## shift, Spiritsight's scan, Glintmark's mark, and Drag Tide's fill-rate
-## penalty, which needs the enemy gauge resync to read it.
+## shift, Spiritsight's scan and Glintmark's mark. Drag Tide's fill-rate
+## penalty is built, and test_drag_tide.gd pins it.
 const UNBUILT: Array = [
 	["spirit", "crumble"],
 	["spirit", "spiritsight"],
 	["streetwise", "glintmark"],
-	["ley_line", "drag_tide"],
 ]
 
 var _booted: Node = null
@@ -412,7 +411,7 @@ func _menu_spells(character_id: String, level: int) -> Dictionary:
 
 func test_unbuilt_enemy_spells_are_grayed_in_the_magic_menu() -> void:
 	var maren: Dictionary = _menu_spells("maren", 40)
-	for id: String in ["crumble", "spiritsight", "drag_tide"]:
+	for id: String in ["crumble", "spiritsight"]:
 		assert_true(maren.has(id), "precondition: Maren knows %s" % id)
 		assert_false(maren.get(id, {}).get("enabled", true), "%s is grayed" % id)
 	var sable: Dictionary = _menu_spells("sable", 40)
@@ -422,6 +421,8 @@ func test_unbuilt_enemy_spells_are_grayed_in_the_magic_menu() -> void:
 
 func test_built_enemy_debuffs_stay_selectable_in_the_magic_menu() -> void:
 	var maren: Dictionary = _menu_spells("maren", 40)
-	for id: String in ["sunder", "fray", "dampening_field", "dispersion", "mass_dispersion"]:
+	for id: String in [
+		"sunder", "fray", "dampening_field", "drag_tide", "dispersion", "mass_dispersion"
+	]:
 		assert_true(maren.has(id), "precondition: Maren knows %s" % id)
 		assert_true(maren.get(id, {}).get("enabled", false), "%s can be cast" % id)

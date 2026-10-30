@@ -318,8 +318,7 @@ func _status_on_enemy(caster_slot: int, spell: Dictionary, idx: int) -> bool:
 ## stat debuff or dispel (EnemyDebuffs, #514). One not built yet is refused
 ## before MP is spent, and the Magic menu grays it out: Leymirror, Last Breath,
 ## Drift, Forgeshield, the field-only Waymark, Linewalk and Veilstep, and on the
-## enemy side Crumble, Drag Tide, Spiritsight, Glintmark and the enemy-only
-## Drinker of Days.
+## enemy side Crumble, Spiritsight, Glintmark and the enemy-only Drinker of Days.
 static func is_castable_in_battle(spell: Dictionary) -> bool:
 	var turns: Variant = spell.get("duration")
 	for key: String in TIMED_EFFECTS:

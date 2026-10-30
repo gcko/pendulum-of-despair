@@ -47,7 +47,7 @@ This table supersedes the 2026-06-27 figures, which were up to 55% stale by the 
 | `game/scripts/autoload/party_state.gd` | 751 | 861 | 512 | 527 |
 | `game/scripts/core/exploration.gd` | 719 | 728 | 590 | 590 |
 | `game/scripts/autoload/audio_manager.gd` | 710 | 710 | 536 | 334 |
-| `game/scripts/combat/battle_manager.gd` | 550 | 724 | 414 | 569 |
+| `game/scripts/combat/battle_manager.gd` | 550 | 724 | 414 | 572 |
 | `game/scripts/util/inventory_helpers.gd` | 453 | 705 | 386 | 386 |
 | `game/scripts/ui/menu_ley_crystal.gd` | 451 | 451 | 341 | 341 |
 | `game/scripts/core/cutscene_player.gd` | 429 | 464 | 339 | 339 |

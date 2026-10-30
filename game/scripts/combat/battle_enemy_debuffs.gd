@@ -7,6 +7,9 @@ extends RefCounted
 ## The keys are each spell's own data, valued from its magic.md entry:
 ##   - `stat_debuff: {stat, pct}` lowers one stat by `pct`% for the spell's
 ##     `duration` turns (Sunder DEF, Fray MDEF, Dampening Field MAG: 30 for 5).
+##     Drag Tide's stat is "atb_fill", the gauge's fill speed (30 for 5), which
+##     get_stats never reads, so no hit or evasion roll sees it; the battle's
+##     enemy gauge resync reads it as a fill multiplier.
 ##     It rolls the spell's `hit_rate` through the two-stage status roll, as
 ##     "debuff spells ... also roll to hit and use the standard band"
 ##     (magic.md § Derived Rules), and lands as an enemy stat buff of the
