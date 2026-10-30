@@ -6,7 +6,8 @@ extends GutTest
 ## Design law: abilities.md § Torren — Spiritcall ("Each spirit starts at Favor
 ## 0", "Max Favor 3", "Favor is persistent across battles"), save-system.md
 ## § 3.11 and save-system.md § 10: spirit_favor is an additive optional field,
-## so a save without it loads with every spirit at 0 and stays on version 2.
+## so a save without it loads with every spirit at 0 and stays on version 2;
+## present, it is type-checked like any field (save-system.md § 11).
 
 const TEST_SLOT: int = 2
 
@@ -78,13 +79,36 @@ func test_a_save_from_before_favor_was_saved_loads_every_spirit_at_zero() -> voi
 	assert_eq(_favor("thornveil"), 0)
 
 
-func test_a_save_holding_malformed_favor_loads_it_as_zero() -> void:
-	var data: Dictionary = PartyState.build_save_data()
-	data["spirit_favor"] = "three"
-	PartyState.spirit_favor = {"thornveil": 3}
-	PartyState.load_from_save(data)
-	assert_eq(_favor("thornveil"), 0, "a non-dictionary block reads as no Favor")
-	data["spirit_favor"] = {"thornveil": "lots", "dewfall": 9}
-	PartyState.load_from_save(data)
-	assert_eq(_favor("thornveil"), 0, "a non-number reads as 0")
-	assert_eq(_favor("dewfall"), 3, "a number past the cap is held to 3")
+func test_a_save_whose_favor_block_is_not_an_object_is_refused_as_corrupt() -> void:
+	_write_slot_with_favor("three")
+	assert_eq(SaveManager.load_game(TEST_SLOT).get("error", ""), "invalid")
+	assert_push_error("Invalid save data", "reported, not loaded as no Favor")
+
+
+func test_a_save_holding_a_non_number_for_a_spirit_is_refused_as_corrupt() -> void:
+	_write_slot_with_favor({"thornveil": "lots", "dewfall": 1})
+	assert_eq(SaveManager.load_game(TEST_SLOT).get("error", ""), "invalid")
+	assert_push_error("Invalid save data")
+
+
+func test_a_number_past_the_cap_loads_held_to_three() -> void:
+	_write_slot_with_favor({"dewfall": 9, "greyveil": -4})
+	var loaded: Dictionary = SaveManager.load_game(TEST_SLOT)
+	assert_false(loaded.has("error"), "a number is the right shape")
+	PartyState.load_from_save(loaded)
+	assert_eq(_favor("dewfall"), 3)
+	assert_eq(_favor("greyveil"), 0)
+
+
+## Save to TEST_SLOT, then rewrite the file on disk with [param favor] as its
+## spirit_favor block, as a hand-edited or damaged save would carry it.
+func _write_slot_with_favor(favor: Variant) -> void:
+	assert_true(SaveManager.save_game(TEST_SLOT), "saved")
+	var path: String = SaveManager.SAVE_DIR + "slot_%d.json" % TEST_SLOT
+	var file: FileAccess = FileAccess.open(path, FileAccess.READ)
+	var data: Dictionary = JSON.parse_string(file.get_as_text())
+	file.close()
+	data["spirit_favor"] = favor
+	file = FileAccess.open(path, FileAccess.WRITE)
+	file.store_string(JSON.stringify(data))
+	file.close()

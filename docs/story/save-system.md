@@ -301,9 +301,10 @@ spirit_favor: {
 An additive optional field (§ 10 Migration Types): saves written before Favor
 was persisted have no `spirit_favor`, and a spirit with no entry is at Favor 0,
 the value every spirit starts at. So a save without it loads with every spirit
-at 0, with no version bump and no migration. A block that is not an object
-reads as no Favor; an entry that is not a number reads as 0, and a numeric one
-is held to 0-3.
+at 0, with no version bump and no migration. Present, it is type-checked like
+any other field (§ 11 Corruption Detection): a `spirit_favor` that is not an
+object, or holds a value that is not a number, marks the save corrupted and it
+does not load. A numeric value outside 0-3 is held to 0-3 on load.
 
 ---
 

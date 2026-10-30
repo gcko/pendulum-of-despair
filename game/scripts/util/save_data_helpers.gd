@@ -111,6 +111,17 @@ static func build_save_dict(
 	}
 
 
+## Whether [param favor] has the shape a save's spirit_favor must have when it
+## is present (save-system.md § 3.11): an object whose every value is a number.
+static func is_favor_table(favor: Variant) -> bool:
+	if not favor is Dictionary:
+		return false
+	for value: Variant in (favor as Dictionary).values():
+		if not (value is int or value is float):
+			return false
+	return true
+
+
 ## Resolve formation active indices to uppercase character names for display.
 static func format_active_party_names(save_data: Dictionary) -> String:
 	var party_arr: Array = save_data.get("party", [])

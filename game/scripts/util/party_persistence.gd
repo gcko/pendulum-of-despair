@@ -85,9 +85,10 @@ static func saved_arcanite_charges(data: Dictionary) -> int:
 
 ## Torren's Spirit Favor as a save records it in spirit_favor (save-system.md
 ## § 3.11). It is an additive optional field (§ 10): a save written before it
-## was persisted has none, and loads with every spirit at 0, as does a block
-## that is not a Dictionary. PartyState's setter drops non-numbers and holds
-## each value to 0..3.
+## was persisted has none, and loads with every spirit at 0. A malformed block
+## never gets here from disk, since SaveManager refuses the file as corrupt
+## (SaveDataHelpers.is_favor_table); PartyState's setter still holds each value
+## to 0..3.
 static func saved_spirit_favor(data: Dictionary) -> Dictionary:
 	var favor: Variant = data.get("spirit_favor", {})
 	return favor as Dictionary if favor is Dictionary else {}
