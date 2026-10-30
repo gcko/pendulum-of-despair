@@ -444,7 +444,14 @@ From [magic.md](magic.md):
 
 Some weapons and abilities have elemental properties:
 - Lira's Overcharge: Storm element added to the ally's next attack (the physical pipeline below applies when that attack is physical)
-- Elemental weapons (defined in equipment, Gap 1.5)
+- Elemental weapons (defined in equipment, Gap 1.5). The equipped weapon's
+  element applies to every physical strike a party member makes on an enemy:
+  the Attack command, an auto-attack under Confusion or Berserk, and Riposte's
+  counter, with weakness, resistance, immunity and absorption all as below.
+  When Overcharge also applies, the more favorable of Storm and the weapon's
+  element decides ([abilities.md](abilities.md) § Lira — Forgewright). A
+  confused member's blow on an ally and Shatter Guard's fixed damage carry no
+  element (ruling of 2026-10-30, [#513](https://github.com/gcko/pendulum-of-despair/issues/513)).
 
 Lira's Arc Trap used to be listed here. It is not a physical attack: it is a
 device whose damage scales with Lira's Magic stat at spell power 30
@@ -528,13 +535,32 @@ a user ruling of 2026-10-29 or as a reading of the canon above.
   lands at the end of the Pallor enemy's own turn (reading), and only a living
   party member's Despair feeds it (ruling).
 
+### Attacker Status Modifiers
+
+What a status does to the blows its bearer deals, party member or enemy alike
+([#246](https://github.com/gcko/pendulum-of-despair/issues/246)). Each point is
+a user ruling of 2026-10-30 unless marked as a reading.
+
+- **Despair cuts all damage its bearer deals by 20%** ([magic.md](magic.md)
+  § Status Effect Reference: "damage dealt -20%"). That is physical attacks,
+  spells, abilities, Lira's Shock Coil and Arc Trap ticks, and counters such
+  as Riposte. It does not cut healing. A heal turned into damage on an Undead
+  is damage, so Despair cuts it. In the physical formula the
+  ×0.8 is a step-6 modifier, as Berserk's +50% is; in the magic formula it is
+  a step-5 buff modifier (reading). Shatter Guard's fixed damage is cut after
+  its caps, never below 1 (reading).
+- **Blind halves its bearer's physical hit rate** ([magic.md](magic.md): "Physical
+  accuracy -50%"). The rate from § Physical Attack Resolution step 1 is
+  multiplied by 0.5 before the [20%, 99%] clamp and floored, so an even-SPD 90%
+  becomes 45% (the floor is a reading). Spells keep their full hit rate.
+
 ---
 
 ## Combat Resolution Order
 
 ### Physical Attack Resolution
 
-1. **Hit Rate% roll** — `90 + (attacker.SPD - target.SPD) / 4`, clamped to [20%, 99%]. Miss = 0 damage, stop.
+1. **Hit Rate% roll** — `90 + (attacker.SPD - target.SPD) / 4`, times the attacker's accuracy multiplier (Blind 0.5, else 1.0; § Attacker Status Modifiers), clamped to [20%, 99%]. Miss = 0 damage, stop.
 2. **Evasion% roll** — `target.SPD / 4`, cap 50%. Dodged = 0 damage, stop.
 3. **Calculate base damage** — `(ATK² × ability_mult) / 6 - target.DEF`
 4. **Floor check** — `max(1, base_damage)`
