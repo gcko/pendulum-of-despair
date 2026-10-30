@@ -346,6 +346,52 @@ unstated. `game/tests/test_spell_balance.gd` asserts all of them against
   *The multiplier is charged:* a cross-trained learner pays `mp_cost` × 1.5
   rounded **up** (an odd cost of 7 costs 11), and the battle and field menus
   show and check that same figure. A native learner pays the base `mp_cost`.
+- **Ally spell effects in battle (#503).** A spell aimed at the party carries
+  its battle effect in its own data keys, each valued from its entry above:
+  - `stat_buff: {stat, pct}` raises one stat (`atk`, `def`, `mag` or `mdef`)
+    by `pct`% for `duration` turns: Ironhide and Wardglass 40, Rallying Cry
+    and Attunement 30, Bulwark Line and Leyward 25. A spell buff is a
+    percentage term of its own, so it adds to an item boost or a Rally
+    ([combat-formulas.md](combat-formulas.md) § Buff & Debuff Interaction).
+    Two stat-buff spells on one stat keep the stronger: a weaker cast leaves a
+    stronger buff in force on its own clock, and an equal or stronger cast
+    replaces it and restarts its duration (2026-10-30 ruling). Bulwark Line
+    does not replace Ironhide; Ironhide replaces Bulwark Line.
+  - `regen_pct` is Regen: that percent of max HP, at least 1, at the start of
+    each of the bearer's turns for `duration` turns (Kindle Breath and
+    Rekindling: 5, for 4 turns). Cael's Second Wind
+    ([abilities.md](abilities.md) § Cael — Rally) and a spell's Regen on one
+    ally are one regen effect: the stronger applies each turn and the two do
+    not stack, so Second Wind's 5% with Kindle Breath's 5% heals 5%, not 10%
+    (2026-10-30 ruling).
+  - `revive_pct` revives a Fainted ally (target `fainted_ally`) at that
+    percent of max HP: Spirit Recall 25, Second Dawn 75.
+  - `mp_restore_pct` restores that percent of the target's max MP
+    (Leydraught 20).
+  - `hp_cost_pct` is paid by the caster as that percent of its own max HP,
+    floored (Leydraught 15). The caster must have more HP than the cost: a
+    cost that would KO the caster is refused, and the battle Magic menu grays
+    the spell out (2026-10-30 ruling).
+  - `cure: {only, except, count}` names what the spell cures. `only` lists the
+    statuses in priority order; without it every negative status is cured but
+    those in `except`. `count` caps how many go per cast, absent meaning all.
+    Purge is `{except: [stop, despair]}`, which leaves Berserk curable by it
+    alone. Cleansing Draught is `{only: [poison, burn, sleep, confusion,
+    silence, blind], count: 1}`: it removes the first of those the target
+    carries, in that order (2026-10-30 ruling). Hollow Mend adds
+    `{only: [despair]}` to its heal. No cure removes a positive status.
+  - `escape: true` (Smokeveil) ends a non-boss battle as a successful Flee
+    does, and is refused in a boss fight.
+
+  A timed effect (`stat_buff`, `regen_pct`) needs a `duration` of at least one
+  turn. A party-side spell with none of these keys, no heal power and no
+  registry `status` has no battle effect yet and is refused before any MP is
+  spent: Leymirror, Last Breath, Drift and Forgeshield, plus the field-only
+  Waymark, Linewalk and Veilstep. Turned on the enemy line, a revival spell
+  kills an Undead outright and is refused on a Pallor or a normal foe, as a
+  revival item is ([bestiary/README.md](bestiary/README.md) § Undead), and
+  Kindle Breath is refused until an enemy-side Regen tick exists (2026-10-30
+  rulings).
 
 ---
 
@@ -1653,6 +1699,8 @@ For quick reference, here are all status effects that spells in this system can 
 
 *For positive statuses, "Cured By" indicates spells that can remove the buff. Dispersion and Mass Dispersion target enemies, so in practice these buffs are stripped when an enemy casts Dispersion/Mass Dispersion against the buffed party. Player-side Dispersion removes enemy buffs, not friendly ones.*
 
+**Fainting clears statuses.** A member who Faints loses every positive status, and Confusion and Berserk as well, so a revived member acts normally (2026-10-30 ruling).
+
 ---
 
 ## Spell Count Summary
@@ -1692,7 +1740,7 @@ For quick reference, here are all status effects that spells in this system can 
 ### Interaction with Combat System
 
 - All spell damage uses the magic damage formula from the systems reference: `magic_damage = min(14999, max(1, (caster.mag * spell.power) / 4 - target.mdef) * element_mod * variance)` where `variance = random_int(240, 255) / 256`. See [combat-formulas.md](combat-formulas.md) for full resolution order.
-- Buff/debuff percentages modify the relevant stat directly (stacking rules: same buff does not stack, different buffs do)
+- Buff/debuff percentages modify the relevant stat directly. Buffs on different stats stack; two stat-buff spells on the same stat do not: the stronger stays, and an equal or stronger cast replaces it and restarts its duration (2026-10-30 ruling; § Derived Rules > 'Ally spell effects')
 - Status hit rates are modified by: `effective_rate = base_rate * (caster.mag / (caster.mag + target.mdef))`
 - Reflect bounces the spell back using the original caster's MAG stat against the original caster's MDEF
 - Unique command effects can modify spell output with a percentage multiplier. For example, Maren's Resonance (see abilities.md) amplifies the next ally spell by +30% damage or healing, applied as a multiplier after the base calculation and elemental adjustments
