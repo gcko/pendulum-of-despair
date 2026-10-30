@@ -104,7 +104,7 @@ func _ready() -> void:
 		_on_enemy_status_applied
 	)
 	for e: Node in _enemies:
-		_enemy_turn.announce_wakes(e)
+		_enemy_turn.announce_status_ends(e)
 	BattleSetup.apply_atb_config(_atb)
 	_atb.apply_formation(_formation_type)
 	if _formation_type == "back_attack":

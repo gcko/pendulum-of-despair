@@ -20,6 +20,9 @@ signal status_applied(status_name: String, duration: int)
 ## Emitted when a status effect is removed.
 signal status_removed(status_name: String)
 
+## Emitted, after status_removed, when a status ran out rather than being taken off.
+signal status_expired(status_name: String)
+
 ## Emitted when HP reaches 0.
 signal died
 
@@ -278,15 +281,14 @@ func is_removed_from_combat() -> bool:
 ## are not turn-based and are left to tick_realtime_statuses.
 func tick_statuses() -> void:
 	for i: int in range(active_statuses.size() - 1, -1, -1):
-		if not active_statuses[i].has("remaining_turns"):
-			continue
-		if active_statuses[i].get("remaining_turns", 0) < 0:
-			continue
+		if active_statuses[i].get("remaining_turns", -1) < 0:
+			continue  # realtime (no remaining_turns) or UNTIL_CURED
 		active_statuses[i]["remaining_turns"] -= 1
 		if active_statuses[i]["remaining_turns"] <= 0:
 			var expired_name: String = active_statuses[i].get("name", "")
 			active_statuses.remove_at(i)
 			status_removed.emit(expired_name)
+			status_expired.emit(expired_name)
 
 
 ## Count realtime statuses (Stop) down by [param delta] battle seconds, the
@@ -300,14 +302,12 @@ func tick_realtime_statuses(delta: float) -> void:
 			var expired_name: String = active_statuses[i].get("name", "")
 			active_statuses.remove_at(i)
 			status_removed.emit(expired_name)
+			status_expired.emit(expired_name)
 
 
 ## Check if a status is currently active.
 func has_status(status_name: String) -> bool:
-	for status: Dictionary in active_statuses:
-		if status.get("name", "") == status_name:
-			return true
-	return false
+	return active_statuses.any(func(s: Dictionary) -> bool: return s.get("name", "") == status_name)
 
 
 ## Apply damage. Clamps amount >= 0 and HP to 0. Emits damage_taken and died (once).

@@ -233,7 +233,7 @@ func _do_spawn(action: Dictionary, enemy: Node, enemies: Array[Node], idx: int) 
 		_atb.add_combatant(eid, new_enemy.get_stats().get("spd", 10), true)
 		new_enemy.died.connect(_manager._on_enemy_died.bind(new_enemy))
 		new_enemy.status_applied.connect(_manager._on_enemy_status_applied.bind(new_enemy))
-		announce_wakes(new_enemy)
+		announce_status_ends(new_enemy)
 		spawned += 1
 	if spawned > 0:
 		_manager.message.emit("Corrupted Spawns emerge from the depths!")
@@ -269,13 +269,18 @@ static func wake_lines(state: Node, before: Array[int]) -> Array[String]:
 
 
 ## Announce [param enemy] waking (a hit cured its Sleep, as enemy.take_damage
-## does) with the same canonical line the party uses. Wired to each enemy's
-## status_removed by BattleManager and by _do_spawn.
-func announce_wakes(enemy: Node) -> void:
+## does) and its Poison or Silence running out (#246), with the lines the party
+## gets; any other status runs out silently. Wired by BattleManager and _do_spawn.
+func announce_status_ends(enemy: Node) -> void:
 	enemy.status_removed.connect(
 		func(status_name: String) -> void:
 			if status_name == "sleep" and enemy.is_alive:
 				_manager.message.emit(StatusEffects.wake_notice(enemy.get_display_name()))
+	)
+	enemy.status_expired.connect(
+		func(status_name: String) -> void:
+			if not StatusEffects.wears_off_notice(status_name).is_empty():
+				_manager.message.emit(StatusEffects.wears_off_notice(status_name))
 	)
 
 
