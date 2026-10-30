@@ -405,6 +405,17 @@ The Combo menu lists a combo when all three of these hold. The rulings are recor
 
 MP does not remove a combo from the list. A combo one partner cannot pay for is listed but cannot be chosen, the way Magic lists a spell its caster cannot afford.
 
+### Calling a Combo
+
+These readings were posted on [#176](https://github.com/gcko/pendulum-of-despair/issues/176) for slice 176b, where the text above is silent.
+
+1. **The menu is the actor's.** Combo sits after the unique command in the battle command list ([ui-design.md](ui-design.md) § 2.4). Its menu lists only the combos that include the character whose turn it is and a partner who is ready by the rules above. With none to list, the Combo command is grayed.
+2. **Grayed, not hidden.** A listed combo is grayed when a partner cannot pay their share, or when its usage condition is unmet. The conditions are Shattered Vanguard's "stance with stored damage", Spiritward's Bulwark stance, Arcane Convergence's deployed devices and Ambush Protocol's stolen Forgewright component. A combo whose effect is not built yet is grayed too. No document says which items are Forgewright components, so Ambush Protocol's condition is never met yet.
+3. **It uses both turns.** The combo is the turn of both characters. The partner's start-of-turn effects run as the combo is called, and Second Wind's regen lands then. Afterward both turns close: both ATB gauges reset, and each character's end-of-turn ticks (Poison, Burn, status countdowns) run once, as on a turn of their own. A combo is checked again when it is chosen, so a partner Confused, Silenced or KO'd since the menu opened stops it and nothing is spent.
+4. **MP is split** per the Combo List's shares (`mp_costs` in `combos.json`). The combo is refused, spending nothing, if either character is short.
+5. **Ley Torrent.** The blast goes through the magic formula ([combat-formulas.md](combat-formulas.md) § Magic Damage Resolution) with the two partners' MAG added together at spell power 16. The formula's base is MAG × power / 4, so this is the Combo List's (Maren's Magic + Torren's Magic) × 4. The target's MDEF is taken as 0, and the standard hit roll and variance apply. Each partner's Despair cuts it, because both of them deal the blow: one partner in Despair takes 20% off, and both take 0.8 × 0.8 (36% off). The hit roll uses Maren's SPD, since she channels the blast, and the threat is hers. Maren gains 30 WG in place of the normal cast gain (not 30 + 5, and Torren's share earns her no +10). Like the cast gain it replaces, the 30 needs the blast to land on at least one enemy.
+6. **What is built.** Slice 176b builds Ley Torrent. The other ten combos land in 176c, each with the sub-ability slice of [#158](https://github.com/gcko/pendulum-of-despair/issues/158) it draws on. Cael's Echo also waits on its gate, because nothing in the game sets `cael_betrayal_complete` yet.
+
 ---
 
 ## 3. Magic System Framework
