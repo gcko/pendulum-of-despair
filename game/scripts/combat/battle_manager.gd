@@ -479,6 +479,9 @@ func _check_end_conditions() -> void:
 			return
 		victory.emit(r)
 	elif _state.is_party_wiped():
+		# Resolved as a victory is, so the frame stops here and defeats once.
+		_battle_resolved = true
+		_awaiting_input_for = ""
 		defeat.emit()
 		exit_battle("faint")
 
