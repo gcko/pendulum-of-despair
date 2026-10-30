@@ -151,9 +151,7 @@ func _tick_enemy_statuses(enemy: Node, idx: int) -> void:
 				dmg = maxi(1, int(dmg * mult))
 			enemy.take_damage(dmg, false)  # DoT must not wake Sleep/Confusion
 			_manager.damage_dealt.emit(eid, dmg, "burn" if sname == "burn" else "poison")
-			# A DoT kill must clean up like any other kill, or the dead enemy's
-			# gauge keeps filling and re-enters the ready queue.
-			if not enemy.is_alive:
+			if not enemy.is_alive:  # cleaned up like any kill, or its gauge refills
 				_manager.combatant_died.emit(eid)
 				_atb.remove_combatant(eid)
 	if enemy.is_alive and enemy.get_type() == "pallor" and _party_despairs():
@@ -269,9 +267,9 @@ static func wake_lines(state: Node, before: Array[int]) -> Array[String]:
 	return out
 
 
-## Announce [param enemy] waking (a hit cured its Sleep, as enemy.take_damage
-## does) and its Poison or Silence running out (#246), with the lines the party
-## gets; any other status runs out silently. Wired by BattleManager and _do_spawn.
+## Announce [param enemy] waking (a hit cured its Sleep) and its Poison or
+## Silence running out (#246), with the party's lines; any other status, and any
+## on a fallen enemy, ends silently. Wired by BattleManager and _do_spawn.
 func announce_status_ends(enemy: Node) -> void:
 	enemy.status_removed.connect(
 		func(status_name: String) -> void:
@@ -280,8 +278,9 @@ func announce_status_ends(enemy: Node) -> void:
 	)
 	enemy.status_expired.connect(
 		func(status_name: String) -> void:
-			if not StatusEffects.wears_off_notice(status_name).is_empty():
-				_manager.message.emit(StatusEffects.wears_off_notice(status_name))
+			var line: String = StatusEffects.wears_off_notice(status_name)
+			if enemy.is_alive and not line.is_empty():
+				_manager.message.emit(line)
 	)
 
 
