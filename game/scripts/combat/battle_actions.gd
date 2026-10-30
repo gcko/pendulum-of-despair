@@ -30,10 +30,9 @@ static func apply_status_to_enemy(
 ) -> Dictionary:
 	if not enemy.is_alive or not StatusEffects.is_known(status_name):
 		return {"hit": false, "inflicted": false, "type": "no_effect", "status": status_name}
-	# Immune targets don't roll — auto no-effect (type/boss/per-enemy immunity).
-	# Intentional deviation from combat-formulas.md's step order (immunity is
-	# step 4, after the rolls): the applied/not-applied outcome is identical and
-	# this skips a pointless roll.
+	# Immune targets (type/boss/per-enemy immunity) skip the rolls: a deliberate
+	# deviation from combat-formulas.md's step order (immunity is step 4, after
+	# the rolls) that leaves the applied/not-applied outcome identical.
 	if enemy.is_immune_to_status(status_name):
 		return {"hit": true, "inflicted": false, "type": "immune", "status": status_name}
 	var caster_mag: int = state.get_effective_stat(caster_slot, "mag")
@@ -82,7 +81,7 @@ static func roll_status_rider(
 ## two-stage roll's Stage 1, the member's MDEF/SPD drive resistance. Reuses
 ## DamageCalc.roll_status + StatusEffects.resolve_duration (no duplication).
 ## Returns {hit, inflicted, type, status}; type is
-## "status" | "resisted" | "no_effect".
+## "status" | "resisted" | "immune" (worn gear blocked it, #512) | "no_effect".
 static func execute_enemy_status(
 	state: Node,
 	enemy: Node,
@@ -91,8 +90,7 @@ static func execute_enemy_status(
 	status_name: String,
 	explicit_duration: Variant
 ) -> Dictionary:
-	var member: Dictionary = state.get_member(target_slot)
-	var alive: bool = not member.is_empty() and member.get("is_alive", false)
+	var alive: bool = state.get_member(target_slot).get("is_alive", false)
 	if not alive or not StatusEffects.is_known(status_name):
 		return {"hit": false, "inflicted": false, "type": "no_effect", "status": status_name}
 	var caster_mag: int = enemy.get_stats().get("mag", 0)
@@ -102,7 +100,9 @@ static func execute_enemy_status(
 		return {"hit": false, "inflicted": false, "type": "resisted", "status": status_name}
 	var duration: int = StatusEffects.resolve_duration(status_name, explicit_duration)
 	var kind: String = "realtime" if StatusEffects.is_realtime(status_name) else "turns"  # Stop
-	state.apply_status(target_slot, status_name, kind, float(duration))
+	var landed: Variant = state.apply_status(target_slot, status_name, kind, float(duration))
+	if landed is bool and not landed:  # false only once gear can block it (#512)
+		return {"hit": true, "inflicted": false, "type": "immune", "status": status_name}
 	return {"hit": true, "inflicted": true, "type": "status", "status": status_name}
 
 
