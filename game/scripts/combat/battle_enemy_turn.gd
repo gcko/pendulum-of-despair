@@ -132,7 +132,8 @@ func _apply_action(action: Dictionary, enemy: Node, enemies: Array[Node], idx: i
 ## then decrement durations. Poison/Burn = floor(max_hp * tick_pct), min 1.
 ## Burn is fire: it scales by the enemy's Flame multiplier, so a weakness or
 ## resistance scales it, immunity voids it and absorption heals (ruling of
-## 2026-10-29, #246). A Pallor enemy then regenerates while the party despairs.
+## 2026-10-29, #246). A Pallor enemy then regenerates while the party despairs,
+## and a party Regen on it lands its tick (BattleEnemyHeal.tick_regen, #503).
 func _tick_enemy_statuses(enemy: Node, idx: int) -> void:
 	var max_hp: int = enemy.enemy_data.get("hp", 0)
 	var eid: String = "enemy_%d" % idx
@@ -156,7 +157,7 @@ func _tick_enemy_statuses(enemy: Node, idx: int) -> void:
 				_atb.remove_combatant(eid)
 	if enemy.is_alive and enemy.get_type() == "pallor" and _party_despairs():
 		_heal_enemy(enemy, eid, int(max_hp * PALLOR_REGEN_PCT))
-	BattleEnemyHeal.tick_regen(_manager, enemy, idx)  # a Kindle Breath turned on it (#503)
+	BattleEnemyHeal.tick_regen(_manager, enemy, idx)
 	enemy.tick_statuses()
 	enemy.tick_buffs()
 

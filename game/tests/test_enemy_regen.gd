@@ -259,3 +259,42 @@ func test_dispersion_strips_a_regen_off_an_enemy() -> void:
 	)
 	_enemy_turn(battle)
 	assert_eq(battle.get_enemies()[0].current_hp, 100, "no tick lands after the dispel")
+
+
+func test_a_regen_tick_leaves_a_confused_undead_confused() -> void:
+	# A Regen tick is a tick, like Poison's: it never cures Confusion. Paralysis
+	# skips the turn's action, so only the turn's ticks touch the enemy.
+	var battle: Node = _boot("restless_dead", MAX_HP)
+	var dead: Node = battle.get_enemies()[0]
+	if not await _cast(battle):
+		return
+	assert_true(dead.apply_status("confusion", 3), "precondition: Confusion lands")
+	assert_true(dead.apply_status("paralysis", 3), "precondition: Paralysis lands")
+	_enemy_turn(battle)
+	assert_eq(dead.current_hp, MAX_HP - 50, "precondition: the tick landed as damage")
+	assert_true(dead.has_status("confusion"), "and the Undead is still Confused")
+
+
+func test_a_recast_kindle_breath_refreshes_its_4_turns() -> void:
+	var battle: Node = _boot("ley_vermin", 100)
+	if not await _cast(battle):
+		return
+	var first: Array[int] = _hp_over_turns(battle, 2)
+	assert_eq(first, [150, 200] as Array[int], "precondition: two ticks of the first cast")
+	if not await _cast(battle):
+		return
+	var seen: Array[int] = _hp_over_turns(battle, 5)
+	assert_eq(seen, [250, 300, 350, 400, 400] as Array[int], "four fresh turns from the recast")
+
+
+func test_the_caster_s_despair_is_read_as_each_tick_lands() -> void:
+	var battle: Node = _boot("restless_dead", MAX_HP)
+	var state: Node = battle.get_battle_state()
+	if not await _cast(battle):
+		return
+	var seen: Array[int] = _hp_over_turns(battle, 1)
+	assert_true(state.apply_status(CASTER, "despair", "turns", 4.0), "precondition: Despair")
+	seen.append_array(_hp_over_turns(battle, 1))
+	state.remove_status(CASTER, "despair")
+	seen.append_array(_hp_over_turns(battle, 1))
+	assert_eq(seen, [950, 910, 860] as Array[int], "50, then 40 under Despair, then 50 again")

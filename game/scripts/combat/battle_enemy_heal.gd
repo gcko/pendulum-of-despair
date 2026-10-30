@@ -18,7 +18,7 @@ extends RefCounted
 ## down on the enemy's turns with its other buffs, a recast refreshes it, and
 ## Dispersion strips it, as the Regen row's "Cured By" names
 ## (magic.md § Status Effect Reference). The entry also records the caster's
-## slot, whose Despair is read when each tick lands.
+## slot, whose Despair is read when each tick lands, and its percentage.
 
 ## Enemy types a heal hurts instead of heals, for exactly the HP it would have
 ## restored: Undead ("Healing spells deal damage", bestiary/README.md § Undead)
@@ -29,20 +29,19 @@ const HEAL_REVERSING_TYPES: Array[String] = ["undead", "pallor"]
 const REGEN: String = "regen"
 
 
-## Land [param heal_amt] of [param caster_slot]'s healing on enemy
-## [param idx]. [param wakes] is false for a Regen tick, which like a Poison
+## Land [param heal_amt] of [param caster_slot]'s healing on [param enemy],
+## enemy [param idx]. [param wakes] is false for a Regen tick, which like a Poison
 ## tick does not cure Sleep or Confusion (Enemy.take_damage). Returns whether
 ## it dealt damage, which is what earns the cast Weave Gauge: healing an enemy
 ## earns none (2026-10-29 ruling).
 static func land(
-	battle: Node, caster_slot: int, heal_amt: int, idx: int, wakes: bool = true
+	battle: Node, caster_slot: int, heal_amt: int, enemy: Node, idx: int, wakes: bool = true
 ) -> bool:
-	var enemy: Node = battle.get_enemies()[idx]
 	if enemy.get_type() in HEAL_REVERSING_TYPES:
 		var member: Dictionary = battle.get_battle_state().get_member(caster_slot)
 		heal_amt = BattleDamageMods.cut_dealt(heal_amt, member)
 		enemy.take_damage(heal_amt, wakes)
-		land_spell_damage(battle, caster_slot, heal_amt, idx)
+		land_spell_damage(battle, caster_slot, heal_amt, enemy, idx)
 		return heal_amt > 0
 	var before: int = enemy.current_hp
 	enemy.heal(heal_amt)
@@ -51,13 +50,15 @@ static func land(
 	return false
 
 
-## Book [param dmg] of spell damage already dealt to enemy [param idx]: the
-## caster's threat (GAP-009 highest-threat), the number shown over the enemy,
-## and the kill if it fell.
-static func land_spell_damage(battle: Node, caster_slot: int, dmg: int, idx: int) -> void:
+## Book [param dmg] of spell damage already dealt to [param enemy], enemy
+## [param idx]: the caster's threat (GAP-009 highest-threat), the number shown
+## over the enemy, and the kill if it fell.
+static func land_spell_damage(
+	battle: Node, caster_slot: int, dmg: int, enemy: Node, idx: int
+) -> void:
 	battle.get_battle_state().add_threat(caster_slot, dmg)
 	battle.damage_dealt.emit("enemy_%d" % idx, dmg, "magic")
-	if not battle.get_enemies()[idx].is_alive:
+	if not enemy.is_alive:
 		battle.combatant_died.emit("enemy_%d" % idx)
 		battle.get_atb().remove_combatant("enemy_%d" % idx)
 
@@ -69,7 +70,7 @@ static func grant_regen(battle: Node, caster_slot: int, spell: Dictionary, idx: 
 	var enemy: Node = battle.get_enemies()[idx]
 	var pct: int = int(spell.get("regen_pct", 0))
 	enemy.apply_buff(REGEN, 1.0 + pct / 100.0, int(spell.get("duration", 0)))
-	_regen_entry(enemy)["caster"] = caster_slot
+	_regen_entry(enemy).merge({"caster": caster_slot, "pct": pct}, true)
 	return enemy.get_type() in HEAL_REVERSING_TYPES
 
 
@@ -80,9 +81,8 @@ static func tick_regen(battle: Node, enemy: Node, idx: int) -> void:
 	var entry: Dictionary = _regen_entry(enemy)
 	if entry.is_empty() or not enemy.is_alive:
 		return
-	var pct: int = roundi((float(entry.get("mult", 1.0)) - 1.0) * 100.0)
-	var amount: int = maxi(1, int(enemy.enemy_data.get("hp", 0)) * pct / 100)
-	land(battle, int(entry.get("caster", 0)), amount, idx, false)
+	var amount: int = maxi(1, int(enemy.enemy_data.get("hp", 0)) * int(entry["pct"]) / 100)
+	land(battle, int(entry["caster"]), amount, enemy, idx, false)
 
 
 ## [param enemy]'s Regen entry in active_buffs, or {} when it has none.

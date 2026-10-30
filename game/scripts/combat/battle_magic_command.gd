@@ -184,7 +184,7 @@ func _resolve(
 		var enemy: Node = _battle.get_enemies()[resolved_enemy_target]
 		var hp: int = enemy.current_hp
 		enemy.take_damage(hp)
-		BattleEnemyHeal.land_spell_damage(_battle, slot, hp, resolved_enemy_target)
+		BattleEnemyHeal.land_spell_damage(_battle, slot, hp, enemy, resolved_enemy_target)
 		return true
 	if target_type in ALLY_TARGETS:
 		# One heal roll for the whole cast, as a party heal has always rolled.
@@ -199,7 +199,7 @@ func _resolve(
 ## [param idx] by the heal-on-enemy rules (BattleEnemyHeal.land: an Undead or
 ## Pallor takes it as damage). Returns whether the cast earns Weave Gauge.
 func _heal_on_enemy(caster_slot: int, heal_amt: int, idx: int) -> bool:
-	return BattleEnemyHeal.land(_battle, caster_slot, heal_amt, idx)
+	return BattleEnemyHeal.land(_battle, caster_slot, heal_amt, _battle.get_enemies()[idx], idx)
 
 
 ## Run [param apply] against every alive, targetable enemy. Returns whether any
@@ -235,7 +235,8 @@ func _magic_on_enemy(
 		_battle.damage_dealt.emit("enemy_%d" % idx, result.get("damage", 0), "heal")
 		return true
 	if result.get("hit", false):
-		BattleEnemyHeal.land_spell_damage(_battle, caster_slot, int(result.get("damage", 0)), idx)
+		var dmg: int = int(result.get("damage", 0))
+		BattleEnemyHeal.land_spell_damage(_battle, caster_slot, dmg, enemies[idx], idx)
 		if enemies[idx].is_alive and not rider.is_empty():
 			# The rider rides on landed damage, and only onto a target still alive.
 			BattleActions.roll_status_rider(state, caster_slot, rider, enemies[idx])
