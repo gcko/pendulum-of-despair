@@ -748,7 +748,11 @@
 					"character": "maren",
 					"level": 12
 				}
-			]
+			],
+			"stat_debuff": {
+				"stat": "def",
+				"pct": 30
+			}
 		},
 		{
 			"id": "fray",
@@ -768,7 +772,11 @@
 					"character": "maren",
 					"level": 10
 				}
-			]
+			],
+			"stat_debuff": {
+				"stat": "mdef",
+				"pct": 30
+			}
 		},
 		{
 			"id": "drag_tide",
@@ -812,7 +820,8 @@
 					"character": "maren",
 					"level": 18
 				}
-			]
+			],
+			"dispel": true
 		},
 		{
 			"id": "dampening_field",
@@ -832,7 +841,11 @@
 					"character": "maren",
 					"level": 16
 				}
-			]
+			],
+			"stat_debuff": {
+				"stat": "mag",
+				"pct": 30
+			}
 		},
 		{
 			"id": "mass_dispersion",
@@ -852,7 +865,8 @@
 					"character": "maren",
 					"level": 30
 				}
-			]
+			],
+			"dispel": true
 		},
 		{
 			"id": "waymark",
