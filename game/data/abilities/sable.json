@@ -109,8 +109,8 @@
 			"item_branch_ability_mult": 2.0,
 			"item_branch_element_field": "throw_element",
 			"item_branch_element_pick": "most_recent_elemental",
-			"effect": "Sable improvises a powerful technique based on her current stolen goods. 0 items: physical damage to one enemy at ability_mult 2.0 (\"2x her Attack\"). 1 item: the same 2.0 strike against all enemies, carrying the thrown item's element. 2 items: as 1 item, plus a random debuff (Poison, Sleep, Silence, Blind, or Slow) on all enemies. 3 items: heavy — ability_mult 3.0 against all enemies, elemental, random debuff, and restores 10% HP to all allies. All stolen items are consumed. Item-steal component requires front row.",
-			"row_restriction": "front",
+			"effect": "Sable improvises a powerful technique based on her current stolen goods. 0 items: physical damage to one enemy at ability_mult 2.0 (\"2x her Attack\"). 1 item: the same 2.0 strike against all enemies, carrying the thrown item's element. 2 items: as 1 item, plus a random debuff (Poison, Sleep, Silence, Blind, or Slow) on all enemies. 3 items: heavy — ability_mult 3.0 against all enemies, elemental, random debuff, and restores 10% HP to all allies. All stolen items are consumed.",
+			"row_restriction": null,
 			"story_gated": true,
 			"story_event": "interlude_party_reassembled",
 			"description": "Improvise a powerful attack fueled by stolen goods."

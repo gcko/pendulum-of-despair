@@ -72,13 +72,13 @@ static func abilities(character_data: Dictionary, member: Dictionary) -> Array[D
 static func _throws(member: Dictionary, shiv: Dictionary) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	var seen: Array[String] = []
-	for item_id: Variant in member.get("stolen_goods", []):
-		if String(item_id) in seen:
+	for item_id: String in BattleTricks.held(member):
+		if item_id in seen:
 			continue
-		seen.append(String(item_id))
+		seen.append(item_id)
 		var entry: Dictionary = shiv.duplicate(true)
-		entry["label"] = "Shiv: %s" % BattleTricks.item_name(String(item_id))
-		entry["command"]["throw_item"] = String(item_id)
+		entry["label"] = "Shiv: %s" % BattleTricks.item_name(item_id)
+		entry["command"]["throw_item"] = item_id
 		out.append(entry)
 	return out
 

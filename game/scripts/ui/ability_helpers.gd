@@ -50,8 +50,7 @@ static func format_cost(ability: Dictionary) -> String:
 		"wg":
 			return "%d WG" % value
 		"mp_cd":
-			var cd_raw: Variant = ability.get("cooldown", 0)
-			var cd: int = int(cd_raw) if cd_raw != null else 0
+			var cd: int = BattleTricks.cooldown_of(ability)  # Wild Card's 4 after the trial
 			if cd > 0:
 				return "%d MP/%dt" % [value, cd]
 			return "%d MP" % value

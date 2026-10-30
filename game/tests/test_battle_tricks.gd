@@ -12,6 +12,7 @@ extends GutTest
 const BattleState = preload("res://scripts/combat/battle_state.gd")
 const AbilityCommand = preload("res://scripts/combat/battle_ability_command.gd")
 const SubmenuItems = preload("res://scripts/ui/battle_submenu_items.gd")
+const AbilityHelpers = preload("res://scripts/ui/ability_helpers.gd")
 const Record = preload("res://scripts/entities/enemy_record.gd")
 const ENEMY_SCENE: PackedScene = preload("res://scenes/entities/enemy.tscn")
 
@@ -286,6 +287,27 @@ func test_ransack_finds_nothing_on_an_enemy_already_filched() -> void:
 	assert_eq(_stock("beast_hide"), 2, "only the second enemy still had something")
 
 
+func test_a_stolen_key_item_goes_to_the_key_items_and_not_the_pool() -> void:
+	_battle.enemies[0].enemy_data["steal"]["common"]["item_id"] = "fenmothers_tear"
+	assert_true(_use("filch"), "Filch issued")
+	assert_true(PartyState.has_key_item("fenmothers_tear"), "filed as a key item")
+	assert_eq(_stock("fenmothers_tear"), 0, "not as a consumable")
+	assert_eq(_pool(), [] as Array[String], "and never held to throw")
+	assert_true(_messages.has("Obtained Fenmother's Tear."), "named: %s" % [_messages])
+
+
+func test_stolen_equipment_goes_to_the_owned_equipment_and_not_the_pool() -> void:
+	_battle.enemies[0].enemy_data["steal"]["common"]["item_id"] = "koles_epaulettes"
+	assert_true(_use("filch"), "Filch issued")
+	var owned: Array = PartyState.owned_equipment.map(
+		func(e: Dictionary) -> String: return e["equipment_id"]
+	)
+	assert_eq(owned, ["koles_epaulettes"], "filed as equipment")
+	assert_eq(_stock("koles_epaulettes"), 0, "not as a consumable")
+	assert_eq(_pool(), [] as Array[String], "and never held to throw")
+	assert_true(_messages.has("Obtained Kole's Epaulettes."), "named: %s" % [_messages])
+
+
 func test_an_item_used_from_the_inventory_leaves_the_pool() -> void:
 	_use("filch")
 	PartyState.consume_item("beast_hide")
@@ -343,12 +365,18 @@ func test_wild_cards_cooldown_is_five_turns_and_four_after_sables_trial() -> voi
 	assert_eq(BattleTricks.cooldown_of(_ability("smokescreen")), 2, "nothing else changes")
 
 
+func test_wild_cards_menu_label_shows_its_cooldown_after_the_trial() -> void:
+	assert_eq(AbilityHelpers.format_cost(_ability("wild_card")), "10 MP/5t", "before the trial")
+	EventFlags.set_flag("trial_sable_complete", true)
+	assert_eq(AbilityHelpers.format_cost(_ability("wild_card")), "10 MP/4t", "after it")
+
+
 # --- Steal abilities need the front row ---
 
 
 func test_the_steal_tricks_cannot_be_used_from_the_back_row() -> void:
 	_state.get_member(SABLE)["row"] = "back"
-	for ability_id: String in ["filch", "ransack", "wild_card"]:
+	for ability_id: String in ["filch", "ransack"]:
 		assert_false(_usable(ability_id), "%s needs the front row" % ability_id)
 	assert_false(_use("filch"), "Filch is refused from the back row")
 	assert_eq(_pool(), [] as Array[String], "and steals nothing")
@@ -356,8 +384,15 @@ func test_the_steal_tricks_cannot_be_used_from_the_back_row() -> void:
 
 func test_the_other_tricks_work_from_either_row() -> void:
 	_state.get_member(SABLE)["row"] = "back"
-	for ability_id: String in ["smokescreen", "shiv"]:
+	for ability_id: String in ["smokescreen", "shiv", "wild_card"]:
 		assert_true(_usable(ability_id), "%s works from the back row" % ability_id)
+
+
+func test_wild_card_strikes_from_the_back_row() -> void:
+	## Wild Card steals nothing, so the steal Tricks' gate is not its own.
+	_state.get_member(SABLE)["row"] = "back"
+	assert_true(_use("wild_card"), "Wild Card issued from the back row")
+	assert_lt(_battle.enemies[0].current_hp, 30000, "and it lands")
 
 
 func test_the_menu_grays_the_steal_tricks_in_the_back_row_and_cooldowns() -> void:
@@ -437,5 +472,10 @@ func test_a_rally_of_unbreakable_is_spent_before_the_thread() -> void:
 	BattleRally.start(_state, CAEL, "unbreakable", {"last_stand": true, "turns": 3})
 	_state.take_damage(EDREN, 5000)
 	assert_eq(_state.get_member(EDREN)["current_hp"], 1, "the Rally holds this one")
+	assert_true(BattleRally.active(_state).is_empty(), "the Rally is what spent itself")
+	assert_false(
+		_state.get_member(SABLE).get("tricks", {}).get("thread_spent", false),
+		"the thread is untouched"
+	)
 	_state.take_damage(LIRA, 5000)
 	assert_eq(_state.get_member(LIRA)["current_hp"], 1, "the thread is left for the next")

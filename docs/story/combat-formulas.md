@@ -573,6 +573,12 @@ a user ruling of 2026-10-30 unless marked as a reading.
   § Status Effect Reference: "Physical accuracy -50%"). The rate from § Physical Attack Resolution step 1 is
   multiplied by 0.5 before the [20%, 99%] clamp and floored, so an even-SPD 90%
   becomes 45% (the floor is a reading). Spells keep their full hit rate.
+- **Smokescreen cuts an enemy's physical hit rate by 30%** ([abilities.md](abilities.md)
+  § Sable — Tricks: "Reduces all enemies' accuracy by 30% for 2 turns"). It
+  multiplies the step-1 rate by 0.7, with Blind's 0.5 when both apply (0.35),
+  before the clamp, and lasts two of each enemy's own turns. Like Blind it is
+  physical only; an enemy's spells keep their hit rate (orchestrator reading
+  on [#158](https://github.com/gcko/pendulum-of-despair/issues/158)).
 
 ---
 
@@ -580,7 +586,7 @@ a user ruling of 2026-10-30 unless marked as a reading.
 
 ### Physical Attack Resolution
 
-1. **Hit Rate% roll** — `90 + (attacker.SPD - target.SPD) / 4`, times the attacker's accuracy multiplier (Blind 0.5, else 1.0; § Attacker Status Modifiers), clamped to [20%, 99%]. Miss = 0 damage, stop.
+1. **Hit Rate% roll** — `90 + (attacker.SPD - target.SPD) / 4`, times the attacker's accuracy multiplier (Blind 0.5 and Smokescreen 0.7, multiplied together when both apply, else 1.0; § Attacker Status Modifiers), clamped to [20%, 99%]. Miss = 0 damage, stop.
 2. **Evasion% roll** — `target.SPD / 4`, cap 50%. Dodged = 0 damage, stop.
 3. **Calculate base damage** — `(ATK² × ability_mult) / 6 - target.DEF`
 4. **Floor check** — `max(1, base_damage)`

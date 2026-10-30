@@ -57,7 +57,7 @@ func resolve(slot: int, ability: Dictionary, command: Dictionary) -> void:
 ## single-target exception to its data's all_enemies (abilities.md § Damage
 ## Magnitudes > 'Wild Card').
 static func target_type(member: Dictionary, ability: Dictionary) -> String:
-	if ability.get("id", "") == "wild_card" and member.get("stolen_goods", []).is_empty():
+	if ability.get("id", "") == "wild_card" and BattleTricks.held(member).is_empty():
 		return "single_enemy"
 	return String(ability.get("target", "single_enemy"))
 
@@ -84,7 +84,9 @@ func _steal_from(slot: int, idx: int, rate_pct: int) -> void:
 func _shiv(slot: int, ability: Dictionary, idx: int, thrown: String) -> void:
 	var element: String = ""
 	if not thrown.is_empty():
-		element = BattleTricks.thrown_element(thrown)
+		element = BattleTricks.thrown_element(
+			thrown, String(ability.get("thrown_item_element_field", ""))
+		)
 		BattleTricks.spend_goods(_state(), slot, thrown)
 	var mult: float = float(
 		ability.get("thrown_item_ability_mult" if not thrown.is_empty() else "ability_mult", 1.0)
@@ -102,7 +104,7 @@ func _wild_card(slot: int, ability: Dictionary, idx: int) -> void:
 	if held.is_empty():
 		_strike(slot, idx, float(ability["ability_mult"]), 0, "")
 		return
-	var element: String = BattleTricks.wild_card_element(held)
+	var element: String = BattleTricks.wild_card_element(held, ability)
 	for item_id: String in held:
 		BattleTricks.spend_goods(state, slot, item_id)
 	var key: String = "ability_mult_max" if held.size() >= 3 else "item_branch_ability_mult"

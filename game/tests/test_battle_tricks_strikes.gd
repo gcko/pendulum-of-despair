@@ -145,6 +145,13 @@ func _use(ability_id: String, command: Dictionary = {}) -> bool:
 	return ok
 
 
+## Sable's Tricks menu as the battle lists it.
+func _menu() -> Array[Dictionary]:
+	return preload("res://scripts/ui/battle_submenu_items.gd").abilities(
+		{"character_id": "sable", "level": 40}, _state.get_member(SABLE)
+	)
+
+
 ## The [amount, type] events that landed on enemy [param idx].
 func _on_enemy(idx: int) -> Array:
 	var out: Array = []
@@ -219,15 +226,56 @@ func test_shiv_cannot_throw_an_item_sable_does_not_hold() -> void:
 func test_the_menu_offers_each_held_item_as_a_throw() -> void:
 	_hold(["emberstone", "potion", "emberstone"])
 	var throws: Array[String] = []
-	var items: Array[Dictionary] = preload("res://scripts/ui/battle_submenu_items.gd").abilities(
-		{"character_id": "sable", "level": 40}, _state.get_member(SABLE)
-	)
-	for item: Dictionary in items:
+	for item: Dictionary in _menu():
 		var thrown: String = item["command"].get("throw_item", "")
 		if not thrown.is_empty():
 			throws.append(thrown)
 			assert_true(item["enabled"], "%s can be thrown" % thrown)
 	assert_eq(throws, ["emberstone", "potion"] as Array[String], "one entry per item held")
+
+
+func test_the_menu_drops_a_throw_for_an_item_the_party_used() -> void:
+	_hold(["potion"])
+	PartyState.consume_item("potion")  # an ally drank the stolen Potion
+	for item: Dictionary in _menu():
+		assert_eq(
+			item["command"].get("throw_item", ""), "", "no throw is offered: %s" % item["label"]
+		)
+
+
+func test_wild_card_asks_for_one_enemy_once_the_held_item_is_used() -> void:
+	EventFlags.set_flag("interlude_party_reassembled", true)  # Wild Card is learned
+	_hold(["potion"])
+	PartyState.consume_item("potion")
+	var target: String = ""
+	for item: Dictionary in _menu():
+		if item["command"]["ability"]["id"] == "wild_card":
+			target = item["target_type"]
+	assert_ne(target, "", "Wild Card is listed")
+	assert_eq(target, "single_enemy", "nothing is held, so the 0-item strike picks a target")
+
+
+func test_a_throw_reads_its_element_from_the_field_shivs_data_names() -> void:
+	_hold(["emberstone"])
+	_battle.enemies = [_make_enemy({"absorb": ["flame"]})] as Array[Node]
+	var shiv: Dictionary = _ability("shiv").duplicate(true)
+	shiv["thrown_item_element_field"] = "no_such_field"
+	_state.begin_turn(SABLE)
+	_cmd.do_ability(
+		"party_%d" % SABLE,
+		{"type": "ability", "ability": shiv, "target": 0, "throw_item": "emberstone"}
+	)
+	assert_eq(_on_enemy(0)[0][1], "physical", "a field no item carries throws non-elemental")
+
+
+func test_wild_card_reads_its_element_field_from_the_data() -> void:
+	_hold(["emberstone"])
+	_battle.enemies = [_make_enemy({"absorb": ["flame"]})] as Array[Node]
+	var wild: Dictionary = _ability("wild_card").duplicate(true)
+	wild["item_branch_element_field"] = "no_such_field"
+	_state.begin_turn(SABLE)
+	_cmd.do_ability("party_%d" % SABLE, {"type": "ability", "ability": wild, "target": 0})
+	assert_eq(_on_enemy(0)[0][1], "physical", "a field no item carries is non-elemental")
 
 
 # --- Wild Card: four branches by Stolen Goods ---

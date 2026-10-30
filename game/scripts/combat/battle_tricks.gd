@@ -63,82 +63,121 @@ const WILD_CARD: Dictionary = {
 ## issued; it works through on_damage.
 const BUILT: Array[String] = ["filch", "smokescreen", "shiv", "ransack", "wild_card"]
 
-## The item field a thrown item's element is read from (sable.json's
-## thrown_item_element_field and item_branch_element_field).
-const ELEMENT_FIELD: String = "throw_element"
+## The one rule for which held item supplies Wild Card's element that this
+## build knows, as sable.json's item_branch_element_pick names it (#447).
+const PICK_MOST_RECENT: String = "most_recent_elemental"
 
 # ---------- The Stolen Goods pool ----------
 
 
-## Sable's held Stolen Goods, oldest first. An item the party has since used
-## from the inventory is no longer held, so the list is trimmed to the stock,
-## oldest first.
+## Sable's held Stolen Goods, oldest first, from her record [param m]. An item
+## the party has since used from the inventory is no longer held, so the list is
+## trimmed to the stock, the oldest dropped first. Reads only; goods() also
+## writes the trimmed list back.
+static func held(m: Dictionary) -> Array[String]:
+	var raw: Array[String] = []
+	raw.assign(m.get("stolen_goods", []))
+	var kept: Array[String] = []
+	var counted: Dictionary = {}
+	for i: int in range(raw.size() - 1, -1, -1):
+		var item_id: String = raw[i]
+		counted[item_id] = int(counted.get(item_id, 0)) + 1
+		if int(counted[item_id]) <= _stock(item_id):
+			kept.push_front(item_id)
+	return kept
+
+
+## Sable's held Stolen Goods at [param slot] (held), with her record trimmed to
+## them.
 static func goods(state: Node, slot: int) -> Array[String]:
 	var m: Dictionary = state.get_member(slot)
 	if m.is_empty():
 		return [] as Array[String]
-	var held: Array[String] = []
-	held.assign(m.get("stolen_goods", []))
-	var kept: Array[String] = []
-	var counted: Dictionary = {}
-	for i: int in range(held.size() - 1, -1, -1):
-		var item_id: String = held[i]
-		counted[item_id] = int(counted.get(item_id, 0)) + 1
-		if int(counted[item_id]) <= _stock(item_id):
-			kept.push_front(item_id)
-	if kept != held:
+	var kept: Array[String] = held(m)
+	if kept != Array(m.get("stolen_goods", [])):
 		m["stolen_goods"] = kept
 	return kept.duplicate()
 
 
-## Sable at [param slot] takes [param item_id]: it goes into the party
-## inventory, and into her Stolen Goods while she holds fewer than POOL_LIMIT.
+## Sable at [param slot] takes [param item_id], into the party's own bag for it
+## (receive). An item, as opposed to a key item or equipment, also joins her
+## Stolen Goods while she holds fewer than POOL_LIMIT.
 static func add_goods(state: Node, slot: int, item_id: String) -> void:
-	PartyState.add_item(item_id, 1)
-	var held: Array[String] = goods(state, slot)
-	if held.size() >= POOL_LIMIT:
+	if not receive(item_id):
 		return
-	held.append(item_id)
-	state.get_member(slot)["stolen_goods"] = held
+	var list: Array[String] = goods(state, slot)
+	if list.size() >= POOL_LIMIT:
+		return
+	list.append(item_id)
+	state.get_member(slot)["stolen_goods"] = list
 	state.ability_state_changed.emit(slot)
+
+
+## Put a stolen [param item_id] where the party keeps its kind: a key item with
+## the key items, equipment with the owned equipment, anything else in the item
+## inventory. Returns true for an item, which Sable can also hold and use; a key
+## item or equipment never enters the Stolen Goods (orchestrator reading on
+## #158), so it cannot be thrown or spent by Wild Card.
+static func receive(item_id: String) -> bool:
+	if not _key_item(item_id).is_empty():
+		PartyState.add_key_item(item_id)
+		return false
+	if not InventoryHelpers.lookup_equipment(item_id).is_empty():
+		PartyState.add_equipment(item_id)
+		return false
+	PartyState.add_item(item_id, 1)
+	return true
 
 
 ## Use up [param item_id] from Sable's Stolen Goods and the inventory. Returns
 ## false, using nothing, when she does not hold it.
 static func spend_goods(state: Node, slot: int, item_id: String) -> bool:
-	var held: Array[String] = goods(state, slot)
-	var at: int = held.rfind(item_id)
+	var list: Array[String] = goods(state, slot)
+	var at: int = list.rfind(item_id)
 	if at < 0 or not PartyState.consume_item(item_id):
 		return false
-	held.remove_at(at)
-	state.get_member(slot)["stolen_goods"] = held
+	list.remove_at(at)
+	state.get_member(slot)["stolen_goods"] = list
 	state.ability_state_changed.emit(slot)
 	return true
 
 
-## The element a thrown [param item_id] carries, or "" (items.md § Thrown-Item
-## Elements: an item without the field is non-elemental).
-static func thrown_element(item_id: String) -> String:
-	var raw: Variant = InventoryHelpers.lookup_material(item_id).get(ELEMENT_FIELD)
+## The element a thrown [param item_id] carries, read from its [param field]
+## (sable.json's thrown_item_element_field or item_branch_element_field), or ""
+## (items.md § Thrown-Item Elements: an item without the field is non-elemental).
+static func thrown_element(item_id: String, field: String) -> String:
+	var raw: Variant = InventoryHelpers.lookup_material(item_id).get(field)
 	return String(raw) if raw is String else ""
 
 
-## Wild Card's element for the Stolen Goods [param held], oldest first: the
-## most recently stolen item that has one, or "" when none does (#447).
-static func wild_card_element(held: Array[String]) -> String:
-	for i: int in range(held.size() - 1, -1, -1):
-		var element: String = thrown_element(held[i])
+## Wild Card's element for the Stolen Goods [param list], oldest first, by
+## [param ability]'s item_branch_element_pick and item_branch_element_field:
+## the most recently stolen item that has one, or "" when none does (#447).
+static func wild_card_element(list: Array[String], ability: Dictionary) -> String:
+	var pick: String = String(ability.get("item_branch_element_pick", ""))
+	if pick != PICK_MOST_RECENT:
+		push_error("BattleTricks: unknown item_branch_element_pick '%s'" % pick)
+		return ""
+	var field: String = String(ability.get("item_branch_element_field", ""))
+	for i: int in range(list.size() - 1, -1, -1):
+		var element: String = thrown_element(list[i], field)
 		if not element.is_empty():
 			return element
 	return ""
 
 
-## An item's display name.
+## A stolen item's display name, from whichever catalog holds it: items, key
+## items or equipment.
 static func item_name(item_id: String) -> String:
-	var item: Dictionary = InventoryHelpers.lookup_material(item_id)
-	if item.is_empty():
-		item = InventoryHelpers.lookup_consumable(item_id)
-	return String(item.get("name", item_id.capitalize()))
+	for item: Dictionary in [
+		InventoryHelpers.lookup_material(item_id),
+		InventoryHelpers.lookup_consumable(item_id),
+		_key_item(item_id),
+		InventoryHelpers.lookup_equipment(item_id),
+	]:
+		if item.has("name"):
+			return String(item["name"])
+	return item_id.capitalize()
 
 
 # ---------- Stealing ----------
@@ -290,6 +329,14 @@ static func _record(m: Dictionary) -> Dictionary:
 	if not m.has("tricks"):
 		m["tricks"] = {}
 	return m["tricks"]
+
+
+## The key item [param item_id]'s catalog entry, or {}.
+static func _key_item(item_id: String) -> Dictionary:
+	for item: Variant in DataManager.load_items("key_items"):
+		if item is Dictionary and (item as Dictionary).get("id", "") == item_id:
+			return item
+	return {}
 
 
 ## How many of [param item_id] the party holds.
