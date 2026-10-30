@@ -10,6 +10,11 @@ signal member_died(slot: int)
 signal member_revived(slot: int)
 signal status_applied(slot: int, status_name: String)
 signal status_removed(slot: int, status_name: String)
+## Cured (BattleStatusGuard.cure) or expired follow a status_removed (#515); blocked
+## is a status worn gear kept off, so nothing landed (BattleStatusGuard.blocks, #512).
+signal status_cured(slot: int, status_name: String)
+signal status_expired(slot: int, status_name: String)
+signal status_blocked(slot: int, status_name: String)
 ## A member's in-force ability or buff state changed: a Rally, Bulwark's stance,
 ## AP or effects, Forgewright's devices or AC, or a buff landed on or left them.
 signal ability_state_changed(slot: int)
@@ -20,6 +25,7 @@ const Rally = preload("res://scripts/combat/battle_rally.gd")
 const Bulwark = preload("res://scripts/combat/battle_bulwark.gd")
 const Forgewright = preload("res://scripts/combat/battle_forgewright.gd")
 const Buffs = preload("res://scripts/combat/battle_buffs.gd")
+const StatusGuard = preload("res://scripts/combat/battle_status_guard.gd")
 
 ## Modules holding in-force ability and buff state (#158), each answering on_damage,
 ## on_fainted, on_status, on_turn_begin, on_turn_end and stat_pct (no seam names one).
@@ -42,7 +48,6 @@ func add_member(slot: int, char_data: Dictionary) -> void:
 	var max_mp: int = char_data.get("max_mp", stats.get("mp", 0))
 	var current_mp: int = char_data.get("current_mp", max_mp)
 	var cid: String = char_data.get("character_id", char_data.get("id", ""))
-	# Enrich character_data with display name from DataManager if missing
 	var enriched_data: Dictionary = char_data.duplicate()
 	if not enriched_data.has("name") and cid != "":
 		var template: Dictionary = DataManager.load_character(cid)
@@ -127,8 +132,7 @@ func heal(slot: int, amount: int, can_revive: bool = false) -> int:
 	var m: Dictionary = get_member(slot)
 	if m.is_empty():
 		return 0
-	# Regular healing cannot target KO'd members — only revive items can
-	if not m["is_alive"] and not can_revive:
+	if not m["is_alive"] and not can_revive:  # only a revive raises the KO'd
 		return 0
 	var clamped: int = maxi(0, amount)
 	var old_hp: int = m["current_hp"]
@@ -145,9 +149,7 @@ func heal(slot: int, amount: int, can_revive: bool = false) -> int:
 ## Spend MP. Returns false if insufficient or negative amount.
 func spend_mp(slot: int, amount: int) -> bool:
 	var m: Dictionary = get_member(slot)
-	if m.is_empty() or amount < 0:
-		return false
-	if m["current_mp"] < amount:
+	if m.is_empty() or amount < 0 or m["current_mp"] < amount:
 		return false
 	m["current_mp"] -= amount
 	return true
@@ -156,19 +158,20 @@ func spend_mp(slot: int, amount: int) -> bool:
 ## Restore MP. Clamps amount to >= 0.
 func restore_mp(slot: int, amount: int) -> void:
 	var m: Dictionary = get_member(slot)
-	if m.is_empty():
-		return
-	var clamped: int = maxi(0, amount)
-	m["current_mp"] = mini(m["max_mp"], m["current_mp"] + clamped)
+	if not m.is_empty():
+		m["current_mp"] = mini(m["max_mp"], m["current_mp"] + maxi(0, amount))
 
 
-## Apply a status effect. Duration is turns (int) or seconds (float).
-func apply_status(slot: int, status_name: String, duration_type: String, duration: float) -> void:
+## Apply a status effect. Duration is turns (int) or seconds (float). Returns
+## false when nothing landed: no member, or worn gear wards it off (#512).
+func apply_status(slot: int, status_name: String, duration_type: String, duration: float) -> bool:
 	var m: Dictionary = get_member(slot)
 	if m.is_empty():
-		return
-	# Remove existing instance
-	remove_status(slot, status_name)
+		return false
+	if StatusGuard.blocks(m["character_id"], status_name):
+		status_blocked.emit(slot, status_name)
+		return false
+	remove_status(slot, status_name)  # a recast refreshes it
 	var entry: Dictionary = {"name": status_name, "duration_type": duration_type}
 	if duration_type == "turns":
 		entry["remaining_turns"] = int(duration)
@@ -178,6 +181,7 @@ func apply_status(slot: int, status_name: String, duration_type: String, duratio
 	for hook: Variant in ABILITY_HOOKS:
 		hook.on_status(self, slot, status_name)
 	status_applied.emit(slot, status_name)
+	return true
 
 
 ## Remove a status effect.
@@ -221,14 +225,14 @@ func tick_statuses(slot: int) -> Array:
 		var s: Dictionary = m["active_statuses"][i]
 		if s.get("duration_type", "") != "turns":
 			continue
-		# Negative remaining_turns = UNTIL_CURED (Poison): never decremented.
-		if int(s.get("remaining_turns", 0)) < 0:
+		if int(s.get("remaining_turns", 0)) < 0:  # UNTIL_CURED
 			continue
 		s["remaining_turns"] -= 1
 		if s["remaining_turns"] <= 0:
 			var sname: String = s.get("name", "")
 			m["active_statuses"].remove_at(i)
 			status_removed.emit(slot, sname)
+			status_expired.emit(slot, sname)
 	return dot_events
 
 
@@ -266,6 +270,7 @@ func tick_realtime_statuses(slot: int, delta: float) -> void:
 			var sname: String = s.get("name", "")
 			m["active_statuses"].remove_at(i)
 			status_removed.emit(slot, sname)
+			status_expired.emit(slot, sname)
 
 
 ## Effective stat (base + capsules + equipment) with every buff applied. Buffs are
@@ -305,17 +310,15 @@ func begin_turn(slot: int) -> Array:
 ## Swap row (front <-> back). Free action per combat-formulas.md.
 func swap_row(slot: int) -> void:
 	var m: Dictionary = get_member(slot)
-	if m.is_empty():
-		return
-	m["row"] = "back" if m["row"] == "front" else "front"
+	if not m.is_empty():
+		m["row"] = "back" if m["row"] == "front" else "front"
 
 
 ## Accumulate threat (damage dealt to enemies) for a member (GAP-009).
 func add_threat(slot: int, amount: int) -> void:
 	var m: Dictionary = get_member(slot)
-	if m.is_empty():
-		return
-	m["threat_dealt"] = int(m.get("threat_dealt", 0)) + maxi(0, amount)
+	if not m.is_empty():
+		m["threat_dealt"] = int(m.get("threat_dealt", 0)) + maxi(0, amount)
 
 
 ## The living member with the most cumulative damage dealt = highest threat.
@@ -382,11 +385,9 @@ func _compute_effective_stats(character_id: String, base_stats: Dictionary) -> D
 	var effective: Dictionary = base_stats.duplicate()
 	if character_id.is_empty():
 		return effective
-	# Assemble through the one shared formula so combat, the status/equip menus
-	# and the level-up recompute cannot disagree — including on the stat cap
-	# (progression.md § Equipment and Buffs: equipment cannot push a stat past
-	# 255). The view carries this battle's base_stats with the member's banked
-	# Stat Capsule gains (GAP-020).
+	# The one shared formula, so combat, the menus and level-up agree, stat cap
+	# included (progression.md § Equipment and Buffs: gear cannot pass 255). The
+	# view is this battle's base_stats plus the banked capsule gains (GAP-020).
 	var view: Dictionary = {
 		"base_stats": base_stats,
 		"stat_capsules": PartyState.get_member(character_id).get("stat_capsules", {}),

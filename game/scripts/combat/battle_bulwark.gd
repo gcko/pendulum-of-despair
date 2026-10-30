@@ -25,6 +25,8 @@ extends RefCounted
 ## What the sub-ability table leaves open is settled by the rulings paragraph
 ## under abilities.md § Edren — Bulwark (recorded on #158).
 
+const StatusGuard = preload("res://scripts/combat/battle_status_guard.gd")
+
 ## Max AP (abilities.md § Edren — Bulwark, "Max 10 AP. Starts each battle at 0").
 const AP_MAX: int = 10
 
@@ -156,12 +158,13 @@ static func aegis_veil(state: Node, target: int) -> void:
 	state.ability_state_changed.emit(target)
 
 
-## Cleanse Despair and Silence from every ally, then give every living ally
-## Steadfast Resolve's buff, refreshing one already running.
+## Cleanse Despair and Silence from every ally, each announced as cured (#515),
+## then give every living ally Steadfast Resolve's buff, refreshing one already
+## running.
 static func steadfast_resolve(state: Node) -> void:
 	for i: int in range(4):
 		for status: String in STEADFAST_RESOLVE["cleanse"]:
-			state.remove_status(i, status)
+			StatusGuard.cure(state, i, status)
 	for i: int in range(4):
 		var m: Dictionary = state.get_member(i)
 		if m.is_empty() or not m.get("is_alive", false):

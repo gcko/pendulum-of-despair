@@ -8,6 +8,7 @@ extends RefCounted
 
 const BattleActions = preload("res://scripts/combat/battle_actions.gd")
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
+const StatusGuard = preload("res://scripts/combat/battle_status_guard.gd")
 
 ## Effects that need a living single target before anything else happens.
 const LIVING_TARGET_EFFECTS: Array[String] = [
@@ -124,9 +125,9 @@ func _revive(item: Dictionary, target_slot: int) -> bool:
 	return true
 
 
-## Lift every status [param item] cures from [param target_slot]. Returns false,
-## spending nothing, when the target has none of them: a no-op item is refused,
-## not consumed (items.md § Battle Utility).
+## Lift every status [param item] cures from [param target_slot], each announced
+## as cured (#515). Returns false, spending nothing, when the target has none of
+## them: a no-op item is refused, not consumed (items.md § Battle Utility).
 func _cure(item: Dictionary, target_slot: int) -> bool:
 	var state: Node = _battle.get_battle_state()
 	var cures: Array = item.get("cures", [])
@@ -135,7 +136,7 @@ func _cure(item: Dictionary, target_slot: int) -> bool:
 		return false
 	_battle.message.emit("Used %s!" % item.get("name", "Item"))
 	for sname: String in cures:
-		state.remove_status(target_slot, sname)
+		StatusGuard.cure(state, target_slot, sname)
 	return true
 
 
@@ -221,12 +222,16 @@ func _use_on_enemy(item: Dictionary, command: Dictionary) -> bool:
 
 
 ## Smoke Bomb and friends. Bosses cannot be escaped, so the item is refused
-## instead of wasted; otherwise it is spent before the scene transition starts.
+## instead of wasted; otherwise it is spent before the scene transition starts,
+## and the escape is announced as a successful Flee is (battle-dialogue.md
+## § Escape, #515).
 func _flee_item(item: Dictionary) -> bool:
 	if _battle.is_boss_battle():
 		_battle.message.emit("Can't use that here!")
 		return false
 	_battle.message.emit("Used %s!" % item.get("name", "Item"))
+	_battle.message.emit("Escaped!")
+	_battle.flee_result.emit(true)
 	# Consume before exit — exit_battle triggers scene transition
 	var flee_item_id: String = item.get("id", "")
 	if not flee_item_id.is_empty():
@@ -253,15 +258,16 @@ func _hp_amount(item: Dictionary, target: Dictionary) -> int:
 	return int(raw_val) if raw_val != null else 0
 
 
-## Strip every ailment an item can cure from a slot, walking backwards so
-## removal cannot skip one. Positive statuses (Haste) are buffs, not something
-## to cure, and stay; so does every item-proof ailment (StatusEffects.is_item_proof).
+## Cure every ailment an item can cure on a slot (each announced, #515), walking
+## backwards so removal cannot skip one. Positive statuses (Haste) are buffs, not
+## something to cure, and stay; so does every item-proof ailment
+## (StatusEffects.is_item_proof).
 func _clear_statuses(slot: int, member: Dictionary) -> void:
 	var statuses: Array = member.get("active_statuses", [])
 	for i: int in range(statuses.size() - 1, -1, -1):
 		var status: String = statuses[i].get("name", "")
 		if not StatusEffects.is_positive(status) and not StatusEffects.is_item_proof(status):
-			_battle.get_battle_state().remove_status(slot, status)
+			StatusGuard.cure(_battle.get_battle_state(), slot, status)
 
 
 func _target_slots(target_type: String, single_slot: int) -> Array[int]:

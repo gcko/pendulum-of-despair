@@ -9,6 +9,7 @@ extends RefCounted
 
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 const Buffs = preload("res://scripts/combat/battle_buffs.gd")
+const StatusGuard = preload("res://scripts/combat/battle_status_guard.gd")
 
 var _battle: Node
 
@@ -89,7 +90,8 @@ func _show_heal(slot: int, healed: int) -> bool:
 ## Cure party slot [param slot] by [param rule] {only, except, count}: the
 ## listed statuses in order, else every negative one but the exceptions (Purge:
 ## not Stop or Despair), at most count of them (Cleansing Draught: one), 0 = all.
-## A positive status is never cured. Returns whether anything was cured.
+## A positive status is never cured. Each cure is announced (#515). Returns
+## whether anything was cured.
 func _cure(slot: int, rule: Dictionary) -> bool:
 	var state: Node = _battle.get_battle_state()
 	var candidates: Array[String] = []
@@ -105,8 +107,7 @@ func _cure(slot: int, rule: Dictionary) -> bool:
 			break
 		if StatusEffects.is_positive(status) or status in rule.get("except", []):
 			continue
-		if state.has_status(slot, status):
-			state.remove_status(slot, status)
+		if StatusGuard.cure(state, slot, status):
 			cured += 1
 	return cured > 0
 
@@ -114,11 +115,11 @@ func _cure(slot: int, rule: Dictionary) -> bool:
 ## Land a buff spell's status on party slot [param slot] (Quickstep's Haste,
 ## #246) for the spell's duration, else the status's own, plus one on a self-cast
 ## (BattleBuffs.grant counts it the same way); a recast refreshes it. The battle
-## announces it from BattleState.status_applied. Returns true.
+## announces it from BattleState.status_applied. Returns whether it landed: worn
+## gear never wards off a positive status, but apply_status is the one that says.
 func _status_on_ally(slot: int, status: String, duration: Variant) -> bool:
 	var state: Node = _battle.get_battle_state()
 	var turns: int = StatusEffects.resolve_duration(status, duration)
 	if state.get_member(slot).get("turn_open", false):
 		turns += 1
-	state.apply_status(slot, status, "turns", float(turns))
-	return true
+	return state.apply_status(slot, status, "turns", float(turns))
