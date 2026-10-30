@@ -219,9 +219,9 @@ static func apply_magic_to_enemy(
 	var element_mod: float = enemy.get_element_multiplier(element)
 	# Enemy type-element bonus stacks multiplicatively with weakness (GAP-008).
 	var interaction: float = ModifierAggregator.type_element_multiplier(enemy.get_type(), element)
-	var despair: Array = [BattleDamageMods.dealt_mult(state.get_member(caster_slot))]
+	var mults: Array = BattleDamageMods.spell_mults(state.get_member(caster_slot), enemy)
 	var dmg: int = DamageCalc.calculate_magic(
-		mag, power, target_mdef, element_mod, interaction, despair, []
+		mag, power, target_mdef, element_mod, interaction, mults, []
 	)
 	if element_mod == 0.0:
 		return {"hit": true, "damage": 0, "type": "immune"}

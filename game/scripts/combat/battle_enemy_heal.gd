@@ -7,7 +7,8 @@ extends RefCounted
 ## signals); BattleMagicCommand casts, BattleEnemyTurn ticks.
 ##
 ## The damage form is the heal as rolled, with no hit roll and no element or
-## type multiplier, cut by the caster's Despair (BattleDamageMods, #246), and
+## type multiplier, cut by the caster's Despair (BattleDamageMods, #246) and
+## raised by a Glintmark on the enemy (#514), and
 ## it counts as spell damage: threat for the caster, the number shown over the
 ## enemy, and a kill handled like any other.
 ##
@@ -39,7 +40,7 @@ static func land(
 ) -> bool:
 	if enemy.get_type() in HEAL_REVERSING_TYPES:
 		var member: Dictionary = battle.get_battle_state().get_member(caster_slot)
-		heal_amt = BattleDamageMods.cut_dealt(heal_amt, member)
+		heal_amt = BattleDamageMods.cut_dealt(heal_amt, member, enemy)
 		enemy.take_damage(heal_amt, wakes)
 		land_spell_damage(battle, caster_slot, heal_amt, enemy, idx)
 		return heal_amt > 0

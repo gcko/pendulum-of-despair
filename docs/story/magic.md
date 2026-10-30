@@ -415,11 +415,24 @@ unstated. `game/tests/test_spell_balance.gd` asserts all of them against
   - `dispel: true` (Dispersion, Mass Dispersion) always lands and removes every
     positive effect the enemy carries: its stat buffs and its positive statuses
     (Haste). A debuff the party laid stays on it (§ Status Effect Reference).
+  - `damage_taken_pct` marks the enemy: Glintmark 10, for 3 of the enemy's
+    turns. It has no hit rate and always lands, and a recast refreshes it. Its
+    +10% multiplies final damage, at step 6 of a physical blow and step 5 of a
+    spell ([combat-formulas.md](combat-formulas.md) § Combat Resolution
+    Order). It is the party's mark, so Dispersion leaves it on, as its row's
+    "Wears off" says. The mark reaches an Attack (a confused or berserk
+    member's too), a Riposte, a Trick, a spell, and a heal or Regen turned to
+    damage on an Undead or a Pallor. It does not yet reach the rest of "all
+    sources": Lira's Shock Coil, Arc Trap and Thornveil, Edren's Shatter
+    Guard, Torren's Greyveil and thorn barrier, and a Poison or Burn tick.
+    Glintmark's other half, revealing an enemy's hidden and steal-able items,
+    is not built either, any more than Spiritsight's scan is.
 
-  A `stat_debuff` needs a `duration` of at least one turn. An enemy-side spell
-  with no damage `power`, no registry `status` on a `status` spell and neither
-  key has no battle effect yet and is refused before any MP is spent: Crumble,
-  Spiritsight and Glintmark, and the enemy-only Drinker of Days.
+  A `stat_debuff` or a mark needs a `duration` of at least one turn. An
+  enemy-side spell with no damage `power`, no registry `status` on a `status`
+  spell and none of these keys has no battle effect yet and is refused before
+  any MP is spent: Crumble and Spiritsight, and the enemy-only Drinker of
+  Days.
 
 ---
 

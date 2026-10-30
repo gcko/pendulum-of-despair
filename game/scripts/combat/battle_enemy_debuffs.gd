@@ -1,8 +1,8 @@
 extends RefCounted
 ## Debuff spells turned on an enemy (#514): a stat penalty that rolls to hit,
-## and the dispel that strips an enemy's positive effects and always lands.
-## Pure rules over one enemy; BattleMagicCommand owns the cast and what the
-## player is shown.
+## the dispel that strips an enemy's positive effects and always lands, and
+## Glintmark's mark. Pure rules over one enemy; BattleMagicCommand owns the
+## cast and what the player is shown.
 ##
 ## The keys are each spell's own data, valued from its magic.md entry:
 ##   - `stat_debuff: {stat, pct}` lowers one stat by `pct`% for the spell's
@@ -20,13 +20,21 @@ extends RefCounted
 ##     status (Haste). A debuff the party laid stays, as "Player-side
 ##     Dispersion removes enemy buffs, not friendly ones" (magic.md § Status
 ##     Effect Reference).
+##   - `damage_taken_pct` (Glintmark, 10 for 3) marks the enemy: it takes that
+##     much more damage from every blow for the spell's `duration` turns of its
+##     own (BattleDamageMods.taken_mult). The mark has no hit rate and always
+##     lands. It is kept as a debuff on BattleDamageMods.RESIST_STAT, so it
+##     counts down on the enemy's turns, a recast refreshes it, and Dispersion
+##     leaves it on: it is the party's, and "wears off" only.
 
 const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 
 
-## Whether [param spell] carries a stat_debuff or a dispel.
+## Whether [param spell] carries a stat_debuff, a dispel or a mark.
 static func has_effect(spell: Dictionary) -> bool:
+	if spell.get("damage_taken_pct") != null:
+		return true
 	return spell.get("stat_debuff") is Dictionary or bool(spell.get("dispel", false))
 
 
@@ -36,13 +44,18 @@ static func has_effect(spell: Dictionary) -> bool:
 static func land(caster_mag: int, spell: Dictionary, enemy: Node) -> String:
 	if bool(spell.get("dispel", false)):
 		return "dispelled" if dispel(enemy) > 0 else "no_effect"
+	var turns: int = int(spell.get("duration", 0))
+	if spell.get("damage_taken_pct") != null:
+		var mark: float = 1.0 - int(spell["damage_taken_pct"]) / 100.0
+		enemy.apply_buff(BattleDamageMods.RESIST_STAT, mark, turns)
+		return "debuffed"
 	var debuff: Dictionary = spell.get("stat_debuff", {})
 	var stats: Dictionary = enemy.get_stats()
 	var rate: int = int(spell.get("hit_rate", 0))
 	if not DamageCalc.roll_status(rate, caster_mag, stats.get("mdef", 0), stats.get("spd", 0)):
 		return "missed"
 	var mult: float = 1.0 - int(debuff.get("pct", 0)) / 100.0
-	enemy.apply_buff(str(debuff.get("stat", "")), mult, int(spell.get("duration", 0)))
+	enemy.apply_buff(str(debuff.get("stat", "")), mult, turns)
 	return "debuffed"
 
 

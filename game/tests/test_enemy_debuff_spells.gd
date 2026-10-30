@@ -38,12 +38,11 @@ const STAT_DEBUFFS: Array = [
 ]
 
 ## Enemy-side spells with no battle effect built yet: Crumble's resistance
-## shift, Spiritsight's scan and Glintmark's mark. Drag Tide's fill-rate
-## penalty is built, and test_drag_tide.gd pins it.
+## shift and Spiritsight's scan. Drag Tide's fill-rate penalty is built, and
+## test_drag_tide.gd pins it; so is Glintmark's mark (test_glintmark.gd).
 const UNBUILT: Array = [
 	["spirit", "crumble"],
 	["spirit", "spiritsight"],
-	["streetwise", "glintmark"],
 ]
 
 var _booted: Node = null
@@ -414,9 +413,6 @@ func test_unbuilt_enemy_spells_are_grayed_in_the_magic_menu() -> void:
 	for id: String in ["crumble", "spiritsight"]:
 		assert_true(maren.has(id), "precondition: Maren knows %s" % id)
 		assert_false(maren.get(id, {}).get("enabled", true), "%s is grayed" % id)
-	var sable: Dictionary = _menu_spells("sable", 40)
-	assert_true(sable.has("glintmark"), "precondition: Sable knows Glintmark")
-	assert_false(sable.get("glintmark", {}).get("enabled", true), "Glintmark is grayed")
 
 
 func test_built_enemy_debuffs_stay_selectable_in_the_magic_menu() -> void:
