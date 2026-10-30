@@ -149,6 +149,28 @@ gh pr view <N> --json baseRefName,mergeStateStatus,headRefOid,statusCheckRollup,
 | `copilot` | a review whose `commit` is the ledger's last content head, and whose body is a real review; or a recorded fallback | See SKILL.md Step 6 for requesting a review and for the fallback. A body like "unable to review … insufficient remaining quota" is not a review. |
 | ledger | the PUSH-GATE recorded as passed for the last content head, or the reason it did not apply | The PUSH-GATE runs only when Copilot commented and fixes were made. A PR with no Copilot comments, or one reviewed by the fallback, records that instead. |
 
+### Waiting on CI
+
+Wait with the skill's script, run with `run_in_background` and the head you
+just pushed:
+
+```bash
+bash .claude/skills/milestone-burndown/scripts/wait-ci.sh <N> <head-sha> [timeout-minutes]
+```
+
+It always exits, and the exit wakes you: `0` pass, `1` a check failed, `2` gh
+failed three polls in a row, `3` deadline (default 45 minutes), `4` the head
+moved, `5` nothing registered in 10 minutes. Anything but `0` gets read and
+acted on; none of them is a reason to start the same wait again unchanged.
+
+Do not write your own `until`/`while` poll loop, and do not use
+`gh pr checks --watch`. Neither has a deadline. A loop that sends gh's stderr
+to `/dev/null` reads every error as "still pending": one invalid `--json`
+field (`gh pr checks` has no `headSha`) made a wait spin for 18 hours after CI
+had passed. Any wait you write for something else needs the same three
+guards: a deadline, errors printed and not discarded, and a progress line on
+every poll.
+
 ## 5. Merge
 
 ```bash
@@ -262,8 +284,8 @@ Copilot review (section 3). Skip this when `X` already sits on the current
    is new content, and this is not a base-only push.
 4. Re-check signatures and re-run the section 2 gates. Push a base-only result
    with `git -C wt-X push --force-with-lease`.
-5. **Wait for CI on the new head.** `gh pr checks --watch` can return before
-   the new run registers, so check first:
+5. **Wait for CI on the new head.** A wait can finish before every workflow
+   has registered a run on the new head, so check first:
 
    ```bash
    gh pr view <X-PR> --json headRefOid,statusCheckRollup \
@@ -272,7 +294,8 @@ Copilot review (section 3). Skip this when `X` already sits on the current
 
    `head` must equal `git -C wt-X rev-parse X`, and `workflows` must list
    the `name:` of every workflow the section 6 step 2 grep finds (an empty
-   name is a status context, such as GitGuardian). Then
-   `gh pr checks <X-PR> --watch`, then `X`'s section 4 checklist. Section 3's
+   name is a status context, such as GitGuardian). Then wait with
+   `scripts/wait-ci.sh` (section 4, "Waiting on CI"), then `X`'s section 4
+   checklist. Section 3's
    last-content-head rule holds: a base-only push does not reset the Copilot
    requirement.

@@ -387,6 +387,7 @@ comment on the issue saying why.
 
 | Thought | Reality |
 |---|---|
+| "A quick `until gh pr checks …; do sleep; done` will do" | It has no deadline, and a swallowed gh error looks like "pending" forever. Use `scripts/wait-ci.sh` in the background (stack-and-merge section 4, "Waiting on CI"). |
 | "The builder said gates passed" | Read the RESULT line and the status line, or run the gates yourself. A report is a claim. |
 | "Defaults are fine, skip the intake questions" | The user chooses the models, the effort and the merge authority. Ask. |
 | "I'll fork the reviewers, it's quicker" | A fork ignores `model` and `effort`, which drops the user's choice. |
