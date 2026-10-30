@@ -231,7 +231,8 @@ func tick_statuses(slot: int) -> Array:
 			var sname: String = s.get("name", "")
 			m["active_statuses"].remove_at(i)
 			status_removed.emit(slot, sname)
-			status_expired.emit(slot, sname)
+			if m["is_alive"]:  # a fallen member's run out unannounced, as an enemy's do
+				status_expired.emit(slot, sname)
 	return dot_events
 
 
