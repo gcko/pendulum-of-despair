@@ -54,6 +54,10 @@ func execute(enemy_id: String, enemies: Array[Node], is_boss: bool, turn_counter
 			_manager.message.emit("%s is %s and can't move!" % [enemy.get_display_name(), adj])
 			_tick_enemy_statuses(enemy, idx)
 		return turn_counter
+	var auto: String = BattleAutoAction.driving_status(enemy.active_statuses)
+	if not auto.is_empty():
+		_auto_turn(auto, enemy, enemies, idx)
+		return turn_counter + 1
 	var pm: Array = range(4).map(func(i: int) -> Dictionary: return _state.get_member(i))
 	var pr: Array = pm.map(
 		func(m: Dictionary) -> String:
@@ -75,6 +79,29 @@ func _select_action(
 	if BossAI.has_script(enemy.enemy_data):
 		return BossAI.select_action(enemy, turn_counter, _state, enemies)
 	return BattleAI.select_action(enemy.enemy_data, pm, pr, enemy.has_status("silence"))
+
+
+## Confusion or Berserk makes the enemy's basic attack for it, at the target
+## BattleAutoAction picks (#246): on a party member, the very attack its AI
+## would make; on another enemy, BattleAutoAction's enemy-on-enemy blow. A full
+## turn either way, so its statuses tick and Confusion's 3 turns run out.
+func _auto_turn(status: String, enemy: Node, enemies: Array[Node], idx: int) -> void:
+	var target: String = BattleAutoAction.pick_target(status, "enemy_%d" % idx, _state, enemies)
+	if target.begins_with("party_"):
+		var slot: int = target.replace("party_", "").to_int()
+		_apply_action({"type": "attack", "target_slot": slot}, enemy, enemies, idx)
+		return
+	if target.begins_with("enemy_"):
+		var other: Node = enemies[target.replace("enemy_", "").to_int()]
+		_manager.message.emit(
+			"%s attacks %s!" % [enemy.get_display_name(), other.get_display_name()]
+		)
+		var r: Dictionary = BattleAutoAction.enemy_strikes_enemy(enemy, other)
+		_manager.damage_dealt.emit(target, int(r["damage"]), r["type"])
+		if r["killed"]:
+			_manager.combatant_died.emit(target)
+			_atb.remove_combatant(target)
+	_tick_enemy_statuses(enemy, idx)
 
 
 func _apply_action(action: Dictionary, enemy: Node, enemies: Array[Node], idx: int) -> void:

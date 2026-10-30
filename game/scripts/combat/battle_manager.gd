@@ -43,6 +43,7 @@ var _actions: BattlePlayerActions = null
 var _magic: BattleMagicCommand = null
 var _items: BattleItemCommand = null
 var _abilities: BattleAbilityCommand = null
+var _auto: BattleAutoAction = null
 
 @onready var _atb: Node = $ATBSystem
 @onready var _state: Node = $BattleState
@@ -52,6 +53,7 @@ var _abilities: BattleAbilityCommand = null
 
 func _ready() -> void:
 	_enemy_turn = BattleEnemyTurn.new(self, _state, _atb, _enemy_area)
+	_auto = BattleAutoAction.new(self)
 	if _ui == null:
 		push_error("BattleManager: BattleUI not found")
 		call_deferred("exit_battle", "flee")
@@ -169,6 +171,9 @@ func _process(delta: float) -> void:
 				# frame. The announcement's readability is the UI's job —
 				# battle_ui queues messages (ui-design.md § 2.5).
 				break
+			# Confusion/Berserk make this turn's basic attack for them (#246).
+			if _auto.take_party_turn(slot):
+				break
 			_awaiting_input_for = id
 			_atb.set_command_menu_open(true)
 			var char_data: Dictionary = _state.get_member(slot).get("character_data", {})
@@ -228,12 +233,18 @@ func _on_ui_command(command: Dictionary) -> void:
 	):
 		_state.set_defending(cmd_slot, false)
 		_state.set_buff(cmd_slot, "damage_taken_mult", 1.0)
+	end_party_turn(cmd_slot)
+
+
+## Close [param slot]'s turn once its action has resolved, commanded or not
+## (BattleAutoAction): the gauge empties and the end-of-turn statuses tick.
+func end_party_turn(slot: int) -> void:
 	_awaiting_input_for = ""
-	_atb.reset_gauge(actor_id)
+	_atb.reset_gauge("party_%d" % slot)
 	_turn_counter += 1
 	# Surface party-side DoT (Poison/Burn) through damage_dealt so it shows a
 	# floating number, mirroring the enemy-side tick.
-	_emit_party_events(_state.tick_statuses(cmd_slot))
+	_emit_party_events(_state.tick_statuses(slot))
 	_check_end_conditions()
 
 

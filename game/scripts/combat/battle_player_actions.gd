@@ -37,17 +37,25 @@ func do_attack(actor_id: String, command: Dictionary) -> bool:
 	for _swing: int in range(Bulwark.attack_hits(member)):
 		if not enemies[target_idx].is_alive:
 			break
-		var result: Dictionary = BattleActions.execute_party_attack(
-			state, slot, enemies[target_idx], target_idx
-		)
-		state.add_threat(slot, int(result.get("damage", 0)))  # GAP-009 highest-threat
-		_battle.damage_dealt.emit(
-			"enemy_%d" % target_idx, result.get("damage", 0), result.get("type", "miss")
-		)
-		if result.get("killed", false):
-			_battle.combatant_died.emit("enemy_%d" % target_idx)
-			_battle.get_atb().remove_combatant("enemy_%d" % target_idx)
+		strike(slot, target_idx)
 	return true
+
+
+## One basic attack from [param slot] on enemy [param target_idx], shown and
+## counted: its damage number, the threat it earns, and the kill it makes. A
+## swing of the Attack command, and a confused or berserk member's auto-attack.
+func strike(slot: int, target_idx: int) -> Dictionary:
+	var state: Node = _battle.get_battle_state()
+	var eid: String = "enemy_%d" % target_idx
+	var result: Dictionary = BattleActions.execute_party_attack(
+		state, slot, _battle.get_enemies()[target_idx], target_idx
+	)
+	state.add_threat(slot, int(result.get("damage", 0)))  # GAP-009 highest-threat
+	_battle.damage_dealt.emit(eid, result.get("damage", 0), result.get("type", "miss"))
+	if result.get("killed", false):
+		_battle.combatant_died.emit(eid)
+		_battle.get_atb().remove_combatant(eid)
+	return result
 
 
 ## Halve incoming damage until this member's next action.

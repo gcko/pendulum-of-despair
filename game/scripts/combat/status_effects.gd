@@ -9,12 +9,13 @@ extends RefCounted
 ## one positive status built so far (#246; is_positive). Ailments whose
 ## *behavioral* effect needs an unbuilt system are still inflictable here, but
 ## their effect is deferred (tracked on #246):
-##   - blind (-50% enemy accuracy), confusion (auto-target) — need enemy-AI
-##     hooks (GAP-009).
+##   - blind (-50% enemy accuracy) — needs enemy-AI hooks (GAP-009).
 ##   - despair's -20% damage-dealt needs an attacker-status param in DamageCalc.
 ## Silence blocks casting on both sides: BattleMagicCommand for the party, and
 ## BattleAI / BossAI for enemies, which skip spell moves (#246). Stop is the one
 ## status counted in real-time seconds rather than turns: see is_realtime().
+## Confusion and Berserk take the command away on both sides: BattleAutoAction
+## makes the bearer's basic attack for it (#246).
 
 ## Sentinel duration: status persists until cured (no per-turn countdown).
 const UNTIL_CURED: int = -1
@@ -63,7 +64,7 @@ const RULES: Dictionary = {
 	# Enforced by the caster's side, not here (see the scope note above).
 	"silence": {"duration": 4},
 	# Confusion: 3 turns or until damaged (magic.md § Status Effect Reference > 'Confusion').
-	# Auto-target deferred.
+	# Its auto-attack is BattleAutoAction's.
 	"confusion": {"duration": 3, "wake_on_damage": true},
 	# Blind: -50% physical accuracy, 4 turns (magic.md § Status Effect Reference > 'Blind').
 	# Effect deferred.
@@ -76,6 +77,10 @@ const RULES: Dictionary = {
 	# § Fill Rate Modifiers + § Status Effect ATB Interactions). A positive
 	# status (magic.md § Status Effect Reference): a KO ends it, a cure-all keeps it.
 	"haste": {"atb": "mod", "atb_mult": 1.5, "duration": 5, "positive": true},
+	# Berserk: ATB fill x1.25, until cured, Purge its only cure (combat-formulas.md
+	# § Fill Rate Modifiers + § Status Effect ATB Interactions; magic.md § Status
+	# Effect Reference > 'Berserk'). Its auto-attack is BattleAutoAction's.
+	"berserk": {"atb": "mod", "atb_mult": 1.25, "duration": UNTIL_CURED},
 }
 
 ## Player-facing adjective for an ACTION-DENIAL announcement ("paralysis" ->
@@ -115,6 +120,7 @@ const APPLICATION_NOTICES: Dictionary = {
 	"blind": "%s is Blinded!",
 	"stop": "%s is Stopped!",
 	"haste": "%s is Hastened!",
+	"berserk": "%s is Berserk!",
 }
 
 ## The line for a combatant a hit has woken, "[Character] woke up!" from

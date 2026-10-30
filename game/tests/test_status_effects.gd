@@ -106,7 +106,7 @@ func test_every_status_the_registry_can_inflict_announces_a_shipped_line() -> vo
 
 
 func test_a_status_with_no_canonical_line_announces_nothing() -> void:
-	assert_eq(SE.application_notice("berserk", "Sable"), "", "unregistered statuses stay silent")
+	assert_eq(SE.application_notice("not_a_status", "Sable"), "", "unregistered names stay silent")
 	assert_eq(SE.application_notice("paralysis", "Sable"), "Sable is Paralyzed!")
 
 
@@ -152,6 +152,18 @@ func test_atb_mod_statuses() -> void:
 	assert_eq(SE.atb_effect("despair"), "mod")
 	assert_almost_eq(SE.atb_mult("despair"), 0.75, 0.001)  # combat-formulas.md § Fill Rate Modifiers
 	assert_almost_eq(SE.atb_mult("poison"), 1.0, 0.001, "non-mod statuses default 1.0")
+
+
+## Berserk: "× 1.25 ... Until cured" (combat-formulas.md § Fill Rate
+## Modifiers), "Purge only" (magic.md § Status Effect Reference > 'Berserk'):
+## an ailment, so a hit does not end it and a KO does not keep it as a buff.
+func test_berserk_speeds_the_gauge_a_quarter_until_cured() -> void:
+	assert_eq(SE.atb_effect("berserk"), "mod")
+	assert_almost_eq(SE.atb_mult("berserk"), 1.25, 0.001)
+	assert_eq(SE.default_duration("berserk"), SE.UNTIL_CURED, "no countdown")
+	assert_false(SE.wakes_on_damage("berserk"), "a hit does not end it")
+	assert_false(SE.is_positive("berserk"), "an ailment, not a buff")
+	assert_false(SE.is_incapacitating("berserk"), "the bearer still takes its turn")
 
 
 func test_tick_percentages() -> void:
