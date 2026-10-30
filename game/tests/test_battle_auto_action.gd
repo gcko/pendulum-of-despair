@@ -442,6 +442,46 @@ func test_a_confused_ally_s_direct_hit_on_edren_in_stance_earns_ap_but_no_ripost
 	assert_eq(state.get_member(2)["current_hp"], STURDY_HP, "no Riposte hit Lira")
 
 
+# --- A self-targeted enemy ability lands only a buff (Coil) ---
+
+
+func _self_ability(status: String) -> Dictionary:
+	return {"type": "ability", "id": "test_move", "target": "self", "status": status}
+
+
+func test_a_self_targeted_ability_will_not_land_an_ailment_on_its_caster() -> void:
+	var battle: Node = _boot()
+	var vermin: Node = battle.get_enemies()[0]
+	battle._enemy_turn._do_self_ability(_self_ability("poison"), vermin, battle.get_enemies())
+	assert_false(vermin.has_status("poison"), "a self ability lands buffs, not ailments")
+	assert_push_error("poison", "the bad data is reported")
+
+
+func test_a_self_targeted_ability_reports_a_status_the_registry_does_not_know() -> void:
+	var battle: Node = _boot()
+	var vermin: Node = battle.get_enemies()[0]
+	battle._enemy_turn._do_self_ability(_self_ability("hast"), vermin, battle.get_enemies())
+	assert_push_error("hast", "a typo is reported, not passed over in silence")
+
+
+func test_every_shipped_self_targeted_status_is_a_buff() -> void:
+	var checked: int = 0
+	for act: String in ["act_i", "act_ii", "act_iii", "interlude", "optional"]:
+		var f: FileAccess = FileAccess.open("res://data/enemies/%s.json" % act, FileAccess.READ)
+		var data: Dictionary = JSON.parse_string(f.get_as_text())
+		f.close()
+		for enemy: Dictionary in data.get("enemies", []):
+			for ab: Dictionary in enemy.get("abilities", []):
+				var st: String = ab.get("status", "")
+				if ab.get("target", "") != "self" or st.is_empty():
+					continue
+				checked += 1
+				assert_true(
+					StatusEffects.is_positive(st), "%s/%s lands %s" % [enemy["id"], ab["id"], st]
+				)
+	assert_gt(checked, 0, "Coil at least was read")
+
+
 # --- What an item cannot cure (items.md § Status Cures) ---
 
 

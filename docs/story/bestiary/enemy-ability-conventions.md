@@ -32,18 +32,19 @@ Each element is a dictionary:
 | `spell_power` | int | `0` | Magic spell power (`type:"magic"`). |
 | `target` | String | `"single"` | `"single"`, `"all"` (party-wide AoE), or `"self"`. |
 | `selector` | String | `""` | Single-target pick. `"back"` (a back-row member, e.g. Lunge) and `"random"` (e.g. Drift) are honored by **both** regular enemies and bosses; `"highest_threat"`/`"lowest_hp"` are **boss-only** (resolved by BossAI against BattleState). Default (empty) is the front-biased physical pick. |
-| `status` | String | `""` | Status inflicted on hit (e.g. `"poison"`). |
+| `status` | String | `""` | Status inflicted on hit (e.g. `"poison"`). On a `target:"self"` ability it is a positive status that lands on the caster without a roll instead (Coil's `"haste"`, §2.4). |
 | `status_rate` | int | `0` | Base hit-rate fed to the two-stage roll. |
 | `status_duration` | Variant | `null` | Explicit duration override; `null` = canonical (`StatusEffects.resolve_duration`). |
 | `hits` | int | `1` | Multi-hit count. |
 | `aoe_on_death` | bool | `false` | If true, the ability fires against the party when the bearer dies. |
-| `buff` | Dictionary | `{}` | `{stat, mult, duration, scope}` for `type:"buff"` (see §2.4). |
+| `buff` | Dictionary | `{}` | `{stat, mult, duration, scope}` for a `type:"buff"` stat buff (see §2.4). A `type:"buff"` that lands a status (Coil) carries `status` instead. |
 
 Every damage/roll value resolves through the existing combat code — there is
 **no** new damage math. `type:"attack"` → `DamageCalc.calculate_physical`
 (`ability_mult` is the power knob); `type:"magic"` →
 `DamageCalc.calculate_magic` (`spell_power` is the power knob); `status` →
-`DamageCalc.roll_status` two-stage accuracy; `buff` → enemy stat multiplier.
+`DamageCalc.roll_status` two-stage accuracy on an offensive ability, or straight
+onto the caster on a `target:"self"` one; `buff` → enemy stat multiplier.
 
 ---
 
