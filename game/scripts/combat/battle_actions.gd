@@ -100,8 +100,7 @@ static func execute_enemy_status(
 		return {"hit": false, "inflicted": false, "type": "resisted", "status": status_name}
 	var duration: int = StatusEffects.resolve_duration(status_name, explicit_duration)
 	var kind: String = "realtime" if StatusEffects.is_realtime(status_name) else "turns"  # Stop
-	var landed: Variant = state.apply_status(target_slot, status_name, kind, float(duration))
-	if landed is bool and not landed:  # false only once gear can block it (#512)
+	if not state.apply_status(target_slot, status_name, kind, float(duration)):  # gear (#512)
 		return {"hit": true, "inflicted": false, "type": "immune", "status": status_name}
 	return {"hit": true, "inflicted": true, "type": "status", "status": status_name}
 

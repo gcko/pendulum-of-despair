@@ -513,3 +513,43 @@ func test_a_blinded_enemy_misses_another_enemy_its_unhalved_hit_rate_lands() -> 
 	_enemy.apply_status("blind", 4)
 	seed(s)
 	assert_false(BattleAutoAction.enemy_strikes_enemy(_enemy, other)["hit"])
+
+
+# --- An enemy's status meets the target's worn gear (#512) ---
+
+
+## The enemy's Poison on Cael, at a base rate its MAG cannot dilute below 100,
+## wearing an Antidote Charm, under the first seed whose rolls land it on him
+## unguarded: only the charm stands between the status and him.
+func _poison_cael() -> Dictionary:
+	for s: int in range(1, 60):
+		seed(s)
+		var r: Dictionary = BattleActions.execute_enemy_status(
+			_state, _enemy, CAEL, 150, "poison", null
+		)
+		if r["inflicted"]:
+			_state.remove_status(CAEL, "poison")
+			PartyState.get_member("cael")["equipment"]["accessory"] = "antidote_charm"
+			seed(s)
+			return BattleActions.execute_enemy_status(_state, _enemy, CAEL, 150, "poison", null)
+	fail_test("no seed lands the Poison")
+	return {}
+
+
+func test_an_unguarded_member_takes_an_enemy_s_status() -> void:
+	var r: Dictionary = {}
+	for s: int in range(1, 60):
+		seed(s)
+		r = BattleActions.execute_enemy_status(_state, _enemy, CAEL, 150, "poison", null)
+		if r["inflicted"]:
+			break
+	assert_eq(r["type"], "status")
+	assert_true(_state.has_status(CAEL, "poison"))
+
+
+func test_worn_gear_that_wards_off_a_status_reads_as_immune() -> void:
+	var r: Dictionary = _poison_cael()
+	assert_true(r["hit"])
+	assert_false(r["inflicted"], "the Antidote Charm wards off Poison")
+	assert_eq(r["type"], "immune")
+	assert_false(_state.has_status(CAEL, "poison"))
