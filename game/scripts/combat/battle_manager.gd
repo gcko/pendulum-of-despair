@@ -159,6 +159,9 @@ func _process(delta: float) -> void:
 				continue
 			# The turn begins: Second Wind's regen lands (abilities.md § Cael — Rally).
 			_emit_party_events(_state.begin_turn(slot))
+			_check_end_conditions()  # a turn-start effect may have won or lost it
+			if _battle_resolved or not _battle_active:
+				return
 			if blocked_by != "":
 				# Paralysis fills the gauge instead, so it does have a turn to
 				# consume: the status counts down on this would-be turn (the
@@ -339,9 +342,10 @@ func _on_enemy_died(enemy: Node) -> void:
 		message.emit(line)
 
 
-## Recompute an enemy's ATB freeze/mods from its current statuses. Idempotent;
-## called for living enemies each frame and after status changes so cured or
-## expired statuses clear (StatusEffects.atb_state is the pure, tested core).
+## Recompute an enemy's ATB freeze/mods from its current statuses, and its SPD
+## from its buffs, so a SPD buff or debuff changes how fast the gauge fills.
+## Idempotent; called for living enemies each frame and after status changes so
+## cured or expired statuses clear (StatusEffects.atb_state is the pure core).
 func resync_enemy_atb(idx: int) -> void:
 	if idx < 0 or idx >= _enemies.size():
 		return
@@ -349,6 +353,7 @@ func resync_enemy_atb(idx: int) -> void:
 	var st: Dictionary = StatusEffects.atb_state(_enemies[idx].active_statuses)
 	_atb.set_frozen(eid, st["frozen"])
 	_atb.set_status_mods(eid, st["mods"])
+	_atb.set_spd(eid, _enemies[idx].get_stats().get("spd", 0))  # SPD buffs (Arc Trap)
 	if st["zeroed"]:
 		_atb.set_gauge(eid, 0)
 
