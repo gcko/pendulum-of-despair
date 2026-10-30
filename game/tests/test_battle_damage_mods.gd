@@ -4,9 +4,9 @@ extends GutTest
 ## slice 3).
 ##
 ## Design law: combat-formulas.md § Physical Elemental Attacks ("Elemental
-## weapons"), § Fill Rate Modifiers ("Also -20% damage dealt") and § Physical
-## Attack Resolution step 1; magic.md § Status Effect Reference (Despair "damage
-## dealt -20%", Blind "Physical accuracy -50%"). Rulings of 2026-10-30: Despair
+## weapons"), combat-formulas.md § Attacker Status Modifiers, and
+## magic.md § Status Effect Reference (Despair "damage dealt -20%", Blind
+## "Physical accuracy -50%"). Rulings of 2026-10-30: Despair
 ## cuts every kind of damage its bearer deals but no healing; Blind halves the
 ## hit rate of physical attacks only, before the 20-99 clamp; every physical
 ## strike through execute_party_attack carries the equipped weapon's element,
