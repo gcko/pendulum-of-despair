@@ -370,11 +370,15 @@ unstated. `game/tests/test_spell_balance.gd` asserts all of them against
     spell that lands on the bearer loses up to that plus the caster's MAG,
     read when the ward is cast (Forgeshield 150). The ward then shatters,
     whether the spell was under that threshold or over it, and the rest of a
-    spell over it lands (a reading of "up to a threshold"). A physical blow and a missed spell leave it up, and
-    so does a Poison or Burn tick, which is not directed at the bearer. When
-    Edren's stance meets the spell, his split comes first and the ward meets
-    the bearer's own share. Like a stat buff, a weaker recast leaves a
-    stronger ward up and an equal or stronger one replaces it (a reading).
+    spell over it lands (a reading of "up to a threshold"). A physical blow
+    and a missed spell leave it up, and so does a Poison or Burn tick, which
+    is not directed at the bearer. A spell aimed at the whole party meets each
+    member's own ward. Under Edren's stance the split comes first: Edren takes
+    his share in full, and the ward meets only the bearer's share. A spell on
+    Edren himself while he holds a stance still counts toward his stance's
+    absorbed total even when his own ward takes all of it. Like a stat buff, a
+    weaker recast leaves a stronger ward up and an equal or stronger one
+    replaces it (a reading).
   - `mp_restore_pct` restores that percent of the target's max MP
     (Leydraught 20).
   - `hp_cost_pct` is paid by the caster as that percent of its own max HP,

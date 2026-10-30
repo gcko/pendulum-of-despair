@@ -55,9 +55,10 @@ func _boot() -> Node:
 	var battle: Node = BATTLE.instantiate()
 	add_child(battle)
 	_booted = battle
-	var m: Dictionary = battle.get_battle_state().get_member(TARGET)
-	m["max_hp"] = DEEP_HP
-	m["current_hp"] = DEEP_HP
+	for slot: int in [CASTER, TARGET]:
+		var m: Dictionary = battle.get_battle_state().get_member(slot)
+		m["max_hp"] = DEEP_HP
+		m["current_hp"] = DEEP_HP
 	var enemy: Node = battle.get_enemies()[0]
 	var data: Dictionary = enemy.enemy_data.duplicate(true)
 	data["spd"] = 0
@@ -89,12 +90,12 @@ func _forgeshield() -> Dictionary:
 	return {}
 
 
-## Wait for the caster's prompt, then cast Forgeshield on the target.
-func _shield(battle: Node) -> bool:
+## Wait for the caster's prompt, then cast Forgeshield on party slot [param target].
+func _shield(battle: Node, target: int = TARGET) -> bool:
 	if not await _await_prompt(battle):
 		return false
 	battle.get_node("BattleUI").command_submitted.emit(
-		{"type": "magic", "spell": _forgeshield(), "target": TARGET}
+		{"type": "magic", "spell": _forgeshield(), "target": target}
 	)
 	return true
 
@@ -200,3 +201,97 @@ func test_forgeshield_can_be_cast_from_lira_s_magic_menu() -> void:
 			entry = item
 	assert_false(entry.is_empty(), "precondition: Lira knows Forgeshield")
 	assert_true(entry.get("enabled", false), "Forgeshield is offered")
+
+
+func test_a_missed_spell_leaves_the_shield_up() -> void:
+	var battle: Node = _boot()
+	if not await _shield(battle):
+		return
+	var state: Node = battle.get_battle_state()
+	var enemy: Node = battle.get_enemies()[0]
+	var target: Dictionary = state.get_member(TARGET)
+	var spd: int = int(target["effective_stats"].get("spd", 0))
+	target["effective_stats"]["spd"] = 999  # a 20% hit roll, then a 50% dodge
+	var missed: bool = false
+	for rng: int in range(1, 60):
+		seed(rng)
+		if not BattleActions.execute_enemy_magic(state, enemy, TARGET, "", 10).get("hit", true):
+			missed = true
+			break
+	target["effective_stats"]["spd"] = spd
+	assert_true(missed, "precondition: a spell missed")
+	assert_eq(_spell_hit(battle, 20, 10), 0, "and the shield still took the next spell")
+
+
+func test_a_poison_tick_leaves_the_shield_up() -> void:
+	var battle: Node = _boot()
+	if not await _shield(battle):
+		return
+	var state: Node = battle.get_battle_state()
+	assert_true(state.apply_status(TARGET, "poison", "turns", -1), "precondition: poisoned")
+	state.tick_statuses(TARGET)
+	assert_lt(int(state.get_member(TARGET)["current_hp"]), DEEP_HP, "the tick hurt")
+	state.get_member(TARGET)["current_hp"] = DEEP_HP
+	assert_eq(_spell_hit(battle, 20, 10), 0, "and the shield still took the next spell")
+
+
+## The HP the enemy's power-20 spell at MAG 200 takes from Cael in the back
+## row and from Edren in Rampart over him, at fixed rolls: [Cael's, Edren's].
+func _rampart_hit(battle: Node) -> Array[int]:
+	var state: Node = battle.get_battle_state()
+	BattleBulwark.enter_stance(state, CASTER, "rampart", -1)
+	state.get_member(TARGET)["row"] = "back"
+	var enemy: Node = battle.get_enemies()[0]
+	enemy.enemy_data["mag"] = 200
+	seed(SEED)
+	var r: Dictionary = BattleActions.execute_enemy_magic(state, enemy, TARGET, "", 20)
+	assert_true(r.get("hit", false), "precondition: the enemy's spell lands")
+	var lost: Array[int] = []
+	for slot: int in [TARGET, CASTER]:
+		lost.append(DEEP_HP - int(state.get_member(slot)["current_hp"]))
+		state.get_member(slot)["current_hp"] = DEEP_HP
+	return lost
+
+
+func test_under_a_stance_the_ward_meets_only_the_bearer_s_share() -> void:
+	var battle: Node = _boot()
+	var plain: Array[int] = _rampart_hit(battle)
+	var threshold: int = _threshold(battle)
+	assert_gt(plain[0], threshold, "precondition: Cael's share is over the threshold")
+	assert_gt(plain[1], 0, "precondition: Edren's Rampart took a share")
+	if not await _shield(battle):
+		return
+	var warded: Array[int] = _rampart_hit(battle)
+	assert_eq(warded[0], plain[0] - threshold, "the ward takes its threshold off Cael's share")
+	assert_eq(warded[1], plain[1], "and Edren's share lands in full")
+
+
+func test_an_area_spell_meets_each_target_s_own_ward() -> void:
+	var battle: Node = _boot()
+	if not await _shield(battle, TARGET):
+		return
+	if not await _shield(battle, CASTER):
+		return
+	var enemy: Node = battle.get_enemies()[0]
+	enemy.enemy_data["mag"] = 20
+	var action: Dictionary = {
+		"type": "ability",
+		"id": "x",
+		"target": "all",
+		"atk_type": "magic",
+		"element": "",
+		"power": 10,
+	}
+	var state: Node = battle.get_battle_state()
+	for slot: int in [CASTER, TARGET]:
+		state.get_member(slot)["effective_stats"]["spd"] = 0  # every member is hit
+	seed(SEED)
+	battle._enemy_turn._do_attack_or_ability(action, enemy, 0)
+	for slot: int in [CASTER, TARGET]:
+		assert_eq(int(state.get_member(slot)["current_hp"]), DEEP_HP, "slot %d's ward held" % slot)
+	seed(SEED)
+	battle._enemy_turn._do_attack_or_ability(action, enemy, 0)
+	for slot: int in [CASTER, TARGET]:
+		assert_lt(
+			int(state.get_member(slot)["current_hp"]), DEEP_HP, "slot %d's ward is spent" % slot
+		)
