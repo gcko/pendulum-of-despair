@@ -15,7 +15,11 @@ extends RefCounted
 ## deploys it on, the rule a Rally's copy on its caster follows — so Shock Coil
 ## fires as each of those turns begins and Mending Engine heals as each ends;
 ## Arc Trap fires on any enemy's physical attack, whatever its target, and is
-## spent. Arcanite Colossus, Cael's Edge and Calibrate are a later slice.
+## spent; a KO on Lira ends every device she has up, refunding nothing.
+## Salvage takes the oldest device unless told which; Mending Engine's "most
+## injured" is the lowest share of max HP, the lower slot on a tie; Thornveil
+## Barrier answers physical hits only. Arcanite Colossus, Cael's Edge and
+## Calibrate are a later slice.
 ##
 ## Lira's record carries her AC in member["ac"] and her devices, oldest first,
 ## in member["forgewright"]["devices"], each {id, cost, power, target,
@@ -258,8 +262,15 @@ static func on_damage(_state: Node, _slot: int, amount: int) -> int:
 	return amount
 
 
-static func on_fainted(_state: Node, _slot: int) -> void:
-	pass
+## A member fainted. If it was Lira, every device she has up ends at once, the
+## fused ones too, with no AC back (2026-10-30 ruling: a KO ends her devices as
+## it ends a Rally, Bulwark's state and positive statuses).
+static func on_fainted(state: Node, slot: int) -> void:
+	var list: Array = devices(state.get_member(slot))
+	if list.is_empty():
+		return
+	list.clear()
+	state.ability_state_changed.emit(slot)
 
 
 static func on_status(_state: Node, _slot: int, _status: String) -> void:

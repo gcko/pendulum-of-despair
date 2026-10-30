@@ -16,6 +16,7 @@ const BattleState = preload("res://scripts/combat/battle_state.gd")
 const AbilityCommand = preload("res://scripts/combat/battle_ability_command.gd")
 const BattleActions = preload("res://scripts/combat/battle_actions.gd")
 const Forgewright = preload("res://scripts/combat/battle_forgewright.gd")
+const SubmenuItems = preload("res://scripts/ui/battle_submenu_items.gd")
 const ENEMY_SCENE: PackedScene = preload("res://scenes/entities/enemy.tscn")
 
 const EDREN := 0
@@ -443,6 +444,49 @@ func test_mending_engine_passes_over_a_fallen_ally() -> void:
 	_lira_turn()
 	assert_eq(_state.get_member(CAEL)["current_hp"], 0, "the fallen stay down")
 	assert_eq(_state.get_member(MAREN)["current_hp"], 1000, "the living hurt one is healed")
+
+
+func test_mending_engine_breaks_a_tie_toward_the_lower_slot() -> void:
+	_state.get_member(CAEL)["current_hp"] = 500
+	_state.get_member(MAREN)["current_hp"] = 500
+	_use("mending_engine")
+	_lira_turn()
+	assert_eq(_state.get_member(CAEL)["current_hp"], 650, "Cael, slot 1, is healed")
+	assert_eq(_state.get_member(MAREN)["current_hp"], 500, "Maren, slot 3, waits")
+
+
+# --- A KO on Lira ends her devices (2026-10-30 ruling) ---
+
+
+func test_lira_fainting_ends_every_device_she_has_up_without_refund() -> void:
+	_use("shock_coil")
+	_use("bulkhead", EDREN)
+	_state.take_damage(LIRA, 99999)
+	assert_eq(_device_ids(), [] as Array[String], "both gone")
+	assert_eq(_ac(), 12 - 2 - 3, "no AC back")
+
+
+func test_a_shock_coil_does_not_return_when_lira_is_revived() -> void:
+	_use("shock_coil")
+	_state.take_damage(LIRA, 99999)
+	_state.heal(LIRA, 500, true)
+	for _turn: int in range(3):
+		_lira_turn()
+	assert_eq(_enemy_hits(0).size(), 0, "the coil never fires again")
+
+
+# --- The battle menu deploys a field device without a target pick ---
+
+
+func test_shock_coil_and_arc_trap_deploy_without_a_target_pick() -> void:
+	# battle_command_menu.gd confirms these target types at once; every other
+	# one opens target selection.
+	var no_pick: Array[String] = ["all_enemies", "all_allies", "self"]
+	var lira: Dictionary = {"character_id": "lira", "level": 99}
+	for item: Dictionary in SubmenuItems.abilities(lira, _state.get_member(LIRA)):
+		var id: String = item["command"]["ability"]["id"]
+		if id in ["shock_coil", "arc_trap"]:
+			assert_has(no_pick, item["target_type"], "%s needs no pick" % id)
 
 
 # --- Listeners hear devices come and go ---

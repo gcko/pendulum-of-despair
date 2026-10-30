@@ -239,6 +239,15 @@ func test_bulkhead_lapses_after_three_of_lira_s_turns() -> void:
 	assert_eq(_device_ids(), [] as Array[String])
 
 
+func test_bulkhead_stops_guarding_once_lira_faints() -> void:
+	var s: int = _landing_seed(CAEL)
+	var plain: int = int(_strike(CAEL, s)["damage"])
+	_heal_all()
+	_use("bulkhead", CAEL)
+	_state.take_damage(LIRA, 99999)
+	assert_eq(int(_strike(CAEL, s)["damage"]), plain, "the full hit lands")
+
+
 # --- Arc Trap: any enemy's physical attack sets it off, once ---
 
 
