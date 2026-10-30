@@ -4,7 +4,8 @@ extends RefCounted
 ## Weighted-random action selection for regular enemies, plus shared party-target
 ## helpers (pick_alive_target / _pick_lowest_hp_target / _pick_physical_target)
 ## consumed by the data-driven boss interpreter. Scripted boss AI moved to
-## boss_ai.gd (GAP-009).
+## boss_ai.gd (GAP-009). Every pick is among the members still on the field
+## (BattleStatusGuard.on_field): a petrified member is never a target (#246).
 
 
 ## Whether an enemy move resolves on the MAG formula: atk_type "magic", or a
@@ -33,9 +34,8 @@ static func select_action(
 ) -> Dictionary:
 	var living: Array[int] = []
 	for i: int in range(party_members.size()):
-		if party_members[i] != null and party_members[i] is Dictionary:
-			if party_members[i].get("is_alive", false):
-				living.append(i)
+		if party_members[i] is Dictionary and BattleStatusGuard.on_field(party_members[i]):
+			living.append(i)
 	if living.is_empty():
 		return {"type": "defend", "target_slot": -1, "ability_id": ""}
 
@@ -140,22 +140,22 @@ static func _pick_physical_target(living_slots: Array, party_rows: Array) -> int
 	return living_slots[randi() % living_slots.size()]
 
 
-## Pick a random living party member slot from battle state.
+## Pick a random party member slot still on the field from battle state.
 static func pick_alive_target(state: Node) -> int:
 	var alive: Array[int] = []
 	for i: int in range(4):
-		if state.get_member(i).get("is_alive", false):
+		if BattleStatusGuard.on_field(state.get_member(i)):
 			alive.append(i)
 	return alive[randi() % alive.size()] if not alive.is_empty() else -1
 
 
-## Pick the living party member with the lowest current HP.
+## Pick the party member on the field with the lowest current HP.
 static func _pick_lowest_hp_target(state: Node) -> int:
 	var best_slot: int = -1
 	var best_hp: int = 999999
 	for i: int in range(4):
 		var m: Dictionary = state.get_member(i)
-		if m.get("is_alive", false):
+		if BattleStatusGuard.on_field(m):
 			var hp: int = m.get("current_hp", 999999)
 			if hp < best_hp:
 				best_hp = hp

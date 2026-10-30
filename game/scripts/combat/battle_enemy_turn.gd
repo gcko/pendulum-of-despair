@@ -296,8 +296,7 @@ func _resolve_attack_or_ability(action: Dictionary, enemy: Node, idx: int) -> vo
 		for i: int in range(4):
 			if not enemy.is_alive:  # a Riposte felled it: the rest of the AoE never lands
 				break
-			var m: Dictionary = _state.get_member(i)
-			if m.is_empty() or not m.get("is_alive", false):
+			if not BattleStatusGuard.on_field(_state.get_member(i)):  # a statue is passed over
 				continue
 			var result: Dictionary = _resolve_offensive(action, enemy, i, elem, first)
 			first = false
