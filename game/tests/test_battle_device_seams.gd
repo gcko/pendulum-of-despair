@@ -154,3 +154,28 @@ func test_one_aoe_attack_springs_one_of_two_traps() -> void:
 	battle._enemy_turn._do_attack_or_ability(quake, vermin, 0)
 	var left: Array = Forgewright.devices(state.get_member(LIRA))
 	assert_eq(left.size(), 1, "three targets, one trap sprung, one left armed")
+
+
+# --- Threat comes from damage dealt, not damage absorbed ---
+
+
+func test_an_overcharged_strike_the_enemy_absorbs_earns_no_threat() -> void:
+	for s: int in range(1, 60):
+		var battle: Node = _boot()
+		var state: Node = battle.get_battle_state()
+		var vermin: Node = battle.get_enemies()[0]
+		vermin.enemy_data["absorb"] = ["storm"]
+		vermin.current_hp = STURDY_HP
+		Forgewright.overcharge(state, CAEL)
+		var shown: Array = []
+		battle.damage_dealt.connect(
+			func(t: String, n: int, k: String) -> void: shown.append([t, n, k])
+		)
+		_only_turn(battle, "party_%d" % CAEL)
+		seed(s)
+		battle.get_node("BattleUI").command_submitted.emit({"type": "attack", "target": 0})
+		if not shown.any(func(h: Array) -> bool: return h[2] == "absorb"):
+			continue  # the strike missed on this seed
+		assert_eq(state.get_highest_threat_slot(), EDREN, "Cael earned no threat by healing it")
+		return
+	fail_test("the strike never landed")
