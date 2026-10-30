@@ -1,9 +1,9 @@
 extends GutTest
 ## An enemy's Poison or Silence running out is announced with the line a party
-## member's gets (#246): "Poison wears off." and "Silence wears off."
-## (battle-dialogue.md § Status Effect Notifications, StatusEffects.
-## wears_off_notice). Every other status runs out silently, as on the party
-## side, and a status taken off any other way (a waking hit, a cure) says no
+## member's gets (#246): "Poison wears off." and "Silence wears off.", from
+## battle-dialogue.md § Status Effect Notifications through
+## StatusEffects.wears_off_notice. Every other status runs out silently, as on
+## the party side, and a status taken off any other way (a waking hit, a cure) says no
 ## "wears off" line.
 ##
 ## An enemy's turn-based statuses count down at the end of its own turn
