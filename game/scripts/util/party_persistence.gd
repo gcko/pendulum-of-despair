@@ -44,6 +44,7 @@ func load_from_save(data: Dictionary) -> void:
 	_party.ley_crystals = lc_data as Dictionary if lc_data is Dictionary else {}
 	var ps_data: Variant = data.get("puzzle_state", {})
 	_party.puzzle_state = ps_data as Dictionary if ps_data is Dictionary else {}
+	_party.arcanite_charges = saved_arcanite_charges(data)
 	# Max HP/MP are derived at load time, not trusted from the file
 	# (save-system.md § 1). Runs last because the crystal term needs the
 	# ley_crystals block above. A save written before #274 therefore loads with
@@ -62,8 +63,22 @@ func build_save_data() -> Dictionary:
 		build_world_state(),
 		_party.playtime,
 		_party.ley_crystals,
-		_party.puzzle_state
+		_party.puzzle_state,
+		_party.arcanite_charges
 	)
+
+
+## Lira's AC pool as a save records it in crafting.arcanite_charges
+## (save-system.md § 3.5). Every save written before AC could be spent recorded
+## a constant full pool, so a missing or non-numeric value reads as full: the
+## narrow exception save-system.md § 10 records. PartyState's setter holds the
+## result to 0..AC_MAX.
+static func saved_arcanite_charges(data: Dictionary) -> int:
+	var crafting: Variant = data.get("crafting", {})
+	var ac: Variant = null
+	if crafting is Dictionary:
+		ac = (crafting as Dictionary).get("arcanite_charges")
+	return int(ac) if ac is int or ac is float else PartyVitals.AC_MAX
 
 
 ## The world block written to a save: which map the party is on, where they

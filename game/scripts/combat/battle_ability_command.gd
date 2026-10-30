@@ -6,13 +6,14 @@ extends RefCounted
 ## A dispatcher. do_ability checks the ability can be issued, pays its cost
 ## (keyed on the data's cost_type), then hands it to the resolver for its
 ## command (the data's `command` field). Slice 158a of #158 built Cael's
-## Rally and 158b Edren's Bulwark. Forgewright, Tricks, Spiritcall and Arcanum
-## are slices 158c-f: each adds a resolver here, and pay() learns its cost
-## type. Until then their abilities are not built, so the battle menu lists
-## them disabled and do_ability refuses them.
+## Rally, 158b Edren's Bulwark and 158c Lira's Forgewright. Tricks, Spiritcall
+## and Arcanum are slices 158d-f: each adds a resolver here, and pay() learns
+## its cost type. Until then their abilities are not built, so the battle menu
+## lists them disabled and do_ability refuses them, as it does the Forgewright
+## abilities left for a later slice (BattleForgewright.BUILT).
 ##
-## The in-force rules live in BattleRally and BattleBulwark, reached through
-## BattleState's ability hooks.
+## The in-force rules live in BattleRally, BattleBulwark and BattleForgewright,
+## reached through BattleState's ability hooks.
 
 const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
 const ModifierAggregator = preload("res://scripts/combat/modifier_aggregator.gd")
@@ -72,6 +73,8 @@ func _resolver(ability: Dictionary) -> Callable:
 			return _resolve_rally
 		"bulwark":
 			return _resolve_bulwark
+		"forgewright":
+			return _resolve_forgewright
 	return Callable()
 
 
@@ -99,6 +102,20 @@ func _resolve_bulwark(slot: int, ability: Dictionary, command: Dictionary) -> vo
 			BattleBulwark.steadfast_resolve(state)
 		"oathkeeper":
 			BattleBulwark.oathkeeper(state, slot)
+
+
+## Lira's Forgewright: deploy a device (at command["target"] where it takes an
+## ally), Overcharge an ally, or Salvage her oldest device.
+func _resolve_forgewright(slot: int, ability: Dictionary, command: Dictionary) -> void:
+	var state: Node = _battle.get_battle_state()
+	var target: int = int(command.get("target", -1))
+	match ability["id"]:
+		"overcharge":
+			BattleForgewright.overcharge(state, target)
+		"salvage":
+			BattleForgewright.salvage(state, slot)
+		_:
+			BattleForgewright.deploy(state, slot, ability, target, _battle)
 
 
 ## Shatter Guard lands the [param shattered] total on every targetable enemy as
@@ -154,6 +171,8 @@ static func is_built(ability: Dictionary) -> bool:
 			return is_rally(ability)
 		"bulwark":
 			return BattleBulwark.BUILT.has(ability.get("id", ""))
+		"forgewright":
+			return BattleForgewright.BUILT.has(ability.get("id", ""))
 	return false
 
 
@@ -166,10 +185,12 @@ static func is_rally(ability: Dictionary) -> bool:
 ## built and no status blocks it. A Rally is unavailable while Cael is
 ## Silenced, since Silence would end it at once (abilities.md § Cael — Rally).
 ## Shatter Guard breaks a stance, so it needs one; Riposte is automatic under
-## Oathkeeper, so it cannot be armed then.
+## Oathkeeper, so it cannot be armed then. Salvage needs a device standing.
 static func is_available(member: Dictionary, ability: Dictionary) -> bool:
 	if not is_built(ability):
 		return false
+	if ability.get("command", "") == "forgewright":
+		return BattleForgewright.can_issue(member, ability)
 	if is_rally(ability) and not BattleRally.caster_can_sustain(member):
 		return false
 	if ability.get("id", "") == "shatter_guard" and not BattleBulwark.in_stance(member):
@@ -180,16 +201,18 @@ static func is_available(member: Dictionary, ability: Dictionary) -> bool:
 
 
 ## Whether [param member] has enough of [param ability]'s resource. Keyed on
-## the data's cost_type: "mp" (158a) and "ap" (Bulwark's Aegis Points, 158b)
-## are built. "ac" (Forgewright, 158c), "mp_cd" (Tricks' MP plus cooldown,
-## 158d) and "wg" (Arcanum, 158f) answer false until their slices add them, and
-## "none" marks a passive, which is never issued.
+## the data's cost_type: "mp" (158a), "ap" (Bulwark's Aegis Points, 158b) and
+## "ac" (Forgewright's Arcanite Charges, 158c) are built. "mp_cd" (Tricks' MP
+## plus cooldown, 158d) and "wg" (Arcanum, 158f) answer false until their
+## slices add them, and "none" marks a passive, which is never issued.
 static func can_pay(member: Dictionary, ability: Dictionary) -> bool:
 	match ability.get("cost_type", ""):
 		"mp":
 			return int(member.get("current_mp", 0)) >= int(ability.get("cost_value", 0))
 		"ap":
 			return BattleBulwark.can_spend(member, int(ability.get("cost_value", 0)))
+		"ac":
+			return BattleForgewright.can_spend(member, int(ability.get("cost_value", 0)))
 	return false
 
 
@@ -203,6 +226,8 @@ static func pay(state: Node, slot: int, ability: Dictionary) -> bool:
 			return state.spend_mp(slot, int(ability.get("cost_value", 0)))
 		"ap":
 			return BattleBulwark.spend_ap(state, slot, int(ability.get("cost_value", 0)))
+		"ac":
+			return BattleForgewright.spend_ac(state, slot, int(ability.get("cost_value", 0)))
 	return false
 
 

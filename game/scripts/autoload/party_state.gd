@@ -5,9 +5,9 @@ extends Node
 ## grouped into collaborators under `scripts/util/` — PartyCrystals,
 ## PartyRoster, PartyVitals, PartyInventory, PartyEquipment and
 ## PartyPersistence (GAP-087). The mutable state itself (members, formation,
-## inventory, owned_equipment, gold, ley_crystals, puzzle_state) stays here,
-## because saves and tests read it directly and the facets are constructed
-## lazily around it.
+## inventory, owned_equipment, gold, arcanite_charges, ley_crystals,
+## puzzle_state) stays here, because saves and tests read it directly and the
+## facets are constructed lazily around it.
 ##
 ## Budget: the facade sits at 64 public methods against `max-public-methods: 65`
 ## in `.gdlintrc`. Adding a public forward here costs the last slot, so pair any
@@ -54,6 +54,12 @@ var formation: Dictionary = {"active": [], "reserve": [], "rows": {}}
 var inventory: Dictionary = {"consumables": {}, "materials": {}, "key_items": []}
 var owned_equipment: Array[Dictionary] = []
 var gold: int = 0
+## Lira's Arcanite Charges, the pool every battle starts from and spends into;
+## only a rest refills it (abilities.md § Lira; save-system.md § 3.5). Every
+## write is held to 0..12 here.
+var arcanite_charges: int = PartyVitals.AC_MAX:
+	set(value):
+		arcanite_charges = PartyVitals.clamp_ac(value)
 var playtime: int = 0
 var location_name: String = ""
 ## Player-facing place name for `location_name`'s map, taken from the map's
@@ -111,6 +117,7 @@ func initialize_new_game() -> void:
 		"key_items": [] as Array[String],
 	}
 	gold = STARTING_GOLD
+	arcanite_charges = PartyVitals.AC_MAX
 	playtime = 0
 	clear_player_location()
 	ley_crystals.clear()
