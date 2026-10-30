@@ -1,6 +1,6 @@
 extends RefCounted
 ## Lands an ally spell on the party (#503): the revive, heal, stat buff,
-## regeneration, MP restore, cure or registry status its data carries, on the
+## regeneration, Reraise, MP restore, cure or registry status its data carries, on the
 ## slots its target type names. Each value is the spell's own data, from its
 ## magic.md entry (magic.md § Derived Rules > 'Ally spell effects').
 ##
@@ -63,6 +63,9 @@ func _land_on_ally(spell: Dictionary, slot: int, heal_amt: int) -> bool:
 		landed = Buffs.grant(state, slot, str(buff.get("stat", "")), pct, turns) or landed
 	if spell.get("regen_pct") != null:
 		landed = Buffs.grant(state, slot, Buffs.REGEN, int(spell["regen_pct"]), turns) or landed
+	if spell.get("reraise_pct") != null:
+		var pct: int = int(spell["reraise_pct"])
+		landed = Buffs.grant(state, slot, Buffs.RERAISE, pct, Buffs.UNTIMED) or landed
 	if spell.get("mp_restore_pct") != null:
 		var mp_before: int = int(m.get("current_mp", 0))
 		state.restore_mp(slot, _pct_of(m, "max_mp", spell, "mp_restore_pct"))

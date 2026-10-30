@@ -8,8 +8,10 @@ extends RefCounted
 ##     the one StatusEffects.is_positive names so far);
 ##   - spell buffs in member["spell_buffs"], {kind: {pct, remaining_turns}},
 ##     where kind is a stat ("atk", "def", "mag", "mdef") for a stat buff
-##     (Ironhide, Wardglass, Rallying Cry, Attunement, Bulwark Line, Leyward) or
-##     REGEN for Kindle Breath and Rekindling's regeneration.
+##     (Ironhide, Wardglass, Rallying Cry, Attunement, Bulwark Line, Leyward),
+##     REGEN for Kindle Breath and Rekindling's regeneration, or RERAISE for
+##     Last Breath's auto-revive, whose remaining_turns is UNTIMED: it lasts
+##     "until triggered or battle ends" (magic.md § 62 Last Breath).
 ##
 ## Spell buffs are kept out of active_statuses because every status there must
 ## announce a canonical line on landing (test_status_effects.gd), and
@@ -29,6 +31,13 @@ const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 ## The spell_buffs kind for regeneration.
 const REGEN: String = "regen"
 
+## The spell_buffs kind for Last Breath's Reraise; its pct is the share of max
+## HP the bearer stands again with.
+const RERAISE: String = "reraise"
+
+## A spell buff's remaining_turns when no turn count ends it.
+const UNTIMED: int = -1
+
 ## Negative statuses a KO also clears, so a revived member acts normally
 ## (2026-10-30 ruling).
 const KO_CLEARED_STATUSES: Array[String] = ["confusion", "berserk"]
@@ -39,8 +48,9 @@ const KO_CLEARED_STATUSES: Array[String] = ["confusion", "berserk"]
 ## (a self-cast), since that turn's end would otherwise spend one, as
 ## BattleRally.start counts it. One kind keeps the stronger (2026-10-30
 ## ruling): a weaker buff leaves a stronger one in force, on its own clock, and
-## an equal or stronger one replaces it with a fresh duration. Returns whether
-## it landed: a fallen member carries none, and a weaker buff changes nothing.
+## an equal or stronger one replaces it with a fresh duration. [param turns]
+## UNTIMED keeps it until something else ends it. Returns whether it landed: a
+## fallen member carries none, and a weaker buff changes nothing.
 static func grant(state: Node, slot: int, kind: String, pct: int, turns: int) -> bool:
 	var m: Dictionary = state.get_member(slot)
 	if m.is_empty() or not m.get("is_alive", false):
@@ -48,19 +58,28 @@ static func grant(state: Node, slot: int, kind: String, pct: int, turns: int) ->
 	var buffs: Dictionary = m.get("spell_buffs", {})
 	if int(buffs.get(kind, {}).get("pct", 0)) > pct:
 		return false
-	buffs[kind] = {
-		"pct": pct,
-		"remaining_turns": turns + (1 if m.get("turn_open", false) else 0),
-	}
+	if turns != UNTIMED and m.get("turn_open", false):
+		turns += 1
+	buffs[kind] = {"pct": pct, "remaining_turns": turns}
 	m["spell_buffs"] = buffs
 	state.ability_state_changed.emit(slot)
 	return true
 
 
 ## A member fainted: every positive status and spell buff on it ends, and so do
-## Confusion and Berserk (KO_CLEARED_STATUSES).
+## Confusion and Berserk (KO_CLEARED_STATUSES). A Reraise ends with them, spent
+## on this fall: once BattleState has announced it (member_died), the member
+## stands again at its share of max HP, at least 1, as a revival spell stands
+## them, so the battle hears the fall and then the revive, and puts them back
+## on the ATB with an empty gauge.
 static func on_fainted(state: Node, slot: int) -> void:
 	var m: Dictionary = state.get_member(slot)
+	var reraise: int = int(m.get("spell_buffs", {}).get(RERAISE, {}).get("pct", 0))
+	if reraise > 0:
+		var hp: int = maxi(1, int(m.get("max_hp", 0)) * reraise / 100)
+		state.member_died.connect(
+			func(_fallen: int) -> void: state.heal(slot, hp, true), CONNECT_ONE_SHOT
+		)
 	for s: Dictionary in (m.get("active_statuses", []) as Array).duplicate():
 		var status: String = s.get("name", "")
 		if StatusEffects.is_positive(status) or status in KO_CLEARED_STATUSES:
@@ -102,12 +121,14 @@ static func on_turn_begin(state: Node, slot: int) -> Array:
 	return [{"slot": slot, "dmg": healed, "type": "heal"}]
 
 
-## End of a member's turn: count each of its spell buffs down, ending the ones
-## that run out.
+## End of a member's turn: count each of its timed spell buffs down, ending the
+## ones that run out.
 static func on_turn_end(state: Node, slot: int) -> void:
 	var buffs: Dictionary = state.get_member(slot).get("spell_buffs", {})
 	var ended: bool = false
 	for kind: String in buffs.keys():
+		if int(buffs[kind]["remaining_turns"]) == UNTIMED:
+			continue
 		buffs[kind]["remaining_turns"] = int(buffs[kind]["remaining_turns"]) - 1
 		if int(buffs[kind]["remaining_turns"]) <= 0:
 			buffs.erase(kind)
@@ -118,6 +139,6 @@ static func on_turn_end(state: Node, slot: int) -> void:
 
 ## The spell buff's +% to [param stat] on member [param m] (0 when none).
 static func stat_pct(m: Dictionary, stat: String) -> int:
-	if stat == REGEN:
+	if stat in [REGEN, RERAISE]:
 		return 0
 	return int(m.get("spell_buffs", {}).get(stat, {}).get("pct", 0))

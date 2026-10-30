@@ -366,6 +366,13 @@ unstated. `game/tests/test_spell_balance.gd` asserts all of them against
     (2026-10-30 ruling).
   - `revive_pct` revives a Fainted ally (target `fainted_ally`) at that
     percent of max HP: Spirit Recall 25, Second Dawn 75.
+  - `reraise_pct` is Reraise, on a living ally: when the bearer next Faints it
+    stands again at that percent of max HP, at least 1, once (Last Breath 30).
+    It has no turn count and lasts until it is spent or the battle ends. The
+    fall still happens and still clears every positive effect, Reraise with
+    them (§ Status Effect Reference, "Fainting clears statuses"), and the
+    bearer rejoins the ATB with an empty gauge, as a revival spell's target
+    does.
   - `mp_restore_pct` restores that percent of the target's max MP
     (Leydraught 20).
   - `hp_cost_pct` is paid by the caster as that percent of its own max HP,
@@ -386,8 +393,8 @@ unstated. `game/tests/test_spell_balance.gd` asserts all of them against
   A timed effect (`stat_buff`, `regen_pct`) needs a `duration` of at least one
   turn. A party-side spell with none of these keys, no heal power and no
   registry `status` has no battle effect yet and is refused before any MP is
-  spent: Leymirror, Last Breath, Drift and Forgeshield, plus the field-only
-  Waymark, Linewalk and Veilstep. Turned on the enemy line, a revival spell
+  spent: Leymirror, Drift and Forgeshield, plus the field-only Waymark,
+  Linewalk and Veilstep. Turned on the enemy line, a revival spell
   kills an Undead outright and is refused on a Pallor or a normal foe, as a
   revival item is ([bestiary/README.md](bestiary/README.md) § Undead)
   (2026-10-30 rulings). Kindle Breath turned on an enemy ticks the way a heal
