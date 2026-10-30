@@ -354,13 +354,13 @@ func is_valid_heal_target(slot: int, can_revive: bool = false) -> bool:
 	return not m.is_empty() and (m["is_alive"] or can_revive)
 
 
-## Get average SPD of living party members.
+## Average SPD of the members still on the field, for fleeing: a petrified one
+## is left out, as a petrified enemy is on the other side (#246).
 func get_avg_party_spd() -> float:
 	var total: float = 0.0
 	var count: int = 0
 	for i: int in range(4):
-		var m: Dictionary = get_member(i)
-		if not m.is_empty() and m.get("is_alive", false):
+		if StatusGuard.on_field(get_member(i)):
 			total += get_effective_stat(i, "spd")
 			count += 1
 	return total / maxf(1.0, count)

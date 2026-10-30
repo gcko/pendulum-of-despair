@@ -23,8 +23,9 @@ extends RefCounted
 ## on_field is the party mirror of Enemy.is_removed_from_combat: Petrify is
 ## "Removed from combat" (magic.md § Status Effect Reference). BattleAI's and
 ## BossAI's target picks, BattleEnemyTurn's party-wide loop, a confused or berserk
-## attacker's pool (BattleAutoAction.pick_target), and BattleState's highest
-## threat and party-wipe checks ask it instead of is_alive.
+## attacker's pool (BattleAutoAction.pick_target), BattleState's highest threat,
+## flee-average and party-wipe checks, and the Despair that feeds a Pallor's
+## regen (BattleEnemyTurn._party_despairs) ask it instead of is_alive.
 
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 const Helpers = preload("res://scripts/util/inventory_helpers.gd")

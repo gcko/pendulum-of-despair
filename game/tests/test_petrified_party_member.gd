@@ -301,3 +301,43 @@ func test_a_fully_petrified_party_loses_the_battle() -> void:
 	battle._process(0.0)
 
 	assert_eq(defeats.size(), 1, "a party of statues has lost")
+
+
+# --- Flee and Pallor regen (mirrors of the enemy-side rulings of 2026-10-29) ---
+
+
+func test_a_petrified_member_s_speed_is_left_out_of_the_flee_average() -> void:
+	# A petrified enemy is left out of the enemies' average SPD when the party
+	# flees (combat-formulas.md § Statuses on Enemies); a statue in the party
+	# does not run either.
+	var state: Node = _party()
+	state.get_member(0)["effective_stats"]["spd"] = 40
+	assert_eq(state.get_avg_party_spd(), 16.0, "precondition: (40 + 8 + 8 + 8) / 4")
+	_petrify(state, [0])
+	assert_eq(state.get_avg_party_spd(), 8.0, "the petrified sprinter is not in the average")
+
+
+## A Pallor enemy at 500 of 1000 HP whose every turn is a wait, so its HP moves
+## only by its end-of-turn regen.
+func _waiting_pallor() -> Enemy:
+	var pallor: Enemy = _scripted_boss("random")
+	pallor.enemy_data["type"] = "pallor"
+	pallor.enemy_data["hp"] = 1000
+	pallor.enemy_data["boss_ai"]["moves"] = {"strike": {"type": "skip"}}
+	pallor.current_hp = 500
+	return pallor
+
+
+func test_a_petrified_member_s_despair_feeds_no_pallor_regen() -> void:
+	# Only a living member's Despair feeds a Pallor's 2% regen (ruling of
+	# 2026-10-29); a statue is no more in the fight than a fallen member.
+	var state: Node = _party()
+	state.apply_status(1, "despair", "turns", 4)
+	var h: Dictionary = _driver(state)
+	var control: Enemy = _waiting_pallor()
+	(h["driver"] as BattleEnemyTurn).execute("enemy_0", [control] as Array[Node], false, 0)
+	assert_eq(control.current_hp, 520, "precondition: Cael's Despair feeds 2% of 1000")
+	_petrify(state, [1])
+	var pallor: Enemy = _waiting_pallor()
+	(h["driver"] as BattleEnemyTurn).execute("enemy_0", [pallor] as Array[Node], false, 0)
+	assert_eq(pallor.current_hp, 500, "petrified Cael's Despair feeds nothing")
