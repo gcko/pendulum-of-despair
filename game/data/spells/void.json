@@ -145,7 +145,12 @@
 					"character": "torren",
 					"event": "post_game_convergence_meadow"
 				}
-			]
+			],
+			"cure": {
+				"only": [
+					"despair"
+				]
+			}
 		},
 		{
 			"id": "pendulums_echo",

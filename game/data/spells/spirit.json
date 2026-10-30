@@ -376,7 +376,8 @@
 					"cross_trained": true,
 					"mp_penalty": 1.5
 				}
-			]
+			],
+			"regen_pct": 5
 		},
 		{
 			"id": "rekindling",
@@ -402,7 +403,8 @@
 					"cross_trained": true,
 					"mp_penalty": 1.5
 				}
-			]
+			],
+			"regen_pct": 5
 		},
 		{
 			"id": "spirit_recall",
@@ -426,7 +428,8 @@
 					"character": "maren",
 					"level": 18
 				}
-			]
+			],
+			"revive_pct": 25
 		},
 		{
 			"id": "cleansing_draught",
@@ -454,7 +457,18 @@
 					"character": "edren",
 					"level": 8
 				}
-			]
+			],
+			"cure": {
+				"only": [
+					"poison",
+					"burn",
+					"sleep",
+					"confusion",
+					"silence",
+					"blind"
+				],
+				"count": 1
+			}
 		},
 		{
 			"id": "vilethorn",
@@ -649,7 +663,11 @@
 					"character": "lira",
 					"event": "ironhaven_foundry_schematic"
 				}
-			]
+			],
+			"stat_buff": {
+				"stat": "def",
+				"pct": 40
+			}
 		},
 		{
 			"id": "bulwark_line",
@@ -673,7 +691,11 @@
 					"character": "torren",
 					"level": 22
 				}
-			]
+			],
+			"stat_buff": {
+				"stat": "def",
+				"pct": 25
+			}
 		},
 		{
 			"id": "last_breath",

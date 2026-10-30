@@ -10,6 +10,7 @@ signal target_changed(index: int, is_enemy: bool)
 enum MenuState { HIDDEN, COMMAND, SUBMENU, TARGET }
 
 const SubmenuItems := preload("res://scripts/ui/battle_submenu_items.gd")
+const MagicCommand := preload("res://scripts/combat/battle_magic_command.gd")
 
 ## Third-slot label per character (ui-design.md § 2.4 Command Panel).
 const UNIQUE_COMMAND_NAMES: Dictionary = {
@@ -24,6 +25,10 @@ const UNIQUE_COMMAND_NAMES: Dictionary = {
 ## Commands whose single-ally entries may be turned on an enemy (#178a).
 const SIDE_SWITCH_COMMANDS: Array[String] = ["magic", "item"]
 
+## Target types that open on the party side and may cross to the enemy line: a
+## single ally, and a Fainted one for a revive (#503), which an Undead dies to.
+const SIDE_SWITCH_TARGETS: Array[String] = ["single_ally", "fainted_ally"]
+
 const COLOR_SELECTED: Color = Color("#ffff88")
 const COLOR_NORMAL: Color = Color("#ccddff")
 const COLOR_DISABLED: Color = Color("#666688")
@@ -37,8 +42,9 @@ var _is_boss: bool = false
 var _target_cursor: int = 0
 var _target_is_enemy: bool = true
 ## Whether the action being targeted may cross to the other side. Only a
-## single-ally spell or item can be turned on the enemy line (a heal on an
-## Undead, #178a): Magic and Item are the commands with an enemy-side rule.
+## single-ally or fainted-ally spell or item can be turned on the enemy line (a
+## heal or a revive on an Undead, #178a, #503): Magic and Item are the commands
+## with an enemy-side rule.
 ## Abilities, attacks and enemy-targeted actions stay on their own side.
 var _target_side_switchable: bool = false
 var _pending_command: Dictionary = {}
@@ -238,7 +244,7 @@ func _confirm_command() -> void:
 			_target_side_switchable = false
 			_start_target_selection(true)
 		"magic":
-			set_submenu_items(SubmenuItems.magic(_character_data, _member))
+			set_submenu_items(_gray_unbuilt_spells(SubmenuItems.magic(_character_data, _member)))
 			_show_submenu()
 		"ability":
 			set_submenu_items(SubmenuItems.abilities(_character_data, _member))
@@ -291,18 +297,29 @@ func _confirm_submenu() -> void:
 	_pending_command = item.get("command", {})
 	var target_type: String = item.get("target_type", "single_enemy")
 	_target_side_switchable = (
-		target_type == "single_ally" and _pending_command.get("type", "") in SIDE_SWITCH_COMMANDS
+		target_type in SIDE_SWITCH_TARGETS
+		and _pending_command.get("type", "") in SIDE_SWITCH_COMMANDS
 	)
 	match target_type:
 		"single_enemy":
 			_start_target_selection(true)
-		"single_ally":
+		"single_ally", "fainted_ally":
 			_start_target_selection(false)
 		"all_enemies", "all_allies", "self":
 			command_selected.emit(_pending_command)
 			hide_menu()
 		_:
 			_start_target_selection(true)
+
+
+## Gray out every spell in [param items] whose battle effect is not built yet,
+## as an unaffordable one is grayed: the battle refuses it on the same answer
+## (BattleMagicCommand.is_castable_in_battle), so it could only waste the turn.
+static func _gray_unbuilt_spells(items: Array[Dictionary]) -> Array[Dictionary]:
+	for item: Dictionary in items:
+		if not MagicCommand.is_castable_in_battle(item.get("command", {}).get("spell", {})):
+			item["enabled"] = false
+	return items
 
 
 ## Set submenu items (called by battle_ui).

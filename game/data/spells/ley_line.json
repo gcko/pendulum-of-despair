@@ -383,7 +383,13 @@
 					"character": "torren",
 					"level": 20
 				}
-			]
+			],
+			"cure": {
+				"except": [
+					"stop",
+					"despair"
+				]
+			}
 		},
 		{
 			"id": "leydraught",
@@ -403,7 +409,9 @@
 					"character": "maren",
 					"level": 24
 				}
-			]
+			],
+			"mp_restore_pct": 20,
+			"hp_cost_pct": 15
 		},
 		{
 			"id": "second_dawn",
@@ -423,7 +431,8 @@
 					"character": "maren",
 					"level": 28
 				}
-			]
+			],
+			"revive_pct": 75
 		},
 		{
 			"id": "befuddle",
@@ -586,7 +595,11 @@
 					"cross_trained": true,
 					"mp_penalty": 1.5
 				}
-			]
+			],
+			"stat_buff": {
+				"stat": "mdef",
+				"pct": 40
+			}
 		},
 		{
 			"id": "quickstep",
@@ -651,7 +664,11 @@
 					"character": "edren",
 					"level": 6
 				}
-			]
+			],
+			"stat_buff": {
+				"stat": "atk",
+				"pct": 30
+			}
 		},
 		{
 			"id": "attunement",
@@ -675,7 +692,11 @@
 					"character": "cael",
 					"level": 16
 				}
-			]
+			],
+			"stat_buff": {
+				"stat": "mag",
+				"pct": 30
+			}
 		},
 		{
 			"id": "leyward",
@@ -699,7 +720,11 @@
 					"character": "edren",
 					"level": 22
 				}
-			]
+			],
+			"stat_buff": {
+				"stat": "mdef",
+				"pct": 25
+			}
 		},
 		{
 			"id": "sunder",

@@ -18,7 +18,8 @@
 					"character": "sable",
 					"level": 1
 				}
-			]
+			],
+			"escape": true
 		},
 		{
 			"id": "glintmark",
