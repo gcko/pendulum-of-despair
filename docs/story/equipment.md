@@ -551,7 +551,7 @@ content. Not sold in any shop.
 | Warden's Core | Counter-attack on physical hit | Iron Warden | Post |
 | Keeper's Resolve | +15% Despair resistance, +5 MDEF | The Grey Keeper drop (Oasis C) | III |
 | The Pallor's Last | +40 all stats, 25% all incoming damage reduction | The Lingering (super boss) | Post |
-| Dreamer's Mark | Immunity to all status effects | Dreamer's Fault Floor 20 completion | Post |
+| Dreamer's Mark | Immunity to all negative status effects (positive ones such as Haste still land) | Dreamer's Fault Floor 20 completion | Post |
 | Dreamer's Crest | +30 all stats | Cael's Echo (non-combat) | Post |
 | Warrior's Memento | ATK +10 | Boss Rush Tier 1 | Post |
 | Survivor's Memento | DEF +10, MDEF +10 | Boss Rush Tier 2 | Post |
