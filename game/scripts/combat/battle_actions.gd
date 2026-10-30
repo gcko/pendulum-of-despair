@@ -114,18 +114,17 @@ static func enemy_aoe_on_death_ability(enemy: Node) -> Dictionary:
 	return {}
 
 
-## Fire an aoe_on_death ability against the whole living party when its bearer
-## dies. Resolves through execute_enemy_magic (non-elemental by default; element
-## is cosmetic until party resistances exist). Returns per-slot
-## [{slot, damage, type}], plus Edren's "absorbed" share where a stance took
-## one, so the battle layer can emit damage signals.
+## Fire an aoe_on_death ability at every member on the field (a statue is not:
+## BattleStatusGuard.on_field) when its bearer dies. Resolves through
+## execute_enemy_magic (non-elemental by default; element is cosmetic until
+## party resistances exist). Returns per-slot [{slot, damage, type}], plus
+## Edren's "absorbed" share where a stance took one, for the damage signals.
 static func execute_aoe_on_death(state: Node, enemy: Node, ability: Dictionary) -> Array:
 	var results: Array = []
 	var element: String = ability.get("element", "")
 	var power: int = int(ability.get("spell_power", ability.get("power", 0)))
 	for i: int in range(4):
-		var m: Dictionary = state.get_member(i)
-		if m.is_empty() or not m.get("is_alive", false):
+		if not BattleStatusGuard.on_field(state.get_member(i)):
 			continue
 		var r: Dictionary = execute_enemy_magic(state, enemy, i, element, power)
 		var entry: Dictionary = {
