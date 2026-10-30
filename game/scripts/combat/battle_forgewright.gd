@@ -6,8 +6,8 @@ extends RefCounted
 ## ability-hook fan-out (on_turn_begin's strike requests, which the battle
 ## answers with shock, on_turn_end's heal events, and the neutral rest); from
 ## BattleActions where a hit resolves (reductions, thorns, spring_trap,
-## take_overcharge, land_strike); and from BattleAbilityCommand, which issues
-## the abilities and pays their AC.
+## land_strike, and take_overcharge through BattleDamageMods.strike_mods); and
+## from BattleAbilityCommand, which issues the abilities and pays their AC.
 ##
 ## Design law: abilities.md § Lira — Forgewright and § Damage Magnitudes;
 ## combat-formulas.md § Damage Reduction Sources (Bulkhead) and § Buff-Granted
@@ -157,14 +157,16 @@ static func reductions(state: Node, target: int, kind: String) -> Array[float]:
 
 
 ## Thornveil Barrier answering a physical hit that landed on [param target]:
-## 15% of the target's Defense, as fixed damage, back at [param enemy]. Returns
-## the counters in BattleActions' "ripostes" shape.
+## 15% of the target's Defense, as fixed damage, back at [param enemy], cut by
+## Lira's Despair (not the target's; ruling of 2026-10-30), never below 1.
+## Returns the counters in BattleActions' "ripostes" shape.
 static func thorns(state: Node, enemy: Node, target: int) -> Array:
 	var owner: Dictionary = _guarding(state, "thornveil_barrier", target)
 	if owner.is_empty() or not enemy.is_alive:
 		return []
 	var pct: int = int(DEVICES["thornveil_barrier"]["counter_pct"])
-	var dmg: int = maxi(1, state.get_effective_stat(target, "def") * pct / 100)
+	var raw: int = state.get_effective_stat(target, "def") * pct / 100
+	var dmg: int = maxi(1, BattleDamageMods.cut_dealt(raw, state.get_member(int(owner["slot"]))))
 	enemy.take_damage(dmg)
 	return [
 		{
@@ -212,15 +214,16 @@ static func take_overcharge(state: Node, slot: int, enemy: Node) -> Dictionary:
 	_record(m).erase("overcharged")
 	state.ability_state_changed.emit(slot)
 	var mod: float = enemy.get_element_multiplier(OVERCHARGE["element"])
-	var weapon: String = _weapon_element(String(m.get("character_id", "")))
+	var weapon: String = BattleDamageMods.weapon_element(String(m.get("character_id", "")))
 	if not weapon.is_empty():
 		mod = maxf(mod, enemy.get_element_multiplier(weapon))
 	return {"mult": 1.0 + int(OVERCHARGE["damage_pct"]) / 100.0, "element_mod": mod}
 
 
 ## Land a party strike of [param dmg] on [param enemy], as [param dtype] unless
-## Overcharge's element ([param charge], from take_overcharge) voids it or the
-## enemy absorbs it. Returns BattleActions' strike result.
+## the strike's element ([param charge], from BattleDamageMods.strike_mods: an
+## Overcharge's or the weapon's) voids it or the enemy absorbs it. Returns
+## BattleActions' strike result.
 static func land_strike(enemy: Node, dmg: int, dtype: String, charge: Dictionary) -> Dictionary:
 	var mod: float = float(charge.get("element_mod", 1.0))
 	if mod == 0.0:
@@ -358,18 +361,6 @@ static func _guarding(state: Node, id: String, target: int) -> Dictionary:
 			if d["id"] == id and int(d["target"]) == target:
 				return {"slot": slot}
 	return {}
-
-
-## The element of the weapon [param character_id] wears, or "" when it has none.
-static func _weapon_element(character_id: String) -> String:
-	var weapon: String = PartyState.get_member(character_id).get("equipment", {}).get("weapon", "")
-	if weapon.is_empty():
-		return ""
-	for w: Variant in DataManager.load_equipment("weapons"):
-		if w is Dictionary and (w as Dictionary).get("id", "") == weapon:
-			var element: Variant = (w as Dictionary).get("element")
-			return String(element) if element is String else ""
-	return ""
 
 
 ## Remove device [param d] itself from [param list] — not an equal-looking one.

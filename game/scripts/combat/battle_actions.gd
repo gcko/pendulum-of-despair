@@ -2,9 +2,9 @@ extends RefCounted
 ## Battle action execution — physical attacks, magic, items, abilities.
 ##
 ## Extracted from battle_manager.gd under the script size budget
-## (technical-architecture.md § 1.2a: aim 400 lines, hard maximum 600).
-## All functions are static. They operate on battle_state and enemies
-## via passed references.
+## (technical-architecture.md § 1.2a: aim 400 lines, hard maximum 600). All
+## functions are static, operating on battle_state and enemies passed in. An
+## attacker's Despair and Blind, and a party weapon's element, are BattleDamageMods'.
 
 const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
 const ModifierAggregator = preload("res://scripts/combat/modifier_aggregator.gd")
@@ -30,10 +30,9 @@ static func apply_status_to_enemy(
 ) -> Dictionary:
 	if not enemy.is_alive or not StatusEffects.is_known(status_name):
 		return {"hit": false, "inflicted": false, "type": "no_effect", "status": status_name}
-	# Immune targets don't roll — auto no-effect (type/boss/per-enemy immunity).
-	# Intentional deviation from combat-formulas.md's step order (immunity is
-	# step 4, after the rolls): the applied/not-applied outcome is identical and
-	# this skips a pointless roll.
+	# Immune targets (type/boss/per-enemy immunity) skip the rolls: a deliberate
+	# deviation from combat-formulas.md's step order (immunity is step 4, after
+	# the rolls) that leaves the applied/not-applied outcome identical.
 	if enemy.is_immune_to_status(status_name):
 		return {"hit": true, "inflicted": false, "type": "immune", "status": status_name}
 	var caster_mag: int = state.get_effective_stat(caster_slot, "mag")
@@ -82,7 +81,7 @@ static func roll_status_rider(
 ## two-stage roll's Stage 1, the member's MDEF/SPD drive resistance. Reuses
 ## DamageCalc.roll_status + StatusEffects.resolve_duration (no duplication).
 ## Returns {hit, inflicted, type, status}; type is
-## "status" | "resisted" | "no_effect".
+## "status" | "resisted" | "immune" (worn gear blocked it, #512) | "no_effect".
 static func execute_enemy_status(
 	state: Node,
 	enemy: Node,
@@ -91,8 +90,7 @@ static func execute_enemy_status(
 	status_name: String,
 	explicit_duration: Variant
 ) -> Dictionary:
-	var member: Dictionary = state.get_member(target_slot)
-	var alive: bool = not member.is_empty() and member.get("is_alive", false)
+	var alive: bool = state.get_member(target_slot).get("is_alive", false)
 	if not alive or not StatusEffects.is_known(status_name):
 		return {"hit": false, "inflicted": false, "type": "no_effect", "status": status_name}
 	var caster_mag: int = enemy.get_stats().get("mag", 0)
@@ -102,7 +100,8 @@ static func execute_enemy_status(
 		return {"hit": false, "inflicted": false, "type": "resisted", "status": status_name}
 	var duration: int = StatusEffects.resolve_duration(status_name, explicit_duration)
 	var kind: String = "realtime" if StatusEffects.is_realtime(status_name) else "turns"  # Stop
-	state.apply_status(target_slot, status_name, kind, float(duration))
+	if not state.apply_status(target_slot, status_name, kind, float(duration)):  # gear (#512)
+		return {"hit": true, "inflicted": false, "type": "immune", "status": status_name}
 	return {"hit": true, "inflicted": true, "type": "status", "status": status_name}
 
 
@@ -153,8 +152,8 @@ static func resolve_enemy_target(cursor: int, enemies: Array[Node]) -> int:
 ## Execute a physical attack from a party member against an enemy, at
 ## [param ability_mult] (1.0 for the Attack command, 1.5 for Riposte's counter),
 ## which scales power before DEF; [param damage_mult] multiplies final damage
-## (combat-formulas.md step 6), as does an Overcharge on the member, spent on
-## it hit or miss (BattleForgewright.take_overcharge). Returns {hit, damage, type}.
+## (combat-formulas.md step 6), as do an Overcharge and Despair, and it carries
+## the weapon's element (BattleDamageMods.strike_mods). Returns {hit, damage, type}.
 static func execute_party_attack(
 	state: Node,
 	slot: int,
@@ -166,18 +165,17 @@ static func execute_party_attack(
 	var member: Dictionary = state.get_member(slot)
 	if member.is_empty() or not enemy.is_alive:
 		return {"hit": false, "damage": 0, "type": "miss"}
-	var charge: Dictionary = Forgewright.take_overcharge(state, slot, enemy)
+	var charge: Dictionary = BattleDamageMods.strike_mods(state, slot, enemy)
 	var atk: int = state.get_effective_stat(slot, "atk")
 	var spd: int = state.get_effective_stat(slot, "spd")
-	var lck: int = state.get_effective_stat(slot, "lck")
 	var enemy_stats: Dictionary = enemy.get_stats()
 	var target_def: int = enemy_stats.get("def", 0)
 	var target_spd: int = enemy_stats.get("spd", 0)
-	if not DamageCalc.roll_hit(spd, target_spd):
+	if not DamageCalc.roll_hit(spd, target_spd, BattleDamageMods.accuracy_mult(member)):
 		return {"hit": false, "damage": 0, "type": "miss"}
 	if DamageCalc.roll_evasion(target_spd):
 		return {"hit": false, "damage": 0, "type": "miss"}
-	var is_crit: bool = DamageCalc.roll_crit(lck)
+	var is_crit: bool = DamageCalc.roll_crit(state.get_effective_stat(slot, "lck"))
 	var attacker_row: String = member.get("row", "front")
 	# Spirit enemies take 50% physical pre-DEF (GAP-008, bestiary/README.md § Spirit).
 	var pre_def: float = ModifierAggregator.physical_pre_def_mult(enemy.get_type())
@@ -191,7 +189,7 @@ static func execute_party_attack(
 		"front",
 		false,
 		[],
-		not charge.is_empty(),
+		charge.has("element_mod"),
 		float(charge.get("element_mod", 1.0)),
 		pre_def
 	)
@@ -221,8 +219,9 @@ static func apply_magic_to_enemy(
 	var element_mod: float = enemy.get_element_multiplier(element)
 	# Enemy type-element bonus stacks multiplicatively with weakness (GAP-008).
 	var interaction: float = ModifierAggregator.type_element_multiplier(enemy.get_type(), element)
+	var despair: Array = [BattleDamageMods.dealt_mult(state.get_member(caster_slot))]
 	var dmg: int = DamageCalc.calculate_magic(
-		mag, power, target_mdef, element_mod, interaction, [], []
+		mag, power, target_mdef, element_mod, interaction, despair, []
 	)
 	if element_mod == 0.0:
 		return {"hit": true, "damage": 0, "type": "immune"}
@@ -233,8 +232,8 @@ static func apply_magic_to_enemy(
 	return {"hit": true, "damage": dmg, "type": "magic", "killed": not enemy.is_alive}
 
 
-## Execute an enemy magic ability against a party member.
-## Uses MAG/MDEF formula. element_mod is 1.0 until party resistances exist.
+## Execute an enemy magic ability against a party member: the MAG/MDEF formula,
+## cut by the enemy's Despair. element_mod is 1.0 until party resistances exist.
 static func execute_enemy_magic(
 	state: Node, enemy: Node, target_slot: int, _element: String, power: int
 ) -> Dictionary:
@@ -255,9 +254,9 @@ static func execute_enemy_magic(
 	if dmg_mult < 1.0:
 		reduction.append(1.0 - dmg_mult)
 	var guard: Dictionary = Bulwark.guard_for(state, target_slot, "magic")
-	# element_mod 1.0 until party resistances are implemented
+	var despair: Array = [BattleDamageMods.dealt_mult(enemy)]
 	var dmg: int = DamageCalc.calculate_magic(
-		mag, power, target_mdef, 1.0, 1.0, [], reduction if guard.is_empty() else []
+		mag, power, target_mdef, 1.0, 1.0, despair, reduction if guard.is_empty() else []
 	)
 	return _land_on_party(state, target_slot, dmg, reduction, guard, "magic", enemy)
 
@@ -305,8 +304,8 @@ static func _land_on_party(
 
 ## Execute an enemy physical attack against a party member.
 ## [param ability_mult] scales base power (1.0 = basic attack; ability kits set
-## higher per enemy-ability-conventions.md §2.1); [param damage_mult]
-## multiplies final damage (combat-formulas.md step 6).
+## higher per enemy-ability-conventions.md §2.1); [param damage_mult] and the
+## enemy's Despair multiply final damage (step 6); its Blind halves the hit rate.
 static func execute_enemy_attack(
 	state: Node, enemy: Node, target_slot: int, ability_mult: float = 1.0, damage_mult: float = 1.0
 ) -> Dictionary:
@@ -318,7 +317,7 @@ static func execute_enemy_attack(
 		return {"hit": false, "damage": 0, "type": "miss"}
 	var target_def: int = state.get_effective_stat(target_slot, "def")
 	var target_spd: int = state.get_effective_stat(target_slot, "spd")
-	if not DamageCalc.roll_hit(spd, target_spd):
+	if not DamageCalc.roll_hit(spd, target_spd, BattleDamageMods.accuracy_mult(enemy)):
 		return {"hit": false, "damage": 0, "type": "miss"}
 	if DamageCalc.roll_evasion(target_spd):
 		return {"hit": false, "damage": 0, "type": "miss"}
@@ -335,7 +334,7 @@ static func execute_enemy_attack(
 		ability_mult,
 		target_def,
 		is_crit,
-		damage_mult,
+		damage_mult * BattleDamageMods.dealt_mult(enemy),
 		"front",
 		defender_row,
 		false,

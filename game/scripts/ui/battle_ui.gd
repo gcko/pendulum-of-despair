@@ -222,7 +222,7 @@ func _on_damage_dealt(target_id: String, amount: int, damage_type: String) -> vo
 	var text: String = str(amount)
 
 	match damage_type:
-		"heal":
+		"heal", "absorb":  # an absorbed strike or counter heals its target
 			color = COLOR_HEAL
 		"miss":
 			color = COLOR_MISS

@@ -84,7 +84,9 @@ static func calculate_physical(
 ## @param buff_mults Array[float] — multiplicative buff values.
 ## @param reduction_sources Array[float] — multiplicative reduction values.
 ## Returns: positive int for damage, 0 for immunity.
-## For absorb: returns positive int (healing amount for target).
+## For absorb: returns positive int (healing amount for target), after the
+## buff modifiers (combat-formulas.md step 5: Despair cuts the heal as it cuts the blow; ruling of
+## 2026-10-30) and variance, but no interaction modifier or reduction.
 static func calculate_magic(
 	mag: int,
 	spell_power: int,
@@ -101,15 +103,16 @@ static func calculate_magic(
 	raw *= element_mod
 	if element_mod == 0.0:
 		return 0
-	if element_mod < 0.0:
-		return mini(14999, int(absf(raw * roll_variance())))
 
-	# Step 3: Combat interaction modifiers
-	raw *= interaction_mult
+	# Step 3: Combat interaction modifiers (not on an absorbed spell)
+	if element_mod > 0.0:
+		raw *= interaction_mult
 
-	# Step 4: Buff modifiers (Resonance, Glintmark)
+	# Step 4: Buff modifiers (Resonance, Glintmark, Despair), absorbed or not
 	for mult: float in buff_mults:
 		raw *= mult
+	if element_mod < 0.0:
+		return mini(14999, int(absf(raw * roll_variance())))
 
 	# Step 5: Variance
 	var result: float = raw * roll_variance()
@@ -133,9 +136,12 @@ static func calculate_healing(mag: int, spell_power: int) -> int:
 
 
 ## Roll hit check. Returns true if attack hits.
-## hit_rate = clamp(90 + (attacker_spd - target_spd) / 4, 20, 99)
-static func roll_hit(attacker_spd: int, target_spd: int) -> bool:
-	var hit_rate: int = clampi(90 + int((attacker_spd - target_spd) / 4), 20, 99)
+## hit_rate = clamp(floor((90 + (attacker_spd - target_spd) / 4) * accuracy_mult), 20, 99)
+## [param accuracy_mult] scales the computed rate BEFORE the clamp (ruling of
+## 2026-10-30): Blind's 0.5 on a physical attack turns 90 into 45.
+static func roll_hit(attacker_spd: int, target_spd: int, accuracy_mult: float = 1.0) -> bool:
+	var raw: int = 90 + int((attacker_spd - target_spd) / 4)
+	var hit_rate: int = clampi(int(floor(raw * accuracy_mult)), 20, 99)
 	return randi() % 100 < hit_rate
 
 

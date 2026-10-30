@@ -1,0 +1,83 @@
+class_name BattleDamageMods
+extends RefCounted
+## What an attacker's own state does to the blows it deals: Despair's -20%
+## damage dealt and Blind's -50% physical accuracy (#246 slice 3), and the
+## element of a party member's equipped weapon (#513).
+##
+## Rulings of 2026-10-30 (combat-formulas.md § Attacker Status Modifiers and
+## § Physical Elemental Attacks): Despair cuts all damage its bearer deals —
+## physical, magic, abilities, Shock Coil's ticks and Arc Trap's blast,
+## counters — but no healing. Blind halves the bearer's physical hit rate, before the 20-99 clamp;
+## spells keep theirs. Every physical strike through
+## BattleActions.execute_party_attack (Attack, an auto-attack on an enemy,
+## Riposte) carries the equipped weapon's element; when Overcharge also applies,
+## the more favorable of the two decides. A confused member's blow on an ally,
+## and Shatter Guard's fixed damage, carry no element.
+##
+## A combatant is passed as its BattleState member record (a Dictionary) or as
+## its Enemy node: both hold "active_statuses" entries of {name, ...}.
+
+const StatusEffects = preload("res://scripts/combat/status_effects.gd")
+
+
+## [param who]'s active statuses, whether a party member's record or an enemy.
+static func statuses_of(who: Variant) -> Array:
+	if who is Dictionary:
+		return (who as Dictionary).get("active_statuses", [])
+	if who is Object and is_instance_valid(who):
+		var list: Variant = (who as Object).get("active_statuses")
+		return list if list is Array else []
+	return []
+
+
+## The multiplier on all damage [param who] deals: 0.8 under Despair, else 1.0.
+## It never touches healing.
+static func dealt_mult(who: Variant) -> float:
+	var mult: float = 1.0
+	for s: Dictionary in statuses_of(who):
+		mult *= StatusEffects.damage_dealt_mult(String(s.get("name", "")))
+	return mult
+
+
+## [param dmg], damage [param who] has already rolled outside the damage
+## formulas (a fixed amount, or a heal turned to damage on an Undead), cut by
+## its Despair and floored.
+static func cut_dealt(dmg: int, who: Variant) -> int:
+	return int(floor(dmg * dealt_mult(who)))
+
+
+## The multiplier on [param who]'s physical hit rate: 0.5 under Blind, else 1.0.
+## Pass it to DamageCalc.roll_hit for a physical attack only.
+static func accuracy_mult(who: Variant) -> float:
+	var mult: float = 1.0
+	for s: Dictionary in statuses_of(who):
+		mult *= StatusEffects.physical_accuracy_mult(String(s.get("name", "")))
+	return mult
+
+
+## The modifiers on [param slot]'s physical strike at [param enemy], as
+## {mult, element_mod}: mult is the final-damage multiplier (step 6), an
+## Overcharge's +50% times the striker's Despair; element_mod is there only when
+## the strike is elemental — the Overcharge's (BattleForgewright.take_overcharge,
+## spent here, hit or miss), else the equipped weapon's.
+static func strike_mods(state: Node, slot: int, enemy: Node) -> Dictionary:
+	var member: Dictionary = state.get_member(slot)
+	var out: Dictionary = BattleForgewright.take_overcharge(state, slot, enemy)
+	if out.is_empty():
+		var element: String = weapon_element(String(member.get("character_id", "")))
+		if not element.is_empty():
+			out["element_mod"] = enemy.get_element_multiplier(element)
+	out["mult"] = float(out.get("mult", 1.0)) * dealt_mult(member)
+	return out
+
+
+## The element of the weapon [param character_id] wears, or "" when it has none.
+static func weapon_element(character_id: String) -> String:
+	var weapon: String = PartyState.get_member(character_id).get("equipment", {}).get("weapon", "")
+	if weapon.is_empty():
+		return ""
+	for w: Variant in DataManager.load_equipment("weapons"):
+		if w is Dictionary and (w as Dictionary).get("id", "") == weapon:
+			var element: Variant = (w as Dictionary).get("element")
+			return String(element) if element is String else ""
+	return ""
