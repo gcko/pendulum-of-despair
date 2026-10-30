@@ -25,14 +25,13 @@ const PROMPT_TIMEOUT: float = 5.0
 const CASTER: int = 0
 const TARGET: int = 1
 
-## The ally spells with no battle effect built yet: Reflect, Float and
-## Forgeshield's absorb are later slices of #503, and Waymark, Linewalk and
-## Veilstep are field spells (magic.md § 73-75). Last Breath's auto-revive is
-## built (test_last_breath.gd).
+## The ally spells with no battle effect built yet: Reflect and Float are
+## later slices of #503, and Waymark, Linewalk and Veilstep are field spells
+## (magic.md § 73-75). Last Breath's auto-revive and Forgeshield's absorb are
+## built (test_last_breath.gd, test_forgeshield.gd).
 const UNBUILT: Array = [
 	["ley_line", "leymirror"],
 	["ley_line", "drift"],
-	["forgewright", "forgeshield"],
 	["ley_line", "waymark"],
 	["ley_line", "linewalk"],
 	["spirit", "veilstep"],

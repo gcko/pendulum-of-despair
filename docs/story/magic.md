@@ -373,6 +373,15 @@ unstated. `game/tests/test_spell_balance.gd` asserts all of them against
     them (§ Status Effect Reference, "Fainting clears statuses"), and the
     bearer rejoins the ATB with an empty gauge, as a revival spell's target
     does.
+  - `magic_absorb_base` is Forgeshield's ward on one ally: the next enemy
+    spell that lands on the bearer loses up to that plus the caster's MAG,
+    read when the ward is cast (Forgeshield 150). The ward then shatters,
+    whether the spell was under that threshold or over it, and the rest of a
+    spell over it lands (a reading of "up to a threshold"). A physical blow and a missed spell leave it up, and
+    so does a Poison or Burn tick, which is not directed at the bearer. When
+    Edren's stance meets the spell, his split comes first and the ward meets
+    the bearer's own share. Like a stat buff, a weaker recast leaves a
+    stronger ward up and an equal or stronger one replaces it (a reading).
   - `mp_restore_pct` restores that percent of the target's max MP
     (Leydraught 20).
   - `hp_cost_pct` is paid by the caster as that percent of its own max HP,
@@ -393,8 +402,8 @@ unstated. `game/tests/test_spell_balance.gd` asserts all of them against
   A timed effect (`stat_buff`, `regen_pct`) needs a `duration` of at least one
   turn. A party-side spell with none of these keys, no heal power and no
   registry `status` has no battle effect yet and is refused before any MP is
-  spent: Leymirror, Drift and Forgeshield, plus the field-only Waymark,
-  Linewalk and Veilstep. Turned on the enemy line, a revival spell
+  spent: Leymirror and Drift, plus the field-only Waymark, Linewalk and
+  Veilstep. Turned on the enemy line, a revival spell
   kills an Undead outright and is refused on a Pallor or a normal foe, as a
   revival item is ([bestiary/README.md](bestiary/README.md) § Undead)
   (2026-10-30 rulings). Kindle Breath turned on an enemy ticks the way a heal

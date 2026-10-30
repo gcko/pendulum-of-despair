@@ -5,7 +5,8 @@ extends RefCounted
 ## element of a party member's equipped weapon (#513), and Smokescreen's cut to
 ## an enemy's hit rate (#158 slice d). And what a target's own state does to
 ## the blows it takes: Glintmark's mark on an enemy (#514), "+10% damage taken
-## from all sources" (magic.md § 78 Glintmark).
+## from all sources" (magic.md § 78 Glintmark), and Forgeshield's ward on a
+## party member against the next enemy spell (#503, take_blow).
 ##
 ## Rulings of 2026-10-30 (combat-formulas.md § Attacker Status Modifiers and
 ## § Physical Elemental Attacks): Despair cuts all damage its bearer deals —
@@ -21,6 +22,7 @@ extends RefCounted
 ## its Enemy node: both hold "active_statuses" entries of {name, ...}.
 
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
+const Buffs = preload("res://scripts/combat/battle_buffs.gd")
 
 ## The Enemy.active_buffs stat Glintmark lowers: the enemy's resistance to
 ## damage, so a mark of 10% is a 0.9 entry and the blow lands at 1.1x. Being a
@@ -68,6 +70,16 @@ static func taken_mult(target: Variant) -> float:
 	# Whole percentages, so a 10% mark is exactly 110 / 100 and floors cleanly.
 	var resist: float = float((target as Object).call("buff_mult", RESIST_STAT))
 	return (200 - roundi(resist * 100.0)) / 100.0
+
+
+## Land an enemy's [param kind] blow of [param dmg] on party slot [param slot]
+## (BattleActions' damage types: "magic", "physical", "critical"). A magic one
+## meets the slot's Forgeshield first (BattleBuffs.absorb_magic). Returns the
+## damage applied, as BattleState.take_damage does.
+static func take_blow(state: Node, slot: int, dmg: int, kind: String) -> int:
+	if kind == "magic":
+		dmg = Buffs.absorb_magic(state, slot, dmg)
+	return state.take_damage(slot, dmg)
 
 
 ## The step-5 buff modifiers on a spell [param caster] lands on [param target],

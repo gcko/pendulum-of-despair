@@ -1,7 +1,7 @@
 extends RefCounted
 ## Lands an ally spell on the party (#503): the revive, heal, stat buff,
-## regeneration, Reraise, MP restore, cure or registry status its data carries, on the
-## slots its target type names. Each value is the spell's own data, from its
+## regeneration, Reraise, Forgeshield, MP restore, cure or registry status its
+## data carries, on the slots its target type names. Each value is the spell's own data, from its
 ## magic.md entry (magic.md § Derived Rules > 'Ally spell effects').
 ##
 ## Extracted from battle_magic_command.gd, which validates the cast, spends its
@@ -25,8 +25,9 @@ func resolve(
 	caster_slot: int, spell: Dictionary, target_type: String, command: Dictionary, heal_amt: int
 ) -> bool:
 	var had_effect: bool = false
+	var mag: int = _battle.get_battle_state().get_effective_stat(caster_slot, "mag")
 	for i: int in _ally_slots(target_type, command, caster_slot):
-		if _land_on_ally(spell, i, heal_amt):
+		if _land_on_ally(spell, i, heal_amt, mag):
 			had_effect = true
 	return had_effect
 
@@ -46,8 +47,9 @@ func _ally_slots(target_type: String, command: Dictionary, caster_slot: int) -> 
 
 
 ## Land every effect [param spell] carries on party slot [param slot], and
-## [param heal_amt] HP. Returns whether any of them changed the target.
-func _land_on_ally(spell: Dictionary, slot: int, heal_amt: int) -> bool:
+## [param heal_amt] HP, cast at the caster's [param mag]. Returns whether any of
+## them changed the target.
+func _land_on_ally(spell: Dictionary, slot: int, heal_amt: int, mag: int) -> bool:
 	var state: Node = _battle.get_battle_state()
 	var m: Dictionary = state.get_member(slot)
 	var landed: bool = false
@@ -66,6 +68,10 @@ func _land_on_ally(spell: Dictionary, slot: int, heal_amt: int) -> bool:
 	if spell.get("reraise_pct") != null:
 		var pct: int = int(spell["reraise_pct"])
 		landed = Buffs.grant(state, slot, Buffs.RERAISE, pct, Buffs.UNTIMED) or landed
+	if spell.get("magic_absorb_base") != null:
+		# Forgeshield's threshold: "150 + caster MAG" (magic.md § 79).
+		var held: int = int(spell["magic_absorb_base"]) + mag
+		landed = Buffs.grant(state, slot, Buffs.FORGESHIELD, held, Buffs.UNTIMED) or landed
 	if spell.get("mp_restore_pct") != null:
 		var mp_before: int = int(m.get("current_mp", 0))
 		state.restore_mp(slot, _pct_of(m, "max_mp", spell, "mp_restore_pct"))

@@ -9,9 +9,11 @@ extends RefCounted
 ##   - spell buffs in member["spell_buffs"], {kind: {pct, remaining_turns}},
 ##     where kind is a stat ("atk", "def", "mag", "mdef") for a stat buff
 ##     (Ironhide, Wardglass, Rallying Cry, Attunement, Bulwark Line, Leyward),
-##     REGEN for Kindle Breath and Rekindling's regeneration, or RERAISE for
+##     REGEN for Kindle Breath and Rekindling's regeneration, RERAISE for
 ##     Last Breath's auto-revive, whose remaining_turns is UNTIMED: it lasts
-##     "until triggered or battle ends" (magic.md § 62 Last Breath).
+##     "until triggered or battle ends" (magic.md § 62 Last Breath), or
+##     FORGESHIELD for Forgeshield's ward, also UNTIMED, whose pct is the HP of
+##     magic it absorbs before it shatters (magic.md § 79 Forgeshield).
 ##
 ## Spell buffs are kept out of active_statuses because every status there must
 ## announce a canonical line on landing (test_status_effects.gd), and
@@ -34,6 +36,10 @@ const REGEN: String = "regen"
 ## The spell_buffs kind for Last Breath's Reraise; its pct is the share of max
 ## HP the bearer stands again with.
 const RERAISE: String = "reraise"
+
+## The spell_buffs kind for Forgeshield; its pct is the HP of the next spell's
+## damage it absorbs, 150 + the caster's MAG when cast.
+const FORGESHIELD: String = "forgeshield"
 
 ## A spell buff's remaining_turns when no turn count ends it.
 const UNTIMED: int = -1
@@ -139,6 +145,22 @@ static func on_turn_end(state: Node, slot: int) -> void:
 
 ## The spell buff's +% to [param stat] on member [param m] (0 when none).
 static func stat_pct(m: Dictionary, stat: String) -> int:
-	if stat in [REGEN, RERAISE]:
+	if stat in [REGEN, RERAISE, FORGESHIELD]:
 		return 0
 	return int(m.get("spell_buffs", {}).get(stat, {}).get("pct", 0))
+
+
+## [param dmg] of magic damage about to land on [param slot], less what its
+## Forgeshield absorbs: up to the shield's pct, after which the shield is
+## spent, whether the spell was under that or over it ("Absorbs the next
+## instance of magical damage ... Then shatters"). Returns the damage left to
+## land, all of it when no shield stands.
+static func absorb_magic(state: Node, slot: int, dmg: int) -> int:
+	var m: Dictionary = state.get_member(slot)
+	var buffs: Dictionary = m.get("spell_buffs", {})
+	if not buffs.has(FORGESHIELD) or dmg <= 0:
+		return dmg
+	var held: int = int(buffs[FORGESHIELD]["pct"])
+	buffs.erase(FORGESHIELD)
+	state.ability_state_changed.emit(slot)
+	return maxi(0, dmg - held)
