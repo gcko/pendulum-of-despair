@@ -69,7 +69,7 @@ static func on_status(_state: Node, _slot: int, _status: String) -> void:
 
 
 ## Start of a member's turn: regeneration restores its percentage of max HP
-## (magic.md § Status Effect Reference, Regen: "Restore 5% max HP per turn"),
+## ("Restore 5% max HP per turn", magic.md § Status Effect Reference > 'Regen'),
 ## at least 1 as a Poison tick takes at least 1. Returns heal events in
 ## BattleState's turn-event shape [{slot, dmg, type}].
 static func on_turn_begin(state: Node, slot: int) -> Array:

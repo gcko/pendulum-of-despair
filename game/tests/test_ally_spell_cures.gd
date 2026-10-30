@@ -152,7 +152,8 @@ func test_purge_cures_every_ailment_but_stop_and_despair() -> void:
 
 
 func test_purge_cures_berserk() -> void:
-	# magic.md § Status Effect Reference: Berserk is "Purge only". Applied
+	# Berserk is cured by "Purge only" (magic.md § Status Effect Reference >
+	# 'Berserk'). Applied
 	# directly, so this holds whether or not the registry has a Berserk row yet.
 	var battle: Node = _boot()
 	if not await _await_prompt(battle):
@@ -205,8 +206,8 @@ func test_cleansing_draught_cures_one_ailment_per_cast() -> void:
 
 
 func test_cleansing_draught_leaves_what_it_does_not_list() -> void:
-	# items.md § Status Cure Mapping: Petrify and Slow are "Not cured by
-	# Cleansing Draught".
+	# Petrify and Slow are "Not cured by Cleansing Draught"
+	# (items.md § Status Cure Mapping > 'Not cured by Cleansing Draught').
 	var battle: Node = _boot()
 	if not await _await_prompt(battle):
 		return
