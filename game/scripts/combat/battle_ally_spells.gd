@@ -9,6 +9,7 @@ extends RefCounted
 
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 const Buffs = preload("res://scripts/combat/battle_buffs.gd")
+const StatusGuard = preload("res://scripts/combat/battle_status_guard.gd")
 
 var _battle: Node
 
@@ -89,7 +90,8 @@ func _show_heal(slot: int, healed: int) -> bool:
 ## Cure party slot [param slot] by [param rule] {only, except, count}: the
 ## listed statuses in order, else every negative one but the exceptions (Purge:
 ## not Stop or Despair), at most count of them (Cleansing Draught: one), 0 = all.
-## A positive status is never cured. Returns whether anything was cured.
+## A positive status is never cured. Each cure is announced (#515). Returns
+## whether anything was cured.
 func _cure(slot: int, rule: Dictionary) -> bool:
 	var state: Node = _battle.get_battle_state()
 	var candidates: Array[String] = []
@@ -105,8 +107,7 @@ func _cure(slot: int, rule: Dictionary) -> bool:
 			break
 		if StatusEffects.is_positive(status) or status in rule.get("except", []):
 			continue
-		if state.has_status(slot, status):
-			state.remove_status(slot, status)
+		if StatusGuard.cure(state, slot, status):
 			cured += 1
 	return cured > 0
 

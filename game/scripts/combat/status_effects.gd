@@ -129,10 +129,33 @@ const APPLICATION_NOTICES: Dictionary = {
 ## Used for party members and enemies alike.
 const WAKE_NOTICE: String = "%s woke up!"
 
+## The line for a status a spell, item or ability has lifted (#515), "[Status]
+## was cured!" from battle-dialogue.md § Status Effect Notifications, "[Status]"
+## replaced by "%s". It takes the status's name as magic.md § Status Effect
+## Reference writes it: Poison, Sleep, Berserk.
+const CURE_NOTICE: String = "%s was cured!"
+
+## The line for a status that ran out on its own (#515), verbatim from the same
+## section. Only Poison and Silence have one there; anything else ends in silence.
+const WEARS_OFF_NOTICES: Dictionary = {
+	"poison": "Poison wears off.",
+	"silence": "Silence wears off.",
+}
+
 
 ## The "Edren woke up!" line for [param bearer_name].
 static func wake_notice(bearer_name: String) -> String:
 	return WAKE_NOTICE % bearer_name
+
+
+## The "Poison was cured!" line for [param status].
+static func cure_notice(status: String) -> String:
+	return CURE_NOTICE % status.capitalize()
+
+
+## The "Poison wears off." line for [param status], or "" when it has none.
+static func wears_off_notice(status: String) -> String:
+	return WEARS_OFF_NOTICES.get(status, "")
 
 
 ## Whether this status takes its bearer out of the fight (Petrify, "removed

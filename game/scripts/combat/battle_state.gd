@@ -10,7 +10,10 @@ signal member_died(slot: int)
 signal member_revived(slot: int)
 signal status_applied(slot: int, status_name: String)
 signal status_removed(slot: int, status_name: String)
-## A status worn gear kept off, so nothing landed (BattleStatusGuard.blocks, #512).
+## Cured (BattleStatusGuard.cure) or expired follow a status_removed (#515); blocked
+## is a status worn gear kept off, so nothing landed (BattleStatusGuard.blocks, #512).
+signal status_cured(slot: int, status_name: String)
+signal status_expired(slot: int, status_name: String)
 signal status_blocked(slot: int, status_name: String)
 ## A member's in-force ability or buff state changed: a Rally, Bulwark's stance,
 ## AP or effects, Forgewright's devices or AC, or a buff landed on or left them.
@@ -229,6 +232,7 @@ func tick_statuses(slot: int) -> Array:
 			var sname: String = s.get("name", "")
 			m["active_statuses"].remove_at(i)
 			status_removed.emit(slot, sname)
+			status_expired.emit(slot, sname)
 	return dot_events
 
 
@@ -266,6 +270,7 @@ func tick_realtime_statuses(slot: int, delta: float) -> void:
 			var sname: String = s.get("name", "")
 			m["active_statuses"].remove_at(i)
 			status_removed.emit(slot, sname)
+			status_expired.emit(slot, sname)
 
 
 ## Effective stat (base + capsules + equipment) with every buff applied. Buffs are

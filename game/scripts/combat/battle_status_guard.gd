@@ -1,5 +1,5 @@
 extends RefCounted
-## Equipment status immunity (#512).
+## Equipment status immunity (#512), and the cure that says so (#515).
 ##
 ## A worn item's `status_immunity` names the status its wearer cannot be
 ## afflicted with (equipment.md § Status Immunity Accessories, and the Warding
@@ -45,3 +45,15 @@ static func immunities(character_id: String) -> Array[String]:
 			for entry: Variant in ward:
 				wards.append(str(entry))
 	return wards
+
+
+## Lift [param status] from party slot [param slot] as a cure by a spell, item
+## or ability, so the battle can say "[Status] was cured!" (BattleState
+## .status_cured). Expiry, a waking hit and a KO remove a status without this.
+## Returns whether the status was on.
+static func cure(state: Node, slot: int, status: String) -> bool:
+	if not state.has_status(slot, status):
+		return false
+	state.remove_status(slot, status)
+	state.status_cured.emit(slot, status)
+	return true

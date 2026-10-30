@@ -69,6 +69,8 @@ func _ready() -> void:
 	_state.member_revived.connect(_on_party_member_revived)
 	_state.status_applied.connect(_on_party_status_applied)
 	_state.status_blocked.connect(_on_party_status_blocked)
+	_state.status_cured.connect(_on_party_status_ended.bind(true))
+	_state.status_expired.connect(_on_party_status_ended.bind(false))
 	var data: Dictionary = GameManager.transition_data
 	if data.is_empty():
 		push_error("BattleManager: No transition data")
@@ -414,6 +416,18 @@ func _on_party_status_applied(slot: int, status_name: String) -> void:
 ## immune enemy shows, and no line, since nothing landed.
 func _on_party_status_blocked(slot: int, _status_name: String) -> void:
 	damage_dealt.emit("party_%d" % slot, 0, "immune")
+
+
+## A status left a party member by a cure ([param cured]) or by running out
+## (#515). A cure says "Poison was cured!"; an expiry says the status's own
+## "wears off" line where battle-dialogue.md gives one, else nothing. A waking hit
+## and a KO end a status by neither path, so they add no line here.
+func _on_party_status_ended(_slot: int, status_name: String, cured: bool) -> void:
+	var line: String = StatusEffects.wears_off_notice(status_name)
+	if cured:
+		line = StatusEffects.cure_notice(status_name)
+	if not line.is_empty():
+		message.emit(line)
 
 
 ## Enemy-side mirror of _on_party_status_applied (#439), wired to each enemy's
