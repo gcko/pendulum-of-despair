@@ -132,13 +132,15 @@ func _show_ally_hit(target: String, r: Dictionary) -> void:
 ## no counter answers an ally, Riposte or Thornveil, and Edren's stance never
 ## absorbs his own blow (rulings of 2026-10-30). Returns {hit, damage, type},
 ## plus "absorbed": {slot, damage} when a stance split it. [param mult] scales
-## its final damage (Berserk).
+## its final damage (Berserk), as the attacker's Despair does; its Blind halves
+## the hit rate. It carries no weapon element (ruling of 2026-10-30).
 static func party_strikes_ally(
 	state: Node, slot: int, target: int, mult: float = 1.0
 ) -> Dictionary:
 	var spd: int = state.get_effective_stat(slot, "spd")
 	var target_spd: int = state.get_effective_stat(target, "spd")
-	if not DamageCalc.roll_hit(spd, target_spd) or DamageCalc.roll_evasion(target_spd):
+	var blind: float = BattleDamageMods.accuracy_mult(state.get_member(slot))
+	if not DamageCalc.roll_hit(spd, target_spd, blind) or DamageCalc.roll_evasion(target_spd):
 		return {"hit": false, "damage": 0, "type": "miss"}
 	var is_crit: bool = DamageCalc.roll_crit(state.get_effective_stat(slot, "lck"))
 	var reduction: Array[float] = []
@@ -154,7 +156,7 @@ static func party_strikes_ally(
 		1.0,
 		state.get_effective_stat(target, "def"),
 		is_crit,
-		mult,
+		mult * BattleDamageMods.dealt_mult(state.get_member(slot)),
 		state.get_member(slot).get("row", "front"),
 		state.get_member(target).get("row", "front"),
 		false,
@@ -221,12 +223,15 @@ static func _show_enemy_hit(manager: Node, atb: Node, eid: String, r: Dictionary
 ## An enemy's basic attack on another enemy: the enemy-side physical formula
 ## (ATK/SPD, the flat enemy crit rate) against the target's DEF/SPD, halved
 ## before DEF on a Spirit as every physical hit on one is, with [param mult] on
-## its final damage (Berserk). Returns {hit, damage, type, killed}.
+## its final damage (Berserk), and the attacker's Despair and Blind as on any
+## enemy attack. Returns {hit, damage, type, killed}.
 static func enemy_strikes_enemy(attacker: Node, target: Node, mult: float = 1.0) -> Dictionary:
 	var a: Dictionary = attacker.get_stats()
 	var t: Dictionary = target.get_stats()
 	var target_spd: int = t.get("spd", 0)
-	if not DamageCalc.roll_hit(a.get("spd", 10), target_spd):
+	if not DamageCalc.roll_hit(
+		a.get("spd", 10), target_spd, BattleDamageMods.accuracy_mult(attacker)
+	):
 		return {"hit": false, "damage": 0, "type": "miss", "killed": false}
 	if DamageCalc.roll_evasion(target_spd):
 		return {"hit": false, "damage": 0, "type": "miss", "killed": false}
@@ -236,7 +241,7 @@ static func enemy_strikes_enemy(attacker: Node, target: Node, mult: float = 1.0)
 		1.0,
 		t.get("def", 0),
 		is_crit,
-		mult,
+		mult * BattleDamageMods.dealt_mult(attacker),
 		"front",
 		"front",
 		false,

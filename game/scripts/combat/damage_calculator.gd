@@ -133,9 +133,12 @@ static func calculate_healing(mag: int, spell_power: int) -> int:
 
 
 ## Roll hit check. Returns true if attack hits.
-## hit_rate = clamp(90 + (attacker_spd - target_spd) / 4, 20, 99)
-static func roll_hit(attacker_spd: int, target_spd: int) -> bool:
-	var hit_rate: int = clampi(90 + int((attacker_spd - target_spd) / 4), 20, 99)
+## hit_rate = clamp(floor((90 + (attacker_spd - target_spd) / 4) * accuracy_mult), 20, 99)
+## [param accuracy_mult] scales the computed rate BEFORE the clamp (ruling of
+## 2026-10-30): Blind's 0.5 on a physical attack turns 90 into 45.
+static func roll_hit(attacker_spd: int, target_spd: int, accuracy_mult: float = 1.0) -> bool:
+	var raw: int = 90 + int((attacker_spd - target_spd) / 4)
+	var hit_rate: int = clampi(int(floor(raw * accuracy_mult)), 20, 99)
 	return randi() % 100 < hit_rate
 
 

@@ -141,7 +141,8 @@ func _shatter_guard(slot: int, shattered: Dictionary) -> void:
 ## [param shattered] total (BattleBulwark.shatter), raised to one basic attack
 ## against this enemy (the physical formula at ability_mult 1.0, with its DEF, a
 ## Spirit's halving and the variance roll but no hit roll or crit), then capped
-## at the shattered cap and the damage cap.
+## at the shattered cap and the damage cap, and last cut by Edren's Despair
+## (ruling of 2026-10-30), never below 1. It carries no weapon element.
 func _shatter_damage(slot: int, enemy: Node, shattered: Dictionary) -> int:
 	var state: Node = _battle.get_battle_state()
 	var floor_dmg: int = DamageCalc.calculate_physical(
@@ -159,7 +160,8 @@ func _shatter_damage(slot: int, enemy: Node, shattered: Dictionary) -> int:
 		ModifierAggregator.physical_pre_def_mult(enemy.get_type())
 	)
 	var dmg: int = maxi(floor_dmg, int(shattered["total"]))
-	return mini(BattleBulwark.DAMAGE_CAP, mini(int(shattered["cap"]), dmg))
+	dmg = mini(BattleBulwark.DAMAGE_CAP, mini(int(shattered["cap"]), dmg))
+	return maxi(1, BattleDamageMods.cut_dealt(dmg, state.get_member(slot)))
 
 
 ## Whether [param ability] can be issued at all in this build: its command has

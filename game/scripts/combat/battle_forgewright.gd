@@ -212,7 +212,7 @@ static func take_overcharge(state: Node, slot: int, enemy: Node) -> Dictionary:
 	_record(m).erase("overcharged")
 	state.ability_state_changed.emit(slot)
 	var mod: float = enemy.get_element_multiplier(OVERCHARGE["element"])
-	var weapon: String = _weapon_element(String(m.get("character_id", "")))
+	var weapon: String = BattleDamageMods.weapon_element(String(m.get("character_id", "")))
 	if not weapon.is_empty():
 		mod = maxf(mod, enemy.get_element_multiplier(weapon))
 	return {"mult": 1.0 + int(OVERCHARGE["damage_pct"]) / 100.0, "element_mod": mod}
@@ -358,18 +358,6 @@ static func _guarding(state: Node, id: String, target: int) -> Dictionary:
 			if d["id"] == id and int(d["target"]) == target:
 				return {"slot": slot}
 	return {}
-
-
-## The element of the weapon [param character_id] wears, or "" when it has none.
-static func _weapon_element(character_id: String) -> String:
-	var weapon: String = PartyState.get_member(character_id).get("equipment", {}).get("weapon", "")
-	if weapon.is_empty():
-		return ""
-	for w: Variant in DataManager.load_equipment("weapons"):
-		if w is Dictionary and (w as Dictionary).get("id", "") == weapon:
-			var element: Variant = (w as Dictionary).get("element")
-			return String(element) if element is String else ""
-	return ""
 
 
 ## Remove device [param d] itself from [param list] — not an equal-looking one.

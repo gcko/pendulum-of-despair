@@ -206,6 +206,35 @@ func test_hit_rate_minimum_20() -> void:
 	assert_between(hits, 130, 270, "~20% minimum hit rate")
 
 
+func test_an_accuracy_mult_halves_the_hit_rate() -> void:
+	# Blind: 90% halved is 45% (ruling of 2026-10-30).
+	seed(100)
+	var hits: int = 0
+	for i: int in range(2000):
+		if DamageCalc.roll_hit(10, 10, 0.5):
+			hits += 1
+	assert_between(hits, 820, 980, "~45% with equal SPD")
+
+
+func test_an_accuracy_mult_applies_before_the_99_cap() -> void:
+	# 90 + (170 - 50) / 4 = 120, halved to 60%. Halving the capped 99 would be 49%.
+	seed(100)
+	var hits: int = 0
+	for i: int in range(2000):
+		if DamageCalc.roll_hit(170, 50, 0.5):
+			hits += 1
+	assert_between(hits, 1110, 1290, "~60%, not ~49%")
+
+
+func test_an_accuracy_mult_cannot_sink_the_hit_rate_below_20() -> void:
+	seed(200)
+	var hits: int = 0
+	for i: int in range(1000):
+		if DamageCalc.roll_hit(1, 255, 0.5):
+			hits += 1
+	assert_between(hits, 130, 270, "still ~20%")
+
+
 func test_evasion_rate_cap_50() -> void:
 	seed(300)
 	var evades: int = 0

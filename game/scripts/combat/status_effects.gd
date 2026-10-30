@@ -9,9 +9,8 @@ extends RefCounted
 ## one positive status built so far (#246; is_positive), and Berserk, which no
 ## content inflicts yet. Where part of a status's *behavioral* effect needs an
 ## unbuilt system, the status is still in the registry but that part is deferred
-## (tracked on #246):
-##   - blind (-50% enemy accuracy) — needs enemy-AI hooks (GAP-009).
-##   - despair's -20% damage-dealt needs an attacker-status param in DamageCalc.
+## (tracked on #246). Despair's -20% damage dealt (damage_dealt_mult) and Blind's -50% physical
+## accuracy (physical_accuracy_mult) are applied by BattleDamageMods (#246).
 ## Silence blocks casting on both sides: BattleMagicCommand for the party, and
 ## BattleAI / BossAI for enemies, which skip spell moves (#246). Stop is the one
 ## status counted in real-time seconds rather than turns: see is_realtime().
@@ -57,10 +56,17 @@ const RULES: Dictionary = {
 	# Slow: ATB fill x0.5 for 5 turns (combat-formulas.md
 	# § Fill Rate Modifiers + § Status Effect ATB Interactions).
 	"slow": {"atb": "mod", "atb_mult": 0.5, "duration": 5},
-	# Despair: ATB fill x0.75 for 4 turns (combat-formulas.md
-	# § Fill Rate Modifiers + § Status Effect ATB Interactions). The
-	# -20% damage-dealt half is deferred (needs an attacker-status param).
-	"despair": {"atb": "mod", "atb_mult": 0.75, "duration": 4, "item_proof": true},
+	# Despair: ATB fill x0.75 for 4 turns, and -20% damage dealt (combat-formulas.md
+	# § Fill Rate Modifiers + § Status Effect ATB Interactions; magic.md § Status
+	# Effect Reference > 'Despair').
+	"despair":
+	{
+		"atb": "mod",
+		"atb_mult": 0.75,
+		"duration": 4,
+		"item_proof": true,
+		"damage_dealt_mult": 0.8,
+	},
 	# Silence: cannot cast, 4 turns (magic.md § Status Effect Reference > 'Silence').
 	# Enforced by the caster's side, not here (see the scope note above).
 	"silence": {"duration": 4},
@@ -68,8 +74,7 @@ const RULES: Dictionary = {
 	# Its auto-attack is BattleAutoAction's.
 	"confusion": {"duration": 3, "wake_on_damage": true},
 	# Blind: -50% physical accuracy, 4 turns (magic.md § Status Effect Reference > 'Blind').
-	# Effect deferred.
-	"blind": {"duration": 4},
+	"blind": {"duration": 4, "physical_accuracy_mult": 0.5},
 	# Stop: gauge "Frozen at current value", cannot act, "3 real-time seconds"
 	# counted only while battle time runs (combat-formulas.md § Status Effect ATB
 	# Interactions; magic.md § Stillwatch). Its duration is SECONDS, not turns.
@@ -245,6 +250,18 @@ static func application_notice(status: String, bearer_name: String) -> String:
 ## ATB fill multiplier for "mod" statuses (1.0 when none).
 static func atb_mult(status: String) -> float:
 	return RULES.get(status, {}).get("atb_mult", 1.0)
+
+
+## The multiplier this status puts on all damage its bearer deals (Despair's
+## 0.8), 1.0 when none. Healing is not damage, so it never applies there.
+static func damage_dealt_mult(status: String) -> float:
+	return RULES.get(status, {}).get("damage_dealt_mult", 1.0)
+
+
+## The multiplier this status puts on its bearer's physical hit rate (Blind's
+## 0.5), 1.0 when none. A spell's hit rate is never touched.
+static func physical_accuracy_mult(status: String) -> float:
+	return RULES.get(status, {}).get("physical_accuracy_mult", 1.0)
 
 
 ## End-of-turn HP tick as a fraction of max HP (0.0 when none).
