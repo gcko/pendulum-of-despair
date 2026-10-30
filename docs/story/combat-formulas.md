@@ -448,8 +448,14 @@ Some weapons and abilities have elemental properties:
   element applies to every physical strike a party member makes on an enemy
   among those built so far: the Attack command, an auto-attack under Confusion
   or Berserk, and Riposte's counter, with weakness, resistance, immunity and
-  absorption all as below. Abilities that re-element their own hit (Shiv,
-  Wild Card, Sever Bond) settle theirs when they are built.
+  absorption all as below. Sable's Tricks do not carry it: Shiv and Wild
+  Card strike at their thrown item's element and at no other, so a bare Shiv,
+  a non-elemental throw and an item-less or non-elemental Wild Card are all
+  non-elemental, and neither spends an Overcharge. Wild Card's item branches
+  take the element of the most recently stolen elemental item held
+  ([#447](https://github.com/gcko/pendulum-of-despair/issues/447);
+  [abilities.md](abilities.md) § Damage Magnitudes). Sever Bond settles its
+  own when it is built.
   When Overcharge also applies, the more favorable of Storm and the weapon's
   element decides ([abilities.md](abilities.md) § Lira — Forgewright). A
   confused member's blow on an ally and Shatter Guard's fixed damage carry no

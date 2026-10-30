@@ -163,12 +163,14 @@ func _stock(item_id: String) -> int:
 	)
 
 
-## How many of [param tries] Filches on enemy 0 stole something. Each Filch is
-## taken on a fresh turn and the pool is emptied between them, so the cap never
-## decides the count.
+## How many of [param tries] Filches stole something, each on a fresh enemy
+## built like enemy 0 (an enemy is robbed once) and on a fresh turn, with the
+## pool emptied between them so the cap never decides the count.
 func _filch_successes(tries: int) -> int:
 	var stolen: int = 0
+	var mark: Enemy = _battle.enemies[0]
 	for _i: int in range(tries):
+		_battle.enemies[0] = _make_enemy(mark.enemy_data.duplicate(true))
 		_state.get_member(SABLE)["stolen_goods"] = [] as Array[String]
 		_use("filch")
 		stolen += _pool().size()
@@ -259,11 +261,29 @@ func test_ransack_steals_from_every_enemy_at_once() -> void:
 
 
 func test_the_pool_holds_three_and_a_fourth_steal_goes_to_the_inventory_only() -> void:
-	for _i: int in range(4):
-		_use("filch")
+	_battle.enemies = (
+		[_make_enemy({}), _make_enemy({}), _make_enemy({}), _make_enemy({})] as Array[Node]
+	)
+	for i: int in range(4):
+		_use("filch", i)
 	assert_eq(_pool().size(), BattleTricks.POOL_LIMIT, "Sable holds three")
 	assert_eq(BattleTricks.POOL_LIMIT, 3, "abilities.md: up to 3 stolen items at a time")
 	assert_eq(_stock("beast_hide"), 4, "the fourth is still stolen, into the inventory")
+
+
+func test_an_enemy_can_be_robbed_only_once() -> void:
+	assert_true(_use("filch"), "first Filch")
+	assert_eq(_stock("beast_hide"), 1, "it steals")
+	assert_true(_use("filch"), "a second Filch is still a turn spent")
+	assert_eq(_stock("beast_hide"), 1, "but the robbed enemy yields nothing more")
+	assert_eq(_pool().size(), 1, "and nothing more is held")
+
+
+func test_ransack_finds_nothing_on_an_enemy_already_filched() -> void:
+	_battle.enemies = [_make_enemy({"spd": 0}), _make_enemy({"spd": 0})] as Array[Node]
+	assert_true(_use("filch", 0), "Filch robs the first")
+	assert_true(_use("ransack"), "Ransack issued")
+	assert_eq(_stock("beast_hide"), 2, "only the second enemy still had something")
 
 
 func test_an_item_used_from_the_inventory_leaves_the_pool() -> void:

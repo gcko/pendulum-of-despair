@@ -263,8 +263,11 @@ Settled on #158 on 2026-10-30; the battle layer is built to these readings.
 
 **Rulings (from [#158](https://github.com/gcko/pendulum-of-despair/issues/158), slice 158d):**
 - **Filch's success.** A Filch tries the enemy's common steal, then its rare one, and each tier succeeds at that tier's rate × clamp(1 + (Sable SPD − enemy SPD) / 100, 0.5, 1.5), floored. A 75% common steal is 75% at even Speed, 97% with a 30-point lead, and never below 37% or above certain. Ransack rolls each enemy at 70% of that.
+- **An enemy is robbed once.** After any successful steal from an enemy — common or rare, by Filch, Ransack or anything else that steals — every later attempt on it fails as an ordinary miss. Each enemy's common and rare steal is one item to take, not a stream, so a 0 MP Filch with no cooldown cannot farm a fight.
 - **Cooldowns** count Sable's own turns: an *N*-turn cooldown keeps the Trick out of the menu for her next *N* turns, and nobody else's turns count it down. Wild Card's falls to 4 once `trial_sable_complete` is set.
 - **Stolen Goods.** A stolen item goes into the party inventory when it is taken, so whatever Sable still holds when the battle ends is kept. She holds the first three for her Tricks; a fourth steal still succeeds and goes to the inventory alone. A Trick that uses a held item consumes it from the inventory too, and an item the party has used from the inventory is no longer held.
+- **Smokescreen** is a -30% accuracy debuff on each enemy that counts down on that enemy's own turns, as Arc Trap's Speed debuff does. Like Blind, it cuts physical hit rate only; an enemy's spells keep theirs.
+- **A Trick's strike** (Shiv, Wild Card) carries only its thrown item's element, never the equipped weapon's, and does not spend an Overcharge, which stays on Sable for her next Attack (see § Damage Magnitudes).
 - **Built and left for later.** Filch, Smokescreen's accuracy cut, Shiv and its throw, Ransack, Wild Card and Unbreakable Thread are built. Misdirect, Smokescreen's Speed rider (no document says which items are "Forgewright components"), and the Pallor trial's doubled cooldowns and halved Filch are not.
 
 **Synergies:**

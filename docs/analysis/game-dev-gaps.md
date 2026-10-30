@@ -42,9 +42,9 @@ in these docs.**
 | Category | Source Documents |
 |----------|----------------|
 | Game overview | `gdd-overview.md` (270), `outline.md` (371), `world.md` (79) |
-| Combat mechanics | `combat-formulas.md` (1,129) |
+| Combat mechanics | `combat-formulas.md` (1,135) |
 | Character stats/growth | `progression.md` (511), `characters.md` (220) |
-| Abilities & magic | `abilities.md` (1,137), `magic.md` (1,778) |
+| Abilities & magic | `abilities.md` (1,140), `magic.md` (1,778) |
 | Enemy data | `bestiary/` (10 files) |
 | Items & equipment | `items.md` (724), `equipment.md` (735) |
 | Economy & shops | `economy.md` (965) |

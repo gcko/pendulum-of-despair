@@ -11,8 +11,9 @@ extends RefCounted
 ## readings recorded there from #158 and #447. Filch tries the common tier, then
 ## the rare one (2026-04-02-enemy-data-json-design.md § Steal Mapping Rules),
 ## each at its rate times clamp(1 + (Sable SPD - enemy SPD) / 100, 0.5, 1.5);
-## Ransack takes 70% of that. A cooldown counts Sable's own turns: one of N turns
-## keeps the Trick out of the menu for her next N turns.
+## Ransack takes 70% of that, and an enemy can be robbed only once. A cooldown
+## counts Sable's own turns: one of N turns keeps the Trick out of the menu for
+## her next N turns.
 ##
 ## Sable's record carries her Stolen Goods, oldest first, in
 ## member["stolen_goods"] (BattleState gives every member the list), and her
@@ -36,6 +37,9 @@ const POOL_LIMIT: int = 3
 
 ## Ransack's steal chance as a percentage of Filch's ("70% of normal").
 const RANSACK_RATE_PCT: int = 70
+
+## The meta an enemy carries once something has been stolen from it.
+const ROBBED_META: String = "robbed"
 
 ## Filch's speed factor: 1 + (Sable SPD - enemy SPD) / SPD_DIVISOR, clamped.
 const SPD_DIVISOR: float = 100.0
@@ -151,14 +155,19 @@ static func steal_mult(sable_spd: int, enemy_spd: int, rate_pct: int = 100) -> f
 
 ## Sable at [param slot] tries to steal from [param enemy] at [param rate_pct]
 ## of Filch's chance: the common tier, then the rare one. Returns the item taken,
-## which is now hers (add_goods), or "" when she took nothing.
+## which is now hers (add_goods), or "" when she took nothing. An enemy is robbed
+## once: after any successful steal from it, every later attempt misses
+## (abilities.md § Sable — Tricks, rulings).
 static func steal(state: Node, slot: int, enemy: Node, rate_pct: int = 100) -> String:
+	if enemy.get_meta(ROBBED_META, false):
+		return ""
 	var mult: float = steal_mult(
 		state.get_effective_stat(slot, "spd"), int(enemy.get_stats().get("spd", 0)), rate_pct
 	)
 	for tier: String in ["common", "rare"]:
 		var roll: Dictionary = EnemyRecord.roll_steal(enemy.enemy_data, tier, mult)
 		if roll["success"]:
+			enemy.set_meta(ROBBED_META, true)
 			add_goods(state, slot, roll["item_id"])
 			return roll["item_id"]
 	return ""
