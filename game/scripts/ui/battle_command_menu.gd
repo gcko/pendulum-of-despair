@@ -10,7 +10,6 @@ signal target_changed(index: int, is_enemy: bool)
 enum MenuState { HIDDEN, COMMAND, SUBMENU, TARGET }
 
 const SubmenuItems := preload("res://scripts/ui/battle_submenu_items.gd")
-const MagicCommand := preload("res://scripts/combat/battle_magic_command.gd")
 
 ## Third-slot label per character (ui-design.md § 2.4 Command Panel).
 const UNIQUE_COMMAND_NAMES: Dictionary = {
@@ -62,6 +61,11 @@ var _character_data: Dictionary = {}
 ## The acting member's BattleState record: MP for affordability, statuses for
 ## what a status blocks. {} when the caller has none.
 var _member: Dictionary = {}
+## The Combo submenu's entries for this turn (BattleSubmenuItems.combos), built
+## by the caller, which holds the battle state and the gauges the menu does not.
+var _combos: Array[Dictionary] = []
+## Which command's submenu is open ("magic", "ability", "combo", "item").
+var _submenu_kind: String = ""
 
 # get_node_or_null (not $) so unit tests can instantiate the menu via .new()
 # without a scene tree; every use of these refs is already null-guarded.
@@ -79,11 +83,15 @@ func _ready() -> void:
 ## Show command menu for a party member.
 ## [param member] is the actor's BattleState record; it drives MP affordability
 ## in the Magic and Ability submenus, and status blocks on Magic (Silence) and
-## on the unique command.
-func show_commands(character_data: Dictionary, is_boss: bool, member: Dictionary = {}) -> void:
+## on the unique command. [param combos] are the Combo submenu's entries; with
+## none, Combo is grayed (ui-design.md § 2.4).
+func show_commands(
+	character_data: Dictionary, is_boss: bool, member: Dictionary = {}, combos: Array = []
+) -> void:
 	_is_boss = is_boss
 	_character_data = character_data
 	_member = member
+	_combos.assign(combos)
 	_cursor = 0
 	_state = MenuState.COMMAND
 
@@ -95,6 +103,7 @@ func show_commands(character_data: Dictionary, is_boss: bool, member: Dictionary
 		{"label": "Attack", "type": "attack", "enabled": true},
 		{"label": "Magic", "type": "magic", "enabled": magic_on},
 		{"label": ability_name, "type": "ability", "enabled": ability_on},
+		{"label": "Combo", "type": "combo", "enabled": not _combos.is_empty()},
 		{"label": "Item", "type": "item", "enabled": true},
 		{"label": "Defend", "type": "defend", "enabled": true},
 		{"label": "Flee", "type": "flee", "enabled": not _is_boss},
@@ -131,12 +140,10 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _handle_command_input(event: InputEvent) -> bool:
-	if event.is_action_pressed("ui_up"):
-		_cursor = (_cursor - 1 + _commands.size()) % _commands.size()
-		_update_command_display()
-		return true
-	if event.is_action_pressed("ui_down"):
-		_cursor = (_cursor + 1) % _commands.size()
+	if event.is_action_pressed("ui_up") or event.is_action_pressed("ui_down"):
+		_cursor = SubmenuItems.step(
+			_commands, _cursor, -1 if event.is_action_pressed("ui_up") else 1
+		)
 		_update_command_display()
 		return true
 	if event.is_action_pressed("ui_accept"):
@@ -157,12 +164,9 @@ func _handle_submenu_input(event: InputEvent) -> bool:
 			submenu_closed.emit()
 			return true
 		return false
-	if event.is_action_pressed("ui_up"):
-		_submenu_cursor = (_submenu_cursor - 1 + _submenu_items.size()) % _submenu_items.size()
-		_update_submenu_display()
-		return true
-	if event.is_action_pressed("ui_down"):
-		_submenu_cursor = (_submenu_cursor + 1) % _submenu_items.size()
+	if event.is_action_pressed("ui_up") or event.is_action_pressed("ui_down"):
+		var dir: int = -1 if event.is_action_pressed("ui_up") else 1
+		_submenu_cursor = SubmenuItems.step(_submenu_items, _submenu_cursor, dir)
 		_update_submenu_display()
 		return true
 	if event.is_action_pressed("ui_accept"):
@@ -237,7 +241,7 @@ func _confirm_command() -> void:
 	var cmd: Dictionary = _commands[_cursor]
 	if not cmd.get("enabled", true):
 		return
-
+	_submenu_kind = cmd["type"]
 	match cmd["type"]:
 		"attack":
 			_pending_command = {"type": "attack"}
@@ -245,11 +249,14 @@ func _confirm_command() -> void:
 			_start_target_selection(true)
 		"magic":
 			set_submenu_items(
-				_gray_uncastable(SubmenuItems.magic(_character_data, _member), _member)
+				SubmenuItems.gray_uncastable(SubmenuItems.magic(_character_data, _member), _member)
 			)
 			_show_submenu()
 		"ability":
 			set_submenu_items(SubmenuItems.abilities(_character_data, _member))
+			_show_submenu()
+		"combo":
+			set_submenu_items(_combos.duplicate(true))
 			_show_submenu()
 		"item":
 			set_submenu_items(SubmenuItems.items())
@@ -282,7 +289,7 @@ func _enter_target_side(is_enemy: bool) -> void:
 
 
 func _show_submenu() -> void:
-	_submenu_cursor = 0
+	_submenu_cursor = maxi(0, SubmenuItems.step(_submenu_items, -1, 1))
 	_state = MenuState.SUBMENU
 	submenu_opened.emit()
 	if _submenu != null:
@@ -314,19 +321,19 @@ func _confirm_submenu() -> void:
 			_start_target_selection(true)
 
 
-## Gray out every spell in [param items] the battle would refuse, as an
-## unaffordable one is grayed ("Spells the character can't afford ... grayed
-## out", ui-design.md § 2.7): a spell on either side whose battle effect is not
-## built yet (BattleMagicCommand.is_castable_in_battle), and one whose HP cost
-## [param member] cannot pay (BattleMagicCommand.can_pay_hp, Leydraught).
-static func _gray_uncastable(items: Array[Dictionary], member: Dictionary) -> Array[Dictionary]:
-	for item: Dictionary in items:
-		var spell: Dictionary = item.get("command", {}).get("spell", {})
-		if not MagicCommand.is_castable_in_battle(spell):
-			item["enabled"] = false
-		elif not MagicCommand.can_pay_hp(spell, member):
-			item["enabled"] = false
-	return items
+## Replace the Combo list, as BattleUI does when a party gauge fills while the
+## menu is open, and with it whether Combo is selectable. An open Combo submenu
+## shows the new list.
+func set_combos(combos: Array) -> void:
+	_combos.assign(combos)
+	for cmd: Dictionary in _commands:
+		if cmd["type"] == "combo":
+			cmd["enabled"] = not _combos.is_empty()
+	_update_command_display()
+	if _state == MenuState.SUBMENU and _submenu_kind == "combo":
+		set_submenu_items(_combos.duplicate(true))
+		_submenu_cursor = clampi(_submenu_cursor, 0, maxi(0, _submenu_items.size() - 1))
+		_update_submenu_display()
 
 
 ## Set submenu items (called by battle_ui).
@@ -349,6 +356,12 @@ func set_party_count(count: int) -> void:
 func _update_command_display() -> void:
 	if _command_list == null:
 		return
+	# The scene seats six labels; a command beyond them (Combo made seven) gets
+	# a copy of the first, so it wears the same style.
+	var labels: int = _command_list.get_child_count()
+	while labels > 0 and labels < _commands.size():
+		_command_list.add_child(_command_list.get_child(0).duplicate())
+		labels += 1
 	for i: int in range(_command_list.get_child_count()):
 		if i >= _commands.size():
 			break

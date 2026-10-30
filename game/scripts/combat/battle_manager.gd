@@ -3,9 +3,10 @@ extends Node2D
 ## last enemy or the last party member falls.
 ##
 ## The commands a player can pick live in their own modules — BattlePlayerActions
-## (attack/defend/flee), BattleMagicCommand, BattleItemCommand and the unique
-## commands' BattleAbilityCommand — and battle-start assembly lives in
-## BattleSetup (GAP-087). This script dispatches to them and owns what they need.
+## (attack/defend/flee), BattleMagicCommand, BattleItemCommand, the unique
+## commands' BattleAbilityCommand and BattleComboCommand — battle-start assembly
+## lives in BattleSetup, and the status notices in BattleStatusNotices (GAP-087).
+## This script dispatches to them and owns what they need.
 ## A confused or berserk member is not prompted: the loop issues an "auto"
 ## command for them, which BattleAutoAction resolves (#246).
 
@@ -45,6 +46,8 @@ var _actions: BattlePlayerActions = null
 var _magic: BattleMagicCommand = null
 var _items: BattleItemCommand = null
 var _abilities: BattleAbilityCommand = null
+var _combos: BattleComboCommand = null
+var _notices: BattleStatusNotices = null
 var _auto: BattleAutoAction = null
 
 @onready var _atb: Node = $ATBSystem
@@ -67,10 +70,11 @@ func _ready() -> void:
 	_ui.submenu_state_changed.connect(func(o: bool) -> void: _atb.set_submenu_open(o))
 	_state.member_died.connect(_on_party_member_died)
 	_state.member_revived.connect(_on_party_member_revived)
-	_state.status_applied.connect(_on_party_status_applied)
-	_state.status_blocked.connect(_on_party_status_blocked)
-	_state.status_cured.connect(_on_party_status_ended.bind(true))
-	_state.status_expired.connect(_on_party_status_ended.bind(false))
+	_notices = BattleStatusNotices.new(self)
+	_state.status_applied.connect(_notices.party_applied)
+	_state.status_blocked.connect(_notices.party_blocked)
+	_state.status_cured.connect(_notices.party_ended.bind(true))
+	_state.status_expired.connect(_notices.party_ended.bind(false))
 	var data: Dictionary = GameManager.transition_data
 	if data.is_empty():
 		push_error("BattleManager: No transition data")
@@ -101,7 +105,7 @@ func _ready() -> void:
 		_enemy_area,
 		_atb,
 		_on_enemy_died,
-		_on_enemy_status_applied
+		_notices.enemy_applied
 	)
 	for e: Node in _enemies:
 		_enemy_turn.announce_status_ends(e)
@@ -163,7 +167,7 @@ func _process(delta: float) -> void:
 			if StatusEffects.atb_effect(blocked_by) == "frozen":
 				continue
 			# The turn begins: Second Wind's regen lands (abilities.md § Cael — Rally).
-			_emit_party_events(_state.begin_turn(slot))
+			emit_party_events(_state.begin_turn(slot))
 			_check_end_conditions()  # a turn-start effect may have won or lost it
 			if _battle_resolved or not _battle_active:
 				return
@@ -231,29 +235,41 @@ func _on_ui_command(command: Dictionary) -> void:
 				_get_actions().do_flee()
 		"ability":
 			ok = _get_abilities().do_ability(actor_id, command)
+		"combo":
+			ok = _get_combos().do_combo(actor_id, command)
 		"auto":  # issued by _process, never by the menu
 			_auto.act_for(cmd_slot)
 	if not ok:
+		_check_end_conditions()  # a combo partner's turn start may have decided it
+		if _battle_resolved:
+			return
 		_atb.set_command_menu_open(true)
 		var char_data: Dictionary = _state.get_member(cmd_slot).get("character_data", {})
 		turn_ready.emit(actor_id, true, cmd_slot, _targetable_enemy_count(), _is_boss, char_data)
 		return
 	if not _battle_active:
 		return
-	# Clear defending from a PREVIOUS turn — skip if this action IS defend
-	if (
-		command.get("type", "") != "defend"
-		and _state.get_member(cmd_slot).get("is_defending", false)
-	):
-		_state.set_defending(cmd_slot, false)
-		_state.set_buff(cmd_slot, "damage_taken_mult", 1.0)
 	_awaiting_input_for = ""
-	_atb.reset_gauge(actor_id)
-	_turn_counter += 1
-	# Surface party-side DoT (Poison/Burn) through damage_dealt so it shows a
-	# floating number, mirroring the enemy-side tick.
-	_emit_party_events(_state.tick_statuses(cmd_slot))
+	var kind: String = command.get("type", "")
+	var ended: Array[int] = [cmd_slot]
+	if kind == "combo":  # it used the partner's turn as well
+		ended.append(_get_combos().partner_slot())
+	for slot: int in ended:
+		# Clear defending from a PREVIOUS turn — skip if this action IS defend
+		if kind != "defend" and _state.get_member(slot).get("is_defending", false):
+			_state.set_defending(slot, false)
+			_state.set_buff(slot, "damage_taken_mult", 1.0)
+		_end_turn(slot)
 	_check_end_conditions()
+
+
+## Close [param slot]'s turn: reset the gauge and run the end-of-turn ticks,
+## surfacing party-side DoT (Poison/Burn) through damage_dealt so it shows a
+## floating number, mirroring the enemy-side tick.
+func _end_turn(slot: int) -> void:
+	_atb.reset_gauge("party_%d" % slot)
+	_turn_counter += 1
+	emit_party_events(_state.tick_statuses(slot))
 
 
 func _on_ui_cancel() -> void:
@@ -300,7 +316,7 @@ func _incapacitating_status(slot: int) -> String:
 func _skip_incapacitated_turn(slot: int, id: String, status_name: String) -> void:
 	var nm: String = _state.get_member(slot).get("character_data", {}).get("name", "???")
 	message.emit("%s is %s and can't move!" % [nm, StatusEffects.display_adjective(status_name)])
-	_emit_party_events(_state.tick_statuses(slot))
+	emit_party_events(_state.tick_statuses(slot))
 	_atb.reset_gauge(id)
 	_check_end_conditions()
 
@@ -308,8 +324,9 @@ func _skip_incapacitated_turn(slot: int, id: String, status_name: String) -> voi
 ## Surface BattleState's turn events [{slot, dmg, type}] as floating numbers:
 ## a turn's start (Second Wind's heal) and its end (Poison/Burn damage, Regen
 ## and Mending Engine heals, each event carrying its own type). A Shock Coil's
-## request ({slot, shock_coil}) is answered here, where the enemies are.
-func _emit_party_events(events: Array) -> void:
+## request ({slot, shock_coil}) is answered here, where the enemies are. Public
+## for BattleComboCommand, which opens a combo partner's turn.
+func emit_party_events(events: Array) -> void:
 	for ev: Dictionary in events:
 		if ev.has("shock_coil"):
 			_shock_coil(int(ev["slot"]), int(ev["shock_coil"]))
@@ -403,48 +420,10 @@ func _resync_party_atb(slot: int) -> void:
 		_atb.set_gauge(pid, 0)
 
 
-## Tell the player a status just landed on a party member (#299). Routed through
-## the one registry table so the wording is battle-dialogue.md
-## § Status Effect Notifications rather than a per-caller invention, and so
-## every path that lands a status on the PARTY announces it the same way,
-## whatever inflicted it. A status with no canonical line lands silently.
-func _on_party_status_applied(slot: int, status_name: String) -> void:
-	var nm: String = _state.get_member(slot).get("character_data", {}).get("name", "???")
-	var line: String = StatusEffects.application_notice(status_name, nm)
-	if not line.is_empty():
-		message.emit(line)
-
-
-## Worn gear kept a status off a party member (#512): the same "Immune" marker an
-## immune enemy shows, and no line, since nothing landed.
-func _on_party_status_blocked(slot: int, _status_name: String) -> void:
-	damage_dealt.emit("party_%d" % slot, 0, "immune")
-
-
-## A status left a party member by a cure ([param cured]) or by running out
-## (#515). A cure says "Poison was cured!"; an expiry says the status's own
-## "wears off" line where battle-dialogue.md gives one, else nothing. A waking hit
-## and a KO end a status by neither path, so they add no line here.
-func _on_party_status_ended(_slot: int, status_name: String, cured: bool) -> void:
-	var line: String = StatusEffects.wears_off_notice(status_name)
-	if cured:
-		line = StatusEffects.cure_notice(status_name)
-	if not line.is_empty():
-		message.emit(line)
-
-
-## Enemy-side mirror of _on_party_status_applied (#439), wired to each enemy's
-## own status_applied, so a status spell, a spell's rider or any later path
-## shows the same marker and reads the same registry line.
-func _on_enemy_status_applied(status_name: String, _duration: int, enemy: Node) -> void:
-	var idx: int = _enemies.find(enemy)
-	if idx < 0:
-		return
-	resync_enemy_atb(idx)
-	damage_dealt.emit("enemy_%d" % idx, 0, "status")
-	var line: String = StatusEffects.application_notice(status_name, enemy.get_display_name())
-	if not line.is_empty():
-		message.emit(line)
+## A summoned enemy's status_applied, which BattleEnemyTurn wires here: the
+## same notices as the opening line's (BattleStatusNotices.enemy_applied).
+func _on_enemy_status_applied(status_name: String, duration: int, enemy: Node) -> void:
+	_notices.enemy_applied(status_name, duration, enemy)
 
 
 func _check_end_conditions() -> void:
@@ -470,6 +449,9 @@ func _check_end_conditions() -> void:
 			return
 		victory.emit(r)
 	elif _state.is_party_wiped():
+		# Resolved as a victory is, so the frame stops here and defeats once.
+		_battle_resolved = true
+		_awaiting_input_for = ""
 		defeat.emit()
 		exit_battle("faint")
 
@@ -570,3 +552,9 @@ func _get_abilities() -> BattleAbilityCommand:
 	if _abilities == null:
 		_abilities = BattleAbilityCommand.new(self)
 	return _abilities
+
+
+func _get_combos() -> BattleComboCommand:
+	if _combos == null:
+		_combos = BattleComboCommand.new(self)
+	return _combos

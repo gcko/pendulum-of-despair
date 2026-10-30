@@ -13,6 +13,10 @@ extends RefCounted
 ##                         and the sub-ability each partner supplies
 ## MP does not hide a combo: each result says whether both characters can pay
 ## their `mp_costs` share, so the menu can gray it as it grays a spell.
+## combos_for narrows the list to one acting character (slice 176b): only the
+## combos that take in the actor and a partner who is ready, each marked usable
+## or not. A combo is usable when it is built, paid for and its usage condition
+## holds; anything else is listed grayed (abilities.md § Combo Availability).
 ##
 ## Pure query: nothing here spends MP, resets a gauge or performs a combo.
 
@@ -27,6 +31,12 @@ const PARTY_SLOTS: int = 4
 ## Statuses under which a member cannot be commanded at all, so cannot be drawn
 ## into a combo either way round.
 const UNCOMMANDABLE_STATUSES: Array[String] = ["confusion", "berserk"]
+
+## The combos whose effect is built. Slice 176b builds Ley Torrent; the rest
+## land in 176c, each with the sub-ability slice of #158 it draws on, and until
+## then they are listed but cannot be chosen. Cael's Echo also waits on its
+## gate: nothing in the game sets cael_betrayal_complete yet.
+const BUILT: Array[String] = ["ley_torrent"]
 
 
 ## Every combo the party can call now, each as {id, combo, slots, affordable}:
@@ -53,6 +63,58 @@ static func available_combos(state: Node, atb: Node) -> Array[Dictionary]:
 		}
 		out.append(entry)
 	return out
+
+
+## The combos [param slot] could call on its turn: each available_combos entry
+## that takes in [param slot], plus [code]partner[/code] (the other
+## character's slot) and [code]usable[/code] (see usable).
+static func combos_for(state: Node, atb: Node, slot: int) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	for entry: Dictionary in available_combos(state, atb):
+		var slots: Array[int] = entry["slots"]
+		var at: int = slots.find(slot)
+		if at < 0:
+			continue
+		entry["partner"] = slots[1 - at]
+		entry["usable"] = usable(entry, state)
+		out.append(entry)
+	return out
+
+
+## Whether an available_combos [param entry] can be chosen now: its effect is in
+## [param built], both characters can pay their share, and its usage condition
+## holds (condition_met). A combo that fails any of the three is listed grayed.
+static func usable(entry: Dictionary, state: Node, built: Array[String] = BUILT) -> bool:
+	var combo_id: String = entry.get("id", "")
+	return (
+		combo_id in built
+		and bool(entry.get("affordable", false))
+		and condition_met(combo_id, state, entry.get("slots", []))
+	)
+
+
+## Whether the usage condition in [param combo_id]'s effect text holds for its
+## characters at [param slots] (combos.json order). Four combos state one:
+##   Shattered Vanguard  — Edren "in a stance with stored damage"
+##   Spiritward          — Edren's Bulwark stance to channel through
+##   Arcane Convergence  — Lira's deployed devices to trigger
+##   Ambush Protocol     — one of Sable's stolen Forgewright components; no
+##                         document says which items those are (abilities.md
+##                         § Sable — Tricks), so it is never met yet
+## Every other combo has none, so its condition always holds.
+static func condition_met(combo_id: String, state: Node, slots: Array) -> bool:
+	match combo_id:
+		"shattered_vanguard":  # edren, sable
+			var edren: Dictionary = state.get_member(int(slots[0]))
+			var stored: int = int(edren.get("bulwark", {}).get("absorbed_total", 0))
+			return BattleBulwark.in_stance(edren) and stored > 0
+		"spiritward":  # torren, edren
+			return BattleBulwark.in_stance(state.get_member(int(slots[1])))
+		"arcane_convergence":  # maren, lira
+			return not BattleForgewright.devices(state.get_member(int(slots[1]))).is_empty()
+		"ambush_protocol":
+			return false
+	return true
 
 
 ## Whether Silence stops [param character_id]'s share of a combo, [param share]

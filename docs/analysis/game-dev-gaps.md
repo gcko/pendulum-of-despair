@@ -44,14 +44,14 @@ in these docs.**
 | Game overview | `gdd-overview.md` (270), `outline.md` (371), `world.md` (79) |
 | Combat mechanics | `combat-formulas.md` (1,144) |
 | Character stats/growth | `progression.md` (511), `characters.md` (220) |
-| Abilities & magic | `abilities.md` (1,170), `magic.md` (1,778) |
+| Abilities & magic | `abilities.md` (1,194), `magic.md` (1,778) |
 | Enemy data | `bestiary/` (10 files) |
 | Items & equipment | `items.md` (724), `equipment.md` (735) |
 | Economy & shops | `economy.md` (965) |
 | Crafting | `crafting.md` (404) |
 | Encounters | `dungeons-world.md` (5,352), `dungeons-city.md` (1,489), `combat-formulas.md` |
 | Dialogue | `dialogue-system.md` (639), `script/` (9 files) |
-| UI & menus | `ui-design.md` (1,252) |
+| UI & menus | `ui-design.md` (1,264) |
 | Save/load | `save-system.md` (662) |
 | Audio | `audio.md` (323), `music.md` (528) |
 | Overworld & maps | `overworld.md` (512), `geography.md` (718), `locations.md` (1,244), `biomes.md` (999) |
@@ -66,7 +66,7 @@ in these docs.**
 | Dynamic world | `dynamic-world.md` (1,156) |
 | Sidequests | `sidequests.md` (704) |
 | Post-game | `postgame.md` (281) |
-| Architecture | `docs/plans/technical-architecture.md` (1,241) |
+| Architecture | `docs/plans/technical-architecture.md` (1,245) |
 
 **Design doc risk note:** Some source docs are marked "MOSTLY COMPLETE"
 in `game-design-gaps.md` (npcs.md, sidequests.md, events.md).
