@@ -445,9 +445,11 @@ From [magic.md](magic.md):
 Some weapons and abilities have elemental properties:
 - Lira's Overcharge: Storm element added to the ally's next attack (the physical pipeline below applies when that attack is physical)
 - Elemental weapons (defined in equipment, Gap 1.5). The equipped weapon's
-  element applies to every physical strike a party member makes on an enemy:
-  the Attack command, an auto-attack under Confusion or Berserk, and Riposte's
-  counter, with weakness, resistance, immunity and absorption all as below.
+  element applies to every physical strike a party member makes on an enemy
+  among those built so far: the Attack command, an auto-attack under Confusion
+  or Berserk, and Riposte's counter, with weakness, resistance, immunity and
+  absorption all as below. Abilities that re-element their own hit (Shiv,
+  Wild Card, Sever Bond) settle theirs when they are built.
   When Overcharge also applies, the more favorable of Storm and the weapon's
   element decides ([abilities.md](abilities.md) § Lira — Forgewright). A
   confused member's blow on an ally and Shatter Guard's fixed damage carry no
@@ -467,7 +469,10 @@ instead of `damage_after_variance`. Immunity (0.0×) and absorb (-1.0×)
 use the same branching logic as the magic formula — 0.0× yields 0
 damage ("Immune"), -1.0× heals the target, bypassing reduction and the
 floor-of-1 clamp. Most physical attacks are non-elemental (element_mod
-= 1.0×) and skip this step entirely.
+= 1.0×) and skip this step entirely. The enemy type-element bonus
+([bestiary/README.md](bestiary/README.md) § Stacking Rule) is not applied to
+physical elemental strikes yet; that routing is deferred on
+[#178](https://github.com/gcko/pendulum-of-despair/issues/178).
 
 ---
 
@@ -543,19 +548,23 @@ a user ruling of 2026-10-30 unless marked as a reading.
 
 - **Despair cuts all damage its bearer deals by 20%** ([magic.md](magic.md)
   § Status Effect Reference: "damage dealt -20%"). That is physical attacks,
-  spells, abilities, Lira's Shock Coil and Arc Trap ticks, and counters such
-  as Riposte. Thornveil Barrier's counter is cut when Lira, the device's owner,
+  spells, abilities, Lira's Shock Coil ticks and Arc Trap blast, and counters
+  such as Riposte. Thornveil Barrier's counter is cut when Lira, the device's owner,
   is under Despair; the shielded ally's Despair does not touch it. Despair
-  does not cut healing, but a heal that lands as damage on an enemy of any
-  type (Undead and Pallor alike) is damage, so the caster's Despair cuts it.
+  does not cut healing, but a heal that lands as damage on an Undead or
+  Pallor enemy is damage, so the caster's Despair cuts it. A revival spell's
+  instant kill on an Undead is not scaled damage, so it still kills under
+  Despair. An absorbed blow heals its target less under Despair, on both
+  paths: a weaker blow feeds a smaller heal, so the magic formula's absorb at
+  step 3 still runs step 5 before it returns.
   Poison and Burn ticks stay uncut even when a Despaired combatant inflicted
   them, and so does an item's fixed damage such as Drake Fang's, whoever uses
   the item. In the physical formula the ×0.8 is a step-6 modifier, as
   Berserk's +50% is; in the magic formula it is a step-5 buff modifier
   (reading). Shatter Guard's fixed damage is cut after its caps, and Thornveil
   Barrier's counter after its 15%, never below 1 (reading).
-- **Blind halves its bearer's physical hit rate** ([magic.md](magic.md): "Physical
-  accuracy -50%"). The rate from § Physical Attack Resolution step 1 is
+- **Blind halves its bearer's physical hit rate** ([magic.md](magic.md)
+  § Status Effect Reference: "Physical accuracy -50%"). The rate from § Physical Attack Resolution step 1 is
   multiplied by 0.5 before the [20%, 99%] clamp and floored, so an even-SPD 90%
   becomes 45% (the floor is a reading). Spells keep their full hit rate.
 
@@ -587,7 +596,7 @@ a user ruling of 2026-10-30 unless marked as a reading.
 7. **Apply damage reduction** — `× reduction_product` (see [Damage Reduction](#damage-reduction)). Only "All" and "Magic only" sources apply. Skip if no active sources.
 8. **Floor and clamp** — `clamp(floor(result), 1, 14999)` (floor of 1 bypassed if elemental modifier was 0.0× or -1.0×)
 
-Magic damage spells use the same Hit Rate% and Evasion% checks as physical attacks (see [progression.md](progression.md)). Critical% rolls never apply to magic damage — spells cannot crit.
+Magic damage spells use the same Hit Rate% and Evasion% checks as physical attacks, without Blind's multiplier (see [progression.md](progression.md) and § Attacker Status Modifiers). Critical% rolls never apply to magic damage — spells cannot crit.
 
 ### Status Spell Resolution
 
