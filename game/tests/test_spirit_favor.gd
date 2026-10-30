@@ -4,9 +4,9 @@ extends GutTest
 ## surviving a save and a load.
 ##
 ## Design law: abilities.md § Torren — Spiritcall ("Each spirit starts at Favor
-## 0", "Max Favor 3", "Favor is persistent across battles") and save-system.md
-## § 3.11 / § 10: spirit_favor is an additive optional field, so a save without
-## it loads with every spirit at 0 and stays on save version 2.
+## 0", "Max Favor 3", "Favor is persistent across battles"), save-system.md
+## § 3.11 and save-system.md § 10: spirit_favor is an additive optional field,
+## so a save without it loads with every spirit at 0 and stays on version 2.
 
 const TEST_SLOT: int = 2
 

@@ -733,7 +733,7 @@ were pinned by nothing: the Chorus's "counter 10% of DEF" and "status immunity,
 1 turn", and Shock Coil's "3 ticks"
 ([#355](https://github.com/gcko/pendulum-of-despair/issues/355)). They are real
 data fields now, and the 50% Chorus rule is asserted across all four components
-rather than the two numeric ones. An offensive ability that inflicts a status on hit (Ember Wing's 40% Burn) uses the spell `rider: {status, chance}` shape from [magic.md](magic.md) § Derived Rules; Ember Wing carries it, and Inferno Gale's guaranteed Burn is the `rider` of its `favor3` form, with `guaranteed: true`.
+rather than the two numeric ones. An offensive ability that inflicts a status on hit (Ember Wing's 40% Burn) uses the spell `rider: {status, chance}` shape from [magic.md](magic.md) § Derived Rules; the one ability carrying it is Ember Wing, whose Favor 3 form, Inferno Gale, swaps it for a `rider` with `guaranteed: true`.
 
 No *number* here is a fresh design choice. Each one falls out of a rule already
 written down somewhere, and the derivation sits next to the value so a reader can

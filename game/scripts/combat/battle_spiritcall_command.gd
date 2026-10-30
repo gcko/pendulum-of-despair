@@ -6,11 +6,11 @@ extends RefCounted
 ## feedback. The rules that outlast the cast — Favor, the wards, flight — are
 ## BattleSpiritcall's.
 ##
-## Design law: abilities.md § Torren — Spiritcall (the sub-ability table) and
-## § Damage Magnitudes (the spell powers, and the Convergence Chorus table: 50%
-## of each component's one quantity, at that spirit's own Favor, a component
-## whose spirit is not yet learned skipped). Magnitudes are torren.json's,
-## each read in the form the spirit's Favor gives it (BattleSpiritcall.field).
+## Design law: abilities.md § Torren — Spiritcall, for the sub-ability table,
+## and § Damage Magnitudes, for the spell powers and the Chorus's rule: 50% of
+## each component's one quantity, at that spirit's own Favor, with a component
+## whose spirit is not yet learned skipped. Magnitudes are torren.json's, each
+## read in the form the spirit's Favor gives it (BattleSpiritcall.field).
 
 const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")

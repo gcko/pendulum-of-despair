@@ -2,8 +2,8 @@ extends "res://tests/spiritcall_test_base.gd"
 ## Convergence Chorus, Rootsong and the Spiritcall menu (GAP-002, slice 158e of
 ## #158).
 ##
-## Design law: abilities.md § Torren — Spiritcall and § Damage Magnitudes >
-## 'Convergence Chorus' (each of Briar, Rain, Flame and Earth at 50% of its one
+## Design law: abilities.md § Torren — Spiritcall, abilities.md § Damage
+## Magnitudes > 'Convergence Chorus' (each of Briar, Rain, Flame and Earth at 50% of its one
 ## quantity, at that spirit's own Favor, party- or enemy-wide; an unlearned
 ## spirit's component skipped; once per battle), Rootsong (heal at power 12, every
 ## spirit +1, once per battle), the readings on #158 (the Chorus earns no Favor;

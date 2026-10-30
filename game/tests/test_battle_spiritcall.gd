@@ -5,8 +5,8 @@ extends "res://tests/spiritcall_test_base.gd"
 ## and the menu are test_spiritcall_chorus.gd; Favor in the save is
 ## test_spirit_favor.gd.
 ##
-## Design law: abilities.md § Torren — Spiritcall (the sub-ability table) and
-## § Damage Magnitudes, game/data/abilities/torren.json.
+## Design law: abilities.md § Torren — Spiritcall (the sub-ability table),
+## abilities.md § Damage Magnitudes and game/data/abilities/torren.json.
 
 # --- The data is the doc ---
 
