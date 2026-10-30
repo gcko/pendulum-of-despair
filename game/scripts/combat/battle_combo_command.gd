@@ -42,7 +42,9 @@ func partner_slot() -> int:
 ## the caller re-opens the menu: it is not on the actor's list now
 ## (BattleCombos.combos_for: a partner not ready, Confused, Silenced on a share
 ## Silence stops), it is not built, its usage condition is unmet, or one
-## partner cannot pay their share ("Not enough MP!").
+## partner cannot pay their share ("Not enough MP!"). It also stops, spending
+## nothing, when the partner's turn start KOs them or ends the battle (a Shock
+## Coil felling the last enemy), so a combo never lands from a fallen partner.
 func do_combo(actor_id: String, command: Dictionary) -> bool:
 	var state: Node = _battle.get_battle_state()
 	var slot: int = actor_id.replace("party_", "").to_int()
@@ -58,16 +60,45 @@ func do_combo(actor_id: String, command: Dictionary) -> bool:
 	var slots: Array[int] = entry["slots"]
 	_partner = int(entry["partner"])
 	_battle.emit_party_events(state.begin_turn(_partner))
-	var characters: Array = combo.get("characters", [])
+	if _battle_over(state) or not _entry(state, slot, entry["id"]).get("usable", false):
+		return false
+	if not _pay(state, slots, combo):
+		_battle.message.emit("Not enough MP!")
+		return false
 	var names: Array[String] = []
-	for i: int in range(slots.size()):
-		state.spend_mp(slots[i], int(combo.get("mp_costs", {}).get(characters[i], 0)))
-		names.append(state.get_member(slots[i]).get("character_data", {}).get("name", "???"))
+	for i: int in slots:
+		names.append(state.get_member(i).get("character_data", {}).get("name", "???"))
 	_battle.message.emit("%s and %s use %s!" % [names[0], names[1], combo.get("name", "Combo")])
 	match entry["id"]:
 		"ley_torrent":
 			_ley_torrent(slots)
 	return true
+
+
+## Spend each character at [param slots] their share of [param combo]'s MP.
+## Both shares are checked before either is spent, so a refusal spends nothing.
+func _pay(state: Node, slots: Array[int], combo: Dictionary) -> bool:
+	var characters: Array = combo.get("characters", [])
+	var costs: Array[int] = []
+	for i: int in range(slots.size()):
+		costs.append(int(combo.get("mp_costs", {}).get(characters[i], 0)))
+		if int(state.get_member(slots[i]).get("current_mp", 0)) < costs[i]:
+			return false
+	for i: int in range(slots.size()):
+		if not state.spend_mp(slots[i], costs[i]):
+			push_error("BattleComboCommand: %s's checked share was refused" % characters[i])
+			return false
+	return true
+
+
+## Whether the battle has already been decided: the party wiped, or every enemy
+## down or removed from combat, as the battle manager judges it.
+func _battle_over(state: Node) -> bool:
+	if state.is_party_wiped():
+		return true
+	return _battle.get_enemies().all(
+		func(e: Node) -> bool: return not e.is_alive or e.is_removed_from_combat()
+	)
 
 
 ## This turn's combos_for entry for [param combo_id] by [param slot], or {}.

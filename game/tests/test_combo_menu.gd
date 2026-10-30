@@ -75,6 +75,7 @@ func test_a_partner_still_filling_takes_their_combo_off_the_actor_s_list() -> vo
 
 
 func test_a_confused_partner_takes_their_combo_off_the_actor_s_list() -> void:
+	assert_has(_listed(MAREN), "ley_torrent", "open before the Confusion")
 	_state.apply_status(TORREN, "confusion", "turns", 3)
 	assert_does_not_have(_listed(MAREN), "ley_torrent", "Torren cannot be commanded")
 
@@ -139,7 +140,7 @@ func test_shattered_vanguard_s_condition_is_a_stance_holding_stored_damage() -> 
 
 
 func test_an_unmet_condition_grays_a_combo_even_once_it_is_built() -> void:
-	# No built combo has a condition yet; usable_entry is where 176c's will meet it.
+	# No built combo has a condition yet; BattleCombos.usable is where 176c's will meet it.
 	var entry: Dictionary = {
 		"id": "arcane_convergence", "combo": {}, "slots": [MAREN, LIRA], "affordable": true
 	}
@@ -187,3 +188,43 @@ func test_choosing_ley_torrent_submits_the_combo_without_a_target_cursor() -> vo
 	assert_signal_emitted_with_parameters(
 		m, "command_selected", [{"type": "combo", "combo_id": "ley_torrent"}]
 	)
+
+
+func test_the_cursor_passes_over_a_grayed_command() -> void:
+	var m: Node = _menu()
+	m.show_commands({"character_id": "maren", "level": 1}, false, {}, [])
+	m._cursor = 2  # Arcanum; Combo below it is grayed with nothing listed
+	m._handle_command_input(_press("ui_down"))
+	assert_eq(m._commands[m._cursor]["label"], "Item", "down skips the grayed Combo")
+	m._handle_command_input(_press("ui_up"))
+	assert_eq(m._commands[m._cursor]["label"], "Arcanum", "and up skips it back")
+
+
+func test_the_combo_submenu_opens_on_its_first_selectable_entry() -> void:
+	# Arcane Convergence (unbuilt, grayed) listed ahead of a selectable Ley Torrent.
+	var items: Array[Dictionary] = [_item(MAREN, "arcane_convergence"), _item(MAREN, "ley_torrent")]
+	var m: Node = _menu()
+	m.show_commands({"character_id": "maren", "level": 1}, false, {}, items)
+	m._cursor = 3
+	m._confirm_command()
+	assert_eq(m._submenu_cursor, 1, "the cursor opens past the grayed first entry")
+
+
+func test_every_built_combo_says_what_it_targets() -> void:
+	var targets: Array[String] = [
+		"single_enemy", "all_enemies", "single_ally", "all_allies", "self"
+	]
+	var found: Array[String] = []
+	for raw: Variant in DataManager.load_combos():
+		var combo: Dictionary = raw
+		if combo["id"] in BattleCombos.BUILT:
+			found.append(combo["id"])
+			assert_has(targets, combo.get("target", ""), "%s has a menu target" % combo["id"])
+	assert_eq(found.size(), BattleCombos.BUILT.size(), "every BUILT id is a combo in the data")
+
+
+func _press(action: String) -> InputEventAction:
+	var event: InputEventAction = InputEventAction.new()
+	event.action = action
+	event.pressed = true
+	return event

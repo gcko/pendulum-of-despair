@@ -19,6 +19,7 @@ extends GutTest
 ## and evasion 0%; HIT_SEED makes the 99% land.
 
 const BATTLE: PackedScene = preload("res://scenes/core/battle.tscn")
+const ENEMY_SCENE: PackedScene = preload("res://scenes/entities/enemy.tscn")
 const ATBSystem = preload("res://scripts/combat/atb_system.gd")
 const AbilityCommand = preload("res://scripts/combat/battle_ability_command.gd")
 
@@ -32,6 +33,46 @@ const START_MP := 50
 const ENEMY_HP := 99999
 const HIT_SEED := 12345
 const LEY_TORRENT: Dictionary = {"type": "combo", "combo_id": "ley_torrent"}
+
+
+## A BattleState whose turn-start effects can be told to KO a member or fell
+## every enemy, standing in for a turn-start effect (a Shock Coil) that decides
+## something before the combo lands.
+class TurnStartState:
+	extends "res://scripts/combat/battle_state.gd"
+	var fells_slot: int = -1
+	var fells_enemies: Array[Node] = []
+
+	func begin_turn(slot: int) -> Array:
+		if slot == fells_slot:
+			take_damage(slot, 999999)
+		for e: Node in fells_enemies:
+			e.take_damage(999999)
+		return super(slot)
+
+
+## The accessors and signals BattleComboCommand reaches on the battle manager.
+class FakeBattle:
+	extends Node
+	signal message(text: String)
+	signal damage_dealt(target_id: String, amount: int, damage_type: String)
+	signal combatant_died(combatant_id: String)
+	var state: Node
+	var enemies: Array[Node] = []
+	var atb: Node
+
+	func get_battle_state() -> Node:
+		return state
+
+	func get_enemies() -> Array[Node]:
+		return enemies
+
+	func get_atb() -> Node:
+		return atb
+
+	func emit_party_events(_events: Array) -> void:
+		pass
+
 
 var _booted: Node = null
 
@@ -226,3 +267,66 @@ func test_a_combo_whose_partners_cannot_pay_is_refused() -> void:
 	assert_has(said, "Not enough MP!", "the player is told why")
 	assert_eq(battle.get_battle_state().get_member(MAREN)["current_mp"], START_MP, "nothing spent")
 	assert_eq(battle.get_atb().get_gauge("party_%d" % TORREN), ATBSystem.GAUGE_MAX, "Torren waits")
+
+
+# ── turn start and the open menu ────────────────────────────────────────
+
+
+## Maren (slot 0) and Torren (slot 1) on full gauges with 50 MP each, against
+## one enemy, in a battle whose turn starts [param state] decides.
+func _fake(state: Node) -> FakeBattle:
+	var battle: FakeBattle = FakeBattle.new()
+	add_child_autofree(battle)
+	add_child_autofree(state)
+	battle.state = state
+	battle.atb = ATBSystem.new()
+	add_child_autofree(battle.atb)
+	for slot: int in range(2):
+		var cid: String = ["maren", "torren"][slot]
+		state.add_member(
+			slot, {"character_id": cid, "level": 1, "base_stats": {"hp": 100, "mp": 50}}
+		)
+		battle.atb.add_combatant("party_%d" % slot, 10, false)
+		battle.atb.set_gauge("party_%d" % slot, ATBSystem.GAUGE_MAX)
+	var enemy: Node = ENEMY_SCENE.instantiate()
+	add_child_autofree(enemy)
+	enemy.enemy_data = {"name": "Brute", "hp": 500, "spd": 0, "mdef": 0, "type": "humanoid"}
+	enemy.current_hp = 500
+	enemy.is_alive = true
+	battle.enemies = [enemy] as Array[Node]
+	return battle
+
+
+func test_a_partner_felled_by_their_turn_start_stops_the_combo_and_costs_nothing() -> void:
+	var state: TurnStartState = TurnStartState.new()
+	state.fells_slot = 1
+	var battle: FakeBattle = _fake(state)
+	var done: bool = BattleComboCommand.new(battle).do_combo("party_0", LEY_TORRENT)
+	assert_false(done, "Torren fell as his turn began")
+	assert_eq(state.get_member(0)["current_mp"], 50, "Maren pays nothing")
+	assert_eq(battle.enemies[0].current_hp, 500, "and no blast lands")
+
+
+func test_a_turn_start_that_ends_the_battle_stops_the_combo_and_costs_nothing() -> void:
+	var state: TurnStartState = TurnStartState.new()
+	var battle: FakeBattle = _fake(state)
+	state.fells_enemies = battle.enemies
+	var done: bool = BattleComboCommand.new(battle).do_combo("party_0", LEY_TORRENT)
+	assert_false(done, "the last enemy fell as Torren's turn began")
+	assert_eq(state.get_member(0)["current_mp"], 50, "Maren pays nothing")
+	assert_eq(state.get_member(1)["current_mp"], 50, "nor does Torren")
+
+
+func test_a_partner_who_fills_while_the_menu_is_open_joins_the_combo_list() -> void:
+	var battle: Node = _boot()
+	_prompt_maren(battle)
+	var menu: Node = battle.get_node("BattleUI/CommandMenu")
+	assert_false(menu._commands[3]["enabled"], "precondition: Torren is still filling")
+	battle.get_atb().set_gauge("party_%d" % TORREN, ATBSystem.GAUGE_MAX)
+	battle.get_node("BattleUI")._process(0.0)
+	assert_true(menu._commands[3]["enabled"], "Combo opens once Torren is ready")
+	menu._cursor = 3
+	menu._confirm_command()
+	var chosen: Dictionary = menu._submenu_items[menu._submenu_cursor]
+	assert_eq(chosen["command"]["combo_id"], "ley_torrent", "and lists Ley Torrent")
+	assert_true(chosen["enabled"], "selectable")

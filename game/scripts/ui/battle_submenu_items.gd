@@ -97,6 +97,21 @@ static func _throws(member: Dictionary, shiv: Dictionary) -> Array[Dictionary]:
 	return out
 
 
+## Gray out every spell in [param items] the battle would refuse, as an
+## unaffordable one is grayed ("Spells the character can't afford ... grayed
+## out", ui-design.md § 2.7): a spell on either side whose battle effect is not
+## built yet (BattleMagicCommand.is_castable_in_battle), and one whose HP cost
+## [param member] cannot pay (BattleMagicCommand.can_pay_hp, Leydraught).
+static func gray_uncastable(items: Array[Dictionary], member: Dictionary) -> Array[Dictionary]:
+	for item: Dictionary in items:
+		var spell: Dictionary = item.get("command", {}).get("spell", {})
+		if not MagicCommand.is_castable_in_battle(spell):
+			item["enabled"] = false
+		elif not MagicCommand.can_pay_hp(spell, member):
+			item["enabled"] = false
+	return items
+
+
 ## The party's battle-usable items (GAP-019). Battle consumables and
 ## battle-usable crafting materials share one list because InventoryHelpers
 ## gives them one shape; each entry routes an {"type": "item", "item": <dict>}
@@ -145,6 +160,18 @@ static func combos(state: Node, atb: Node, slot: int) -> Array[Dictionary]:
 		}
 		items.append(entry_item)
 	return items
+
+
+## The next selectable entry of [param items] after [param from], moving
+## [param dir] (+1 down, -1 up) and wrapping: the cursor passes over a grayed
+## entry, which it could not choose and would not highlight. [param from] itself
+## when no other entry is selectable. The battle command menu moves by it.
+static func step(items: Array, from: int, dir: int) -> int:
+	for k: int in range(1, items.size() + 1):
+		var i: int = posmod(from + dir * k, items.size())
+		if items[i].get("enabled", true):
+			return i
+	return from
 
 
 ## The character's known abilities that can be issued in battle: passives

@@ -4,9 +4,9 @@ extends Node2D
 ##
 ## The commands a player can pick live in their own modules — BattlePlayerActions
 ## (attack/defend/flee), BattleMagicCommand, BattleItemCommand, the unique
-## commands' BattleAbilityCommand and BattleComboCommand — and battle-start
-## assembly lives in
-## BattleSetup (GAP-087). This script dispatches to them and owns what they need.
+## commands' BattleAbilityCommand and BattleComboCommand — battle-start assembly
+## lives in BattleSetup, and the status notices in BattleStatusNotices (GAP-087).
+## This script dispatches to them and owns what they need.
 ## A confused or berserk member is not prompted: the loop issues an "auto"
 ## command for them, which BattleAutoAction resolves (#246).
 
@@ -47,6 +47,7 @@ var _magic: BattleMagicCommand = null
 var _items: BattleItemCommand = null
 var _abilities: BattleAbilityCommand = null
 var _combos: BattleComboCommand = null
+var _notices: BattleStatusNotices = null
 var _auto: BattleAutoAction = null
 
 @onready var _atb: Node = $ATBSystem
@@ -69,10 +70,11 @@ func _ready() -> void:
 	_ui.submenu_state_changed.connect(func(o: bool) -> void: _atb.set_submenu_open(o))
 	_state.member_died.connect(_on_party_member_died)
 	_state.member_revived.connect(_on_party_member_revived)
-	_state.status_applied.connect(_on_party_status_applied)
-	_state.status_blocked.connect(_on_party_status_blocked)
-	_state.status_cured.connect(_on_party_status_ended.bind(true))
-	_state.status_expired.connect(_on_party_status_ended.bind(false))
+	_notices = BattleStatusNotices.new(self)
+	_state.status_applied.connect(_notices.party_applied)
+	_state.status_blocked.connect(_notices.party_blocked)
+	_state.status_cured.connect(_notices.party_ended.bind(true))
+	_state.status_expired.connect(_notices.party_ended.bind(false))
 	var data: Dictionary = GameManager.transition_data
 	if data.is_empty():
 		push_error("BattleManager: No transition data")
@@ -103,7 +105,7 @@ func _ready() -> void:
 		_enemy_area,
 		_atb,
 		_on_enemy_died,
-		_on_enemy_status_applied
+		_notices.enemy_applied
 	)
 	for e: Node in _enemies:
 		_enemy_turn.announce_status_ends(e)
@@ -238,6 +240,9 @@ func _on_ui_command(command: Dictionary) -> void:
 		"auto":  # issued by _process, never by the menu
 			_auto.act_for(cmd_slot)
 	if not ok:
+		_check_end_conditions()  # a combo partner's turn start may have decided it
+		if _battle_resolved:
+			return
 		_atb.set_command_menu_open(true)
 		var char_data: Dictionary = _state.get_member(cmd_slot).get("character_data", {})
 		turn_ready.emit(actor_id, true, cmd_slot, _targetable_enemy_count(), _is_boss, char_data)
@@ -415,48 +420,10 @@ func _resync_party_atb(slot: int) -> void:
 		_atb.set_gauge(pid, 0)
 
 
-## Tell the player a status just landed on a party member (#299). Routed through
-## the one registry table so the wording is battle-dialogue.md
-## § Status Effect Notifications rather than a per-caller invention, and so
-## every path that lands a status on the PARTY announces it the same way,
-## whatever inflicted it. A status with no canonical line lands silently.
-func _on_party_status_applied(slot: int, status_name: String) -> void:
-	var nm: String = _state.get_member(slot).get("character_data", {}).get("name", "???")
-	var line: String = StatusEffects.application_notice(status_name, nm)
-	if not line.is_empty():
-		message.emit(line)
-
-
-## Worn gear kept a status off a party member (#512): the same "Immune" marker an
-## immune enemy shows, and no line, since nothing landed.
-func _on_party_status_blocked(slot: int, _status_name: String) -> void:
-	damage_dealt.emit("party_%d" % slot, 0, "immune")
-
-
-## A status left a party member by a cure ([param cured]) or by running out
-## (#515). A cure says "Poison was cured!"; an expiry says the status's own
-## "wears off" line where battle-dialogue.md gives one, else nothing. A waking hit
-## and a KO end a status by neither path, so they add no line here.
-func _on_party_status_ended(_slot: int, status_name: String, cured: bool) -> void:
-	var line: String = StatusEffects.wears_off_notice(status_name)
-	if cured:
-		line = StatusEffects.cure_notice(status_name)
-	if not line.is_empty():
-		message.emit(line)
-
-
-## Enemy-side mirror of _on_party_status_applied (#439), wired to each enemy's
-## own status_applied, so a status spell, a spell's rider or any later path
-## shows the same marker and reads the same registry line.
-func _on_enemy_status_applied(status_name: String, _duration: int, enemy: Node) -> void:
-	var idx: int = _enemies.find(enemy)
-	if idx < 0:
-		return
-	resync_enemy_atb(idx)
-	damage_dealt.emit("enemy_%d" % idx, 0, "status")
-	var line: String = StatusEffects.application_notice(status_name, enemy.get_display_name())
-	if not line.is_empty():
-		message.emit(line)
+## A summoned enemy's status_applied, which BattleEnemyTurn wires here: the
+## same notices as the opening line's (BattleStatusNotices.enemy_applied).
+func _on_enemy_status_applied(status_name: String, duration: int, enemy: Node) -> void:
+	_notices.enemy_applied(status_name, duration, enemy)
 
 
 func _check_end_conditions() -> void:

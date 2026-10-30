@@ -11,7 +11,7 @@ signal command_cancelled
 signal submenu_state_changed(is_open: bool)
 
 const BattleActions = preload("res://scripts/combat/battle_actions.gd")
-const SubmenuItems = preload("res://scripts/ui/battle_submenu_items.gd")
+const ComboList = preload("res://scripts/ui/battle_combo_list.gd")
 
 const COLOR_DAMAGE: Color = Color("#ffffff")
 const COLOR_HEAL: Color = Color("#44ff44")
@@ -54,6 +54,7 @@ const MESSAGE_QUEUE_MAX: int = 3
 var _manager: Node = null
 var _battle_state: Node = null
 var _atb_system: Node = null
+var _combo_list: ComboList = null
 var _message_timer: float = 0.0
 var _message_shown_for: float = 0.0
 var _message_queue: Array[String] = []
@@ -73,6 +74,8 @@ func initialize(manager: Node) -> void:
 	_manager = manager
 	_battle_state = manager.get_node_or_null("BattleState")
 	_atb_system = manager.get_node_or_null("ATBSystem")
+	if _battle_state != null and _atb_system != null:
+		_combo_list = ComboList.new(_battle_state, _atb_system)
 	manager.battle_started.connect(_on_battle_started)
 	manager.turn_ready.connect(_on_turn_ready)
 	manager.damage_dealt.connect(_on_damage_dealt)
@@ -108,6 +111,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	_advance_message(delta)
 	_update_party_panel()
+	# A partner whose gauge filled while the menu was open joins the Combo list.
+	if _combo_list != null and _command_menu != null and _command_menu.visible:
+		if _combo_list.stale():
+			_command_menu.set_combos(_combo_list.build())
 
 
 ## Age the current message, then hand the window to the next queued line once
@@ -155,8 +162,8 @@ func _on_turn_ready(
 		if _battle_state != null:
 			member = _battle_state.get_member(slot)
 		var combos: Array[Dictionary] = []
-		if _battle_state != null and _atb_system != null:
-			combos = SubmenuItems.combos(_battle_state, _atb_system, slot)
+		if _combo_list != null:
+			combos = _combo_list.open(slot)
 		_command_menu.show_commands(character_data, is_boss, member, combos)
 
 
