@@ -45,6 +45,7 @@ func load_from_save(data: Dictionary) -> void:
 	var ps_data: Variant = data.get("puzzle_state", {})
 	_party.puzzle_state = ps_data as Dictionary if ps_data is Dictionary else {}
 	_party.arcanite_charges = saved_arcanite_charges(data)
+	_party.spirit_favor = saved_spirit_favor(data)
 	# Max HP/MP are derived at load time, not trusted from the file
 	# (save-system.md § 1). Runs last because the crystal term needs the
 	# ley_crystals block above. A save written before #274 therefore loads with
@@ -64,7 +65,8 @@ func build_save_data() -> Dictionary:
 		_party.playtime,
 		_party.ley_crystals,
 		_party.puzzle_state,
-		_party.arcanite_charges
+		_party.arcanite_charges,
+		_party.spirit_favor
 	)
 
 
@@ -79,6 +81,16 @@ static func saved_arcanite_charges(data: Dictionary) -> int:
 	if crafting is Dictionary:
 		ac = (crafting as Dictionary).get("arcanite_charges")
 	return int(ac) if ac is int or ac is float else PartyVitals.AC_MAX
+
+
+## Torren's Spirit Favor as a save records it in spirit_favor (save-system.md
+## § 3.11). It is an additive optional field (§ 10): a save written before it
+## was persisted has none, and loads with every spirit at 0, as does a block
+## that is not a Dictionary. PartyState's setter drops non-numbers and holds
+## each value to 0..3.
+static func saved_spirit_favor(data: Dictionary) -> Dictionary:
+	var favor: Variant = data.get("spirit_favor", {})
+	return favor as Dictionary if favor is Dictionary else {}
 
 
 ## The world block written to a save: which map the party is on, where they

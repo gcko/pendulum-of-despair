@@ -58,6 +58,7 @@ static func location_display_name(world: Dictionary) -> String:
 ## `world_state` carries the caller-owned world block (location, position, gold,
 ## event flags); everything else in `world` is filled in here. [param ac] is
 ## Lira's Arcanite Charge pool; the rest of the crafting block is still a stub.
+## [param favor] is Torren's Spirit Favor.
 static func build_save_dict(
 	party: Array,
 	form: Dictionary,
@@ -67,7 +68,8 @@ static func build_save_dict(
 	play_time: int = 0,
 	lc: Dictionary = {},
 	ps: Dictionary = {},
-	ac: int = PartyVitals.AC_MAX
+	ac: int = PartyVitals.AC_MAX,
+	favor: Dictionary = {}
 ) -> Dictionary:
 	var world: Dictionary = {
 		"event_flags": world_state.get("event_flags", {}),
@@ -95,6 +97,7 @@ static func build_save_dict(
 		},
 		"ley_crystals": lc.duplicate(true),
 		"puzzle_state": ps.duplicate(true),
+		"spirit_favor": favor.duplicate(),
 		"meta":
 		{
 			"version": SaveManager.CURRENT_SAVE_VERSION,

@@ -9,6 +9,9 @@ extends RefCounted
 ## The most Arcanite Charges Lira's pool holds, and what a full rest restores
 ## (abilities.md § Lira — Forgewright, "Max 12 AC"; economy.md § Inns).
 const AC_MAX: int = 12
+## The highest Favor a spirit of Torren's reaches (abilities.md § Torren —
+## Spiritcall, "Max Favor 3").
+const FAVOR_MAX: int = 3
 
 var _party: Node
 
@@ -97,3 +100,15 @@ func restore_ac(amount: int) -> void:
 ## copy in BattleForgewright).
 static func clamp_ac(ac: int) -> int:
 	return clampi(ac, 0, AC_MAX)
+
+
+## [param favor] as a Favor table: each entry a number held to 0..FAVOR_MAX, and
+## any entry that is not a number dropped, so that spirit reads as 0 — the one
+## clamp every Favor write goes through (PartyState.spirit_favor's setter).
+static func clamp_favor(favor: Dictionary) -> Dictionary:
+	var out: Dictionary = {}
+	for spirit: Variant in favor:
+		var value: Variant = favor[spirit]
+		if value is int or value is float:
+			out[str(spirit)] = clampi(int(value), 0, FAVOR_MAX)
+	return out

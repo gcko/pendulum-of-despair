@@ -38,6 +38,7 @@ static func reset_game_state() -> void:
 	PartyState.inventory = {"consumables": {}, "materials": {}, "key_items": []}
 	PartyState.gold = 0
 	PartyState.arcanite_charges = PartyVitals.AC_MAX
+	PartyState.spirit_favor = {}
 	PartyState.ley_crystals.clear()
 	PartyState.puzzle_state.clear()
 	PartyState.is_at_save_point = false
